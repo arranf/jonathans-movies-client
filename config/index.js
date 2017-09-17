@@ -28,9 +28,11 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      'https://api.jonathansmovies.com': {
-        'target': 'localhost:3030',
-        changeOrigin: true
+      '**': {
+        target: 'localhost:3030',
+        filter: function (pathname, req) {
+          return req.hostname === 'api.jonathansmovies.com'
+        }
       }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"
