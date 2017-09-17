@@ -4,6 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+// Import assets
+require('font-awesome-webpack2')
+require('bootstrap')
+require('styles/main.scss')
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

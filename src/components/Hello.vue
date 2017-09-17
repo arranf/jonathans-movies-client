@@ -17,6 +17,15 @@
       <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
     </ul>
+
+  <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+            <a class="btn btn-primary">Button</a>
+            <i class="fa fa-book"></i>
+        </div>
+      </div>
+  </div>
   </div>
 </template>
 
