@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid h-100 d-inline-block" id="app">
+  <div style="height:100vh" id="app">
     <router-view></router-view>
   </div>
 </template>
