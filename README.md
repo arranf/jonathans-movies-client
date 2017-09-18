@@ -30,6 +30,8 @@ yarn run build --report
 
 [Vuex](https://vuex.vuejs.org)
 
+[VeeValidate Form Validation](http://vee-validate.logaretm.com/)
+
 #### Vuex Resources
 [Vuex Feather](https://github.com/feathersjs/feathers-vuex)
 
