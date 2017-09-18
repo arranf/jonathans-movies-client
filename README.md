@@ -32,6 +32,7 @@ yarn run build --report
 
 #### Vuex Resources
 [Vuex Feather](https://github.com/feathersjs/feathers-vuex)
+
 [Vuex Feather Example](https://github.com/feathersjs/feathers-chat-vuex)
 
 ### Others
