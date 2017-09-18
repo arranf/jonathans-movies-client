@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './AppContainer'
 import router from './router'
 import store from './store/'
+import '@/api/feathers-client'
 
 // Import assets
 require('font-awesome-webpack2')
