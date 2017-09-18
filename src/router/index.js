@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import ComingSoon from '@/components/ComingSoon'
 import Home from '@/components/Home/Home'
 import Login from '@/components/Login/Login'
 
