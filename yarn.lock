@@ -2321,14 +2321,12 @@ feathers-query-filters@^2.1.2:
   dependencies:
     feathers-commons "^0.8.0"
 
-feathers-reactive@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/feathers-reactive/-/feathers-reactive-0.5.2.tgz#ffe32a9af18a467deed4f94183be2db7479cdf41"
+feathers-reactive@0.4:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/feathers-reactive/-/feathers-reactive-0.4.1.tgz#7dfda1a1282749c03e1e00e1387aefb0f9cebf45"
   dependencies:
-    debug "^3.0.0"
+    debug "^2.2.0"
     feathers-commons "^0.8.7"
-    json-stable-stringify "^1.0.1"
-    rxjs "^5.4.0"
 
 feathers-socket-commons@^2.0.0:
   version "2.4.0"
@@ -5033,7 +5031,7 @@ rx-lite@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-3.1.2.tgz#19ce502ca572665f3b647b10939f97fd1615f102"
 
-rxjs@^5.4.0, rxjs@^5.4.3:
+rxjs@^5.4.3:
   version "5.4.3"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.4.3.tgz#0758cddee6033d68e0fd53676f0f3596ce3d483f"
   dependencies:

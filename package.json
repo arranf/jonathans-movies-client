@@ -37,7 +37,7 @@
     "feathers": "^2.2.0",
     "feathers-authentication-client": "^0.3.3",
     "feathers-hooks": "^2.0.2",
-    "feathers-reactive": "^0.5.2",
+    "feathers-reactive": "0.4",
     "feathers-socketio": "^2.0.0",
     "file-loader": "^0.11.1",
     "font-awesome-webpack2": "^0.0.6",
