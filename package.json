@@ -13,6 +13,7 @@
     "feathers-vuex": "^0.8.0",
     "font-awesome": "^4.7.0",
     "popper.js": "^1.12.5",
+    "vee-validate": "^2.0.0-rc.17",
     "vue": "^2.4.2",
     "vue-router": "^2.7.0",
     "vuex": "^2.4.0"

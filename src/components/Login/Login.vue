@@ -8,12 +8,17 @@
               <form>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" v-model="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
-                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                    <input name="email" v-validate="'required|email'" data-vv-delay="1000"  type="email" class="form-control" :class="{'is-invalid': errors.has('email')}" v-model="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    <div v-if="errors.has('email')" class="invalid-feedback">
+                        Please provide a valid email address.
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" v-model="password" class="form-control" id="password" placeholder="Password">
+                    <input name="password" v-validate="'required'"  type="password" v-model="password" class="form-control" :class="{'is-invalid': errors.has('password')}"  id="password" placeholder="Password">
+                    <div v-if="errors.has('password')" class="invalid-feedback">
+                        Please enter a password
+                    </div>
                 </div>
                 <button type="submit" @click.prevent="tryLogin()" class="btn btn-primary">Submit</button>
                 </form>
@@ -67,6 +72,7 @@ export default {
               console.log('User', this.current); 
               router.push('home')
           })
+      .catch(error => console.log('No JWT found'))
   }
 }
 </script>
