@@ -2,6 +2,9 @@
   <div class="container h-100">
       <div class="row h-100 justify-content-center align-items-center">
           <div class="col">
+              <div v-if="isError" class="alert alert-danger" role="alert">
+                Oops that username & password combination wasn't quite correct.
+              </div>
               <form>
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -22,13 +25,15 @@
 <script>
 import feathersClient from '@/api/feathers-client'
 import {mapActions, mapGetters} from 'vuex'
+import router from '@/router'
 
 export default {
   name: 'Login',
   data() {
       return {
           password: '',
-          email: ''
+          email: '',
+          isError: false
       }
   },
   methods: {
@@ -43,14 +48,25 @@ export default {
           })
           .then(response => {
             console.log('Authenticated!', response);
-            return client.passport.verifyJWT(response.accessToken);
+            return feathersClient.passport.verifyJWT(response.accessToken);
           })
-          .then(console.log('User', this.current))
-          .catch(error => console.error(error))
+          .then( () => {
+              console.log('User', this.current); 
+              router.push('home')
+          })
+          .catch(error => {console.error(error); this.isError = true})
       }
   },
   computed: {
       ...mapGetters('users', ['current'])
+  },
+  created: function() {
+      feathersClient.passport.getJWT()
+      .then( token => feathersClient.passport.verifyJWT(token))
+      .then( () => {
+              console.log('User', this.current); 
+              router.push('home')
+          })
   }
 }
 </script>
