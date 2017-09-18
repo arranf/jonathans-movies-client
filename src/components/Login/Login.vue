@@ -63,13 +63,13 @@ export default {
       }
   },
   computed: {
-      ...mapGetters('users', ['current'])
+      ...mapGetters('users', {currentUser: 'current'})
   },
   created: function() {
       feathersClient.passport.getJWT()
       .then( token => feathersClient.passport.verifyJWT(token))
       .then( () => {
-              console.log('User', this.current); 
+              console.log('User', this.currentUser); 
               router.push('home')
           })
       .catch(error => console.log('No JWT found'))

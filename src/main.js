@@ -6,6 +6,7 @@ import App from './AppContainer'
 import router from './router'
 import store from './store/'
 import '@/api/feathers-client'
+import 'bootstrap'
 
 // Import assets
 require('font-awesome-webpack2')
