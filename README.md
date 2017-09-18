@@ -24,11 +24,15 @@ yarn run build --report
 
 [Vue Website](https://vuejs.org)
 
- [This Template Guide](http://vuejs-templates.github.io/webpack/) 
+[This Template Guide](http://vuejs-templates.github.io/webpack/) 
+
+[Vue-Router](https://router.vuejs.org/en/)
 
 [Vuex](https://vuex.vuejs.org)
 
-[Vue-Router](https://router.vuejs.org/en/)
+#### Vuex Resources
+[Vuex Feather](https://github.com/feathersjs/feathers-vuex)
+[Vuex Feather Example](https://github.com/feathersjs/feathers-chat-vuex)
 
 ### Others
 
