@@ -3,7 +3,6 @@ import hooks from 'feathers-hooks'
 import socketio from 'feathers-socketio'
 import auth from 'feathers-authentication-client'
 import io from 'socket.io-client'
-import localStorage from 'localstorage-memory'
 import feathersVuex from 'feathers-vuex'
 import store from '@/store'
 import rx from 'feathers-reactive'
@@ -19,7 +18,7 @@ if (process.env.NODE_ENV !== 'production') {
 const feathersClient = feathers()
 .configure(hooks())
 .configure(socketio(socket))
-.configure(auth({localStorage}))
+.configure(auth({storage: window.localStorage}))
 .configure(rx(RxJS, {idField: '_id'}))
 .configure(feathersVuex(store, {
   idField: '_id',
