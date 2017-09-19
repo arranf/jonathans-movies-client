@@ -64,26 +64,6 @@ export default {
   },
   computed: {
       ...mapState('auth', ['user'])
-  },
-  created: function() {
-    feathersClient.passport.getJWT()
-    .then(token => {
-        console.log('Authenticated!', token);
-        return feathersClient.passport.verifyJWT(token);
-    })
-    .then(payload => {
-        console.log('JWT Payload', payload);
-        return feathersClient.service('users').get(payload.userId);
-    })
-    .then(user => {
-        feathersClient.set('user', user);
-        console.log('User', feathersClient.get('user'));
-        console.log('Sending you to /home from login page')
-        router.push('/home')
-    })
-    .catch(function(error){
-        console.error('Error authenticating!', error);
-    });
   }
 }
 </script>
