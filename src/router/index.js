@@ -20,7 +20,6 @@ export default new Router({
       name: 'Login',
       component: Login,
       beforeEnter: (to, from, next) => {
-        console.log(Store)
         if (Store.state.auth.user) {
           next({path: '/home'})
         }
