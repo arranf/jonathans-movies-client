@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <navbar></navbar>
     <router-view></router-view>
     <statistics-footer></statistics-footer>
   </div>
@@ -13,7 +12,6 @@ import StatisticsFooter from '@/components/StatisticsFooter'
 export default {
   name: 'app',
   components: {
-      Navbar,
       StatisticsFooter
   }
 }
