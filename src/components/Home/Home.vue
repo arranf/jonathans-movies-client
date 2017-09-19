@@ -34,7 +34,9 @@ export default {
                 $lt: new Date().getTime()
             }
         }
-        console.log(this.findPoll({query}))
+        this.findPoll({query})
+        .then(result => console.log(result))
+        .catch(error => console.error(error))
     }
 }
 </script>
