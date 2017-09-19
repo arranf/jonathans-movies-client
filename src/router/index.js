@@ -46,17 +46,12 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  console.group(to.fullPath)
-  console.group('To')
-  console.log(to)
-  console.groupEnd()
-  console.group('From')
-  console.log(from)
-  console.groupEnd()
-  console.groupEnd()
-  if (!store.state.auth.user && to.path !== '/') {
-    console.log('Going to login')
+  const user = store.state.auth.user
+
+  if (!user && to.path !== '/') {
     next('/')
+  } else if (to.matched.some(record => record.meta.admin) && !user.isAdmin) {
+    next(false)
   } else {
     next()
   }
