@@ -1,5 +1,5 @@
 <template>
-  <div class="container h-100">
+  <div class="container h-100 mt-4">
       <div class="row h-100 justify-content-center align-items-center">
           <div class="col">
               <div v-if="isError" class="alert alert-danger" role="alert">
@@ -29,7 +29,7 @@
 
 <script>
 import feathersClient from '@/api/feathers-client'
-import {mapActions, mapGetters} from 'vuex'
+import {mapActions, mapGetters, mapState} from 'vuex'
 import router from '@/router'
 
 export default {
@@ -51,9 +51,9 @@ export default {
                email: email,
                password: password
           })
-          .then(response => {
-            console.log('Authenticated!', response);
-            return feathersClient.passport.verifyJWT(response.accessToken);
+          .then(token => {
+            console.log('Authenticated!', token);
+            return feathersClient.passport.verifyJWT(token.accessToken);
           })
           .then( () => {
               console.log('User', this.current); 
@@ -63,16 +63,27 @@ export default {
       }
   },
   computed: {
-      ...mapGetters('users', {currentUser: 'current'})
+      ...mapState('auth', ['user'])
   },
   created: function() {
-      feathersClient.passport.getJWT()
-      .then( token => feathersClient.passport.verifyJWT(token))
-      .then( () => {
-              console.log('User', this.currentUser); 
-              router.push('home')
-          })
-      .catch(error => console.log('No JWT found'))
+    feathersClient.passport.getJWT()
+    .then(token => {
+        console.log('Authenticated!', token);
+        return feathersClient.passport.verifyJWT(token);
+    })
+    .then(payload => {
+        console.log('JWT Payload', payload);
+        return feathersClient.service('users').get(payload.userId);
+    })
+    .then(user => {
+        feathersClient.set('user', user);
+        console.log('User', feathersClient.get('user'));
+        console.log('Sending you to /home from login page')
+        router.push('/home')
+    })
+    .catch(function(error){
+        console.error('Error authenticating!', error);
+    });
   }
 }
 </script>
