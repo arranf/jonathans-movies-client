@@ -23,7 +23,7 @@
                         Please enter a password
                     </div>
                 </div>
-                <button type="submit" @click.prevent="trySignUp()" class="btn btn-primary">Submit</button>
+                <button type="submit" @click.prevent="trySignUp()" class="btn btn-primary" :disabled="isDisabled">Submit</button>
               </form>
           </div>
       </div>
@@ -70,7 +70,10 @@ export default {
       }
   },
   computed: {
-      ...mapState('auth', ['user'])
+      ...mapState('auth', ['user']),
+      isDisabled: function () {
+          return !(this.password && this.email)
+      }
   }
 }
 </script>
