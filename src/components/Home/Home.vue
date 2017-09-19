@@ -2,7 +2,6 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                Home
             </div>
         </div>
     </div>
@@ -15,12 +14,12 @@ export default {
     name:'Home',
     computed:{
         ...mapGetters('poll', {
-            poll: 'list'
+            polls: 'list'
         }),
     },
     methods: {
         ...mapActions('poll', {
-            findPoll: 'find'
+            getPoll: 'find'
         })
     },
     created: function () {
@@ -34,9 +33,6 @@ export default {
                 $lt: new Date().getTime()
             }
         }
-        this.findPoll({query})
-        .then(result => console.log(result))
-        .catch(error => console.error(error))
     }
 }
 </script>
