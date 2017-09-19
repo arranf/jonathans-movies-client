@@ -1,7 +1,7 @@
 <template>
   <swiper :options="swiperOption" :not-next-tick="notNextTick" class="swiper-box"  ref="voteSwiper">
         <template v-for="movie in movies" >
-                <swiper-slide @click="vote()" :key="movie._id" class="swiper-item" :style="{backgroundColor: randomColor()}" >{{movie.name}}</swiper-slide>
+                <swiper-slide @click="vote()" :key="movie._id" class="swiper-item" :class="{voted: isVoted(movie._id)}" :style="{backgroundColor: randomColor()}" >{{movie.name}}</swiper-slide>
         </template>
   </swiper>
 </template>
@@ -51,16 +51,18 @@ export default {
           }
           const movieOption = this.movies[index]
           const movieOptionId = movieOption._id
-          const userId = this.user._id
-          console.log('Chosen Movie is ' + movieOption)
-          if (this.votes.some( v => v.user_id === userId && v.option_id === movieOptionId )){
-              this.removeVote().then(console.log('Vote added for ', movieOption.name))
+          console.log(movieOption)
+          if (this.isVoted(movieOptionId)){
+              this.removeVote().then(console.log('Vote removed from ', movieOption.name))
               .catch(error => console.error(error))
           } else {
-              this.addVote({poll_id: this.pollId, option_id: movieOptionId, user_id: userId})
+              this.addVote({poll_id: this.pollId, option_id: movieOptionId, user_id: this.user._id})
               .then(console.log('Vote added for ', movieOption.name))
               .catch(error => console.error(error))
           }
+      },
+      isVoted: function(movieId){
+          return this.votes.some( v => v.user_id === this.user._id && v.option_id === movieId )
       }
   },
   computed: {
@@ -102,4 +104,8 @@ export default {
     -webkit-align-items: center;
     align-items: center;
   }
+
+    .voted {
+        opacity: 0.5;
+    }
   </style>
