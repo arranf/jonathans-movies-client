@@ -28,7 +28,6 @@
 
         <div class="row">
             <div class="col mt-4">
-                <a class="btn btn-primary" @click="test()">Test</a>
                 <p>Made with <i class="fa fa-heart heart" aria-hidden="true"></i> <span class="sr-only">love</span> (and a lot of food from Spar) by Arran and Joel.</p>
             </div>
         </div>
