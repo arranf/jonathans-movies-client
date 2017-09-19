@@ -69,7 +69,8 @@ export default {
           const movieOptionId = movieOption._id
           console.log(movieOption)
           if (this.isVoted(movieOptionId)){
-              this.removeVote().then(console.log('Vote removed from ', movieOption.name))
+              const vote = this.votes.find(v => v.user_id === this.user._id && v.option_id === movieOptionId)
+              this.removeVote(vote._id).then(console.log('Vote removed from ', movieOption.name))
               .catch(error => console.error(error))
           } else {
               this.addVote({poll_id: this.pollId, option_id: movieOptionId, user_id: this.user._id})
