@@ -32,7 +32,6 @@ const router = new Router({
               return feathersClient.service('users').get(payload.userId)
             })
             .then(() => {
-              console.log(store.state.auth.user)
               next('/home')
             })
             .catch(function (error) {
