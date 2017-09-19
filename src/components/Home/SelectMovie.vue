@@ -1,7 +1,9 @@
 <template>
   <swiper :options="swiperOption" :not-next-tick="notNextTick" class="swiper-box"  ref="voteSwiper">
         <template v-for="movie in movies" >
-                <swiper-slide @click="vote()" :key="movie._id" class="swiper-item" :class="{voted: isVoted(movie._id)}" :style="{backgroundColor: randomColor()}" >{{movie.name}}</swiper-slide>
+                <swiper-slide @click="vote()" :key="movie._id" class="swiper-item" :class="{voted: isVoted(movie._id)}" :style="{backgroundColor: getColor(movie._id)}" >
+                    {{movie.name}}
+                </swiper-slide>
         </template>
   </swiper>
 </template>
@@ -16,7 +18,11 @@ export default {
   props: ['movies', 'pollId'],
   data() {
       return {
-        gotSwipe: false,
+        movieColors: {
+            currentIndex: 0,
+            colors: ['#6a1b9a', '#4527a0', '#c62828', '#283593', '#1565c0', '#0277bd', '#00838f', '#00695c', '#2e7d32', '#ff8f00', '#d84315'],
+            movieColorMap: {}
+        },
         notNextTick: true,
         swiperOption: {
           onClick: this.vote,
@@ -30,7 +36,6 @@ export default {
                 // TODO RESPONSIVE BREAKPOINTS
                 // https://github.com/surmon-china/vue-awesome-swiper/blob/master/examples/33-responsive-breakpoints.vue
             },
-            colors: ['#6a1b9a', '#4527a0', '#c62828', '#283593', '#1565c0', '#0277bd', '#00838f', '#00695c', '#2e7d32', '#ff8f00', '#d84315']
       }
   },
   components: {
@@ -41,8 +46,19 @@ export default {
       ...mapActions('vote', {addVote: 'create'}),
       ...mapActions('vote', {removeVote: 'remove'}), 
       ...mapActions('vote', {getVotes: 'find'}),
-      randomColor: function (){
-          return this.colors[Math.floor(Math.random() * this.colors.length)]
+      getColor: function (movieId){
+          let movieColors = this.movieColors
+          if (movieId in movieColors.movieColorMap){
+              return movieColors.movieColorMap[movieId]
+          } 
+          let currentIndex = movieColors.currentIndex
+          this.movieColors.movieColorMap[movieId] = movieColors.colors[currentIndex]
+          if (currentIndex+1 === movieColors.colors.length){
+              movieColors.currentIndex = 0
+          } else {
+              movieColors.currentIndex++
+          }
+          return movieColors.movieColorMap[movieId]
       },
       vote: function(){
           const index = this.$refs.voteSwiper.swiper.clickedIndex
