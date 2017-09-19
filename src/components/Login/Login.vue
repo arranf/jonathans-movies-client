@@ -2,6 +2,9 @@
   <div class="container h-100 mt-4">
       <div class="row h-100 justify-content-center align-items-center">
           <div class="col">
+              <div>
+                  <h1>Login</h1>
+              </div>
               <div v-if="isError" class="alert alert-danger" role="alert">
                 Oops that username & password combination wasn't quite correct.
               </div>
@@ -20,7 +23,7 @@
                         Please enter a password
                     </div>
                 </div>
-                    <button type="submit" @click.prevent="tryLogin()" class="btn btn-primary">Submit</button>
+                    <button type="submit" @click.prevent="tryLogin()" class="btn btn-primary" :disabled="isDisabled">Submit</button>
                     <button type="submit" @click.prevent="toSignUp()" class="btn btn-primary">Sign Up</button>
                 </form>
           </div>
@@ -65,7 +68,10 @@ export default {
         }
     },
     computed: {
-        ...mapState('auth', ['user'])
+        ...mapState('auth', ['user']),
+        isDisabled: function () {
+            return !(this.password && this.email)
+        }
     }
 }
 </script>
