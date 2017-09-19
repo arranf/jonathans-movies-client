@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
+  <nav class="navbar sticky-top navbar-expand-sm navbar-dark bg-dark">
     <a class="navbar-brand" href="#">Vote</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
