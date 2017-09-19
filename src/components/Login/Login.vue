@@ -20,7 +20,8 @@
                         Please enter a password
                     </div>
                 </div>
-                <button type="submit" @click.prevent="tryLogin()" class="btn btn-primary">Submit</button>
+                    <button type="submit" @click.prevent="tryLogin()" class="btn btn-primary">Submit</button>
+                    <button type="submit" @click.prevent="toSignUp()" class="btn btn-primary">Sign Up</button>
                 </form>
           </div>
       </div>
@@ -34,36 +35,37 @@ import router from '@/router'
 
 export default {
   name: 'Login',
-  data() {
-      return {
-          password: '',
-          email: '',
-          isError: false
-      }
-  },
-  methods: {
-      ...mapActions('auth',['authenticate']),
-      tryLogin: function() {
-          const email = this.email
-          const password = this.password 
-          this.authenticate({
-               strategy: 'local',
-               email: email,
-               password: password
-          })
-          .then(token => {
-            console.log('Authenticated!', token);
-            return feathersClient.passport.verifyJWT(token.accessToken);
-          })
-          .then( () => {
-              console.log('User', this.current); 
-              router.push('home')
-          })
-          .catch(error => {console.error(error); this.isError = true})
-      }
-  },
-  computed: {
-      ...mapState('auth', ['user'])
-  }
+    data() {
+        return {
+            password: '',
+            email: '',
+            isError: false
+        }
+    },
+    methods: {
+        ...mapActions('auth',['authenticate']),
+        tryLogin: function() {
+            this.authenticate({
+                strategy: 'local',
+                email: this.email,
+                password: this.password
+            })
+            .then(token => {
+                console.log('Authenticated!', token);
+                return feathersClient.passport.verifyJWT(token.accessToken);
+            })
+            .then( () => {
+                console.log('User', this.current); 
+                router.push('home')
+            })
+            .catch(error => {console.error(error); this.isError = true})
+        },
+        toSignUp: function() {
+            router.push('/signup')
+        }
+    },
+    computed: {
+        ...mapState('auth', ['user'])
+    }
 }
 </script>
