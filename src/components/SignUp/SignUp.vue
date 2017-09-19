@@ -2,10 +2,13 @@
   <div class="container h-100 mt-4">
       <div class="row h-100 justify-content-center align-items-center">
           <div class="col">
+              <div>
+                  <h1>Sign Up!</h1>
+              </div>
+              <div v-if="isError" class="alert alert-danger" role="alert">
+                  Whoops! Looks like one or both of your fields are invalid.
+              </div>
               <form>
-                <div>
-                    Sign Up!
-                </div>
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input name="email" v-validate="'required|email'" data-vv-delay="1000"  type="email" class="form-control" :class="{'is-invalid': errors.has('email')}" v-model="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
@@ -21,7 +24,7 @@
                     </div>
                 </div>
                 <button type="submit" @click.prevent="trySignUp()" class="btn btn-primary">Submit</button>
-                </form>
+              </form>
           </div>
       </div>
   </div>
