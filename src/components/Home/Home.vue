@@ -2,7 +2,7 @@
     <div class="container h-80">
         <div class="d-flex h-100 align-items-stretch">
             <div class="col" v-if="this.polls">
-                <select-movie :movies="options" :pollId="this.polls[0].id"></select-movie>
+                <select-movie :movies="options" :pollId="this.polls[0]._id"></select-movie>
             </div>
             <div class="col">
 
@@ -54,7 +54,7 @@ export default {
         }
         
         this.getPoll({pollQuery})
-        .then(this.getOptions({query: {id: this.polls[0].id}}))
+        .then(this.getOptions({query: {poll_id: this.polls[0]._id}}))
         .catch(error => console.error(error))
     }
 }

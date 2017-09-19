@@ -1,7 +1,7 @@
 <template>
-  <swiper :options="swiperOption" class="swiper-box">
+  <swiper :options="swiperOption" :not-next-tick="notNextTick" class="swiper-box"  ref="voteSwiper">
         <template v-for="movie in movies" >
-            <swiper-slide class="swiper-item" :style="{backgroundColor: randomColor()}" :key="movie._id" @click="vote(movie._id)">{{movie.name}}</swiper-slide>
+                <swiper-slide @click="vote()" :key="movie._id" class="swiper-item" :style="{backgroundColor: randomColor()}" >{{movie.name}}</swiper-slide>
         </template>
   </swiper>
 </template>
@@ -16,11 +16,19 @@ export default {
   props: ['movies', 'pollId'],
   data() {
       return {
-            swiperOption: {
+        gotSwipe: false,
+        notNextTick: true,
+        swiperOption: {
+          onClick: this.vote,
+          setWrapperSize :true,
                 slidesPerView: 3,
                 spaceBetween: 40,
                 mousewheelControl : true,
                 observeParents:true,
+                preventClicks: false,
+                loop: false // This as true breaks things
+                // TODO RESPONSIVE BREAKPOINTS
+                // https://github.com/surmon-china/vue-awesome-swiper/blob/master/examples/33-responsive-breakpoints.vue
             },
             colors: ['#6a1b9a', '#4527a0', '#c62828', '#283593', '#1565c0', '#0277bd', '#00838f', '#00695c', '#2e7d32', '#ff8f00', '#d84315']
       }
@@ -30,17 +38,39 @@ export default {
     swiperSlide
   },
   methods: {
-      ...mapActions('vote', [{voteAdd: 'create'}, {voteRemove: 'remove'}]),
+      ...mapActions('vote', {addVote: 'create'}),
+      ...mapActions('vote', {removeVote: 'remove'}), 
+      ...mapActions('vote', {getVotes: 'find'}),
       randomColor: function (){
           return this.colors[Math.floor(Math.random() * this.colors.length)]
       },
-      vote: function(movieId){
-          if (votes.contains(movieId)){
-              // remove
+      vote: function(){
+          const index = this.$refs.voteSwiper.swiper.clickedIndex
+          if (index == null){
+              console.error('COULD NOT GET INDEX')
+          }
+          const movieOption = this.movies[index]
+          const movieOptionId = movieOption._id
+          const userId = this.user._id
+          console.log('Chosen Movie is ' + movieOption)
+          if (this.votes.some( v => v.user_id === userId && v.option_id === movieOptionId )){
+              this.removeVote().then(console.log('Vote added for ', movieOption.name))
+              .catch(error => console.error(error))
           } else {
-              // add
+              this.addVote({poll_id: this.pollId, option_id: movieOptionId, user_id: userId})
+              .then(console.log('Vote added for ', movieOption.name))
+              .catch(error => console.error(error))
           }
       }
+  },
+  computed: {
+      ...mapGetters('vote', {findVote: 'find'}), ...mapGetters('vote', {votes: 'list'}),
+      ...mapState('auth', ['user'])
+  },
+  mounted: function (){
+      console.log('Current swiper instance object',  this.$refs.voteSwiper.swiper)
+      
+      this.getVotes({query:{}}).catch(error => console.error(error))
   }
 }
 </script>
@@ -55,7 +85,7 @@ export default {
     height: 100%;
     text-align: center;
     font-size: 1.8em ;
-    color: white;
+    color: #ffffff;
     /* Center slide text vertically */
     display: -webkit-box;
     display: -ms-flexbox;
