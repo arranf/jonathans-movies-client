@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home/Home'
 import Login from '@/components/Login/Login'
+import SignUp from '@/components/SignUp/SignUp'
 import store from '@/store'
 import feathersClient from '@/api/feathers-client'
 
@@ -40,6 +41,11 @@ const router = new Router({
         }
         next()
       }
+    },
+    {
+      path: '/signup',
+      name: 'SignUp',
+      component: SignUp
     }
   ]
 })
@@ -47,7 +53,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const user = store.state.auth.user
 
-  if (!user && to.path !== '/') {
+  if (!user && (to.path !== '/' && to.path !== '/signup')) {
     next('/')
   } else if (to.matched.some(record => record.meta.admin) && !user.isAdmin) {
     next(false)
