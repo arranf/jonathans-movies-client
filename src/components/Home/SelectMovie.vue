@@ -1,7 +1,9 @@
 <template>
   <swiper :options="swiperOption" :not-next-tick="notNextTick" class="swiper-box"  ref="voteSwiper">
         <template v-for="movie in movies" >
-                <swiper-slide @click="vote()" :key="movie._id" class="swiper-item" :class="{voted: isVoted(movie._id)}" :style="{backgroundColor: getColor(movie._id)}" >{{movie.name}}</swiper-slide>
+                <swiper-slide @click="vote()" :key="movie._id" class="swiper-item" :class="{voted: isVoted(movie._id)}" :style="{backgroundColor: getColor(movie._id)}" >
+                    {{movie.name}}
+                </swiper-slide>
         </template>
   </swiper>
 </template>
