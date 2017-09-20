@@ -11,6 +11,7 @@
 <script>
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import {mapActions, mapState, mapGetters} from 'vuex'
+import utils from '@/utils'
 require('swiper/dist/css/swiper.css')
 
 export default {
@@ -20,7 +21,7 @@ export default {
       return {
         movieColors: {
             currentIndex: 0,
-            colors: ['#6a1b9a', '#4527a0', '#c62828', '#283593', '#1565c0', '#0277bd', '#00838f', '#00695c', '#2e7d32', '#ff8f00', '#d84315'],
+            colors: ['#6a1b9a', '#4527a0', '#c62828', '#283593', '#1565c0', '#0277bd', '#00838f', '#00695c', '#2e7d32', '#558B2F', '#9E9D24', '#F9A825', '#4E342E', '#424242', '#ff8f00', '#d84315'],
             movieColorMap: {}
         },
         notNextTick: true,
@@ -87,6 +88,7 @@ export default {
       ...mapState('auth', ['user'])
   },
   mounted: function (){
+      utils.shuffle(this.movieColors.colors)
       console.log('Current swiper instance object',  this.$refs.voteSwiper.swiper)
       
       this.getVotes({query:{}}).catch(error => console.error(error))
