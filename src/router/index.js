@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home/Home'
 import Login from '@/components/Login/Login'
 import SignUp from '@/components/SignUp/SignUp'
+import Admin from '@/components/Admin/Admin'
 import store from '@/store'
 import feathersClient from '@/api/feathers-client'
 
@@ -46,6 +47,14 @@ const router = new Router({
       path: '/signup',
       name: 'SignUp',
       component: SignUp
+    },
+    {
+      path: '/admin',
+      name: 'Admin',
+      component: Admin
+      // meta: {
+      //   admin: true
+      // }
     }
   ]
 })
