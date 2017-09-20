@@ -12,7 +12,7 @@
 
                         <div class="card">
                             <div class="card-body">
-                                <p class="card-text" v-if="votes && polls"><strong>{{votesRemaining}}</strong> Votes Remaining</p>
+                                <p class="card-text" v-if="votes && polls"><strong>{{remainingVotes}}</strong> Votes Remaining</p>
                             </div>
                         </div>
 
@@ -51,15 +51,8 @@ export default {
       ...mapGetters('poll', {polls: 'find'}),
       ...mapGetters('vote', {findVotesInStore: 'find'}),
       ...mapGetters('poll', ['getActivePoll', 'isActivePoll']),
-      ...mapState('auth', ['user']),
-      userVotes() {
-        if (this.isActivePoll && this.user)
-          return this.findVotesInStore({query: {poll_id: this.getActivePoll._id, user_id: this.user._id}})
-        return null
-      },
-      votesRemaining() {
-        return this.getActivePoll.numberOfVotes - this.userVotes.total
-      }
+      ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
+      ...mapState('auth', ['user'])
   },
   methods: {
       ...mapActions('vote', {getVotes: 'find'}),

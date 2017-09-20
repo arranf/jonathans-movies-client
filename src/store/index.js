@@ -9,17 +9,31 @@ const { service, auth } = feathersVuex(feathersClient, { idField: '_id' })
 
 const store = new Vuex.Store({
   plugins: [
-    service('vote'),
+    service('vote', {getters: {
+      userVotes (state, getters, rootState, rootGetters) {
+        const user = rootState.auth.user
+        if (rootGetters['poll/isActivePoll'] && user) {
+          return getters.find({query: {poll_id: rootGetters['poll/getActivePoll']._id, user_id: user._id}})
+        }
+        return null
+      },
+      votesRemaining (state, getters, rootState, rootGetters) {
+        let activePoll = rootGetters['poll/getActivePoll']
+        if (activePoll) {
+          return activePoll.numberOfVotes - getters.userVotes.total
+        }
+        return null
+      }
+    }}),
     service('option'),
     service('poll', {getters: {
-      getActivePoll (state) {
-        console.log(state)
+      getActivePoll (state, getters, rootState, rootGetters) {
         let currentDateTime = new Date().getTime()
         return Object.values(state.keyedById)
               .sort((a, b) => a.endDateTime < a.endDateTime ? -1 : 1)
               .find(p => p.startDateTime <= currentDateTime && p.endDateTime > currentDateTime)
       },
-      isActivePoll (state) {
+      isActivePoll (state, getters, rootState, rootGetters) {
         let currentDateTime = new Date().getTime()
         let polls = Object.values(state.keyedById)
         return polls.some(p => p.startDateTime <= currentDateTime && p.endDateTime > currentDateTime)
