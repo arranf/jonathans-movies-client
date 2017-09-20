@@ -12,16 +12,8 @@
                   <label :for="index">Option {{ index + 1 }}</label>
                 </div>
                 <div class="col">
-                  <input type="text" class="form-control" :id="index" :placeholder="option"></input>
+                  <input type="text" class="form-control" :id="index" placeholder="Enter a film title here..." v-model="options[index]"></input>
                 </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col col-md-auto">
-                <label :for="options.length + 1">Option {{ options.length + 1 }}</label>
-              </div>
-              <div class="col">
-                <input type="text" class="form-control" :id="options.length" v-model="newOption" placeholder="Enter a film title here..."></input>
               </div>
             </div>
           </div>
@@ -32,11 +24,11 @@
               </div>
               <div class="col">
                 <select class="form-control col-2" id="numberOfMinutes" v-model="minutes">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="5">5</option>
-                  <option value="7">7</option>
-                  <option value="10">10</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>5</option>
+                  <option>7</option>
+                  <option>10</option>
                 </select>
               </div>
             </div>
@@ -44,13 +36,13 @@
           <div class="form-group">
             <div class="row">
               <div class="col col-md-auto">
-                <label for="numberOfVotes">Number of Minutes</label> 
+                <label for="numberOfVotes">Number of Votes</label> 
               </div>
               <div class="col">
                 <select class="form-control col-2" id="numberOfVotes" v-model="votes">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
                 </select>
               </div>
             </div>
@@ -71,11 +63,10 @@ export default {
   name: 'Admin',
   data () {
     return {
-      newOption: '',
       minutes: '',
       votes: '',
       creatingPoll: false,
-      options: []
+      options: ['']
     }
   },
   methods: {
@@ -84,8 +75,7 @@ export default {
       this.creatingPoll = true
     },
     addOption: function () {
-      this.options.push(this.newOption)
-      this.newOption = ''
+      this.options.push('')
     }
   }
 }
