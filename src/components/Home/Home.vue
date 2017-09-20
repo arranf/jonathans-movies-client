@@ -2,7 +2,7 @@
     <div class="container h-80">
         <div class="d-flex h-100 align-items-stretch">
             <div class="col" v-if="this.polls">
-                <select-movie :movies="options" :pollId="this.polls[0]._id"></select-movie>
+                <select-movie :movies="options" :pollId="this.pollId"></select-movie>
             </div>
             <div class="col">
 
@@ -13,7 +13,9 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
+import queries from '@/api'
 import SelectMovie from '@/components/Home/SelectMovie'
+
 
 export default {
     name:'Home',
@@ -22,7 +24,7 @@ export default {
     },
     data() {
         return {
-            colors: ['#c62828', ]
+            pollId: null
         }
     },
     computed:{
@@ -42,19 +44,15 @@ export default {
         })
     },
     created: function () {
-        const pollQuery = {
-            $sort: {endDateTime: 1},
-            $limit: 1,
-            startDateTime: {
-                $gte: new Date().getTime()
-            },
-            endDateTime: {
-                $lt: new Date().getTime()
+        queries.getCurrentPoll()
+        .then(response => {
+            if (response.total > 0){
+                this.pollId = response.data[0]._id
+                return this.getOptions({query: {poll_id: response.data[0]._id}})
+            } else {
+                return Promise.resolve()
             }
-        }
-        
-        this.getPoll({pollQuery})
-        .then(this.getOptions({query: {poll_id: this.polls[0]._id}}))
+        })
         .catch(error => console.error(error))
     }
 }
