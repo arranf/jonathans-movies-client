@@ -12,7 +12,7 @@
 
                         <div class="card">
                             <div class="card-body">
-                                <p class="card-text" v-if="votes"><strong>{{votes.length}}</strong> Votes Cast</p>
+                                <p class="card-text" v-if="votes && polls"><strong>{{votesRemaining}}</strong> Votes Remaining</p>
                             </div>
                         </div>
 
@@ -49,8 +49,17 @@ export default {
   computed: {
       ...mapGetters('vote', {votes: 'list'}),
       ...mapGetters('poll', {polls: 'find'}),
+      ...mapGetters('vote', {findVotesInStore: 'find'}),
       ...mapGetters('poll', ['getActivePoll', 'isActivePoll']),
-      ...mapState('auth', ['user'])
+      ...mapState('auth', ['user']),
+      userVotes() {
+        if (this.isActivePoll && this.user)
+          return this.findVotesInStore({query: {poll_id: this.getActivePoll._id, user_id: this.user._id}})
+        return null
+      },
+      votesRemaining() {
+        return this.getActivePoll.numberOfVotes - this.userVotes.total
+      }
   },
   methods: {
       ...mapActions('vote', {getVotes: 'find'}),
