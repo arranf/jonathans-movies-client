@@ -73,6 +73,7 @@ export default {
           return movieColors.movieColorMap[movieId]
       },
       vote: function(){
+          
           const index = this.$refs.voteSwiper.swiper.clickedIndex
           if (index == null){
               console.error('Could not get movie index')
@@ -80,12 +81,15 @@ export default {
           }
           const movieOption = this.movies[index]
           const movieOptionId = movieOption._id
-          console.log(movieOption)
           if (this.isVoted(movieOptionId)) {
               const vote = this.votes.find(v => v.user_id === this.user._id && v.option_id === movieOptionId)
               this.removeVote(vote._id).then(console.log('Vote removed from ', movieOption.name))
               .catch(error => console.error(error))
           } else {
+            if (this.remainingVotes <= 0){
+              // TODO Show user error
+              return
+            }
               this.addVote({poll_id: this.pollId, option_id: movieOptionId, user_id: this.user._id})
               .then(console.log('Vote added for ', movieOption.name))
               .catch(error => console.error(error))
@@ -97,7 +101,8 @@ export default {
   },
   computed: {
       ...mapGetters('vote', {findVote: 'find'}), ...mapGetters('vote', {votes: 'list'}),
-      ...mapState('auth', ['user'])
+      ...mapState('auth', ['user']),
+      ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
   },
   mounted: function (){
       utils.shuffle(this.movieColors.colors)
