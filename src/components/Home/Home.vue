@@ -1,5 +1,5 @@
 <template>
-    <div class="container h-100">
+    <div class="container-fluid h-100">
         <div class="row d-flex h-75 align-items-stretch">
             <div class="col" v-if="isActivePoll">
                 <select-movie :movies="options" :pollId="this.pollId"></select-movie>
