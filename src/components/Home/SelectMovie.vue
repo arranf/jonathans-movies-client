@@ -2,7 +2,18 @@
   <swiper :options="swiperOption" :not-next-tick="notNextTick" class="swiper-box"  ref="voteSwiper">
         <template v-for="movie in movies" >
                 <swiper-slide @click="vote()" :key="movie._id" class="swiper-item" :class="{voted: isVoted(movie._id)}" :style="{backgroundColor: getColor(movie._id)}" >
-                    {{movie.name}}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                {{movie.name}}
+                            </div>
+                        </div>
+                        <div v-if="isVoted(movie._id)" class="row">
+                            <div class="col">
+                                <i class="fa fa-check fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
                 </swiper-slide>
         </template>
   </swiper>
@@ -64,12 +75,13 @@ export default {
       vote: function(){
           const index = this.$refs.voteSwiper.swiper.clickedIndex
           if (index == null){
-              console.error('COULD NOT GET INDEX')
+              console.error('Could not get movie index')
+              return
           }
           const movieOption = this.movies[index]
           const movieOptionId = movieOption._id
           console.log(movieOption)
-          if (this.isVoted(movieOptionId)){
+          if (this.isVoted(movieOptionId)) {
               const vote = this.votes.find(v => v.user_id === this.user._id && v.option_id === movieOptionId)
               this.removeVote(vote._id).then(console.log('Vote removed from ', movieOption.name))
               .catch(error => console.error(error))
@@ -125,6 +137,6 @@ export default {
   }
 
     .voted {
-        opacity: 0.5;
+        opacity: 0.8;
     }
   </style>
