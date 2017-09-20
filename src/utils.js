@@ -1,4 +1,5 @@
 import humanizeDuration from 'humanize-duration'
+import store from '@/store'
 
 const functions = {
   shuffle: function (a) {
@@ -8,8 +9,8 @@ const functions = {
     }
   },
   humanizeTimeToNow: function (dateTimeEpochms) {
-    let currentTimeEpochms = new Date().getTime()
-    return humanizeDuration(dateTimeEpochms - currentTimeEpochms, { units: ['h', 'm', 's'], largest: 2, round: true })
+    const time = store.getters['time/getNow']
+    return humanizeDuration(dateTimeEpochms - time, { units: ['h', 'm', 's'], largest: 2, round: true })
   }
 }
 export default functions
