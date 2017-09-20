@@ -6,7 +6,7 @@
                     <div class="card-deck">
                         <div class="card">
                             <div class="card-body">
-                                <p class="card-text" v-if="polls"><strong>{{polls.length}}</strong> Time Remaining</p>
+                                <p class="card-text" v-if="polls">{{timeRemainingWords}}</p>
                             </div>
                         </div>
 
@@ -36,22 +36,36 @@
 
 <script>
 import {mapGetters, mapState, mapActions} from 'vuex'
+import utils from '@/utils'
 
 export default {
   name: 'InfoFooter',
   data() {
       return {
-          gotVoteandPolls: false
+          interval: null,
+          timeRemainingWords: 'No Current Poll'
       }
   },
   computed: {
       ...mapGetters('vote', {votes: 'list'}),
       ...mapGetters('poll', {polls: 'find'}),
+      ...mapGetters('poll', ['getActivePoll', 'isActivePoll']),
       ...mapState('auth', ['user'])
   },
   methods: {
       ...mapActions('vote', {getVotes: 'find'}),
       ...mapActions('poll', {getPolls: 'find'}),
+      timeRemaining: function() {
+        if (this.isActivePoll) {
+          return 'Poll closes in ' + utils.humanizeTimeToNow(this.getActivePoll.endDateTime)
+        }
+        return 'No Current Poll'
+      }
+  },
+  mounted: function() {
+    this.interval = setInterval(function () {
+      this.timeRemainingWords = this.timeRemaining()
+    }.bind(this), 100)
   },
   beforeUpdate: function() {
       if (this.user && !this.gotVoteandPolls){
@@ -59,6 +73,9 @@ export default {
         .then(this.getVotes({query: {}}))
         .then(this.gotVoteandPolls = true)
       }
+  },
+  beforeDestroy: function (){
+    window.clearInterval(this.interval)
   }
 }
 </script>

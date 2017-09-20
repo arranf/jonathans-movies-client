@@ -7,7 +7,7 @@
         </div>
         <div class="row h-25">
             <div class="col">
-                
+                <info-footer></info-footer>
             </div>
         </div>
     </div>
@@ -17,12 +17,13 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 import queries from '@/api'
 import SelectMovie from '@/components/Home/SelectMovie'
-
+import InfoFooter from '@/components/Home/InfoFooter'
 
 export default {
     name:'Home',
     components: {
-        SelectMovie
+        SelectMovie,
+        InfoFooter
     },
     data() {
         return {
