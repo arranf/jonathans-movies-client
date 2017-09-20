@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
-    <router-view></router-view>
-    <statistics-footer></statistics-footer>
+  <div class="" style="height:100vh" id="app">
+    <router-view class="h-75"></router-view>
+    <statistics-footer class="h-25 pt-3"></statistics-footer>
   </div>
 </template>
 

@@ -32,7 +32,11 @@ yarn run build --report
 
 [VeeValidate Form Validation](http://vee-validate.logaretm.com/)
 
+[VueAwesomeSwiper](https://github.com/surmon-china/vue-awesome-swiper/vue)
+
 #### Vuex Resources
+Note: We're currently using the 1.0 beta release, make sure to switch to those branches!
+
 [Vuex Feather](https://github.com/feathersjs/feathers-vuex)
 
 [Vuex Feather Example](https://github.com/feathersjs/feathers-chat-vuex)
