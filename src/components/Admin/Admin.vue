@@ -25,7 +25,23 @@
               </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary" @click.prevent="addOption()">Add Option</button>          
+          <div class="form-group">
+            <div class="row">
+              <div class="col col-md-auto">
+                <label for="numberOfMinutes">Number of Minutes</label> 
+              </div>
+              <div class="col">
+                <select class="form-control col-2" id="numberOfMinutes" v-model="minutes">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="5">5</option>
+                  <option value="7">7</option>
+                  <option value="10">10</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" @click.prevent="addOption()">Add Option</button>
         </form>
       </div>
     </div>
@@ -42,6 +58,7 @@ export default {
   data () {
     return {
       newOption: '',
+      minutes: '',
       creatingPoll: false,
       options: []
     }
