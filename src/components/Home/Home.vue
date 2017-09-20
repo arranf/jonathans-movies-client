@@ -45,16 +45,18 @@ export default {
         }),
         ...mapActions('option', {
             getOptions: 'find'
-        })
+        }),
+        ...mapActions('time', {startTimer: 'start'})
     },
     created: function () {
-        queries.getCurrentPoll()
-        .then(response => {
-            if (response.total > 0){
-                this.pollId = response.data[0]._id
-                return this.getOptions({query: {poll_id: this.pollId}})
+      this.startTimer()
+      queries.getCurrentPoll()
+      .then(response => {
+          if (response.total > 0){
+            this.pollId = response.data[0]._id
+            return this.getOptions({query: {poll_id: this.pollId}})
             } else {
-                return Promise.resolve()
+              return Promise.resolve()
             }
         })
         .catch(error => console.error(error))
