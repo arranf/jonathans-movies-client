@@ -43,11 +43,13 @@
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
+                  <option>4</option>
                 </select>
               </div>
             </div>
           </div>
           <button type="submit" class="btn btn-primary" @click.prevent="addOption()">Add Option</button>
+          <button type="submit" class="btn btn-primary" @click.prevent="startPoll()" :disabled="isDisabled">Start Poll!</button>
         </form>
       </div>
     </div>
@@ -70,12 +72,31 @@ export default {
     }
   },
   methods: {
-    ...mapActions('polls', ['create']),
+    ...mapActions('poll', {createPoll: 'create'}),
     newPoll: function () {
       this.creatingPoll = true
     },
     addOption: function () {
       this.options.push('')
+    },
+    startPoll: function () {
+      const currentTime = parseInt(new Date().getTime())
+
+      this.createPoll({
+        numberOfVotes: parseInt(this.votes),
+        startDateTime: currentTime,
+        endDateTime: currentTime + parseInt(this.minutes) *  60000,
+        options: this.options
+      })
+
+      router.push('/home')
+    }
+  },
+  computed: {
+      isDisabled: function () {
+        return this.minutes === '' 
+          || this.votes === ''
+          || this.options[0] === ''  
     }
   }
 }
