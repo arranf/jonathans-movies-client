@@ -46,9 +46,6 @@ export default {
         ...mapGetters('poll', ['getActivePoll', 'isActivePoll'])
     },
     methods: {
-        ...mapActions('poll', {
-            getPoll: 'find'
-        }),
         ...mapActions('option', {
             getOptions: 'find'
         }),
