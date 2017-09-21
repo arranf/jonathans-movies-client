@@ -8,7 +8,7 @@ let socket
 if (process.env.NODE_ENV !== 'production') {
   socket = io('http://localhost:3030', {'transports': ['websocket']})
 } else {
-  socket = io('https://jonathansmovies.com', {'transports': ['websocket']})
+  socket = io('https://api.jonathansmovies.com', {'transports': ['websocket']})
 }
 
 const feathersClient = feathers()
