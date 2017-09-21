@@ -1,8 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import feathersClient from '@/api/feathers-client'
 import feathersVuex from 'feathers-vuex'
 
+import groupBy from 'lodash/groupBy'
+
+import feathersClient from '@/api/feathers-client'
 import time from '@/store/time'
 
 Vue.use(Vuex)
@@ -28,6 +30,10 @@ const store = new Vuex.Store({
           return activePoll.numberOfVotes - getters.userVotes.total
         }
         return null
+      },
+      getVotesByOption: (state, getters, rootState, rootGetters) => pollId => {
+        const votes = Object.values(state.keyedById).filter(v => v.poll_id === pollId)
+        return groupBy(votes, 'option_id')
       }
     }}),
     service('option'),
@@ -35,13 +41,22 @@ const store = new Vuex.Store({
       getActivePoll (state, getters, rootState, rootGetters) {
         let currentDateTime = rootState.time.now
         return Object.values(state.keyedById)
-              .sort((a, b) => a.endDateTime < a.endDateTime ? -1 : 1)
-              .find(p => p.startDateTime <= currentDateTime && p.endDateTime > currentDateTime)
+          // If a.eDT < b.eDT, a comes before b (orders first finishing first)
+          .sort((a, b) => a.endDateTime < b.endDateTime ? -1 : 1)
+          .find(p => p.startDateTime <= currentDateTime && p.endDateTime > currentDateTime)
       },
       isActivePoll (state, getters, rootState, rootGetters) {
         let currentDateTime = rootState.time.now
         let polls = Object.values(state.keyedById)
         return polls.some(p => p.startDateTime <= currentDateTime && p.endDateTime > currentDateTime)
+      },
+      getMostRecentPoll (state, getters, rootState, rootGetters) {
+        let currentDateTime = rootState.time.now
+        let polls = Object.values(state.keyedById)
+        return polls
+          // If a.eDT > b.eDT, a comes before b (orders later finishing first)
+          .sort((a, b) => a.endDateTime > b.endDateTime ? -1 : 1)
+          .find(p => p.endDateTime < currentDateTime)
       }
     }}),
     service('users'),
