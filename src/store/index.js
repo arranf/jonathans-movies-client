@@ -39,7 +39,13 @@ const store = new Vuex.Store({
       },
       getVoteCountsByOption: (state, getters, rootState, rootGetters) => pollId => {
         return getters.getVotesByOption(pollId)
-          .map(gv => ({option_id: gv.option_id, votes: gv.votes.length}))
+          .map(gv => ({option_id: gv.option_id, totalVotes: gv.votes.length}))
+      },
+      getGraphData: (state, getters, rootState, rootGetters) => pollId => {
+        const options = getters.getVoteCountsByOption(pollId)
+        const data = options.reduce((acc, option) => { acc.push(option.totalVotes); return acc }, [])
+        const labels = options.reduce((acc, option) => { acc.push(rootGetters['option/get'](option.option_id).name); return acc }, [])
+        return {'data': data, 'labels': labels}
       }
     }}),
     service('option'),
