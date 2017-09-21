@@ -10,15 +10,9 @@
                             </div>
                         </div>
 
-                        <div class="card">
+                        <div class="card"  v-if="votes && polls && isActivePoll ">
                             <div class="card-body">
-                                <p class="card-text" v-if="votes && polls"><strong>{{remainingVotes}}</strong> Votes Remaining</p>
-                            </div>
-                        </div>
-
-                        <div class="card">
-                            <div class="card-body">
-                                <p class="card-text"><strong>1</strong> <a target="_blank" href="http://www.imdb.com/title/tt3508840/" class="card-link">The Assassin</a></p>
+                                <p class="card-text"><strong>{{remainingVotes}}</strong> Votes Remaining</p>
                             </div>
                         </div>
                     </div>

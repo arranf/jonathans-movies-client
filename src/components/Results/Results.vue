@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{winningOptions}}</h1>
+    <h1 class="text-center"><i class="fa fa-trophy" aria-hidden="true"></i>  {{winningOptions.length > 1 ? winningOptions.slice(0, winningOptions.length - 1).join(', ') + " and " + winningOptions.slice(-1) : winningOptions[0]}}</h1>
    <pie-chart :chart-data="datacollection" :options="{responsive: true, maintainAspectRatio: false}"></pie-chart>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('vote', ['getGraphData']),
+    ...mapGetters('vote', ['getGraphData', 'getHighestVotedOptionsForPoll']),
     ...mapGetters('poll', ['getMostRecentPoll']),
     ...mapGetters('option', {getOption: 'get'})
   },
@@ -47,10 +47,15 @@ export default {
         const backgroundColors = [];
         graphData.labels.forEach(label => backgroundColors.push(utils.selectRandom(constants.colors['800'])))
         this.datacollection = {datasets: [{data: graphData.data, label: 'Vote', backgroundColor: backgroundColors}], labels: graphData.labels}
-        this.winningOptions = utils.getHighestVotedOptions(graphData.data)
+        this.winningOptions = this.getHighestVotedOptionsForPoll(this.getMostRecentPoll._id)
       })
       .catch(error => error)
   }
 }
 </script>
 
+<style>
+.fa-trophy {
+  color: #F6BD1C;
+}
+</style>

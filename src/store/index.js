@@ -46,6 +46,18 @@ const store = new Vuex.Store({
         const data = options.reduce((acc, option) => { acc.push(option.totalVotes); return acc }, [])
         const labels = options.reduce((acc, option) => { acc.push(rootGetters['option/get'](option.option_id).name); return acc }, [])
         return {'data': data, 'labels': labels}
+      },
+      getHighestVotedOptionsForPoll: (state, getters, rootState, rootGetters) => pollId => {
+        const voteCountByOption = getters.getVoteCountsByOption(pollId)
+        const maxVote = voteCountByOption.reduce((acc, value) => {
+          return (acc > value.totalVotes ? acc : value.totalVotes)
+        }, 0)
+        return voteCountByOption.reduce((acc, value) => {
+          if (value.totalVotes === maxVote) {
+            acc.push(rootGetters['option/get'](value.option_id).name)
+          }
+          return acc
+        }, [])
       }
     }}),
     service('option'),
