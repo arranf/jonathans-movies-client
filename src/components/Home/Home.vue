@@ -1,11 +1,13 @@
 <template>
-    <div class="container h-80">
-        <div class="d-flex h-100 align-items-stretch">
-            <div class="col" v-if="this.polls">
+    <div class="container-fluid h-100">
+        <div class="row d-flex h-75 align-items-stretch">
+            <div class="col" v-if="isActivePoll">
                 <select-movie :movies="options" :pollId="this.pollId"></select-movie>
             </div>
+        </div>
+        <div class="row h-25">
             <div class="col">
-
+                <info-footer></info-footer>
             </div>
         </div>
     </div>
@@ -15,12 +17,13 @@
 import { mapState, mapGetters, mapActions } from 'vuex'
 import queries from '@/api'
 import SelectMovie from '@/components/Home/SelectMovie'
-
+import InfoFooter from '@/components/Home/InfoFooter'
 
 export default {
     name:'Home',
     components: {
-        SelectMovie
+        SelectMovie,
+        InfoFooter
     },
     data() {
         return {
@@ -33,7 +36,8 @@ export default {
         }),
         ...mapGetters('option', {
             options: 'list'
-        })
+        }),
+        ...mapGetters('poll', ['getActivePoll', 'isActivePoll'])
     },
     methods: {
         ...mapActions('poll', {
@@ -41,16 +45,18 @@ export default {
         }),
         ...mapActions('option', {
             getOptions: 'find'
-        })
+        }),
+        ...mapActions('time', {startTimer: 'start'})
     },
     created: function () {
-        queries.getCurrentPoll()
-        .then(response => {
-            if (response.total > 0){
-                this.pollId = response.data[0]._id
-                return this.getOptions({query: {poll_id: response.data[0]._id}})
+      this.startTimer()
+      queries.getCurrentPoll()
+      .then(response => {
+          if (response.total > 0){
+            this.pollId = response.data[0]._id
+            return this.getOptions({query: {poll_id: this.pollId}})
             } else {
-                return Promise.resolve()
+              return Promise.resolve()
             }
         })
         .catch(error => console.error(error))

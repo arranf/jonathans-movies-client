@@ -23,6 +23,8 @@
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import {mapActions, mapState, mapGetters} from 'vuex'
 import utils from '@/utils'
+import constants from '@/constants'
+
 require('swiper/dist/css/swiper.css')
 
 export default {
@@ -32,7 +34,7 @@ export default {
       return {
         movieColors: {
             currentIndex: 0,
-            colors: ['#6a1b9a', '#4527a0', '#c62828', '#283593', '#1565c0', '#0277bd', '#00838f', '#00695c', '#2e7d32', '#558B2F', '#9E9D24', '#F9A825', '#4E342E', '#424242', '#ff8f00', '#d84315'],
+            colors: constants.colors['800'],
             movieColorMap: {}
         },
         notNextTick: true,
@@ -73,6 +75,7 @@ export default {
           return movieColors.movieColorMap[movieId]
       },
       vote: function(){
+          
           const index = this.$refs.voteSwiper.swiper.clickedIndex
           if (index == null){
               console.error('Could not get movie index')
@@ -80,12 +83,15 @@ export default {
           }
           const movieOption = this.movies[index]
           const movieOptionId = movieOption._id
-          console.log(movieOption)
           if (this.isVoted(movieOptionId)) {
               const vote = this.votes.find(v => v.user_id === this.user._id && v.option_id === movieOptionId)
               this.removeVote(vote._id).then(console.log('Vote removed from ', movieOption.name))
               .catch(error => console.error(error))
           } else {
+            if (this.remainingVotes <= 0){
+              // TODO Show user error
+              return
+            }
               this.addVote({poll_id: this.pollId, option_id: movieOptionId, user_id: this.user._id})
               .then(console.log('Vote added for ', movieOption.name))
               .catch(error => console.error(error))
@@ -97,7 +103,8 @@ export default {
   },
   computed: {
       ...mapGetters('vote', {findVote: 'find'}), ...mapGetters('vote', {votes: 'list'}),
-      ...mapState('auth', ['user'])
+      ...mapState('auth', ['user']),
+      ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
   },
   mounted: function (){
       utils.shuffle(this.movieColors.colors)
