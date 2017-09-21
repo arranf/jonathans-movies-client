@@ -1,6 +1,6 @@
 <template>
     <footer>
-        <div class="container-fluid" v-if="user">
+        <div class="container-fluid" v-if="user && isActivePoll">
             <div class="row">
                 <div class="col">
                     <div class="card-deck">
@@ -10,7 +10,7 @@
                             </div>
                         </div>
 
-                        <div class="card"  v-if="votes && polls && isActivePoll ">
+                        <div class="card"  v-if="votes && polls && isActivePoll">
                             <div class="card-body">
                                 <p class="card-text"><strong>{{remainingVotes}}</strong> Votes Remaining</p>
                             </div>
