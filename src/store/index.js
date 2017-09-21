@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import feathersVuex from 'feathers-vuex'
 
 import groupBy from 'lodash/groupBy'
+import loMap from 'lodash/map'
 
 import feathersClient from '@/api/feathers-client'
 import time from '@/store/time'
@@ -33,7 +34,12 @@ const store = new Vuex.Store({
       },
       getVotesByOption: (state, getters, rootState, rootGetters) => pollId => {
         const votes = Object.values(state.keyedById).filter(v => v.poll_id === pollId)
-        return groupBy(votes, 'option_id')
+        const groupedVotes = groupBy(votes, 'option_id')
+        return loMap(groupedVotes, (value, key) => ({option_id: key, votes: value}))
+      },
+      getVoteCountsByOption: (state, getters, rootState, rootGetters) => pollId => {
+        return getters.getVotesByOption(pollId)
+          .map(gv => ({option_id: gv.option_id, votes: gv.votes.length}))
       }
     }}),
     service('option'),
