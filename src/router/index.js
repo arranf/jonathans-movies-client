@@ -9,26 +9,17 @@ import feathersClient from '@/api/feathers-client'
 
 Vue.use(Router)
 
-const testAdminForPath = function (user) {
-  return user.isAdmin === true ? '/admin' : '/home'
-}
-
 const router = new Router({
   mode: 'history',
   linkActiveClass: 'active',
   routes: [
-    {
-      path: '/home',
-      name: 'Home',
-      component: Home
-    },
     {
       path: '/',
       name: 'Login',
       component: Login,
       beforeEnter: (to, from, next) => {
         if (store.state.auth.user) {
-          next(testAdminForPath(store.state.auth.user))
+          next('/home')
         } else {
           store.dispatch('auth/authenticate')
             .then(response => {
@@ -38,7 +29,7 @@ const router = new Router({
               return feathersClient.service('users').get(payload.userId)
             })
             .then(() => {
-              next(testAdminForPath(store.state.auth.user))
+              next('/home')
             })
             .catch(function (error) {
               console.error('Error authenticating in login router beforeEnter', error)
@@ -46,6 +37,11 @@ const router = new Router({
         }
         next()
       }
+    },
+    {
+      path: '/home',
+      name: 'Home',
+      component: Home
     },
     {
       path: '/signup',
@@ -66,7 +62,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const user = store.state.auth.user
 
-  if (!user && (to.path !== '/' && to.path !== '/signup')) {
+  if (!user && to.path !== '/' && to.path !== '/signup') {
     next('/')
   } else if (to.matched.some(record => record.meta.admin) && !user.isAdmin) {
     next(false)
