@@ -22,8 +22,9 @@
 
         <div class="row">
             <div class="col mt-4">
-                <p>Made with <i class="fa fa-heart heart" aria-hidden="true"></i> <span class="sr-only">love</span> (and a lot of food from Spar) by Arran and Joel.</p>
-                <router-link to="/admin" v-if="user.isAdmin">Go to Admin Page</router-link>
+              <p>Made with <i class="fa fa-heart heart" aria-hidden="true"></i> <span class="sr-only">love</span> (and a lot of food from Spar) by Arran and Joel.</p>
+              <router-link to="/admin" v-if="user.isAdmin && !isActivePoll">Create Poll</router-link>
+              <button type="button" class="btn btn-link" v-if="user.isAdmin && isActivePoll">Close Poll</button>
             </div>
         </div>
     </footer>
