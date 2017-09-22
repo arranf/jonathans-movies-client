@@ -7,6 +7,7 @@ import loMap from 'lodash/map'
 
 import feathersClient from '@/api/feathers-client'
 import time from '@/store/time'
+import utils from '@/utils'
 
 Vue.use(Vuex)
 
@@ -81,6 +82,12 @@ const store = new Vuex.Store({
           // If a.eDT > b.eDT, a comes before b (orders later finishing first)
           .sort((a, b) => a.endDateTime > b.endDateTime ? -1 : 1)
           .find(p => p.endDateTime < currentDateTime)
+      },
+      remainingTimeWordsForCurrentPoll (state, getters) {
+        if (getters.isActivePoll) {
+          return 'Poll closes in ' + utils.humanizeTimeToNow(getters.getActivePoll.endDateTime)
+        }
+        return 'No Current Poll'
       }
     }}),
     service('users'),

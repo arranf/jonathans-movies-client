@@ -35,34 +35,17 @@ import utils from '@/utils'
 
 export default {
   name: 'InfoFooter',
-  data() {
-      return {
-          interval: null,
-          timeRemainingWords: 'No Current Poll'
-      }
-  },
   computed: {
       ...mapGetters('vote', {votes: 'list'}),
       ...mapGetters('poll', {polls: 'find'}),
       ...mapGetters('vote', {findVotesInStore: 'find'}),
-      ...mapGetters('poll', ['getActivePoll', 'isActivePoll']),
+      ...mapGetters('poll', ['getActivePoll', 'isActivePoll', 'remainingTimeWordsForCurrentPoll']),
       ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
       ...mapState('auth', ['user'])
   },
   methods: {
       ...mapActions('vote', {getVotes: 'find'}),
-      ...mapActions('poll', {getPolls: 'find'}),
-      timeRemaining: function() {
-        if (this.isActivePoll) {
-          return 'Poll closes in ' + utils.humanizeTimeToNow(this.getActivePoll.endDateTime)
-        }
-        return 'No Current Poll'
-      }
-  },
-  mounted: function() {
-    this.interval = setInterval(function () {
-      this.timeRemainingWords = this.timeRemaining()
-    }.bind(this), 100)
+      ...mapActions('poll', {getPolls: 'find'})
   },
   beforeUpdate: function() {
       if (this.user && !this.gotVoteandPolls){
@@ -70,9 +53,6 @@ export default {
         .then(this.getVotes({query: {}}))
         .then(this.gotVoteandPolls = true)
       }
-  },
-  beforeDestroy: function (){
-    window.clearInterval(this.interval)
   }
 }
 </script>
