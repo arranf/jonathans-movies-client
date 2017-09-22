@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col">
         <h1>Hey, Jonathan!</h1>
-        <button type="button" class="btn btn-primary" v-if="!creatingPoll" @click.prevent="newPoll()">New Poll</button>
+        <button type="button" class="btn btn-primary" v-if="!creatingPoll" @click.prevent="newPoll()" :disabled="isActivePoll">New Poll</button>
         <form v-if="creatingPoll">
           <div class="form-group">
             <div v-for="(option, index) in options" :key="index">
@@ -58,7 +58,7 @@
 
 <script>
 import feathersClient from '@/api/feathers-client'
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters, mapState} from 'vuex'
 import router from '@/router'
 
 export default {
@@ -93,10 +93,13 @@ export default {
     }
   },
   computed: {
-      isDisabled: function () {
-        return this.minutes === '' 
-          || this.votes === ''
-          || this.options[0] === ''  
+    ...mapGetters('poll', ['isActivePoll']),
+    ...mapState('auth', ['user']),
+    
+    isDisabled: function () {
+      return this.minutes === '' 
+        || this.votes === ''
+        || this.options[0] === ''  
     }
   }
 }
