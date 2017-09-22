@@ -1,8 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import feathersClient from '@/api/feathers-client'
 import feathersVuex from 'feathers-vuex'
 
+import groupBy from 'lodash/groupBy'
+import loMap from 'lodash/map'
+
+import feathersClient from '@/api/feathers-client'
 import time from '@/store/time'
 
 Vue.use(Vuex)
@@ -28,6 +31,33 @@ const store = new Vuex.Store({
           return activePoll.numberOfVotes - getters.userVotes.total
         }
         return null
+      },
+      getVotesByOption: (state, getters, rootState, rootGetters) => pollId => {
+        const votes = Object.values(state.keyedById).filter(v => v.poll_id === pollId)
+        const groupedVotes = groupBy(votes, 'option_id')
+        return loMap(groupedVotes, (value, key) => ({option_id: key, votes: value}))
+      },
+      getVoteCountsByOption: (state, getters, rootState, rootGetters) => pollId => {
+        return getters.getVotesByOption(pollId)
+          .map(gv => ({option_id: gv.option_id, totalVotes: gv.votes.length}))
+      },
+      getGraphData: (state, getters, rootState, rootGetters) => pollId => {
+        const options = getters.getVoteCountsByOption(pollId)
+        const data = options.reduce((acc, option) => { acc.push(option.totalVotes); return acc }, [])
+        const labels = options.reduce((acc, option) => { acc.push(rootGetters['option/get'](option.option_id).name); return acc }, [])
+        return {'data': data, 'labels': labels}
+      },
+      getHighestVotedOptionsForPoll: (state, getters, rootState, rootGetters) => pollId => {
+        const voteCountByOption = getters.getVoteCountsByOption(pollId)
+        const maxVote = voteCountByOption.reduce((acc, value) => {
+          return (acc > value.totalVotes ? acc : value.totalVotes)
+        }, 0)
+        return voteCountByOption.reduce((acc, value) => {
+          if (value.totalVotes === maxVote) {
+            acc.push(rootGetters['option/get'](value.option_id).name)
+          }
+          return acc
+        }, [])
       }
     }}),
     service('option'),
@@ -35,13 +65,22 @@ const store = new Vuex.Store({
       getActivePoll (state, getters, rootState, rootGetters) {
         let currentDateTime = rootState.time.now
         return Object.values(state.keyedById)
-              .sort((a, b) => a.endDateTime < a.endDateTime ? -1 : 1)
-              .find(p => p.startDateTime <= currentDateTime && p.endDateTime > currentDateTime)
+          // If a.eDT < b.eDT, a comes before b (orders first finishing first)
+          .sort((a, b) => a.endDateTime < b.endDateTime ? -1 : 1)
+          .find(p => p.startDateTime <= currentDateTime && p.endDateTime > currentDateTime)
       },
       isActivePoll (state, getters, rootState, rootGetters) {
         let currentDateTime = rootState.time.now
         let polls = Object.values(state.keyedById)
         return polls.some(p => p.startDateTime <= currentDateTime && p.endDateTime > currentDateTime)
+      },
+      getMostRecentPoll (state, getters, rootState, rootGetters) {
+        let currentDateTime = rootState.time.now
+        let polls = Object.values(state.keyedById)
+        return polls
+          // If a.eDT > b.eDT, a comes before b (orders later finishing first)
+          .sort((a, b) => a.endDateTime > b.endDateTime ? -1 : 1)
+          .find(p => p.endDateTime < currentDateTime)
       }
     }}),
     service('users'),
