@@ -85,9 +85,15 @@ const store = new Vuex.Store({
       },
       remainingTimeWordsForCurrentPoll (state, getters) {
         if (getters.isActivePoll) {
-          return 'Poll closes in ' + utils.humanizeTimeToNow(getters.getActivePoll.endDateTime)
+          return 'Poll closes in ' + utils.humanizeTimeToNowPrecise(getters.getActivePoll.endDateTime)
         }
         return 'No Current Poll'
+      },
+      howLongAgoMostRecentPoll: (state, getters) => {
+        if (getters.getMostRecentPoll) {
+          return 'Last poll was ' + utils.humanizeTimeToNowImprecise(getters.getMostRecentPoll.endDateTime) + ' ago'
+        }
+        return ''
       }
     }}),
     service('users'),
