@@ -1,11 +1,9 @@
 <template>
-    <div class="container-fluid">
-        <div class="h-100 ">
-            <div class="h-100 align-items-stretch justify-content-center" >
-              <select-option v-if="isActivePoll"></select-option>
-              <results v-else class="h-100"></results>
-            </div>
-        </div>
+    <div class="container-fluid h-60">
+      <div class="h-100 align-items-stretch justify-content-center" >
+        <select-option v-if="isActivePoll"></select-option>
+        <results v-else></results>
+      </div>
     </div>
 </template>
 
