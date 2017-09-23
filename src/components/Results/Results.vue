@@ -10,6 +10,7 @@ import PieChart from './PieChart.js'
 import {mapActions, mapGetters} from 'vuex'
 import utils from '@/utils'
 import constants from '@/constants'
+import queries from '@/api'
 
 export default {
   name: 'Results',
@@ -39,7 +40,7 @@ export default {
     
   },
   mounted () {
-    this.getPolls()
+    queries.getCurrentPoll()
     // TODO Make this a smart query
     .then(data => this.getVotes({}))
     .then((data) => {
