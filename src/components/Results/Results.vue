@@ -1,9 +1,17 @@
 <template>
-  <div v-if="getMostRecentPoll">
+<div>
+  <div v-if="getMostRecentPoll && datacollection.datasets.length > 0 && datacollection.datasets.datasets[0].data.length > 0">
     <h1 class="text-center"><i class="fa fa-trophy" aria-hidden="true"></i>  {{winningOptions.length > 1 ? winningOptions.slice(0, winningOptions.length - 1).join(', ') + " and " + winningOptions.slice(-1) : winningOptions[0]}}</h1>
     <h6 class="text-center">{{howLongAgoMostRecentPoll}}</h6>   
    <pie-chart :chart-data="datacollection" :options="{responsive: true, maintainAspectRatio: false}"></pie-chart>
   </div>
+  <div>
+    <h1 class="text-center">
+      No Votes Were Cast
+    </h1>
+    <h6 class="text-center">{{howLongAgoMostRecentPoll}}</h6>   
+  </div>
+</div>
 </template>
 
 <script>
