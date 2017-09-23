@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div v-if="getMostRecentPoll">
     <h1 class="text-center"><i class="fa fa-trophy" aria-hidden="true"></i>  {{winningOptions.length > 1 ? winningOptions.slice(0, winningOptions.length - 1).join(', ') + " and " + winningOptions.slice(-1) : winningOptions[0]}}</h1>
+    <h6 class="text-center">{{howLongAgoMostRecentPoll}}</h6>   
    <pie-chart :chart-data="datacollection" :options="{responsive: true, maintainAspectRatio: false}"></pie-chart>
   </div>
 </template>
@@ -25,7 +26,7 @@ export default {
   },
   computed: {
     ...mapGetters('vote', ['getGraphData', 'getHighestVotedOptionsForPoll']),
-    ...mapGetters('poll', ['getMostRecentPoll']),
+    ...mapGetters('poll', ['getMostRecentPoll', 'howLongAgoMostRecentPoll']),
     ...mapGetters('option', {getOption: 'get'})
   },
   methods: {
@@ -35,9 +36,6 @@ export default {
     ...mapActions('vote', {
       getVotes: 'find'
     })
-  },
-  created () {
-    
   },
   mounted () {
     queries.getCurrentPoll()
