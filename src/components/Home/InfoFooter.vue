@@ -24,7 +24,7 @@
             <div class="col mt-4">
               <p>Made with <i class="fa fa-heart heart" aria-hidden="true"></i> <span class="sr-only">love</span> (and a lot of food from Spar) by Arran and Joel.</p>
               <router-link to="/admin" v-if="user.isAdmin && !isActivePoll">Create Poll</router-link>
-              <button type="button" class="btn btn-link" v-if="user.isAdmin && isActivePoll">Close Poll</button>
+              <button type="button" class="btn btn-link" v-if="user.isAdmin && isActivePoll" @click.prevent="stopPoll()">Stop Poll</button>
             </div>
         </div>
     </footer>
@@ -47,7 +47,18 @@ export default {
   },
   methods: {
       ...mapActions('vote', {getVotes: 'find'}),
-      ...mapActions('poll', {getPolls: 'find'})
+      ...mapActions('poll', {getPolls: 'find', updatePoll: 'patch'}),
+      timeRemaining: function() {
+        if (this.isActivePoll) {
+          return 'Poll closes in ' + utils.humanizeTimeToNow(this.getActivePoll.endDateTime)
+        }
+        return 'No Current Poll'
+      },
+      stopPoll: function () {
+        const currentTime = parseInt(new Date().getTime())
+        const data = {'endDateTime': currentTime}
+        this.updatePoll([this.getActivePoll._id, data, {}])
+      }
   },
   beforeUpdate: function() {
       if (this.user && !this.gotVoteandPolls){
