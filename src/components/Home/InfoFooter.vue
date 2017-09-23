@@ -1,7 +1,7 @@
 <template>
     <footer class="h-100">
-        <div class="container-fluid" v-if="user && isActivePoll">
-            <div class="row">
+        <div class="container-fluid" >
+            <div class="row" v-if="user && isActivePoll">
                 <div class="col">
                     <div class="card-deck">
                         <div class="card">
@@ -18,14 +18,22 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col mt-4">
-              <p>Made with <i class="fa fa-heart heart" aria-hidden="true"></i> <span class="sr-only">love</span> (and a lot of food from Spar) by Arran and Joel.</p>
-              <router-link to="/create" v-if="user && user.isAdmin && !isActivePoll">Create Poll</router-link>
-              <button type="button" class="btn btn-link" v-if="user && user.isAdmin && isActivePoll" @click.prevent="stopPoll()">Stop Poll</button>
-            </div>
+          <div class="row d-flex flex-row">
+            <div class="col mt-4 align-self-end invisible">
+                Hidden
+              </div>
+              <div class="col mt-4 align-self-center">
+                <p>Made with <i class="fa fa-heart heart" aria-hidden="true"></i> <span class="sr-only">love</span> by <a href="https://arranfrance.com" target="_blank">Arran</a> and Joel.</p>
+                <router-link to="/create" v-if="user && user.isAdmin && !isActivePoll">Create Poll</router-link>
+                <div class="">
+                  <button type="button" class="btn btn-link" v-if="user && user.isAdmin && isActivePoll" @click.prevent="stopPoll()">Stop Poll</button>
+                </div>
+              </div>
+              <div class="col mt-4 align-self-end">
+                Version 1.0 <span class="badge badge-dark">BETA</span>
+              </div>
+          </div>
         </div>
     </footer>
 </template>
