@@ -2,7 +2,7 @@
     <div class="container-fluid h-100">
         <div class="row d-flex h-75 align-items-stretch">
             <div class="col" v-if="isActivePoll">
-              <select-movie :movies="options" :pollId="this.pollId"></select-movie>
+              <select-option></select-option>
             </div>
             <div class="col" v-else>
               <results></results>
@@ -19,7 +19,7 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import queries from '@/api'
-import SelectMovie from '@/components/Home/SelectMovie'
+import SelectOption from '@/components/Home/SelectOption'
 import Results from '@/components/Results/Results'
 import InfoFooter from '@/components/Home/InfoFooter'
 
@@ -27,7 +27,7 @@ import InfoFooter from '@/components/Home/InfoFooter'
 export default {
     name:'Home',
     components: {
-        SelectMovie,
+        SelectOption,
         Results,
         InfoFooter
     },

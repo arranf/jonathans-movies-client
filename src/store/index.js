@@ -66,7 +66,19 @@ const store = new Vuex.Store({
         }, [])
       }
     }}),
-    service('option'),
+    service('option', {getters: {
+      getOptionsForPoll: (state, getters) => (pollId) => {
+        return getters.find({query: {
+          poll_id: pollId
+        }}).data
+      },
+      getOptionsForCurrentPoll: (state, getters, rootState, rootGetters) => {
+        const activePoll = rootGetters['poll/getActivePoll']
+        if (activePoll) {
+          return getters.getOptionsForPoll(activePoll._id)
+        }
+      }
+    }}),
     service('poll', {getters: {
       getActivePoll (state, getters, rootState, rootGetters) {
         let currentDateTime = rootState.time.now

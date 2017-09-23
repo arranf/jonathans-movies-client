@@ -1,14 +1,14 @@
 <template>
   <swiper :options="swiperOption" :not-next-tick="notNextTick" class="swiper-box"  ref="voteSwiper">
-        <template v-for="movie in movies" >
-                <swiper-slide @click="vote()" :key="movie._id" class="swiper-item" :class="{voted: isVoted(movie._id)}" :style="{backgroundColor: getColor(movie._id)}" >
+        <template v-for="option in getOptionsForCurrentPoll" >
+                <swiper-slide @click="vote()" :key="option._id" class="swiper-item" :class="{voted: isVoted(option._id)}" :style="{backgroundColor: getColor(option._id)}" >
                     <div class="container">
                         <div class="row">
                             <div class="col">
-                                {{movie.name}}
+                                {{option.name}}
                             </div>
                         </div>
-                        <div v-if="isVoted(movie._id)" class="row">
+                        <div v-if="isVoted(option._id)" class="row">
                             <div class="col">
                                 <i class="fa fa-check fa-2x"></i>
                             </div>
@@ -28,14 +28,13 @@ import constants from '@/constants'
 require('swiper/dist/css/swiper.css')
 
 export default {
-  name: 'SelectMovie',
-  props: ['movies', 'pollId'],
+  name: 'SelectOption',
   data() {
       return {
-        movieColors: {
+        optionColors: {
             currentIndex: 0,
             colors: constants.colors['800'],
-            movieColorMap: {}
+            optionColorMap: {}
         },
         notNextTick: true,
         swiperOption: {
@@ -60,54 +59,58 @@ export default {
       ...mapActions('vote', {addVote: 'create'}),
       ...mapActions('vote', {removeVote: 'remove'}), 
       ...mapActions('vote', {getVotes: 'find'}),
-      getColor: function (movieId){
-          let movieColors = this.movieColors
-          if (movieId in movieColors.movieColorMap){
-              return movieColors.movieColorMap[movieId]
+      getColor: function (optionId){
+          let optionColors = this.optionColors
+          if (optionId in optionColors.optionColorMap){
+              return optionColors.optionColorMap[optionId]
           } 
-          let currentIndex = movieColors.currentIndex
-          this.movieColors.movieColorMap[movieId] = movieColors.colors[currentIndex]
-          if (currentIndex+1 === movieColors.colors.length){
-              movieColors.currentIndex = 0
+          let currentIndex = optionColors.currentIndex
+          this.optionColors.optionColorMap[optionId] = optionColors.colors[currentIndex]
+          if (currentIndex+1 === optionColors.colors.length){
+              optionColors.currentIndex = 0
           } else {
-              movieColors.currentIndex++
+              optionColors.currentIndex++
           }
-          return movieColors.movieColorMap[movieId]
+          return optionColors.optionColorMap[optionId]
       },
       vote: function(){
           
           const index = this.$refs.voteSwiper.swiper.clickedIndex
           if (index == null){
-              console.error('Could not get movie index')
+              console.error('Could not get option index')
               return
           }
-          const movieOption = this.movies[index]
-          const movieOptionId = movieOption._id
-          if (this.isVoted(movieOptionId)) {
-              const vote = this.votes.find(v => v.user_id === this.user._id && v.option_id === movieOptionId)
-              this.removeVote(vote._id).then(console.log('Vote removed from ', movieOption.name))
+          const option = this.getOptionsForCurrentPoll[index]
+          console.log(option)
+          const optionId = option._id
+          if (this.isVoted(optionId)) {
+              const vote = this.votes.find(v => v.user_id === this.user._id && v.option_id === optionId)
+              this.removeVote(vote._id)
+              .then(console.log('Vote removed from ', option.name))
               .catch(error => console.error(error))
           } else {
             if (this.remainingVotes <= 0){
               // TODO Show user error
               return
             }
-              this.addVote({poll_id: this.pollId, option_id: movieOptionId, user_id: this.user._id})
-              .then(console.log('Vote added for ', movieOption.name))
+              this.addVote({poll_id: this.getActivePoll._id, option_id: optionId, user_id: this.user._id})
+              .then(console.log('Vote added for ', option.name))
               .catch(error => console.error(error))
           }
       },
-      isVoted: function(movieId){
-          return this.votes.some( v => v.user_id === this.user._id && v.option_id === movieId )
+      isVoted: function(optionId){
+          return this.votes.some( v => v.user_id === this.user._id && v.option_id === optionId )
       }
   },
   computed: {
       ...mapGetters('vote', {findVote: 'find'}), ...mapGetters('vote', {votes: 'list'}),
       ...mapState('auth', ['user']),
       ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
+      ...mapGetters('option', ['getOptionsForCurrentPoll']),
+      ...mapGetters('poll', ['getActivePoll'])
   },
   mounted: function (){
-      utils.shuffle(this.movieColors.colors)
+      utils.shuffle(this.optionColors.colors)
       console.log('Current swiper instance object',  this.$refs.voteSwiper.swiper)
       
       this.getVotes({query:{}}).catch(error => console.error(error))
