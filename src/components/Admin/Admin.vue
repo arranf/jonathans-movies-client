@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <h1>Hey, Jonathan!</h1>
+        <h1>Hey, let's create a poll!</h1>
         <form>
           <div class="form-group">
             <div v-for="(option, index) in options" :key="index">
