@@ -45,10 +45,27 @@ export default {
                 mousewheelControl : true,
                 observeParents:true,
                 preventClicks: false,
-                loop: false // This as true breaks things
-                // TODO RESPONSIVE BREAKPOINTS
+                loop: false,
                 // https://github.com/surmon-china/vue-awesome-swiper/blob/master/examples/33-responsive-breakpoints.vue
-            },
+                breakpoints: {
+                576: {
+                  slidesPerView: 1,
+                  spaceBetween: 10
+                },
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 20
+                },
+                992: {
+                  slidesPerView: 3,
+                  spaceBetween: 30
+                },
+                1200: {
+                  slidesPerView: 4,
+                  spaceBetween: 40
+                } // This as true breaks things
+              },
+        }
       }
   },
   components: {
