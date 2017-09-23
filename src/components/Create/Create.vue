@@ -1,6 +1,5 @@
 <template>
-  <div>
-  <div class="container-fluid h-100" style="overflow: auto;">
+  <div class="container-fluid">
     <div class="row ">
       <div class="col">
         <h2 class="mt-4 pb-3">Create a Poll</h2>
@@ -8,11 +7,11 @@
            <input autocomplete="false" name="hidden" type="text" style="display:none;">
           <div class="form-group">
             <div v-for="(option, index) in options" :key="index">
-              <div class="row">
+              <div class="row my-1">
                 <div class="col col-md-auto">
                   <label :for="index">Option {{ index + 1 }}</label>
                 </div>
-                <div class="col">
+                <div class="col col-md-4">
                   <input type="text" class="form-control" :id="index" placeholder="The Assassin" v-model="options[index]"></input>
                 </div>
               </div> <!-- row -->
@@ -53,20 +52,19 @@
                 </select>
               </div>
             </div>
-          </div>       
+          </div> <!--form-group-->
         </form>
       </div>
     </div>
     <div class="row">
-      <div class="col">
+      <div class="col col-md-auto">
         <button type="submit" role="button" class="btn btn-primary" @click.prevent="startPoll()" :disabled="isDisabled">Start Poll!</button>
       </div>
-      <div class="col"
+      <div class="col col-md-3">
         <button type="submit" role="button" class="btn btn-outline-secondary" @click.prevent="toHome()">Back to Home</button>
       </div>
-    </div> 
+    </div>
   </div>
-      </div>
 </template>
 
 <script>
