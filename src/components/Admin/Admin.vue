@@ -3,8 +3,7 @@
     <div class="row">
       <div class="col">
         <h1>Hey, Jonathan!</h1>
-        <button type="button" class="btn btn-primary" v-if="!creatingPoll" @click.prevent="newPoll()">New Poll</button>
-        <form v-if="creatingPoll">
+        <form>
           <div class="form-group">
             <div v-for="(option, index) in options" :key="index">
               <div class="row">
@@ -47,18 +46,25 @@
                 </select>
               </div>
             </div>
-          </div>
-          <button type="submit" class="btn btn-primary" @click.prevent="addOption()">Add Option</button>
-          <button type="submit" class="btn btn-primary" @click.prevent="startPoll()" :disabled="isDisabled">Start Poll!</button>
+          </div>       
         </form>
       </div>
     </div>
+    <div class="row">
+      <div class="col">
+        <button type="submit" class="btn btn-primary" @click.prevent="addOption()">Add Option</button>
+        <button type="submit" class="btn btn-primary" @click.prevent="startPoll()" :disabled="isDisabled">Start Poll!</button>
+      </div>
+      <div class="col"
+        <button type="submit" class="btn btn-primary" @click.prevent="toHome()">Back to Home</button>
+      </div>
+    </div> 
   </div>
 </template>
 
 <script>
 import feathersClient from '@/api/feathers-client'
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters, mapState} from 'vuex'
 import router from '@/router'
 
 export default {
@@ -67,14 +73,13 @@ export default {
     return {
       minutes: '',
       votes: '',
-      creatingPoll: false,
       options: ['']
     }
   },
   methods: {
-    ...mapActions('poll', {createPoll: 'create'}),
-    newPoll: function () {
-      this.creatingPoll = true
+    ...mapActions('poll', {createPoll: 'create', updatePoll: 'update'}),
+    toHome: function () {
+      router.push('/home')
     },
     addOption: function () {
       this.options.push('')
@@ -93,10 +98,13 @@ export default {
     }
   },
   computed: {
-      isDisabled: function () {
-        return this.minutes === '' 
-          || this.votes === ''
-          || this.options[0] === ''  
+    ...mapGetters('poll', ['isActivePoll']),
+    ...mapState('auth', ['user']),
+    
+    isDisabled: function () {
+      return this.minutes === '' 
+        || this.votes === ''
+        || this.options[0] === ''  
     }
   }
 }
