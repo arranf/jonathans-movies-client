@@ -1,16 +1,9 @@
 <template>
-    <div class="container-fluid h-100">
-        <div class="row d-flex h-75 align-items-stretch">
-            <div class="col" v-if="isActivePoll">
-              <select-option></select-option>
-            </div>
-            <div class="col" v-else>
-              <results></results>
-            </div>
-        </div>
-        <div class="row h-25">
-            <div class="col">
-                <info-footer></info-footer>
+    <div class="container-fluid">
+        <div class="h-100 ">
+            <div class="h-100 align-items-stretch justify-content-center" >
+              <select-option v-if="isActivePoll"></select-option>
+              <results v-else class="h-100"></results>
             </div>
         </div>
     </div>

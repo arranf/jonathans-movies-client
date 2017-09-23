@@ -1,5 +1,5 @@
 <template>
-    <footer>
+    <footer class="h-100">
         <div class="container-fluid" v-if="user && isActivePoll">
             <div class="row">
                 <div class="col">
@@ -23,8 +23,8 @@
         <div class="row">
             <div class="col mt-4">
               <p>Made with <i class="fa fa-heart heart" aria-hidden="true"></i> <span class="sr-only">love</span> (and a lot of food from Spar) by Arran and Joel.</p>
-              <router-link to="/admin" v-if="user.isAdmin && !isActivePoll">Create Poll</router-link>
-              <button type="button" class="btn btn-link" v-if="user.isAdmin && isActivePoll" @click.prevent="stopPoll()">Stop Poll</button>
+              <router-link to="/admin" v-if="user && user.isAdmin && !isActivePoll">Create Poll</router-link>
+              <button type="button" class="btn btn-link" v-if="user && user.isAdmin && isActivePoll" @click.prevent="stopPoll()">Stop Poll</button>
             </div>
         </div>
     </footer>
@@ -72,10 +72,11 @@ export default {
 
 <style scoped>
 footer {
-  position: absolute;
+  /* position: absolute;
   right: 0;
   bottom: 0;
-  left: 0;
+  left: 0; */
+  flex-shrink: 0;
   padding: 1rem;
   background-color: #efefef;
   text-align: center;

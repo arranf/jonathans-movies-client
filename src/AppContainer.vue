@@ -1,13 +1,30 @@
 <template>
-  <div class="" style="height:100vh" id="app">
-    <router-view class="h-100"></router-view>
+  <div class="d-flex flex-column" style="height:100vh" id="app">
+    <router-view class="content h-60"></router-view>
+    <div class="footer w-100">
+      <info-footer class="h-100"></info-footer>
+    </div>
   </div>
 </template>
 
 <script>
-import Navbar from '@/components/Navbar'
+import InfoFooter from '@/components/Home/InfoFooter'
 
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    InfoFooter
+  }
 }
 </script>
+
+<style scoped>
+.footer {
+  flex-shrink: 0;
+}
+
+.content {
+  flex: 1 0 auto;
+}
+</style>
+
