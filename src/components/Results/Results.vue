@@ -20,6 +20,7 @@ import {mapActions, mapGetters, mapState} from 'vuex'
 import utils from '@/utils'
 import constants from '@/constants'
 import queries from '@/api'
+import emojiFromText from 'emoji-from-text'
 
 export default {
   name: 'Results',
@@ -57,8 +58,12 @@ export default {
         graphData.labels.forEach(label => backgroundColors.push(utils.selectRandom(constants.colors['800'])))
         this.datacollection = {datasets: [{data: graphData.data, label: 'Vote', backgroundColor: backgroundColors}], labels: graphData.labels}
         this.winningOptions = this.getHighestVotedOptionsForPoll(this.getMostRecentPoll._id)
+        if (this.winningOptions.length === 1){
+          console.log(emojiFromText(this.winningOptions[0]));
+        }
       })
       .catch(error => error)
+
   }
 }
 </script>
