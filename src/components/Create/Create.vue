@@ -1,9 +1,11 @@
 <template>
-  <div class="container">
-    <div class="row">
+  <div>
+  <div class="container-fluid h-100" style="overflow: auto;">
+    <div class="row ">
       <div class="col">
-        <h1>Hey, let's create a poll!</h1>
-        <form>
+        <h2 class="mt-4 pb-3">Create a Poll</h2>
+        <form autocomplete="off">
+           <input autocomplete="false" name="hidden" type="text" style="display:none;">
           <div class="form-group">
             <div v-for="(option, index) in options" :key="index">
               <div class="row">
@@ -11,8 +13,13 @@
                   <label :for="index">Option {{ index + 1 }}</label>
                 </div>
                 <div class="col">
-                  <input type="text" class="form-control" :id="index" placeholder="Enter a film title here..." v-model="options[index]"></input>
+                  <input type="text" class="form-control" :id="index" placeholder="The Assassin" v-model="options[index]"></input>
                 </div>
+              </div> <!-- row -->
+            </div>
+            <div class="row">
+              <div class="col">
+                <button type="submit" role="button" class="btn btn-sm btn-primary" @click.prevent="addOption()"><i class="fa fa-plus" aria-disabled="true"><span class="sr-only">Add Option</span></i></button>
               </div>
             </div>
           </div>
@@ -21,13 +28,13 @@
               <div class="col col-md-auto">
                 <label for="numberOfMinutes">Number of Minutes</label> 
               </div>
-              <div class="col">
-                <select class="form-control col-2" id="numberOfMinutes" v-model="minutes">
+              <div class="col col-md-2">
+                <select class="form-control" id="numberOfMinutes" v-model="minutes">
                   <option>1</option>
                   <option>2</option>
+                  <option>3</option>
                   <option>5</option>
-                  <option>7</option>
-                  <option>10</option>
+                  <option>8</option>
                 </select>
               </div>
             </div>
@@ -37,8 +44,8 @@
               <div class="col col-md-auto">
                 <label for="numberOfVotes">Number of Votes</label> 
               </div>
-              <div class="col">
-                <select class="form-control col-2" id="numberOfVotes" v-model="votes">
+              <div class="col col-md-2">
+                <select class="form-control" id="numberOfVotes" v-model="votes">
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -52,14 +59,14 @@
     </div>
     <div class="row">
       <div class="col">
-        <button type="submit" class="btn btn-primary" @click.prevent="addOption()">Add Option</button>
-        <button type="submit" class="btn btn-primary" @click.prevent="startPoll()" :disabled="isDisabled">Start Poll!</button>
+        <button type="submit" role="button" class="btn btn-primary" @click.prevent="startPoll()" :disabled="isDisabled">Start Poll!</button>
       </div>
       <div class="col"
-        <button type="submit" class="btn btn-primary" @click.prevent="toHome()">Back to Home</button>
+        <button type="submit" role="button" class="btn btn-outline-secondary" @click.prevent="toHome()">Back to Home</button>
       </div>
     </div> 
   </div>
+      </div>
 </template>
 
 <script>
@@ -68,11 +75,11 @@ import {mapActions, mapGetters, mapState} from 'vuex'
 import router from '@/router'
 
 export default {
-  name: 'Admin',
+  name: 'Create',
   data () {
     return {
-      minutes: '',
-      votes: '',
+      minutes: '3',
+      votes: '2',
       options: ['']
     }
   },
@@ -100,11 +107,12 @@ export default {
   computed: {
     ...mapGetters('poll', ['isActivePoll']),
     ...mapState('auth', ['user']),
-    
     isDisabled: function () {
-      return this.minutes === '' 
-        || this.votes === ''
-        || this.options[0] === ''  
+      return !this.minutes  
+        || !this.votes 
+        || this.options.length < 2 
+        || !this.options[0]
+        || !this.options[1]
     }
   }
 }

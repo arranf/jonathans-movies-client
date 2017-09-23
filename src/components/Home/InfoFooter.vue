@@ -23,7 +23,7 @@
         <div class="row">
             <div class="col mt-4">
               <p>Made with <i class="fa fa-heart heart" aria-hidden="true"></i> <span class="sr-only">love</span> (and a lot of food from Spar) by Arran and Joel.</p>
-              <router-link to="/admin" v-if="user && user.isAdmin && !isActivePoll">Create Poll</router-link>
+              <router-link to="/create" v-if="user && user.isAdmin && !isActivePoll">Create Poll</router-link>
               <button type="button" class="btn btn-link" v-if="user && user.isAdmin && isActivePoll" @click.prevent="stopPoll()">Stop Poll</button>
             </div>
         </div>
