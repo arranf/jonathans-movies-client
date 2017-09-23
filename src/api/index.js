@@ -18,6 +18,12 @@ const queries = {
       $limit: 100,
       poll_id: pollId
     }})
+  },
+  getOptionsForMostRecentPoll: function (pollId) {
+    return store.dispatch('option/find', {query: {
+      $limit: 100,
+      poll_id: pollId
+    }})
   }
 }
 

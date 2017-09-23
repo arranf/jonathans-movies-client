@@ -16,7 +16,7 @@
 
 <script>
 import PieChart from './PieChart.js'
-import {mapActions, mapGetters} from 'vuex'
+import {mapActions, mapGetters, mapState} from 'vuex'
 import utils from '@/utils'
 import constants from '@/constants'
 import queries from '@/api'
@@ -35,7 +35,8 @@ export default {
   computed: {
     ...mapGetters('vote', ['getGraphData', 'getHighestVotedOptionsForPoll']),
     ...mapGetters('poll', ['getMostRecentPoll', 'howLongAgoMostRecentPoll']),
-    ...mapGetters('option', {getOption: 'get'})
+    ...mapGetters('option', {getOption: 'get'}),
+    ...mapState('vote', ['isFindPending'])
   },
   methods: {
     ...mapActions('poll', {
@@ -48,8 +49,9 @@ export default {
   mounted () {
     queries.getCurrentPoll()
     // TODO Make this a smart query
-    .then(data => this.getVotes({}))
-    .then((data) => {
+    .then(data => queries.getVotesForMostRecentPoll(this.getMostRecentPoll._id))
+    .then(data => queries.getOptionsForMostRecentPoll(this.getMostRecentPoll._id))
+    .then(data => {
         const graphData = this.getGraphData(this.getMostRecentPoll._id)
         const backgroundColors = [];
         graphData.labels.forEach(label => backgroundColors.push(utils.selectRandom(constants.colors['800'])))
