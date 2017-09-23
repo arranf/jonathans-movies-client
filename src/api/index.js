@@ -2,18 +2,16 @@ import store from '@/store'
 
 const queries = {
   getCurrentPoll: function () {
-    const pollQuery = {
+    return store.dispatch('poll/find', {query: {
       $sort: {startDateTime: -1},
-      $limit: 1,
-      startDateTime: {
-        $gte: new Date().getTime()
-      },
-      endDateTime: {
-        $lt: new Date().getTime()
-      }
-    }
-
-    return store.dispatch('poll/find', ({pollQuery}))
+      $limit: 100,
+      // startDateTime: {
+      //   $lt: store.getters['time/getNow']
+      // }
+      // endDateTime: {
+      //   $gte: store.getters['time/getNow']
+      // }
+    }})
   }
 }
 
