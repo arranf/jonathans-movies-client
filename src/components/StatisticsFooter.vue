@@ -36,6 +36,7 @@
 
 <script>
 import {mapGetters, mapState, mapActions} from 'vuex'
+import queries from '@/api'
 
 export default {
   name: 'StatisticsFooter',
@@ -55,7 +56,7 @@ export default {
   },
   beforeUpdate: function() {
       if (this.user && !this.gotVoteandPolls){
-        this.getPolls({query:{}})
+        queries.getCurrentPoll()
         .then(this.getVotes({query: {}}))
         .then(this.gotVoteandPolls = true)
       }
