@@ -19,7 +19,7 @@
                 </div>
             </div>
 
-          <div class="row d-flex flex-row">
+          <div class="row d-flex">
             <div class="col mt-4 align-self-end invisible">
                 Hidden
               </div>
