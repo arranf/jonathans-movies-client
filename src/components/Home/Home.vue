@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid" :class="{isActivePoll : 'h-60'}">
+    <div class="container-fluid" :class="{'h-60': isActivePoll}">
       <div class="h-100 align-items-stretch justify-content-center" >
         <select-option v-if="isActivePoll"></select-option>
         <results v-else></results>
