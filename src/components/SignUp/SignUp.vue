@@ -24,6 +24,7 @@
                     </div>
                 </div>
                 <button type="submit" @click.prevent="trySignUp()" class="btn btn-primary" :disabled="isDisabled">Submit</button>
+                <button type="submit" role="button" class="btn btn-outline-secondary" @click.prevent="toHome()">Back</button>
               </form>
           </div>
       </div>
@@ -47,6 +48,9 @@ export default {
   methods: {
       ...mapActions('users', {signUp: 'create'}),
       ...mapActions('auth', ['authenticate']),
+      toHome: function () {
+        router.push('/home')
+      },
       trySignUp: function() {
           this.signUp({
               strategy: 'local',

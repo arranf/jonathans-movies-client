@@ -1,6 +1,6 @@
 <template>
-  <div class="container mt-4">
-      <div class="row h-100 justify-content-center align-items-center">
+  <div class="container d-flex text-center justify-content-center align-items-center mt-4">
+      <div class="row h-100 ">
           <div class="col">
               <div>
                   <h1>Login</h1>
@@ -8,7 +8,13 @@
               <div v-if="isError" class="alert alert-danger" role="alert">
                 Oops that username & password combination wasn't quite correct.
               </div>
-              <form>
+              <div v-if="!isInternalLogin">
+                <a href="https://api.jonathansmovies.com/auth/auth0" class="btn btn-primary btn-block">Log with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span> or <i class="fa fa-google" title="Google" aria-disabled="true"></i> <span class="sr-only">Google</span></a>
+                <p class="py-1 my-1">or</p>
+                <button @click="swapLoginType()" class="btn btn-secondary btn-block">Log in with a regular account</button>
+                <small><a href="#" @click.prevent="toSignUp()">Not got an account? Sign up</a></small>
+              </div>
+              <form v-if="isInternalLogin">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input name="email" v-validate="'required|email'" data-vv-delay="1000"  type="email" class="form-control" :class="{'is-invalid': errors.has('email')}" v-model="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
@@ -24,7 +30,7 @@
                     </div>
                 </div>
                     <button type="submit" @click.prevent="tryLogin()" class="btn btn-primary" :disabled="isDisabled">Submit</button>
-                    <button type="submit" @click.prevent="toSignUp()" class="btn btn-primary">Sign Up</button>
+                    <button role="button" class="btn btn-outline-secondary" @click="swapLoginType()">Back</button>
                 </form>
           </div>
       </div>
@@ -42,7 +48,8 @@ export default {
         return {
             password: '',
             email: '',
-            isError: false
+            isError: false,
+            isInternalLogin: false
         }
     },
     methods: {
@@ -65,6 +72,9 @@ export default {
         },
         toSignUp: function() {
             router.push('/signup')
+        },
+        swapLoginType: function() {
+          this.isInternalLogin = !this.isInternalLogin
         }
     },
     computed: {
