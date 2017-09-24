@@ -61,7 +61,7 @@
         <button type="submit" role="button" class="btn btn-primary" @click.prevent="startPoll()" :disabled="isDisabled">Start Poll!</button>
       </div>
       <div class="col col-md-3">
-        <button type="submit" role="button" class="btn btn-outline-secondary" @click.prevent="toHome()">Back to Home</button>
+        <button type="submit" role="button" class="btn btn-outline-secondary" @click.prevent="toHome()">Back</button>
       </div>
     </div>
   </div>
