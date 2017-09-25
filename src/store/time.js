@@ -1,25 +1,40 @@
+import client from '@/api/feathers-client'
+
 const state = {
   now: new Date().getTime(),
   hasStarted: false
 }
 
 const actions = {
-  start ({ commit, state }) {
+  start ({ dispatch, commit, state }) {
     if (!state.hasStarted) {
-      commit('setStarted')
-      setInterval(() => {
-        commit('updateTime')
-      }, 1000)
+      return dispatch('setInitialTime').then(() => {
+        commit('setStarted')
+        setInterval(() => {
+          commit('updateTime')
+        }, 1000)
+      })
     }
+  },
+  setInitialTime ({commit, state}) {
+    return new Promise((resolve, reject) => {
+      const timeService = client.service('time')
+      timeService.find()
+        .then(response => { commit('setInitialTime', response); resolve() })
+        .catch(error => reject(error))
+    })
   }
 }
 
 const mutations = {
   updateTime (state) {
-    state.now = new Date().getTime()
+    state.now += 1000
   },
   setStarted (state) {
     state.hasStarted = true
+  },
+  setInitialTime (state, timeResponse) {
+    state.now = timeResponse.time
   }
 }
 

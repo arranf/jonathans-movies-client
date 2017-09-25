@@ -20,5 +20,6 @@ feathersClient.service('/users')
 feathersClient.service('/poll')
 feathersClient.service('/option')
 feathersClient.service('/vote')
+feathersClient.service('/time')
 
 export default feathersClient
