@@ -2,16 +2,16 @@
   <div class="container d-flex text-center justify-content-center align-items-center mt-4">
       <div class="row h-100 ">
           <div class="col">
-              <!-- <div>
+              <div>
                   <h1>Login</h1>
-              </div> -->
+              </div>
               <div v-if="isError" class="alert alert-danger" role="alert">
                 Oops that username & password combination wasn't quite correct.
               </div>
               <div v-if="!isInternalLogin">
-                <a href="https://api.jonathansmovies.com/auth/auth0" class="d-none btn btn-primary btn-block">Log with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span> or <i class="fa fa-google" title="Google" aria-disabled="true"></i> <span class="sr-only">Google</span></a>
-                <p class="d-none py-1 my-1">or</p>
-                <button @click="swapLoginType()" class="btn btn-primary btn-block">Log In</button>
+                <a href="https://api.jonathansmovies.com/auth/facebook" class="btn btn-primary btn-block">Log In with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span></a>
+                <p class="py-1 my-1">or</p>
+                <button @click="swapLoginType()" class="btn btn-info btn-block">Log In</button>
                 <div class="pt-1">
                   <a href="#" @click.prevent="toSignUp()" >Not got an account? Sign up</a>
                 </div>
