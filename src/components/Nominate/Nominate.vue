@@ -1,15 +1,15 @@
 <template>
-  <!-- <options-selector></options-selector> -->
+  <film-selector></film-selector>
 </template>
 
 <script>
-// import OptionPreview from '@/components/Nominate/OptionPreview'
+import FilmSelector from '@/components/Nominate/FilmSelector'
 // import OptionsSelector from '@/components/Nominate/OptionsSelector'
 
 export default {
   name: 'Nominate',
   components: {
-    // OptionsSelector
+    FilmSelector
   }
 }
 </script>
