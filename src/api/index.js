@@ -24,6 +24,11 @@ const queries = {
       $limit: 100,
       poll_id: pollId
     }})
+  },
+  getAllFilms: function () {
+    return store.dispatch('films/find', {query: {
+      $limit: 10000
+    }})
   }
 }
 

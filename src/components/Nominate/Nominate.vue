@@ -1,25 +1,15 @@
 <template>
-  <option-preview :film="film"></option-preview>
+  <!-- <options-selector></options-selector> -->
 </template>
 
 <script>
-import OptionPreview from '@/components/Nominate/OptionPreview'
+// import OptionPreview from '@/components/Nominate/OptionPreview'
+// import OptionsSelector from '@/components/Nominate/OptionsSelector'
 
 export default {
   name: 'Nominate',
   components: {
-    OptionPreview
-  },
-  data() {
-    return {
-      film: {
-        _id: "someId",
-        name: "Hercules",
-        tmdbId: "11970",
-        lastWatched: 1506280871000,
-        data: {}
-      }
-    }
+    // OptionsSelector
   }
 }
 </script>

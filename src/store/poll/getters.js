@@ -27,5 +27,15 @@ export default {
       return 'Last poll was ' + utils.humanizeTimeToNowImprecise(getters.getMostRecentPoll.endDateTime) + ' ago'
     }
     return ''
+  },
+  isCurrentPollInNomination: (state, getters, rootState, rootGetters) => {
+    let activePoll = getters.getActivePoll
+    if (activePoll) {
+      let currentDateTime = rootState.time.now
+      return (activePoll.startDateTime <= currentDateTime &&
+      activePoll.pollTransitionTime &&
+      activePoll.pollTransitionTime > currentDateTime)
+    }
+    return false
   }
 }

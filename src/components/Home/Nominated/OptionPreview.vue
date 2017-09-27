@@ -1,7 +1,7 @@
 <template>
   <div v-if="film">
-    <div class="card bg-dark text-white h-10">
-      <img class="card-img" :src="getFilmBackdrop" alt="Card image">
+    <div class="card bg-dark text-white h-10"  v-if="film" >
+      <img class="card-img"  v-if="film.data" :src="getFilmBackdrop" alt="Card image">
       <div class="card-img-overlay">
         <h4 class="card-title">{{film.name}}</h4>
         <p class="card-text">Last Watched {{lastWatched}}</p>
