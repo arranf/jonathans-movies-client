@@ -29,6 +29,9 @@ const functions = {
       }
       return acc
     }, [])
+  },
+  gettmdbBackdropImage: function (slug) {
+    return 'https://image.tmdb.org/t/p/w1280/' + slug
   }
 }
 export default functions

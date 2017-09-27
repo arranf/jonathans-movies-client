@@ -28,7 +28,7 @@ import constants from '@/constants'
 require('swiper/dist/css/swiper.css')
 
 export default {
-  name: 'SelectOption',
+  name: 'VoteForOption',
   data() {
       return {
         optionColors: {
@@ -91,7 +91,6 @@ export default {
           return optionColors.optionColorMap[optionId]
       },
       vote: function(){
-          
           const index = this.$refs.voteSwiper.swiper.clickedIndex
           if (index == null){
               console.error('Could not get option index')

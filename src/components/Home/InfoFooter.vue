@@ -1,16 +1,16 @@
 <template>
     <footer class="h-100">
         <div class="container-fluid" >
-            <div class="row" v-if="user && isActivePoll">
+            <div class="row" v-if="user && getActivePoll">
                 <div class="col">
                     <div class="card-deck">
                         <div class="card">
                             <div class="card-body">
-                                <p class="card-text" v-if="isActivePoll">{{remainingTimeWordsForCurrentPoll}}</p>
+                                <p class="card-text" v-if="getActivePoll">{{remainingTimeWordsForCurrentPoll}}</p>
                             </div>
                         </div>
 
-                        <div class="card"  v-if="votes && polls && isActivePoll">
+                        <div class="card"  v-if="votes && polls && getActivePoll">
                             <div class="card-body">
                                 <p class="card-text"><strong>{{remainingVotes}}</strong> Votes Remaining</p>
                             </div>
@@ -25,9 +25,10 @@
               </div>
               <div class="col mt-4 align-self-center">
                 <p>Made with <i class="fa fa-heart heart" aria-hidden="true"></i> <span class="sr-only">love</span> by <a href="https://arranfrance.com" target="_blank">Arran</a> and Joel.</p>
-                <router-link to="/create" v-if="user && user.isAdmin && !isActivePoll">Create Poll</router-link>
+                <router-link to="/create" v-if="user && user.isAdmin && !getActivePoll">Create Poll</router-link>
+                <router-link to="/nominate" v-if="user">Nominate TEST</router-link>
                 <div class="">
-                  <button type="button" class="btn btn-link" v-if="user && user.isAdmin && isActivePoll" @click.prevent="stopPoll()">Stop Poll</button>
+                  <button type="button" class="btn btn-link" v-if="user && user.isAdmin && getActivePoll" @click.prevent="stopPoll()">Stop Poll</button>
                 </div>
               </div>
               <div class="col mt-4 align-self-end">
@@ -49,7 +50,7 @@ export default {
       ...mapGetters('vote', {votes: 'list'}),
       ...mapGetters('poll', {polls: 'find'}),
       ...mapGetters('vote', {findVotesInStore: 'find'}),
-      ...mapGetters('poll', ['getActivePoll', 'isActivePoll', 'remainingTimeWordsForCurrentPoll']),
+      ...mapGetters('poll', ['getActivePoll', 'remainingTimeWordsForCurrentPoll']),
       ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
       ...mapState('auth', ['user'])
   },
@@ -57,7 +58,7 @@ export default {
       ...mapActions('vote', {getVotes: 'find'}),
       ...mapActions('poll', {getPolls: 'find', updatePoll: 'patch'}),
       timeRemaining: function() {
-        if (this.isActivePoll) {
+        if (this.getActivePoll) {
           return 'Poll closes in ' + utils.humanizeTimeToNow(this.getActivePoll.endDateTime)
         }
         return 'No Current Poll'

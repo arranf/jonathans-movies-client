@@ -1,7 +1,9 @@
 <template>
-    <div class="container-fluid" :class="{'h-60': isActivePoll}">
+    <div class="container-fluid" :class="{'h-60': getActivePoll && !isCurrentPollInNomination}">
       <div class="h-100 align-items-stretch justify-content-center" >
-        <select-option v-if="isActivePoll"></select-option>
+
+        <selected-options v-if="isCurrentPollInNomination"></selected-options>
+        <vote-for-option v-else-if="getActivePoll"></vote-for-option>
         <results v-else></results>
       </div>
     </div>
@@ -10,17 +12,18 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import queries from '@/api'
-import SelectOption from '@/components/Home/SelectOption'
+import VoteForOption from '@/components/Home/VoteForOption'
 import Results from '@/components/Results/Results'
 import InfoFooter from '@/components/Home/InfoFooter'
-
+import SelectedOptions from './Nominated/SelectedOptions'
 
 export default {
     name:'Home',
     components: {
-        SelectOption,
+        VoteForOption,
         Results,
-        InfoFooter
+        InfoFooter,
+        SelectedOptions
     },
     data() {
         return {
@@ -34,7 +37,7 @@ export default {
         ...mapGetters('option', {
             options: 'list'
         }),
-        ...mapGetters('poll', ['getActivePoll', 'isActivePoll'])
+        ...mapGetters('poll', ['getActivePoll', 'isCurrentPollInNomination'])
     },
     methods: {
         ...mapActions('option', {
@@ -47,8 +50,9 @@ export default {
       queries.getCurrentPoll()
       .then(response => {
           if (response.total > 0){
-            this.pollId = response.data[0]._id
-            return this.getOptions({query: {poll_id: this.pollId}})
+            const pollId = response.data[0]._id
+            // debugger
+            return this.getOptions({query: {poll_id: pollId}})
             } else {
               return Promise.resolve()
             }
