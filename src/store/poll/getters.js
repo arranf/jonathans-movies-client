@@ -33,8 +33,8 @@ export default {
     if (activePoll) {
       let currentDateTime = rootState.time.now
       return (activePoll.startDateTime <= currentDateTime &&
-      activePoll.pollTransitionTime &&
-      activePoll.pollTransitionTime > currentDateTime)
+      activePoll.pollTransitionDateTime &&
+      activePoll.pollTransitionDateTime > currentDateTime)
     }
     return false
   }

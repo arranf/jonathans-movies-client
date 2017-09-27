@@ -1,10 +1,15 @@
 export default {
   getNominatedFilms (state, getters, rootState, rootGetters) {
     let currentPollOptions = rootGetters['option/getOptionsForCurrentPoll']
-    return getters.find({query: {
-      _id: {
-        $in: currentPollOptions.map(option => option.film_id)
-      }
-    }})
+    if (currentPollOptions.length > 0) {
+      const nominatedFilms = getters.find({query: {
+        _id: {
+          $in: currentPollOptions.map(option => option.film_id)
+        }
+      }})
+      return nominatedFilms.data
+    } else {
+      return []
+    }
   }
 }

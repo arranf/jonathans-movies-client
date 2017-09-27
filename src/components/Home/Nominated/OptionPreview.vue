@@ -1,5 +1,5 @@
 <template>
-  <div v-if="film">
+  <div v-if="film" v-show="film.data">
     <div class="card bg-dark text-white h-10"  v-if="film" >
       <img class="card-img"  v-if="film.data" :src="getFilmBackdrop" alt="Card image">
       <div class="card-img-overlay">
@@ -31,8 +31,6 @@ export default {
     })
     .catch(error => console.error(error))
     
-  },
-  mounted() {
   }
 }
 </script>
