@@ -8,11 +8,6 @@ export default {
       .sort((a, b) => a.endDateTime < b.endDateTime ? -1 : 1)
       .find(p => p.startDateTime <= currentDateTime && p.endDateTime > currentDateTime)
   },
-  isActivePoll (state, getters, rootState, rootGetters) {
-    let currentDateTime = rootState.time.now
-    let polls = Object.values(state.keyedById)
-    return polls.some(p => p.startDateTime <= currentDateTime && p.endDateTime > currentDateTime)
-  },
   getMostRecentPoll (state, getters, rootState, rootGetters) {
     let currentDateTime = rootState.time.now
     let polls = Object.values(state.keyedById)
@@ -22,7 +17,7 @@ export default {
       .find(p => p.endDateTime < currentDateTime)
   },
   remainingTimeWordsForCurrentPoll (state, getters) {
-    if (getters.isActivePoll) {
+    if (getters.getActivePoll) {
       return 'Poll closes in ' + utils.humanizeTimeToNowPrecise(getters.getActivePoll.endDateTime)
     }
     return 'No Current Poll'

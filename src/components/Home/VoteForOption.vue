@@ -28,7 +28,7 @@ import constants from '@/constants'
 require('swiper/dist/css/swiper.css')
 
 export default {
-  name: 'SelectOption',
+  name: 'VoteForOption',
   data() {
       return {
         optionColors: {

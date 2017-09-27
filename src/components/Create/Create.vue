@@ -103,7 +103,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('poll', ['isActivePoll']),
+    ...mapGetters('poll', ['getActivePoll']),
     ...mapState('auth', ['user']),
     isDisabled: function () {
       return !this.minutes  

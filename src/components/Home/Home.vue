@@ -1,7 +1,8 @@
 <template>
-    <div class="container-fluid" :class="{'h-60': isActivePoll}">
+    <div class="container-fluid" :class="{'h-60': getActivePoll}">
       <div class="h-100 align-items-stretch justify-content-center" >
-        <select-option v-if="isActivePoll"></select-option>
+        <vote-for-option v-if="getActivePoll"></vote-for-option>
+        <selected-options v-else-if="isCurrentPollInNomination"></selected-options>
         <results v-else></results>
       </div>
     </div>
@@ -10,7 +11,7 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import queries from '@/api'
-import SelectOption from '@/components/Home/SelectOption'
+import isCurrentPollInNomination from '@/components/Home/VoteForOption'
 import Results from '@/components/Results/Results'
 import InfoFooter from '@/components/Home/InfoFooter'
 
@@ -18,7 +19,7 @@ import InfoFooter from '@/components/Home/InfoFooter'
 export default {
     name:'Home',
     components: {
-        SelectOption,
+        isCurrentPollInNomination,
         Results,
         InfoFooter
     },
@@ -34,7 +35,7 @@ export default {
         ...mapGetters('option', {
             options: 'list'
         }),
-        ...mapGetters('poll', ['getActivePoll', 'isActivePoll'])
+        ...mapGetters('poll', ['getActivePoll', 'isCurrentPollInNomination'])
     },
     methods: {
         ...mapActions('option', {
