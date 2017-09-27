@@ -3,10 +3,10 @@ import Vuex from 'vuex'
 import feathersVuex from 'feathers-vuex'
 import feathersClient from '@/api/feathers-client'
 
-import voteGetters from '/vote/getters'
-import optionGetters from '/option/getters'
-import pollGetters from '/poll/getters'
-import filmsGetters from '/films/getters'
+import voteGetters from './vote/getters'
+import optionGetters from './option/getters'
+import pollGetters from './poll/getters'
+import filmsGetters from './films/getters'
 
 import time from '@/store/time'
 
