@@ -16,7 +16,8 @@ export default {
         _id: "someId",
         name: "Hercules",
         tmdbId: "11970",
-        lastWatched: 1506280871000
+        lastWatched: 1506280871000,
+        data: {}
       }
     }
   }
