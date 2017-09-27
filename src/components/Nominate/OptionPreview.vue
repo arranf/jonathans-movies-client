@@ -1,9 +1,8 @@
 <template>
   <div class="card bg-dark text-white">
-    <img class="card-img" src="https://unsplash.it/200/800" alt="Card image">
+    <img class="card-img" src="https://unsplash.it/800/200" alt="Card image">
     <div class="card-img-overlay">
       <h4 class="card-title">{{film.name}}</h4>
-      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
       <p class="card-text">Last Watched {{lastWatched}}</p>
     </div>
   </div>
@@ -20,7 +19,7 @@ export default {
     }
   },
   computed: {
-    lastWatched: () => utils.humanizeTimeToNowImprecise(this.film.lastWatch)
+    lastWatched: function () {return utils.humanizeTimeToNowImprecise(this.film.lastWatched) + ' ago'}
   }
 }
 </script>
