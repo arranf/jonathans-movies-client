@@ -26,6 +26,7 @@
               <div class="col mt-4 align-self-center">
                 <p>Made with <i class="fa fa-heart heart" aria-hidden="true"></i> <span class="sr-only">love</span> by <a href="https://arranfrance.com" target="_blank">Arran</a> and Joel.</p>
                 <router-link to="/create" v-if="user && user.isAdmin && !isActivePoll">Create Poll</router-link>
+                <router-link to="/nominate" v-if="user">Nominate TEST</router-link>
                 <div class="">
                   <button type="button" class="btn btn-link" v-if="user && user.isAdmin && isActivePoll" @click.prevent="stopPoll()">Stop Poll</button>
                 </div>
