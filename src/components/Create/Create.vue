@@ -4,7 +4,8 @@
       <div class="col">
         <h2 class="mt-4 pb-3">Create a Poll</h2>
         <form autocomplete="off">
-           <input autocomplete="false" name="hidden" type="text" style="display:none;">
+          <input autocomplete="false" name="hidden" type="text" style="display:none;">
+         
           <div class="form-group">
             <div v-for="(option, index) in options" :key="index">
               <div class="row my-1">
@@ -22,6 +23,7 @@
               </div>
             </div>
           </div>
+
           <div class="form-group">
             <div class="row">
               <div class="col col-md-auto">
@@ -38,6 +40,7 @@
               </div>
             </div>
           </div>
+
           <div class="form-group">
             <div class="row">
               <div class="col col-md-auto">
@@ -53,6 +56,7 @@
               </div>
             </div>
           </div> <!--form-group-->
+
         </form>
       </div>
     </div>
