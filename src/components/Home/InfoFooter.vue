@@ -29,6 +29,7 @@
                 <div class="">
                   <button type="button" class="btn btn-link" v-if="user && user.isAdmin && isActivePoll" @click.prevent="stopPoll()">Stop Poll</button>
                 </div>
+                <button v-if="user" class="btn btn-link" role="button" @click="logout()">Logout</button>
               </div>
               <div class="col mt-4 align-self-end">
                 Version 1.0 <span class="badge badge-dark">BETA</span>
@@ -51,7 +52,8 @@ export default {
       ...mapGetters('vote', {findVotesInStore: 'find'}),
       ...mapGetters('poll', ['getActivePoll', 'isActivePoll', 'remainingTimeWordsForCurrentPoll']),
       ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
-      ...mapState('auth', ['user'])
+      ...mapState('auth', ['user']),
+      ...mapActions('auth', ['logout'])
   },
   methods: {
       ...mapActions('vote', {getVotes: 'find'}),
