@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <div class="p-2 card h-10">
-    <div class="card-body">
-      <h4 class="card-title">Why Not Nominate A Movie?</h4>
-      <router-link to="/nominate" class="btn btn-primary">Suggest Your Favourite</router-link>
+  <div >
+    <div class="p-2 card h-10 mt-3">
+      <div class="card-body">
+        <h4 class="card-title">Why Not Nominate A Movie?</h4>
+        <router-link to="/nominate" class="btn btn-primary">Suggest Your Favourite</router-link>
+      </div>
     </div>
-  </div>
-    <template v-if="getNominatedFilms.length > 0" v-for="film in getNominatedFilms">
-      <option-preview class="p-2" :key="film._id" :film="film">
+    <template v-if="getOptionsForCurrentPoll" v-for="option in getOptionsForCurrentPoll">
+      <option-preview :key="option._id" :option="option">
     </option-preview>
     </template>
   </div>
@@ -24,10 +24,7 @@ export default {
     OptionPreview
   },
   computed: {
-    ...mapGetters('films', ['getNominatedFilms'])
-  },
-  created() {
-    queries.getAllFilms()
+    ...mapGetters('option', ['getOptionsForCurrentPoll'])
   }
 }
 </script>
