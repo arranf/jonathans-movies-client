@@ -9,7 +9,7 @@
                 Oops that username & password combination wasn't quite correct.
               </div>
               <div v-if="!isInternalLogin">
-                <a href="https://api.jonathansmovies.com/auth/facebook" class="btn btn-primary btn-block">Log In with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span></a>
+                <a href="#" @click.prevent="facebookLogin()" class="btn btn-primary btn-block">Log In with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span></a>
                 <p class="py-1 my-1">or</p>
                 <button @click="swapLoginType()" class="btn btn-info btn-block">Log In</button>
                 <div class="pt-1">
