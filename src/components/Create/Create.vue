@@ -96,7 +96,7 @@ export default {
         numberOfVotes: parseInt(this.votes),
         startDateTime: currentTime,
         endDateTime: currentTime + parseInt(this.minutes) *  60000,
-        options: this.options
+        options: this.options.filter(o => o && o.trim().length() > 0)
       })
 
       router.push('/home')
@@ -111,6 +111,8 @@ export default {
         || this.options.length < 2 
         || !this.options[0]
         || !this.options[1]
+        || !this.options[0].trim().length() > 0
+        || !this.options[1].trim().length() > 0
     }
   }
 }
