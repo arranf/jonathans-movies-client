@@ -16,6 +16,9 @@
                     </div>
                 </swiper-slide>
         </template>
+        <div class="swiper-pagination"  slot="pagination"></div>
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next" slot="button-next"></div>
   </swiper>
 </template>
 
@@ -38,14 +41,19 @@ export default {
         },
         notNextTick: true,
         swiperOption: {
-          onClick: this.vote,
-          setWrapperSize :true,
+                onClick: this.vote,
+                setWrapperSize: true,
+                initialSlide: 0,
                 slidesPerView: 3,
                 spaceBetween: 40,
                 mousewheelControl : true,
                 observeParents:true,
                 preventClicks: false,
                 loop: false,
+                pagination : '.swiper-pagination',
+                paginationClickable :true,
+                prevButton:'.swiper-button-prev',
+                nextButton:'.swiper-button-next',
                 // https://github.com/surmon-china/vue-awesome-swiper/blob/master/examples/33-responsive-breakpoints.vue
                 breakpoints: {
                 576: {
