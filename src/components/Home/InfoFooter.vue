@@ -10,7 +10,7 @@
                             </div>
                         </div>
 
-                        <div class="card"  v-if="votes && polls && getActivePoll">
+                        <div class="card" :class="{'shake-horizontal': shouldShowErrorForExceedVote, 'shake-constant': shouldShowErrorForExceedVote}"  v-if="votes && polls && getActivePoll">
                             <div class="card-body">
                                 <p class="card-text"><strong>{{remainingVotes}}</strong> Votes Remaining</p>
                             </div>
@@ -45,6 +45,8 @@ import {mapGetters, mapState, mapActions} from 'vuex'
 import utils from '@/utils'
 import queries from '@/api'
 
+require('csshake/dist/csshake-horizontal.min.css')
+
 export default {
   name: 'InfoFooter',
   computed: {
@@ -54,7 +56,8 @@ export default {
       ...mapGetters('poll', ['getActivePoll', 'remainingTimeWordsForCurrentPoll']),
       ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
       ...mapState('auth', ['user']),
-      ...mapActions('auth', ['logout'])
+      ...mapActions('auth', ['logout']),
+      ...mapGetters('errors', ['shouldShowErrorForExceedVote'])
   },
   methods: {
       ...mapActions('vote', {getVotes: 'find'}),

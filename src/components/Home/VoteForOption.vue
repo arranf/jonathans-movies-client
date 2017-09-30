@@ -27,6 +27,7 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import {mapActions, mapState, mapGetters} from 'vuex'
 import utils from '@/utils'
 import constants from '@/constants'
+import queries from '@/api'
 
 require('swiper/dist/css/swiper.css')
 
@@ -84,6 +85,7 @@ export default {
       ...mapActions('vote', {addVote: 'create'}),
       ...mapActions('vote', {removeVote: 'remove'}), 
       ...mapActions('vote', {getVotes: 'find'}),
+      ...mapActions('errors', ['updateLastExceededVoteDateTime']),
       getColor: function (optionId){
           let optionColors = this.optionColors
           if (optionId in optionColors.optionColorMap){
@@ -114,7 +116,7 @@ export default {
               .catch(error => console.error(error))
           } else {
             if (this.remainingVotes <= 0){
-              // TODO Show user error
+              this.updateLastExceededVoteDateTime()
               return
             }
               this.addVote({poll_id: this.getActivePoll._id, option_id: optionId, user_id: this.user._id})
@@ -137,7 +139,8 @@ export default {
       utils.shuffle(this.optionColors.colors)
       console.log('Current swiper instance object',  this.$refs.voteSwiper.swiper)
       
-      this.getVotes({query:{}}).catch(error => console.error(error))
+      queries.getVotesForCurrentPoll()
+      .catch(error => console.error(error))
   }
 }
 </script>

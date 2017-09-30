@@ -9,6 +9,8 @@ import pollGetters from './poll/getters'
 import filmsGetters from './films/getters'
 
 import time from '@/store/time'
+import errors from '@/store/errors'
+import utils from '@/utils'
 
 Vue.use(Vuex)
 
@@ -16,7 +18,8 @@ const { service, auth } = feathersVuex(feathersClient, { idField: '_id' })
 
 const store = new Vuex.Store({
   modules: {
-    time
+    time,
+    errors
   },
   plugins: [
     service('vote', {getters: voteGetters}),

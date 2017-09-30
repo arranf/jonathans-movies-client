@@ -1,6 +1,7 @@
 export default {
   getOptionsForPoll: (state, getters) => (pollId) => {
     const options = getters.find({query: {
+      $limit: 100,
       poll_id: pollId
     }}).data
     return options
