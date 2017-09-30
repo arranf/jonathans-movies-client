@@ -7,6 +7,7 @@ import loMap from 'lodash/map'
 
 import feathersClient from '@/api/feathers-client'
 import time from '@/store/time'
+import errors from '@/store/errors'
 import utils from '@/utils'
 
 Vue.use(Vuex)
@@ -15,7 +16,8 @@ const { service, auth } = feathersVuex(feathersClient, { idField: '_id' })
 
 const store = new Vuex.Store({
   modules: {
-    time
+    time,
+    errors
   },
   plugins: [
     service('vote', {getters: {
@@ -28,7 +30,7 @@ const store = new Vuex.Store({
       },
       votesRemaining: (state, getters, rootState, rootGetters) => {
         let activePoll = rootGetters['poll/getActivePoll']
-        if (activePoll) {
+        if (activePoll && activePoll.numberOfVotes) {
           return activePoll.numberOfVotes - getters.userVotes.total
         }
         return null
