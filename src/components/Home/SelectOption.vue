@@ -118,7 +118,7 @@ export default {
               this.updateLastExceededVoteDateTime()
               return
             }
-              this.addVote({poll_id: this.getActivePoll._id, option_id: optionId, user_id: this.user._id})
+              this.addVote({poll_id: this.getActivePoll._id, option_id: optionId})
               .then(console.log('Vote added for ', option.name))
               .catch(error => console.error(error))
           }
