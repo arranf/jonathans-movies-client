@@ -24,7 +24,8 @@ const store = new Vuex.Store({
       userVotes: (state, getters, rootState, rootGetters) => {
         const user = rootState.auth.user
         if (rootGetters['poll/getActivePoll'] && user) {
-          return getters.find({query: {poll_id: rootGetters['poll/getActivePoll']._id, user_id: user._id}})
+          const votes = getters.find({query: {$limit: 1000, poll_id: rootGetters['poll/getActivePoll']._id, user_id: user._id}})
+          return votes
         }
         return null
       },
@@ -71,6 +72,7 @@ const store = new Vuex.Store({
     service('option', {getters: {
       getOptionsForPoll: (state, getters) => (pollId) => {
         return getters.find({query: {
+          $limit: 100,
           poll_id: pollId
         }}).data
       },

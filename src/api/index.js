@@ -24,6 +24,17 @@ const queries = {
       $limit: 100,
       poll_id: pollId
     }})
+  },
+  getVotesForCurrentPoll: function () {
+    const poll = store.getters['poll/getActivePoll']
+    const pollId = poll._id
+    if (poll && pollId) {
+      return store.dispatch('vote/find', {query: {
+        $limit: 1000,
+        poll_id: pollId
+      }})
+    }
+    return Promise.reject(new Error('Could not get current poll'))
   }
 }
 

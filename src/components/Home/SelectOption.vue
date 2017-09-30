@@ -27,6 +27,7 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import {mapActions, mapState, mapGetters} from 'vuex'
 import utils from '@/utils'
 import constants from '@/constants'
+import queries from '@/api'
 
 require('swiper/dist/css/swiper.css')
 
@@ -138,7 +139,9 @@ export default {
       utils.shuffle(this.optionColors.colors)
       console.log('Current swiper instance object',  this.$refs.voteSwiper.swiper)
       
-      this.getVotes({query:{}}).catch(error => console.error(error))
+      queries.getVotesForCurrentPoll()
+      .then( response => console.log(response))
+      .catch(error => console.error(error))
   }
 }
 </script>
