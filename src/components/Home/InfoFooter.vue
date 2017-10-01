@@ -76,7 +76,7 @@ export default {
   beforeUpdate: function() {
       if (this.user && !this.gotVoteandPolls){
         queries.getCurrentPoll()
-        .then(this.getVotes({query: {}}))
+        .then(this.getVotes({query: {$limit: 100}}))
         .then(this.gotVoteandPolls = true)
       }
   }
