@@ -51,8 +51,7 @@ export default {
       .then(response => {
           if (response.total > 0){
             const pollId = response.data[0]._id
-            // debugger
-            return this.getOptions({query: {poll_id: pollId}})
+            return this.getOptions({query: {$limit: 20, poll_id: this.pollId}})
             } else {
               return Promise.resolve()
             }
