@@ -37,9 +37,6 @@ export default {
         ...mapGetters('poll', ['getActivePoll', 'isActivePoll'])
     },
     methods: {
-        ...mapActions('option', {
-            getOptions: 'find'
-        }),
         ...mapActions('time', {startTimer: 'start'})
     },
     created: function () {
@@ -48,7 +45,7 @@ export default {
       .then(response => {
           if (response.total > 0){
             this.pollId = response.data[0]._id
-            return this.getOptions({query: {$limit: 20, poll_id: this.pollId}})
+            return queries.getOptionsForMostRecentPoll(this.pollId)
             } else {
               return Promise.resolve()
             }
@@ -57,7 +54,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

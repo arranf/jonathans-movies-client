@@ -59,8 +59,7 @@ export default {
       ...mapGetters('errors', ['shouldShowErrorForExceedVote'])
   },
   methods: {
-      ...mapActions('vote', {getVotes: 'find'}),
-      ...mapActions('poll', {getPolls: 'find', updatePoll: 'patch'}),
+      ...mapActions('poll', {updatePoll: 'patch'}),
       timeRemaining: function() {
         if (this.isActivePoll) {
           return 'Poll closes in ' + utils.humanizeTimeToNow(this.getActivePoll.endDateTime)
@@ -76,7 +75,7 @@ export default {
   beforeUpdate: function() {
       if (this.user && !this.gotVoteandPolls){
         queries.getCurrentPoll()
-        .then(this.getVotes({query: {$limit: 100}}))
+        .then(queries.getVotesForCurrentPoll())
         .then(this.gotVoteandPolls = true)
       }
   }

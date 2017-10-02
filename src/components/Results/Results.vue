@@ -40,14 +40,6 @@ export default {
     ...mapGetters('option', {getOption: 'get'}),
     ...mapState('vote', ['isFindPending'])
   },
-  methods: {
-    ...mapActions('poll', {
-      getPolls: 'find'
-    }),
-    ...mapActions('vote', {
-      getVotes: 'find'
-    })
-  },
   mounted () {
     queries.getCurrentPoll()
     .then(data => queries.getVotesForMostRecentPoll(this.getMostRecentPoll._id))

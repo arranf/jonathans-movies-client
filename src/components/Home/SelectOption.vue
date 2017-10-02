@@ -82,8 +82,7 @@ export default {
   },
   methods: {
       ...mapActions('vote', {addVote: 'create'}),
-      ...mapActions('vote', {removeVote: 'remove'}), 
-      ...mapActions('vote', {getVotes: 'find'}),
+      ...mapActions('vote', {removeVote: 'remove'}),
       ...mapActions('errors', ['updateLastExceededVoteDateTime']),
       getColor: function (optionId){
           let optionColors = this.optionColors
