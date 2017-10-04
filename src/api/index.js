@@ -40,10 +40,13 @@ const queries = {
     return Promise.reject(new Error('Could not get current poll'))
   },
   getFilmSuggestions: function (movieName, limit = 5) {
-    return store.dispatch('films/find', {query: {
-      $limit: limit,
-      $search: movieName
-    }})
+    if (movieName && movieName.length > 0) {
+      return store.dispatch('films/find', {query: {
+        $limit: limit,
+        $search: movieName
+      }})
+    }
+    return Promise.resolve()
   }
 }
 
