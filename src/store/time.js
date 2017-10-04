@@ -1,8 +1,11 @@
 import client from '@/api/feathers-client'
 
+const maxCount = 20
+
 const state = {
   now: new Date().getTime(),
-  hasStarted: false
+  hasStarted: false,
+  counter: 0
 }
 
 const actions = {
@@ -11,7 +14,14 @@ const actions = {
       return dispatch('setInitialTime').then(() => {
         commit('setStarted')
         setInterval(() => {
-          commit('updateTime')
+          commit('incrementCounter')
+          if (state.counter === 0) {
+            dispatch('setInitialTime').then(
+              commit('incrementCounter'), commit('incrementCounter')
+            )
+          } else {
+            commit('updateTime')
+          }
         }, 1000)
       })
     }
@@ -20,7 +30,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       const timeService = client.service('time')
       timeService.find()
-        .then(response => { commit('setInitialTime', response); resolve() })
+        .then(response => { commit('setTime', response); resolve() })
         .catch(error => reject(error))
     })
   }
@@ -33,8 +43,15 @@ const mutations = {
   setStarted (state) {
     state.hasStarted = true
   },
-  setInitialTime (state, timeResponse) {
+  setTime (state, timeResponse) {
     state.now = timeResponse.time
+  },
+  incrementCounter (state) {
+    if (state.counter === (maxCount - 1)) {
+      state.counter = 0
+    } else {
+      state.counter++
+    }
   }
 }
 
