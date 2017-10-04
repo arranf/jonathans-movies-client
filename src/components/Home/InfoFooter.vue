@@ -73,7 +73,7 @@ export default {
       }
   },
   beforeUpdate: function() {
-      if (this.user && !this.gotVoteandPolls){
+      if (this.user && !this.gotVoteandPolls && this.getActivePoll){
         queries.getCurrentPoll()
         .then(queries.getVotesForCurrentPoll())
         .then(this.gotVoteandPolls = true)
