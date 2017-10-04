@@ -32,7 +32,7 @@
                 <button v-if="user" class="btn btn-link" role="button" @click="logout()">Logout</button>
               </div>
               <div class="col mt-4 align-self-end">
-                Version 1.0 <span class="badge badge-dark">BETA</span>
+                Version 1.0.2
               </div>
           </div>
         </div>
