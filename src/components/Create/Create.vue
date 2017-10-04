@@ -13,7 +13,7 @@
                   <label :for="index">Option {{ index + 1 }}</label>
                 </div>
                 <div class="col col-md-4">
-                  <input type="text" class="form-control" :id="index" placeholder="The Assassin" v-model="options[index]"></input>
+                  <input type="text" class="form-control" :id="index" :placeholder="getRandomPlaceholder()" v-model="options[index]"></input>
                 </div>
               </div> <!-- row -->
             </div>
@@ -75,6 +75,7 @@
 import feathersClient from '@/api/feathers-client'
 import {mapActions, mapGetters, mapState} from 'vuex'
 import router from '@/router'
+import utils from '@/utils'
 
 export default {
   name: 'Create',
@@ -82,7 +83,8 @@ export default {
     return {
       minutes: '3',
       votes: '2',
-      options: ['']
+      options: [''],
+      placeholders: ['The Assassin', 'Zoolander 2', 'Titanic 2', 'Beauty and the Beast']
     }
   },
   methods: {
@@ -95,15 +97,16 @@ export default {
     },
     startPoll: function () {
       const currentTime = parseInt(new Date().getTime())
-
       this.createPoll({
         numberOfVotes: parseInt(this.votes),
         startDateTime: currentTime,
         endDateTime: currentTime + parseInt(this.minutes) *  60000,
-        options: this.options
+        options: this.options.filter(o => o && o.trim().length > 0)
       })
-
       router.push('/home')
+    },
+    getRandomPlaceholder: function () {
+      return utils.selectRandom(this.placeholders)
     }
   },
   computed: {
@@ -115,6 +118,8 @@ export default {
         || this.options.length < 2 
         || !this.options[0]
         || !this.options[1]
+        || (this.options[0] && !this.options[0].trim().length > 0)
+        || (this.options[1] && !this.options[1].trim().length > 0)
     }
   }
 }

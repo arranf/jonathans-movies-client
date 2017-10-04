@@ -40,9 +40,6 @@ export default {
         ...mapGetters('poll', ['getActivePoll', 'isCurrentPollInNomination'])
     },
     methods: {
-        ...mapActions('option', {
-            getOptions: 'find'
-        }),
         ...mapActions('time', {startTimer: 'start'})
     },
     created: function () {
@@ -50,9 +47,8 @@ export default {
       queries.getCurrentPoll()
       .then(response => {
           if (response.total > 0){
-            const pollId = response.data[0]._id
-            // debugger
-            return this.getOptions({query: {poll_id: pollId}})
+            this.pollId = response.data[0]._id
+            return queries.getOptionsForMostRecentPoll(this.pollId)
             } else {
               return Promise.resolve()
             }
@@ -61,7 +57,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>

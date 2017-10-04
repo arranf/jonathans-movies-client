@@ -16,6 +16,9 @@
                     </div>
                 </swiper-slide>
         </template>
+        <div class="swiper-pagination" slot="pagination"></div>
+        <div class="swiper-button-prev" slot="button-prev"></div>
+        <div class="swiper-button-next" slot="button-next"></div>
   </swiper>
 </template>
 
@@ -24,6 +27,7 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import {mapActions, mapState, mapGetters} from 'vuex'
 import utils from '@/utils'
 import constants from '@/constants'
+import queries from '@/api'
 
 require('swiper/dist/css/swiper.css')
 
@@ -46,6 +50,10 @@ export default {
                 observeParents:true,
                 preventClicks: false,
                 loop: false,
+                pagination : '.swiper-pagination',
+                paginationClickable :true,
+                prevButton:'.swiper-button-prev',
+                nextButton:'.swiper-button-next',
                 // https://github.com/surmon-china/vue-awesome-swiper/blob/master/examples/33-responsive-breakpoints.vue
                 breakpoints: {
                 576: {
@@ -74,8 +82,8 @@ export default {
   },
   methods: {
       ...mapActions('vote', {addVote: 'create'}),
-      ...mapActions('vote', {removeVote: 'remove'}), 
-      ...mapActions('vote', {getVotes: 'find'}),
+      ...mapActions('vote', {removeVote: 'remove'}),
+      ...mapActions('errors', ['updateLastExceededVoteDateTime']),
       getColor: function (optionId){
           let optionColors = this.optionColors
           if (optionId in optionColors.optionColorMap){
@@ -97,7 +105,6 @@ export default {
               return
           }
           const option = this.getOptionsForCurrentPoll[index]
-          console.log(option)
           const optionId = option._id
           if (this.isVoted(optionId)) {
               const vote = this.votes.find(v => v.user_id === this.user._id && v.option_id === optionId)
@@ -106,10 +113,10 @@ export default {
               .catch(error => console.error(error))
           } else {
             if (this.remainingVotes <= 0){
-              // TODO Show user error
+              this.updateLastExceededVoteDateTime()
               return
             }
-              this.addVote({poll_id: this.getActivePoll._id, option_id: optionId, user_id: this.user._id})
+              this.addVote({poll_id: this.getActivePoll._id, option_id: optionId})
               .then(console.log('Vote added for ', option.name))
               .catch(error => console.error(error))
           }
@@ -123,13 +130,16 @@ export default {
       ...mapState('auth', ['user']),
       ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
       ...mapGetters('option', ['getOptionsForCurrentPoll']),
-      ...mapGetters('poll', ['getActivePoll'])
+      ...mapGetters('poll', ['getActivePoll']),
+      ...mapGetters('errors', ['shouldShowErrorForExceedVote'])
   },
   mounted: function (){
       utils.shuffle(this.optionColors.colors)
       console.log('Current swiper instance object',  this.$refs.voteSwiper.swiper)
       
-      this.getVotes({query:{}}).catch(error => console.error(error))
+      queries.getVotesForCurrentPoll()
+      .then( response => console.log(response))
+      .catch(error => console.error(error))
   }
 }
 </script>

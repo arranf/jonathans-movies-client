@@ -10,7 +10,7 @@
                             </div>
                         </div>
 
-                        <div class="card"  v-if="votes && polls && getActivePoll">
+                        <div class="card" :class="{'shake-horizontal': shouldShowErrorForExceedVote, 'shake-constant': shouldShowErrorForExceedVote}"  v-if="votes && polls && isActivePoll">
                             <div class="card-body">
                                 <p class="card-text"><strong>{{remainingVotes}}</strong> Votes Remaining</p>
                             </div>
@@ -30,6 +30,7 @@
                 <div class="">
                   <button type="button" class="btn btn-link" v-if="user && user.isAdmin && getActivePoll" @click.prevent="stopPoll()">Stop Poll</button>
                 </div>
+                <button v-if="user" class="btn btn-link" role="button" @click="logoutAndRedirect()">Logout</button>
               </div>
               <div class="col mt-4 align-self-end">
                 Version 1.0 <span class="badge badge-dark">BETA</span>
@@ -43,6 +44,9 @@
 import {mapGetters, mapState, mapActions} from 'vuex'
 import utils from '@/utils'
 import queries from '@/api'
+import router from '@/router'
+
+require('csshake/dist/csshake-horizontal.min.css')
 
 export default {
   name: 'InfoFooter',
@@ -52,11 +56,12 @@ export default {
       ...mapGetters('vote', {findVotesInStore: 'find'}),
       ...mapGetters('poll', ['getActivePoll', 'remainingTimeWordsForCurrentPoll']),
       ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
-      ...mapState('auth', ['user'])
+      ...mapState('auth', ['user']),
+      ...mapGetters('errors', ['shouldShowErrorForExceedVote'])
   },
   methods: {
-      ...mapActions('vote', {getVotes: 'find'}),
-      ...mapActions('poll', {getPolls: 'find', updatePoll: 'patch'}),
+      ...mapActions('poll', {updatePoll: 'patch'}),
+      ...mapActions('auth', ['logout']),
       timeRemaining: function() {
         if (this.getActivePoll) {
           return 'Poll closes in ' + utils.humanizeTimeToNow(this.getActivePoll.endDateTime)
@@ -67,12 +72,16 @@ export default {
         const currentTime = parseInt(new Date().getTime())
         const data = {'endDateTime': currentTime}
         this.updatePoll([this.getActivePoll._id, data, {}])
+      },
+      logoutAndRedirect: function () {
+        this.logout()
+        router.push('/')
       }
   },
   beforeUpdate: function() {
-      if (this.user && !this.gotVoteandPolls){
+      if (this.user && !this.gotVoteandPolls && this.getActivePoll){
         queries.getCurrentPoll()
-        .then(this.getVotes({query: {}}))
+        .then(queries.getVotesForCurrentPoll())
         .then(this.gotVoteandPolls = true)
       }
   }

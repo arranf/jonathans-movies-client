@@ -9,7 +9,7 @@
                 Oops that username & password combination wasn't quite correct.
               </div>
               <div v-if="!isInternalLogin">
-                <a href="https://api.jonathansmovies.com/auth/facebook" class="btn btn-primary btn-block">Log In with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span></a>
+                <a href="#" @click.prevent="facebookLogin()" class="btn btn-primary btn-block">Log In with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span></a>
                 <p class="py-1 my-1">or</p>
                 <button @click="swapLoginType()" class="btn btn-info btn-block">Log In</button>
                 <div class="pt-1">
@@ -55,7 +55,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions('auth',['authenticate']),
+        ...mapActions('auth',['authenticate', 'logout']),
         tryLogin: function() {
             this.authenticate({
                 strategy: 'local',
@@ -77,6 +77,11 @@ export default {
         },
         swapLoginType: function() {
           this.isInternalLogin = !this.isInternalLogin
+        },
+        facebookLogin: function() {
+          const url = process.env.NODE_ENV === 'production' ? "https://api.jonathansmovies.com/auth/facebook" : "http://localhost:3030/auth/facebook"
+          this.logout()
+          .then(window.location = url)
         }
     },
     computed: {
