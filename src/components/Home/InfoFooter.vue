@@ -30,10 +30,10 @@
                 <div class="">
                   <button type="button" class="btn btn-link" v-if="user && user.isAdmin && getActivePoll" @click.prevent="stopPoll()">Stop Poll</button>
                 </div>
-                <button v-if="user" class="btn btn-link" role="button" @click="logout()">Logout</button>
+                <button v-if="user" class="btn btn-link" role="button" @click="logoutAndRedirect()">Logout</button>
               </div>
               <div class="col mt-4 align-self-end">
-                Version 1.0 <span class="badge badge-dark">BETA</span>
+                Version 1.0.2
               </div>
           </div>
         </div>
@@ -44,6 +44,7 @@
 import {mapGetters, mapState, mapActions} from 'vuex'
 import utils from '@/utils'
 import queries from '@/api'
+import router from '@/router'
 
 require('csshake/dist/csshake-horizontal.min.css')
 
@@ -56,11 +57,11 @@ export default {
       ...mapGetters('poll', ['getActivePoll', 'remainingTimeWordsForCurrentPoll']),
       ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
       ...mapState('auth', ['user']),
-      ...mapActions('auth', ['logout']),
       ...mapGetters('errors', ['shouldShowErrorForExceedVote'])
   },
   methods: {
       ...mapActions('poll', {updatePoll: 'patch'}),
+      ...mapActions('auth', ['logout']),
       timeRemaining: function() {
         if (this.getActivePoll) {
           return 'Poll closes in ' + utils.humanizeTimeToNow(this.getActivePoll.endDateTime)
@@ -71,10 +72,14 @@ export default {
         const currentTime = parseInt(new Date().getTime())
         const data = {'endDateTime': currentTime}
         this.updatePoll([this.getActivePoll._id, data, {}])
+      },
+      logoutAndRedirect: function () {
+        this.logout()
+        router.push('/')
       }
   },
   beforeUpdate: function() {
-      if (this.user && !this.gotVoteandPolls){
+      if (this.user && !this.gotVoteandPolls && this.getActivePoll){
         queries.getCurrentPoll()
         .then(queries.getVotesForCurrentPoll())
         .then(this.gotVoteandPolls = true)
