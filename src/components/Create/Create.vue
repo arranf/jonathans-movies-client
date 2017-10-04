@@ -13,7 +13,8 @@
                   <label :for="index">Option {{ index + 1 }}</label>
                 </div>
                 <div class="col col-md-4">
-                  <input type="text" class="form-control" :id="index" :placeholder="getRandomPlaceholder()" v-model="options[index]"></input>
+                  <movie-suggest :id="index+'-suggest'"></movie-suggest>
+                  <!-- <input type="text" class="form-control" :id="index" :placeholder="getRandomPlaceholder()" v-model="options[index]"></input> -->
                 </div>
               </div> <!-- row -->
             </div>
@@ -72,6 +73,7 @@
 </template>
 
 <script>
+import MovieSuggest from './MovieSuggest'
 import feathersClient from '@/api/feathers-client'
 import {mapActions, mapGetters, mapState} from 'vuex'
 import router from '@/router'
@@ -79,6 +81,9 @@ import utils from '@/utils'
 
 export default {
   name: 'Create',
+  components: {
+    MovieSuggest
+  },
   data () {
     return {
       minutes: '3',

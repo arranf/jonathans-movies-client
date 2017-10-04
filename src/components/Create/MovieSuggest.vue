@@ -1,18 +1,50 @@
 <template>
   <div>
-    <input type="text" @input="" name="movies" class="form-control">
-    <div class="autocomplete-suggestions">
-    <div class="autocomplete-group"><strong>NHL</strong></div>
-    <div class="autocomplete-suggestion autocomplete-selected">...</div>
-    <div class="autocomplete-suggestion">...</div>
-    <div class="autocomplete-suggestion">...</div>
-</div>
+    <input type="text" v-model="searchQuery" @input="getSuggestions()" name="movies" class="form-control" @focus="completed = true" @blur="completed = false">
+    <div v-if="suggestions.length > 0 && !completed" class="autocomplete-suggestions">
+      <div @click="fillBox(suggest.name)" class="autocomplete-suggestion autocomplete-selected" :key="suggest.tmdbid" v-for="suggest in suggestions">
+        {{suggest.name}}
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import debounce from 'lodash/debounce'
+import queries from '@/api'
+import { focus } from 'vue-focus';
+
 export default {
-  
+  data() {
+    return {
+      suggestions: [],
+      searchQuery: '',
+      completed: false
+    }
+  },
+  methods: {
+    getResults: function () {
+      if (this.completed){
+        this.completed = false
+      }
+      
+      queries.getFilmSuggestions(this.searchQuery).then(response => {
+        if (response && response.data){
+          this.suggestions.splice(0, this.suggestions.length)
+          response.data.forEach((result) => {
+            this.suggestions.push(result)
+          })
+        }
+      })
+    },
+    fillBox: function(toFill) {
+      this.searchQuery = toFill
+      this.completed = true
+    }  
+  },
+  mounted() {
+    this.getSuggestions = debounce(this.getResults, 300, {leading: true})
+  }
 }
 </script>
 
