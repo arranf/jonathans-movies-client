@@ -4,7 +4,7 @@ const queries = {
   getCurrentPoll: function () {
     return store.dispatch('poll/find', {query: {
       $sort: {endDateTime: -1},
-      $limit: 100//,
+      $limit: 100//, 
       // startDateTime: {
       //   $lt: store.getters['time/getNow']
       // },
@@ -39,10 +39,22 @@ const queries = {
     }
     return Promise.reject(new Error('Could not get current poll'))
   },
-  getAllFilms: function () {
-    return store.dispatch('films/find', {query: {
-      $limit: 10000
-    }})
+  getFilmSuggestions: function (movieName, limit = 5) {
+    if (movieName && movieName.length > 0) {
+      return store.dispatch('films/find', {query: {
+        $limit: limit,
+        $search: movieName
+      }})
+    }
+    return Promise.resolve()
+  },
+  getFilms: function (skip = 0, limit = 50, sort = {name: 1}, shouldPageinate = false) {
+    return store.dispatch('films/find', {paginate: false,
+      query: {
+        $limit: limit,
+        $sort: sort,
+        $skip: skip
+      }})
   }
 }
 

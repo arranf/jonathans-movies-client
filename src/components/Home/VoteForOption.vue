@@ -106,7 +106,6 @@ export default {
               return
           }
           const option = this.getOptionsForCurrentPoll[index]
-          console.log(option)
           const optionId = option._id
           if (this.isVoted(optionId)) {
               const vote = this.votes.find(v => v.user_id === this.user._id && v.option_id === optionId)
@@ -118,7 +117,7 @@ export default {
               this.updateLastExceededVoteDateTime()
               return
             }
-              this.addVote({poll_id: this.getActivePoll._id, option_id: optionId, user_id: this.user._id})
+              this.addVote({poll_id: this.getActivePoll._id, option_id: optionId})
               .then(console.log('Vote added for ', option.name))
               .catch(error => console.error(error))
           }
@@ -132,7 +131,8 @@ export default {
       ...mapState('auth', ['user']),
       ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
       ...mapGetters('option', ['getOptionsForCurrentPoll']),
-      ...mapGetters('poll', ['getActivePoll'])
+      ...mapGetters('poll', ['getActivePoll']),
+      ...mapGetters('errors', ['shouldShowErrorForExceedVote'])
   },
   mounted: function (){
       utils.shuffle(this.optionColors.colors)

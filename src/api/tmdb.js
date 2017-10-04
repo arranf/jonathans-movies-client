@@ -11,6 +11,9 @@ const instance = axios.create({
 const functions = {
   getMovieData: (movieId) => {
     return instance.get('movie/' + movieId)
+  },
+  searchForMovie: (movieName) => {
+    return instance.get('search/movie', {params: {query: movieName}})
   }
 }
 
