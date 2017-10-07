@@ -60,6 +60,6 @@ require("@/assets/styles/loading.scss")
 
 <style scoped>
   .scroll {
-    overflow: scroll;
+    overflow-y: scroll;
   }
 </style>
