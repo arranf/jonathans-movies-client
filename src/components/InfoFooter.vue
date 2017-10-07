@@ -19,21 +19,18 @@
                 </div>
             </div>
 
-          <div class="row d-flex">
-            <div class="col mt-4 align-self-end invisible">
-                Hidden
+          <div class="row">
+              <div class="col mt-2">
+                <ul class="list-inline list-unstyled">
+                  <li class="list-inline-item"><router-link to="/create" v-if="user && user.isAdmin && !getActivePoll">Create Poll</router-link></li>
+                  <li class="list-inline-item"><router-link to="/nominate" v-if="user">Nominate TEST</router-link></li>
+                  <li class="list-inline-item"><button type="button" class="btn btn-link" v-if="user && user.isAdmin && getActivePoll" @click.prevent="stopPoll()">Stop Poll</button></li>
+                  <li class="list-inline-item"><button v-if="user" class="btn btn-link" role="button" @click="logoutAndRedirect()">Logout</button></li>
+                </ul>
               </div>
-              <div class="col mt-4 align-self-center">
+              <div class="col mt-2">
                 <p>Made with <i class="fa fa-heart heart" aria-hidden="true"></i> <span class="sr-only">love</span> by <a href="https://arranfrance.com" target="_blank">Arran</a> and Joel.</p>
-                <router-link to="/create" v-if="user && user.isAdmin && !getActivePoll">Create Poll</router-link>
-                <router-link to="/nominate" v-if="user">Nominate TEST</router-link>
-                <div class="">
-                  <button type="button" class="btn btn-link" v-if="user && user.isAdmin && getActivePoll" @click.prevent="stopPoll()">Stop Poll</button>
-                </div>
-                <button v-if="user" class="btn btn-link" role="button" @click="logoutAndRedirect()">Logout</button>
-              </div>
-              <div class="col mt-4 align-self-end">
-                Version 1.0.2
+                <p>Version 1.0.2</p>
               </div>
           </div>
         </div>

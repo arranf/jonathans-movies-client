@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import InfoFooter from '@/components/Home/InfoFooter'
+import InfoFooter from '@/components/InfoFooter'
 
 export default {
   name: 'app',

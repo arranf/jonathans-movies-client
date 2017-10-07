@@ -14,7 +14,7 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import queries from '@/api'
 import VoteForOption from '@/components/Home/VoteForOption'
 import Results from '@/components/Results/Results'
-import InfoFooter from '@/components/Home/InfoFooter'
+import InfoFooter from '@/components/InfoFooter'
 import SelectedOptions from './Nominated/SelectedOptions'
 
 export default {
