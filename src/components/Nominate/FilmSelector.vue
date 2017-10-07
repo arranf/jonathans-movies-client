@@ -1,9 +1,13 @@
 <template>
-   <div v-if="allFilms" v-infinite-scroll="fetchNextPage" infinite-scroll-disabled="busy" infinite-scroll-distance="15">
+   <div v-if="allFilms" v-infinite-scroll="fetchNextPage" infinite-scroll-disabled="busy" infinite-scroll-distance="10" class="scroll">
      <template v-for="film in allFilms">
-      <film-suggestion class="m-2" :key="film._id" :film="film">
+      <film-suggestion class="m-1" :key="film._id" :film="film">
       </film-suggestion>
     </template>
+    <div class="spinner" v-if="busy">
+      <div class="double-bounce1"></div>
+      <div class="double-bounce2"></div>
+    </div>
   </div>
 </template>
 
@@ -12,6 +16,8 @@ import FilmSuggestion from './FilmSuggestion'
 import infiniteScroll from 'vue-infinite-scroll'
 import {mapGetters} from 'vuex'
 import queries from '@/api'
+
+require("@/assets/styles/loading.scss")
 
   export default {
     name: 'FilmSelector',
@@ -50,3 +56,10 @@ import queries from '@/api'
     }
   }
 </script>
+
+
+<style scoped>
+  .scroll {
+    overflow: scroll;
+  }
+</style>

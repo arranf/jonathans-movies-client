@@ -1,10 +1,9 @@
 <template>
-  <film-selector></film-selector>
+  <film-selector class="h-60"></film-selector>
 </template>
 
 <script>
 import FilmSelector from '@/components/Nominate/FilmSelector'
-// import OptionsSelector from '@/components/Nominate/OptionsSelector'
 
 export default {
   name: 'Nominate',
@@ -13,3 +12,5 @@ export default {
   }
 }
 </script>
+
+
