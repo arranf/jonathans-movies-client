@@ -1,29 +1,21 @@
-// @import "../../../node_modules/bootstrap/scss/_mixins";
+@import "../../../node_modules/bootstrap/scss/_mixins";
+@import "../../../node_modules/bootstrap/scss/_functions.scss";
+@import "../../../node_modules/bootstrap/scss/_variables.scss";
 
-.h-80 {
-  height: 80% !important;
-}
+.h-80 {   height: 80% !important; }
 
-.h-20 {
-  height: 20% !important;
-}
+.h-20 {  height: 20% !important; }
 
-.h-30 {
-  height: 30% !important;
-}
+.h-30 {  height: 30% !important; }
 
-.h-70 {
-  height: 70% !important;
-}
+.h-70 {  height: 70% !important; }
 
-.h-60 {
-  height: 60% !important;
-}
+.h-60 {  height: 60% !important; }
 
-.h-10 {
-  height: 10% !important;
-}
+.h-10 {  height: 10% !important; }
 
-html {
-  height: 100%;
-}
+.h-50 {  height: 50% !important; }
+
+html {  height: 100%; }
+
+html { font-size: 100%; } /* This means 16px by default or is adjusted by the user in their browser*/
