@@ -1,37 +1,30 @@
 <template>
     <footer class="h-100">
         <div class="container-fluid" >
-            <div class="row" v-if="user && getActivePoll">
-                <div class="col">
-                    <div class="card-deck">
-                        <div class="card">
-                            <div class="card-body">
-                                <p class="card-text" v-if="getActivePoll">{{remainingTimeWordsForCurrentPoll}}</p>
-                            </div>
-                        </div>
-
-                        <div class="card" :class="{'shake-horizontal': shouldShowErrorForExceedVote, 'shake-constant': shouldShowErrorForExceedVote}"  v-if="votes && polls && getActivePoll">
-                            <div class="card-body">
-                                <p class="card-text"><strong>{{remainingVotes}}</strong> Votes Remaining</p>
-                            </div>
-                        </div>
-                    </div>
+            <div class="row equal-height" v-if="user && getActivePoll">
+                <div class="col-6">
+                  <div class="card">
+                      <div class="card-body d-flex align-items-center justify-content-center">
+                          <p class="card-text text-center" v-if="getActivePoll">{{remainingTimeWordsForCurrentPoll}}</p>
+                      </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="card" :class="displayError"  v-if="votes && polls && getActivePoll">
+                      <div class="card-body d-flex align-items-center justify-content-center">
+                          <p class="card-text text-center"><span class="font-weight-bold">{{remainingVotes}}</span> <br/> Votes Left</p>
+                      </div>
+                  </div>
                 </div>
             </div>
 
-          <div class="row">
-              <div class="col mt-2">
-                <ul class="list-inline list-unstyled">
-                  <li class="list-inline-item"><router-link to="/create" v-if="user && user.isAdmin && !getActivePoll">Create Poll</router-link></li>
-                  <li class="list-inline-item"><router-link to="/nominate" v-if="user">Nominate TEST</router-link></li>
-                  <li class="list-inline-item"><button type="button" class="btn btn-link" v-if="user && user.isAdmin && getActivePoll" @click.prevent="stopPoll()">Stop Poll</button></li>
-                  <li class="list-inline-item"><button v-if="user" class="btn btn-link" role="button" @click="logoutAndRedirect()">Logout</button></li>
-                </ul>
-              </div>
-              <div class="col mt-2">
-                <p>Made with <i class="fa fa-heart heart" aria-hidden="true"></i> <span class="sr-only">love</span> by <a href="https://arranfrance.com" target="_blank">Arran</a> and Joel.</p>
-                <p>Version 1.0.2</p>
-              </div>
+          <div >
+            <ul class="list-inline list-unstyled">
+              <li class="list-inline-item"><router-link to="/create" v-if="user && user.isAdmin && !getActivePoll">Create Poll</router-link></li>
+              <li class="list-inline-item"><router-link to="/nominate" v-if="user">Nominate</router-link></li>
+              <li class="list-inline-item"><button type="button" class="btn btn-link" v-if="user && user.isAdmin && getActivePoll" @click.prevent="stopPoll()">Stop Poll</button></li>
+              <li class="list-inline-item"><button v-if="user" class="btn btn-link" role="button" @click="logoutAndRedirect()">Logout</button></li>
+            </ul>
           </div>
         </div>
     </footer>
@@ -54,14 +47,27 @@ export default {
       ...mapGetters('poll', ['getActivePoll', 'remainingTimeWordsForCurrentPoll']),
       ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
       ...mapState('auth', ['user']),
-      ...mapGetters('errors', ['shouldShowErrorForExceedVote'])
+      ...mapGetters('errors', ['shouldShowErrorForExceedVote']),
+      displayError:  function() {
+         if (this.shouldShowErrorForExceedVote) {
+           return {
+          'shake-horizontal': true, 
+          'shake-constant': true,
+          'border': true,
+          'border-danger': true,
+          'text-danger': true
+          }
+        } else {
+          return {}
+        }
+      }
   },
   methods: {
       ...mapActions('poll', {updatePoll: 'patch'}),
       ...mapActions('auth', ['logout']),
       timeRemaining: function() {
         if (this.getActivePoll) {
-          return 'Poll closes in ' + utils.humanizeTimeToNow(this.getActivePoll.endDateTime)
+          return 'Poll over in ' + utils.humanizeTimeToNow(this.getActivePoll.endDateTime)
         }
         return 'No Current Poll'
       },
@@ -87,12 +93,8 @@ export default {
 
 <style scoped>
 footer {
-  /* position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0; */
+  padding-top: 0.5rem;
   flex-shrink: 0;
-  padding: 1rem;
   background-color: #efefef;
   text-align: center;
 }

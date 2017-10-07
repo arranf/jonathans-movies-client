@@ -1,6 +1,20 @@
 import humanizeDuration from 'humanize-duration'
 import store from '@/store'
 
+let shortHumanizer = humanizeDuration.humanizer({
+  language: 'shortEn',
+  languages: {
+    shortEn: {
+      h: function () { return 'h' },
+      m: function () { return 'm' },
+      s: function () { return 's' }
+    }
+  },
+  units: ['h', 'm', 's'],
+  largest: 2,
+  round: true
+})
+
 const functions = {
   shuffle: function (a) {
     for (let i = a.length; i; i--) {
@@ -10,7 +24,7 @@ const functions = {
   },
   humanizeTimeToNowPrecise: function (dateTimeEpochms) {
     const time = store.getters['time/getNow']
-    return humanizeDuration(dateTimeEpochms - time, { units: ['h', 'm', 's'], largest: 2, round: true })
+    return shortHumanizer(dateTimeEpochms - time)
   },
   humanizeTimeToNowImprecise: function (dateTimeEpochms) {
     const time = store.getters['time/getNow']

@@ -19,3 +19,16 @@
 html {  height: 100%; }
 
 html { font-size: 100%; } /* This means 16px by default or is adjusted by the user in their browser*/
+
+.row.equal-height {
+  display: flex;
+  flex-wrap: wrap;
+}
+.row.equal-height > [class*='col-'] {
+  display: flex;
+  // flex-direction: column;
+}
+
+.card {
+  flex: 1;
+}
