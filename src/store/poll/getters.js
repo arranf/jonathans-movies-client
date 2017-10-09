@@ -22,19 +22,34 @@ export default {
     }
     return 'No Current Poll'
   },
+  remainingTimeInNominationWordsForCurrentPoll (state, getters) {
+    if (getters.getActivePoll) {
+      return 'Nominations close in ' + utils.humanizeTimeToNowPrecise(getters.getActivePoll.pollTransitionDateTime)
+    }
+    return 'No Current Poll'
+  },
   howLongAgoMostRecentPoll: (state, getters) => {
     if (getters.getMostRecentPoll) {
       return 'Last poll was ' + utils.humanizeTimeToNowImprecise(getters.getMostRecentPoll.endDateTime) + ' ago'
     }
     return ''
   },
-  isCurrentPollInNomination: (state, getters, rootState, rootGetters) => {
+  isCurrentPollInNomination (state, getters, rootState, rootGetters) {
     let activePoll = getters.getActivePoll
     if (activePoll) {
       let currentDateTime = rootState.time.now
       return (activePoll.startDateTime <= currentDateTime &&
-      activePoll.pollTransitionDateTime &&
+      activePoll.pollTransitionDateTime !== undefined &&
       activePoll.pollTransitionDateTime > currentDateTime)
+    }
+    return false
+  },
+  isCurrentPollInVoting (state, getters, rootState, rootGetters) {
+    let activePoll = getters.getActivePoll
+    if (activePoll) {
+      let currentDateTime = rootState.time.now
+      return (activePoll.startDateTime <= currentDateTime && ((activePoll.pollTransitionDateTime !== undefined &&
+      activePoll.pollTransitionDateTime <= currentDateTime) || activePoll.endDateTime > currentDateTime))
     }
     return false
   }

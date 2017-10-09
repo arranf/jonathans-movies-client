@@ -5,7 +5,8 @@
                 <div class="col-6">
                   <div class="card">
                       <div class="card-body d-flex align-items-center justify-content-center">
-                          <p class="card-text text-center" v-if="getActivePoll">{{remainingTimeWordsForCurrentPoll}}</p>
+                          <p class="card-text text-center" v-if="isCurrentPollInNomination">{{remainingTimeInNominationWordsForCurrentPoll}}</p>
+                          <p class="card-text text-center" v-else-if="isCurrentPollInVoting">{{remainingTimeWordsForCurrentPoll}}</p>
                       </div>
                   </div>
                 </div>
@@ -44,7 +45,7 @@ export default {
       ...mapGetters('vote', {votes: 'list'}),
       ...mapGetters('poll', {polls: 'find'}),
       ...mapGetters('vote', {findVotesInStore: 'find'}),
-      ...mapGetters('poll', ['getActivePoll', 'remainingTimeWordsForCurrentPoll']),
+      ...mapGetters('poll', ['getActivePoll', 'remainingTimeWordsForCurrentPoll', 'isCurrentPollInNomination', 'isCurrentPollInVoting', 'remainingTimeInNominationWordsForCurrentPoll']),
       ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
       ...mapState('auth', ['user']),
       ...mapGetters('errors', ['shouldShowErrorForExceedVote']),
@@ -65,12 +66,6 @@ export default {
   methods: {
       ...mapActions('poll', {updatePoll: 'patch'}),
       ...mapActions('auth', ['logout']),
-      timeRemaining: function() {
-        if (this.getActivePoll) {
-          return 'Poll over in ' + utils.humanizeTimeToNow(this.getActivePoll.endDateTime)
-        }
-        return 'No Current Poll'
-      },
       stopPoll: function () {
         const currentTime = parseInt(new Date().getTime())
         const data = {'endDateTime': currentTime}
@@ -82,7 +77,7 @@ export default {
       }
   },
   beforeUpdate: function() {
-      if (this.user && !this.gotVoteandPolls && this.getActivePoll){
+      if (this.user && !this.gotVoteandPolls && this.getActivePoll) {
         queries.getCurrentPoll()
         .then(queries.getVotesForCurrentPoll())
         .then(this.gotVoteandPolls = true)
