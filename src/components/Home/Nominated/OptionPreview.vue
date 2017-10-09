@@ -1,10 +1,10 @@
 <template>
-  <div v-if="film" v-show="film.data">
-    <div class="card bg-dark text-white h-10"  v-if="film" >
-      <img class="card-img"  v-if="film.data" :src="getFilmBackdrop" alt="Card image">
-      <div class="card-img-overlay">
-        <h4 class="card-title">{{film.name}}</h4>
-        <p class="card-text">Last Watched {{lastWatched}}</p>
+  <div v-if="option">
+    <div class="card mt-3 mb-1"  v-if="option" >
+      <img class="card-img-top" v-if="option.film.data" v-once :src="getFilmBackdrop" :alt="option.name + ' image'">
+      <div class="card-body">
+        <h4 class="card-title mb-0">{{option.name}}</h4>
+        <p class="card-text" v-if="lastWatched"><small class="text-muted">Last Watched {{lastWatched}}</small></p>
       </div>
     </div>
   </div>
@@ -17,17 +17,17 @@ import LazyLoad from 'lazyload'
 
 export default {
   name: 'OptionPreview',
-  props: ['film'],
+  props: ['option'],
   computed: {
-    lastWatched: function () {return utils.humanizeTimeToNowImprecise(this.film.lastWatched) + ' ago'},
-    getFilmBackdrop: function () {return utils.gettmdbBackdropImage(this.film.data.backdrop_path)}
+    lastWatched: function () {return utils.humanizeTimeToNowImprecise(this.option.film.lastWatched) + ' ago'},
+    getFilmBackdrop: function () {return utils.gettmdbBackdropImage(this.option.film.data.backdrop_path)}
   },
   created() {
-    let lazyLoad = new LazyLoad()
+    // let lazyLoad = new LazyLoad()
 
-    tmdb.getMovieData(this.film.tmdbId)
+    tmdb.getMovieData(this.option.film.tmdbId)
     .then(response => {
-      this.film.data = response.data
+      this.option.film.data = response.data
     })
     .catch(error => console.error(error))
     

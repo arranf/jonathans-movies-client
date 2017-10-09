@@ -6,7 +6,7 @@ export default {
   userVotes: (state, getters, rootState, rootGetters) => {
     const user = rootState.auth.user
     if (rootGetters['poll/getActivePoll'] && user) {
-      return getters.find({query: {poll_id: rootGetters['poll/getActivePoll']._id, user_id: user._id}})
+      return getters.find({query: {$limit: 1000, poll_id: rootGetters['poll/getActivePoll']._id, user_id: user._id}})
     }
     return null
   },

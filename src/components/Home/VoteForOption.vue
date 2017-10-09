@@ -16,7 +16,7 @@
                     </div>
                 </swiper-slide>
         </template>
-        <div class="swiper-pagination" slot="pagination"></div>
+        <div class="swiper-pagination"  slot="pagination"></div>
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
   </swiper>
@@ -42,8 +42,9 @@ export default {
         },
         notNextTick: true,
         swiperOption: {
-          onClick: this.vote,
-          setWrapperSize :true,
+                onClick: this.vote,
+                setWrapperSize: true,
+                initialSlide: 0,
                 slidesPerView: 3,
                 spaceBetween: 40,
                 mousewheelControl : true,
@@ -138,7 +139,6 @@ export default {
       console.log('Current swiper instance object',  this.$refs.voteSwiper.swiper)
       
       queries.getVotesForCurrentPoll()
-      .then( response => console.log(response))
       .catch(error => console.error(error))
   }
 }
