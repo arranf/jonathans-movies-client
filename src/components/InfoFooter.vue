@@ -13,7 +13,8 @@
                 <div class="col-6">
                   <div class="card" :class="displayError"  v-if="votes && polls && getActivePoll">
                       <div class="card-body d-flex align-items-center justify-content-center">
-                          <p class="card-text text-center"><span class="font-weight-bold">{{remainingVotes}}</span> <br/> Votes Left</p>
+                          <p v-if="isCurrentPollInNomination" class="card-text text-center"><span class="font-weight-bold">{{remainingNominations}}</span> <br/> Nominations Left</p>
+                          <p v-else-if="isCurrentPollInVoting" class="card-text text-center"><span class="font-weight-bold">{{remainingVotes}}</span> <br/> Votes Left</p>
                       </div>
                   </div>
                 </div>
@@ -47,6 +48,7 @@ export default {
       ...mapGetters('vote', {findVotesInStore: 'find'}),
       ...mapGetters('poll', ['getActivePoll', 'remainingTimeWordsForCurrentPoll', 'isCurrentPollInNomination', 'isCurrentPollInVoting', 'remainingTimeInNominationWordsForCurrentPoll']),
       ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
+      ...mapGetters('option', {remainingNominations: 'nominationsRemaining'}),
       ...mapState('auth', ['user']),
       ...mapGetters('errors', ['shouldShowErrorForExceedVote']),
       displayError:  function() {
