@@ -1,20 +1,23 @@
 <template>
-  <div class="card mt-3 mb-1 mx-2 movie-poster" v-if="option" >
-    <img class="card-img-top" v-if="option.film && option.film.data" v-once :src="getFilmPoster" :alt="option.name + ' image'">
-    <div class="card-body">
-      <h4 class="card-title">{{option.name}} <small v-if="option.film && option.film.data">{{getFilmYear}}</small></h4>
-      <p class="text-muted" v-if="option.film && option.film.data"><span class="font-weight-bold">Runtime</span>: {{option.film.data.runtime}} mins</p>
-      <p class="text-muted"><span class="font-weight-bold">Genres</span> {{option.film.genres.join(', ')}}</p>
-    </div>
-    <div class="card-body" v-if="option.film && option.film.data">
-      <a v-once :href="getImdbLink" target="_blank" class="card-link">More Information</a>
+<div style="width: 15rem !important;">
+  <div class="mt-2 mb-1 mx-2"  v-if="option" >
+    <img class="img-fluid img-thumbnail" v-if="option.film && option.film.data" v-once :src="getFilmPoster" :alt="option.name + ' image'">
+    <div v-else class="d-flex" style="height: 20.5rem;" :style="{backgroundColor: getColor()}">
+      <div class="h-30 w-100 align-self-end">
+        <p style="font-size: 1.6em;" class="text-white text-center">{{option.name}}</p>
+      </div>
     </div>
   </div>
+  <h6 class="text-muted ml-3">
+    {{option.name}}
+  </h6>
+</div>
 </template>
 
 <script>
 import utils from '@/utils'
 import tmdb from '@/api/tmdb'
+import constants from '@/constants'
 
 export default {
   name: 'OptionPreview',
@@ -30,6 +33,11 @@ export default {
       return utils.getYearFromTmdbReleaseDate(this.option.film.release_date)
     }
   },
+  methods: {
+    getColor: function () {
+      return utils.selectRandom(constants.colors['800'])
+    }
+  },
   created() {
     if (this.option.film) {
       tmdb.getMovieData(this.option.film.tmdb_id)
@@ -41,9 +49,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  .movie-poster {
-    width: 15rem !important;
-  }
-</style>

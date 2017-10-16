@@ -1,15 +1,9 @@
 <template>
-<div>
-  <h2>Nominations: </h2>
-  <div class="d-flex scroll flex-row-reverse card-deck" v-if="getOptionsForCurrentPoll">
-    <!-- <div class="scroll-item p-2 card mt-3">
-      <div class="card-body">
-        <h4 class="card-title">Why Not Nominate A Movie?</h4>
-        <router-link to="/nominate" class="btn btn-primary">Suggest Your Favourite</router-link>
-      </div>
-    </div> -->
-    <template  v-for="option in getOptionsForCurrentPoll">
-      <option-preview class="scroll-item" :key="option._id" :option="option"></option-preview>
+<div class="h-100">
+  <h4 class="mt-2 mx-3 m-1">Nominations</h4>
+  <div class="d-flex h-100 scroll flex-row-reverse" v-if="getOptionsForCurrentPoll">
+    <template v-for="option in getOptionsForCurrentPoll">
+      <option-preview class="scroll-item h-100" :key="option._id" :option="option"></option-preview>
     </template>
   </div>
 </div>
