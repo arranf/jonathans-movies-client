@@ -46,6 +46,9 @@ const functions = {
   },
   getTmdbBackdropImage: function (slug) {
     return 'https://image.tmdb.org/t/p/w1280/' + slug
+  },
+  getYearFromTmdbReleaseDate: function (releaseDate) {
+    return new Date(releaseDate).getFullYear()
   }
 }
 export default functions
