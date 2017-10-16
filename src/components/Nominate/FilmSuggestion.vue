@@ -9,8 +9,8 @@
           <p class="card-text">{{film.overview}}</p>
         </div>
         <div class="card-body">
-          <a href="#" @click="nominate()" class="card-link font-weight-bold">Nominate</a>
-          <a v-once :href="getImdbLink" target="_blank" class="card-link">More Information</a>
+          <a v-if="isCurrentPollInNomination" href="#" @click="addNomination()" :class="shouldNominate" class="card-link font-weight-bold">Nominate</a>
+          <a v-once isCurrentPollInNomination:href="getImdbLink" target="_blank" class="card-link">More Information</a>
         </div>
       </div>
       <loading-bounce v-else></loading-bounce>
@@ -30,7 +30,7 @@
               {{film.genres.join(', ')}}
             </div>
             <div class="col-3">
-              <button class="btn btn-danger btn-sm">Nominate</button>
+              <button :disabled="hasNominationsRemaining" class="btn btn-danger btn-sm" @click="addNomination">Nominate</button>
             </div>
           </div>
         </div>
@@ -40,14 +40,21 @@
 </template>
 
 <script>
+import queries from '@/api'
 import utils from '@/utils'
 import tmdbApi from '@/api/tmdb'
+import {mapGetters} from 'vuex'
 import LoadingBounce from '@/components/Loading/LoadingBounce'
 
   export default {
     props:  ['film'],
     components :{
       LoadingBounce
+    },
+    data () {
+      return {
+        'text-muted': !this.hasNominationsRemaining
+      }
     },
     methods: {
       showDetail: function() {
@@ -61,9 +68,14 @@ import LoadingBounce from '@/components/Loading/LoadingBounce'
           .then(response => this.$set(this.film, 'data', response.data))
           .catch(error => {console.error(error); this.$modal.hide(`${this.film._id}-detail`)})
           
+      },
+      addNomination: function () {
+        queries.addNomination(this.film)
       }
     },
     computed: {
+      ...mapGetters('option', ['hasNominationsRemaining', 'hasNominationsRemaining']),
+      ...mapGetters('poll', ['isCurrentPollInNomination']),
       backdropImage: function () {
         if (this.film.data) {
           return utils.getTmdbBackdropImage(this.film.data.backdrop_path)
