@@ -2,7 +2,7 @@
   <div>
     <input type="text" v-model="searchQuery" @input="getSuggestions()" name="movies" class="form-control" @focus="completed = true" @blur="completed = false">
     <div v-if="suggestions.length > 0 && !completed" class="autocomplete-suggestions">
-      <div @click="fillBox(suggest.name)" class="autocomplete-suggestion autocomplete-selected" :key="suggest.tmdbid" v-for="suggest in suggestions">
+      <div @click="fillBox(suggest)" class="autocomplete-suggestion autocomplete-selected" :key="suggest.tmdbid" v-for="suggest in suggestions">
         {{suggest.name}}
       </div>
     </div>
@@ -19,9 +19,13 @@ export default {
     return {
       suggestions: [],
       searchQuery: '',
+      chosenFilm: {},
       completed: false
     }
   },
+  props: [
+    'index'
+  ],
   methods: {
     getResults: function () {
       if (this.completed){
@@ -36,10 +40,14 @@ export default {
           })
         }
       })
+
+      this.$emit('fill', this.index, {name: this.searchQuery, film_id: null})
     },
     fillBox: function(toFill) {
-      this.searchQuery = toFill
+      this.searchQuery = toFill.name
+      this.chosenFilm = {name: toFill.name, film_id: toFill._id} 
       this.completed = true
+      this.$emit('fill', this.index, this.chosenFilm)
     }  
   },
   mounted() {

@@ -13,8 +13,7 @@
                   <label :for="index">Option {{ index + 1 }}</label>
                 </div>
                 <div class="col col-md-4">
-                  <movie-suggest :id="index+'-suggest'"></movie-suggest>
-                  <!-- <input type="text" class="form-control" :id="index" :placeholder="getRandomPlaceholder()" v-model="options[index]"></input> -->
+                  <movie-suggest :id="index+'-suggest'" :index="index" @fill="fillOption"></movie-suggest>
                 </div>
               </div> <!-- row -->
             </div>
@@ -88,7 +87,7 @@ export default {
     return {
       minutes: '3',
       votes: '2',
-      options: [''],
+      options: [{name: "", film_id: null}],
       placeholders: ['The Assassin', 'Zoolander 2', 'Titanic 2', 'Beauty and the Beast']
     }
   },
@@ -98,7 +97,10 @@ export default {
       router.push('/home')
     },
     addOption: function () {
-      this.options.push('')
+      this.options.push({name: "", film_id: null})
+    },
+    fillOption: function (index, film) {
+      this.options[index] = film
     },
     startPoll: function () {
       const currentTime = parseInt(new Date().getTime())
@@ -106,7 +108,9 @@ export default {
         numberOfVotes: parseInt(this.votes),
         startDateTime: currentTime,
         endDateTime: currentTime + parseInt(this.minutes) *  60000,
-        options: this.options.filter(o => o && o.trim().length > 0)
+        options: this.options.filter(o => o
+          && (typeof o === 'object' || o.trim().length > 0)
+        )
       })
       router.push('/home')
     },
@@ -120,11 +124,11 @@ export default {
     isDisabled: function () {
       return !this.minutes  
         || !this.votes 
-        || this.options.length < 2 
+        || this.options.length < 2
         || !this.options[0]
         || !this.options[1]
-        || (this.options[0] && !this.options[0].trim().length > 0)
-        || (this.options[1] && !this.options[1].trim().length > 0)
+        || (!this.options[0].name.trim().length > 0)
+        || (!this.options[1].name.trim().length > 0)
     }
   }
 }
