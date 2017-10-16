@@ -72,7 +72,7 @@ export default {
                 1200: {
                   slidesPerView: 4,
                   spaceBetween: 40
-                } // This as true breaks things
+                }
               },
         }
       }
