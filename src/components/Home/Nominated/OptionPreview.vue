@@ -20,7 +20,7 @@ export default {
   props: ['option'],
   computed: {
     lastWatched: function () {return utils.humanizeTimeToNowImprecise(this.option.film.lastWatched) + ' ago'},
-    getFilmBackdrop: function () {return utils.gettmdbBackdropImage(this.option.film.data.backdrop_path)}
+    getFilmBackdrop: function () {return utils.getTmdbBackdropImage(this.option.film.data.backdrop_path)}
   },
   created() {
     // let lazyLoad = new LazyLoad()
