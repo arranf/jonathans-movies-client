@@ -44,8 +44,14 @@ const functions = {
       return acc
     }, [])
   },
-  gettmdbBackdropImage: function (slug) {
-    return 'https://image.tmdb.org/t/p/w1280/' + slug
+  getTmdbBackdropImage: function (slug) {
+    return `https://image.tmdb.org/t/p/w1280/${slug}`
+  },
+  getTmdbPosterImage: function (slug) {
+    return `https://image.tmdb.org/t/p/w342${slug}`
+  },
+  getYearFromTmdbReleaseDate: function (releaseDate) {
+    return new Date(releaseDate).getFullYear()
   }
 }
 export default functions

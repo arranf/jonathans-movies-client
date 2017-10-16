@@ -55,6 +55,24 @@ const queries = {
         $sort: sort,
         $skip: skip
       }})
+  },
+  addNomination: function (film) {
+    const poll = store.getters['poll/getActivePoll']
+    const pollId = poll._id
+    const hasNominationsRemaining = store.getters['option/hasNominationsRemaining']
+
+    if (!hasNominationsRemaining) {
+      return Promise.reject(new Error('Nomination used'))
+    }
+
+    if (!pollId) {
+      return Promise.reject(new Error('Missing poll id'))
+    }
+    if (film && film.name && film._id) {
+      return store.dispatch('option/create', {name: film.name, poll_id: pollId, film_id: film._id})
+    } else {
+      return Promise.reject(new Error('Missing film information id'))
+    }
   }
 }
 
