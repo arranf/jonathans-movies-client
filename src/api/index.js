@@ -62,16 +62,16 @@ const queries = {
     const hasNominationsRemaining = store.getters['option/hasNominationsRemaining']
 
     if (!hasNominationsRemaining) {
-      throw new Error('Nomination used')
+      return Promise.reject(new Error('Nomination used'))
     }
 
     if (!pollId) {
-      throw new Error('Missing poll id')
+      return Promise.reject(new Error('Missing poll id'))
     }
     if (film && film.name && film._id) {
-      store.dispatch('options/create', {name: film.name, poll_id: pollId, film_id: film._id})
+      return store.dispatch('option/create', {name: film.name, poll_id: pollId, film_id: film._id})
     } else {
-      throw new Error('Missing film information id')
+      return Promise.reject(new Error('Missing film information id'))
     }
   }
 }
