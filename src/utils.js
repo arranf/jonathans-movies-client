@@ -45,7 +45,10 @@ const functions = {
     }, [])
   },
   getTmdbBackdropImage: function (slug) {
-    return 'https://image.tmdb.org/t/p/w1280/' + slug
+    return `https://image.tmdb.org/t/p/w1280/${slug}`
+  },
+  getTmdbPosterImage: function (slug) {
+    return `https://image.tmdb.org/t/p/w342${slug}`
   },
   getYearFromTmdbReleaseDate: function (releaseDate) {
     return new Date(releaseDate).getFullYear()
