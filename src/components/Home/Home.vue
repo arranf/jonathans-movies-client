@@ -37,6 +37,9 @@ export default {
         ...mapGetters('option', {
             options: 'list'
         }),
+        ...mapGetters('option', {
+          findOptions: 'find'
+        }),
         ...mapGetters('poll', ['getActivePoll', 'isCurrentPollInNomination'])
     },
     methods: {
@@ -48,10 +51,11 @@ export default {
       .then(response => {
           if (response.total > 0){
             this.pollId = response.data[0]._id
-            return queries.getOptionsForMostRecentPoll(this.pollId)
-            } else {
-              return Promise.resolve()
+            const existingOptions = this.findOptions({query: {poll_id: this.pollId}})
+            if (existingOptions.total <= 2) {
+              queries.getOptionsForMostRecentPoll(this.pollId).then(response => console.log('Got options'))
             }
+          }
         })
         .catch(error => console.error(error))
     }
