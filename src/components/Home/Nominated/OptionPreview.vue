@@ -16,35 +16,59 @@
 
 <script>
 import utils from '@/utils'
-import tmdb from '@/api/tmdb'
 import constants from '@/constants'
+import {mapState, mapActions} from 'vuex'
+// import tryer from 'tryer'
 
 export default {
   name: 'OptionPreview',
   props: ['option'],
   computed: {
-    lastWatched: function () {return utils.humanizeTimeToNowImprecise(this.option.film.lastWatched) + ' ago'},
-    getFilmBackdrop: function () {return utils.getTmdbBackdropImage(this.option.film.data.backdrop_path)},
-    getFilmPoster: function () {return utils.getTmdbPosterImage(this.option.film.data.poster_path)},
+    ...mapState('option', {waitingForOptionFind: 'isFindPending'}),
+    lastWatched: function () {
+      if (this.option.film && this.option.film.lastWatched){
+        return utils.humanizeTimeToNowImprecise(this.option.film.lastWatched) + ' ago'
+      }
+      return null
+    },
+    getFilmBackdrop: function () {
+      if (this.option.film && this.option.film.data && this.option.film.backdrop_path) {
+        return utils.getTmdbBackdropImage(this.option.film.data.backdrop_path)
+      }
+      return null
+    },
+    getFilmPoster: function () {
+      if (this.option.film && this.option.film.data) {
+        return utils.getTmdbPosterImage(this.option.film.data.poster_path)
+      }
+      return null
+    },
     getImdbLink: function () {
-      return `https://www.imdb.com/title/${this.option.film.data.imdb_id}`
+      if (this.option.film && this.option.film.data && this.option.film.data.imdb_id) {
+        return `https://www.imdb.com/title/${this.option.film.data.imdb_id}`
+      }
     },
     getFilmYear: function() {
-      return utils.getYearFromTmdbReleaseDate(this.option.film.release_date)
+      if (this.option.film && this.option.film.release_date) {
+        return utils.getYearFromTmdbReleaseDate(this.option.film.release_date)
+      }
+      return null
     }
   },
   methods: {
+    ...mapActions('option', ['getFilmData']),
     getColor: function () {
       return utils.selectRandom(constants.colors['800'])
     }
   },
+  data () {
+    return {
+      fetchedData: false
+    }
+  },
   created() {
-    if (this.option.film) {
-      tmdb.getMovieData(this.option.film.tmdb_id)
-      .then(response => {
-        this.$set(this.option.film, 'data', response.data)
-      })
-      .catch(error => console.error(error))
+    if (this.option.film ) {
+      this.getFilmData(this.option)
     }
   }
 }

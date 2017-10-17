@@ -8,6 +8,9 @@ import optionGetters from './option/getters'
 import pollGetters from './poll/getters'
 import filmsGetters from './films/getters'
 
+import optionActions from './option/actions'
+import optionMutations from './option/mutations'
+
 import time from '@/store/time'
 import errors from '@/store/errors'
 
@@ -22,7 +25,7 @@ const store = new Vuex.Store({
   },
   plugins: [
     service('vote', {getters: voteGetters}),
-    service('option', {getters: optionGetters}),
+    service('option', {getters: optionGetters, actions: optionActions, mutations: optionMutations}),
     service('poll', {getters: pollGetters}),
     service('users'),
     service('films', {getters: filmsGetters}),
