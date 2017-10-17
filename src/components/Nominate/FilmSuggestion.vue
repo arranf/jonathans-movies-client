@@ -4,7 +4,7 @@
       <div class="card" v-if="film.data">
         <img class="card-img-top" :src="backdropImage" :alt="`{film.name} Backdrop`">
         <div class="card-body">
-          <h4 class="card-title">{{film.name}} <small>{{getFilmYear(film.release_date)}}</small></h4>
+          <h4 class="card-title">{{film.name}} <small>{{getFilmYear}}</small></h4>
           <p class="text-muted"><span class="font-weight-bold">Runtime</span>: {{film.data.runtime}} mins | <span class="font-weight-bold">Genres</span> {{film.genres.join(', ')}}</p>
           <p class="card-text">{{film.overview}}</p>
         </div>
@@ -19,17 +19,17 @@
     <div class="card-group">
       <div class="card" @click="showDetail()">
         <div class="card-body">
-          <h4 class="card-title d-inline">{{film.name}} <small>{{getFilmYear()}}</small></h4> 
+          <h4 class="card-title d-inline">{{film.name}} <small>{{getFilmYear}}</small></h4> 
         </div>
         <div class="card-body">
           <div class="row d-flex">
             <div class="col-2">
               <span class="badge badge-primary">{{film.score}}</span>
             </div>
-            <div class="col-7">
+            <div class="col-6">
               {{film.genres.join(', ')}}
             </div>
-            <div class="col-3">
+            <div class="col-4">
               <button :disabled="!hasNominationsRemaining" class="btn btn-danger btn-sm" @click="addNomination">Nominate</button>
             </div>
           </div>
@@ -58,9 +58,6 @@ import LoadingBounce from '@/components/Loading/LoadingBounce'
       hideDetail: function () {
         this.$modal.hide(`${this.film._id}-detail`)
       },
-      getFilmYear: function(){
-        return utils.getYearFromTmdbReleaseDate(this.film.release_date)
-      },
       modalOpened: function () {
         tmdbApi.getMovieData(this.film.tmdb_id)
           .then(response => this.$set(this.film, 'data', response.data))
@@ -84,6 +81,11 @@ import LoadingBounce from '@/components/Loading/LoadingBounce'
       },
       getImdbLink: function () {
         return `https://www.imdb.com/title/${this.film.data.imdb_id}`
+      },
+      getFilmYear: function(){
+        if (this.film && this.film.release_date) {
+          return utils.getYearFromTmdbReleaseDate(this.film.release_date)
+        }
       },
       shouldNominate: function () {
         return {
