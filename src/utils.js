@@ -52,6 +52,12 @@ const functions = {
   },
   getYearFromTmdbReleaseDate: function (releaseDate) {
     return new Date(releaseDate).getFullYear()
+  },
+  showModal: function (vue, filmId) {
+    vue.$modal.show(`${filmId}-modal`)
+  },
+  hideModal: function (vue, filmId) {
+    vue.$modal.hide(`${filmId}-modal`)
   }
 }
 export default functions

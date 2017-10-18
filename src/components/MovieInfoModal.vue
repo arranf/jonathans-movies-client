@@ -1,5 +1,5 @@
 <template>
-  <modal :pivotY="0.05" :name="`${film._id}-detail`" height="auto" width="85%" @opened="modalOpened()" :scrollable="true">
+  <modal :pivotY="0.05" :name="`${film._id}-modal`" height="auto" width="85%" @opened="modalOpened()" :scrollable="true">
       <div class="card" v-if="film.data">
         <img class="card-img-top" :src="backdropImage" :alt="`{film.name} Backdrop`">
         <div class="card-body">
@@ -30,17 +30,12 @@ export default {
       LoadingBounce
     },
     methods: {
-      showModal: function() {
-         this.$modal.show(`${this.film._id}-detail`);
-      },
-      hideModal: function () {
-        this.$modal.hide(`${this.film._id}-detail`)
-      },
       modalOpened: function () {
-        tmdbApi.getMovieData(this.film.tmdb_id)
-          .then(response => this.$set(this.film, 'data', response.data))
-          .catch(error => {console.error(error); this.hideModal()})
-          
+        if (!this.film.data) {
+          tmdbApi.getMovieData(this.film.tmdb_id)
+            .then(response => this.$set(this.film, 'data', response.data))
+            .catch(error => {console.error(error); this.hideModal()})
+        }
       },
       addNomination: function () {
         if (showNominate) {

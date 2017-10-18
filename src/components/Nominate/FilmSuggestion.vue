@@ -1,6 +1,6 @@
 <template>
   <div>
-    <movie-info-modal ref="modal" :film="film" :show-nominate="true"></movie-info-modal>
+    <movie-info-modal :film="film" :show-nominate="true"></movie-info-modal>
 
     <div class="card-group">
       <div class="card" @click="showModal()">
@@ -39,10 +39,10 @@ import MovieInfoModal from '@/components/MovieInfoModal'
     },
     methods: {
       showModal: function() {
-         this.$refs.modal.showModal()
+         utils.showModal(this, this.film._id)
       },
       hideModal: function () {
-        this.$refs.modal.hideModal()
+        utils.hideModal(this, this.film._id)
       },
       addNomination: function () {
         queries.addNomination(this.film)
