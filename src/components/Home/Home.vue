@@ -1,8 +1,8 @@
 <template>
     <div class="container-fluid" :class="{'h-60': getActivePoll && !isCurrentPollInNomination}">
-      <div class="h-100 align-items-stretch vertical-container justify-content-center" >
+      <div class="h-100 align-items-stretch justify-content-center" >
 
-        <selected-options class="vertical-item" v-if="isCurrentPollInNomination"></selected-options>
+        <selected-options v-if="isCurrentPollInNomination"></selected-options>
         <vote-for-option v-else-if="getActivePoll"></vote-for-option>
         <results v-else></results>
       </div>
@@ -61,21 +61,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-/* https://medium.com/@sevcsik/css-vertical-alignment-without-flexbox-a83eac44c574 */
-.vertical-container {
-  position: relative;
-  text-align: center;
-  
-  &::before,
-  .vertical-item {
-    vertical-align: middle;
-  }
-
-  &::before {
-    content: '';
-    width: 0;
-  }
-}
-</style>
