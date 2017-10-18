@@ -1,9 +1,9 @@
 <template>
-<div class="h-100">
+<div>
   <h4 class="mt-2 mx-3 m-1">Nominations</h4>
-  <div class="d-flex h-100 scroll flex-row-reverse" v-if="getOptionsForCurrentPoll">
+  <div class="d-flex scroll flex-row-reverse" v-if="getOptionsForCurrentPoll">
     <template v-for="option in getOptionsForCurrentPoll">
-      <option-preview class="scroll-item h-100" :key="option._id" :option="option"></option-preview>
+      <option-preview class="scroll-item" :key="option._id" :option="option"></option-preview>
     </template>
   </div>
 </div>
