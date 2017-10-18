@@ -4,8 +4,7 @@ export default {
   getFilmData ({commit}, option) {
     return tmdb.getMovieData(option.film.tmdb_id)
     .then(response => {
-      option.film.data = response.data
-      commit('forceUpdateItem', option)
+      commit('setOptionFilmData', {optionId: option._id, data: response.data})
     })
     .catch(error => console.error(error))
   }
