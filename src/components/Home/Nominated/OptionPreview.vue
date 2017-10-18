@@ -1,20 +1,18 @@
 <template>
 <div>
-  <movie-info-modal v-if="option.film" :film="option.film" :show-nominate="true"></movie-info-modal>
+  <movie-info-modal v-if="option.film" :film="option.film" :show-nominate="false"></movie-info-modal>
 
-  <div style="width: 15rem !important;" @click="showModal()">
-    <div class="mt-2 mb-1 mx-2" style="width: 12rem;"  v-if="option" >
+    <div class="mt-2 mb-1 movie-poster" @click="showModal()" v-if="option" >
       <img class="img-fluid img-thumbnail" v-if="option.film && option.film.data" v-once :src="getFilmPoster" :alt="option.name + ' image'">
-      <div v-else class="d-flex" style="height: 17.5rem;" :style="{backgroundColor: getColor()}">
+      <div v-else class="d-flex fake-movie-poster" :style="{backgroundColor: getColor()}">
         <div class="h-30 w-100 align-self-end">
           <p style="font-size: 1.6em;" class="text-white text-center">{{option.name}}</p>
         </div>
       </div>
+      <h6 class="mt-1 text-muted ml-3">
+        {{option.name}}
+      </h6>
     </div>
-    <h6 class="text-muted ml-3">
-      {{option.name}}
-    </h6>
-  </div>
 </div>
 </template>
 
@@ -83,3 +81,45 @@ export default {
   }
 }
 </script>
+
+<style>
+.movie-poster {
+  width: 11.5rem;
+  margin-right: 0.5em; margin-left: 0.5em;
+}
+
+.fake-movie-poster {
+  height: 17rem;
+}
+
+@media (min-height: 500px) {
+	.movie-poster {
+      width: 12rem;
+    }
+  
+  .fake-movie-poster {
+    height: 17.5rem; 
+  }
+}
+
+@media (min-height: 600px) {
+	.movie-poster {
+      width: 15rem;
+    }
+  
+  .fake-movie-poster {
+    height: 22rem; 
+  }
+}
+
+/* iPhone6 */
+@media (min-height: 650px) {
+	.movie-poster {
+      width: 16rem;
+    }
+  
+  .fake-movie-poster {
+    height: 23.5rem;
+  }
+}
+</style>
