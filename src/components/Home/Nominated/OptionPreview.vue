@@ -102,6 +102,16 @@ export default {
   }
 }
 
+@media (min-height: 550px) {
+	.movie-poster {
+      width: 12.3rem;
+    }
+  
+  .fake-movie-poster {
+    height: 18rem; 
+  }
+}
+
 @media (min-height: 600px) {
 	.movie-poster {
       width: 15rem;
@@ -120,6 +130,27 @@ export default {
   
   .fake-movie-poster {
     height: 23.5rem;
+  }
+}
+
+@media (min-height: 700px) {
+	.movie-poster {
+      width: 21rem;
+    }
+  
+  .fake-movie-poster {
+    height: 31rem;
+  }
+}
+
+/* iPad Portrait */
+@media (min-height: 1000px) {
+	.movie-poster {
+      width: 24rem;
+    }
+  
+  .fake-movie-poster {
+    height: 32.5rem;
   }
 }
 </style>
