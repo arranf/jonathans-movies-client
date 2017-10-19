@@ -38,7 +38,7 @@
     "feathers-authentication-client": "^0.3.3",
     "feathers-hooks": "^2.0.2",
     "feathers-socketio": "^2.0.0",
-    "feathers-vuex": "^1.0.3",
+    "feathers-vuex": "^1.0.4",
     "file-loader": "^0.11.1",
     "font-awesome": "^4.7.0",
     "font-awesome-webpack2": "^0.0.6",
