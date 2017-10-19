@@ -157,11 +157,17 @@ export default {
     canStart: function () {
       return this.minutes  
         && this.votes 
-        && this.options.length > 2
-        && this.options[0]
-        && this.options[1]
-        && this.options[0].name.trim().length > 0
-        && this.options[1].name.trim().length > 0
+        && ( // Either have appropriate options...
+          this.options.length > 2
+          && this.options[0]
+          && this.options[1]
+          && this.options[0].name.trim().length > 0
+          && this.options[1].name.trim().length > 0
+          || // ...or setup a nomination phase 
+          this.haveNominations
+          && this.nominationsMinutes
+          && this.nominations
+        )
     }
   }
 }
