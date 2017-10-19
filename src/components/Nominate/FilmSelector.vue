@@ -4,11 +4,8 @@
       <film-suggestion class="m-1" :key="film._id" :film="film">
       </film-suggestion>
     </template>
-    <div class="spinner" v-if="busy">
-      <div class="double-bounce1"></div>
-      <div class="double-bounce2"></div>
-    </div>
-  </div>
+    <loading-bounce v-if="busy"></loading-bounce>
+  </div>  
 </template>
 
 <script>
@@ -16,8 +13,7 @@ import FilmSuggestion from './FilmSuggestion'
 import infiniteScroll from 'vue-infinite-scroll'
 import {mapGetters} from 'vuex'
 import queries from '@/api'
-
-require("@/assets/styles/loading.scss")
+import LoadingBounce from '@/components/Loading/LoadingBounce'
 
   export default {
     name: 'FilmSelector',
@@ -33,7 +29,8 @@ require("@/assets/styles/loading.scss")
       infiniteScroll
     },
     components: {
-      FilmSuggestion
+      FilmSuggestion,
+      LoadingBounce
     },
     computed: {
       ...mapGetters('films', {allFilms: 'list'})

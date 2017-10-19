@@ -33,5 +33,8 @@ export default {
       return 0
     }
     return 1
+  },
+  hasNominationsRemaining: (state, getters) => {
+    return getters.nominationsRemaining > 0
   }
 }

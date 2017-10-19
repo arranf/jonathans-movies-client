@@ -44,8 +44,20 @@ const functions = {
       return acc
     }, [])
   },
-  gettmdbBackdropImage: function (slug) {
-    return 'https://image.tmdb.org/t/p/w1280/' + slug
+  getTmdbBackdropImage: function (slug) {
+    return `https://image.tmdb.org/t/p/w1280/${slug}`
+  },
+  getTmdbPosterImage: function (slug) {
+    return `https://image.tmdb.org/t/p/w342${slug}`
+  },
+  getYearFromTmdbReleaseDate: function (releaseDate) {
+    return new Date(releaseDate).getFullYear()
+  },
+  showModal: function (vue, filmId) {
+    vue.$modal.show(`${filmId}-modal`)
+  },
+  hideModal: function (vue, filmId) {
+    vue.$modal.hide(`${filmId}-modal`)
   }
 }
 export default functions

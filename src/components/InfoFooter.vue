@@ -34,7 +34,6 @@
 
 <script>
 import {mapGetters, mapState, mapActions} from 'vuex'
-import utils from '@/utils'
 import queries from '@/api'
 import router from '@/router'
 
