@@ -92,7 +92,7 @@
     </div>
     <div class="row">
       <div class="col col-md-auto">
-        <button type="submit" role="button" class="btn btn-primary" @click.prevent="startPoll()" :disabled="isDisabled">Start Poll!</button>
+        <button type="submit" role="button" class="btn btn-primary" @click.prevent="startPoll()" :disabled="!canStart">Start Poll!</button>
       </div>
       <div class="col col-md-3">
         <button type="submit" role="button" class="btn btn-outline-secondary" @click.prevent="toHome()">Back</button>
@@ -154,14 +154,14 @@ export default {
   computed: {
     ...mapGetters('poll', ['getActivePoll']),
     ...mapState('auth', ['user']),
-    isDisabled: function () {
-      return !this.minutes  
-        || !this.votes 
-        || this.options.length < 2
-        || !this.options[0]
-        || !this.options[1]
-        || (!this.options[0].name.trim().length > 0)
-        || (!this.options[1].name.trim().length > 0)
+    canStart: function () {
+      return this.minutes  
+        && this.votes 
+        && this.options.length > 2
+        && this.options[0]
+        && this.options[1]
+        && this.options[0].name.trim().length > 0
+        && this.options[1].name.trim().length > 0
     }
   }
 }
