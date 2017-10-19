@@ -30,9 +30,9 @@ export default {
   nominationsRemaining: (state, getters) => {
     const userNominations = getters.getUserNominations
     if (userNominations && userNominations.length > 0) {
-      return 0
+      return 1
     }
-    return 1
+    return 0
   },
   hasNominationsRemaining: (state, getters) => {
     return getters.nominationsRemaining > 0
