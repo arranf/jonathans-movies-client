@@ -6,8 +6,6 @@
 </template>
 
 <script>
-require("@/assets/styles/loading.scss")
-
 export default {
    name: 'LoadingBounce',
 }
