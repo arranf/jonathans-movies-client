@@ -9,4 +9,7 @@ $theme-colors: (
   "secondary": #ff5722
 );
 
+$enable-gradients: true;
+$enable-shadows: true;
+
 @import "../../../node_modules/bootstrap/scss/bootstrap";
