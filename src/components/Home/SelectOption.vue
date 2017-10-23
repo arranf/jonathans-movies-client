@@ -44,6 +44,8 @@ export default {
         swiperOption: {
           onClick: this.vote,
           setWrapperSize :true,
+                simulateTouch: true,
+                preventClicks: true,
                 slidesPerView: 3,
                 spaceBetween: 40,
                 mousewheelControl : true,
