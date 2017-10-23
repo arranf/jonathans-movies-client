@@ -1,5 +1,6 @@
 <template>
   <div class="d-flex flex-column" style="height:100vh" id="app">
+    <progress-indicator />
     <router-view class="content m-h-60"></router-view>
     <div class="footer w-100">
       <info-footer class="h-100"></info-footer>
@@ -9,11 +10,13 @@
 
 <script>
 import InfoFooter from '@/components/InfoFooter'
-
+import ProgressIndicator from '@/components/Progress.vue'
+        
 export default {
   name: 'app',
   components: {
-    InfoFooter
+    InfoFooter,
+    ProgressIndicator
   }
 }
 </script>
