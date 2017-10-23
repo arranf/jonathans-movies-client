@@ -42,6 +42,8 @@ export default {
         },
         notNextTick: true,
         swiperOption: {
+                simulateTouch: true,
+                preventClicks: true,
                 onClick: this.vote,
                 setWrapperSize: true,
                 initialSlide: 0,
