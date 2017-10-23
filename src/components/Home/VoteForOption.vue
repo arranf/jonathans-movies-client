@@ -91,7 +91,8 @@ export default {
           let optionColors = this.optionColors
           if (optionId in optionColors.optionColorMap){
               return optionColors.optionColorMap[optionId]
-          } 
+          }
+          
           let currentIndex = optionColors.currentIndex
           this.optionColors.optionColorMap[optionId] = optionColors.colors[currentIndex]
           if (currentIndex+1 === optionColors.colors.length){
@@ -107,19 +108,20 @@ export default {
               console.error('Could not get option index')
               return
           }
+
           const option = this.getOptionsForCurrentPoll[index]
           const optionId = option._id
           if (this.isVoted(optionId)) {
               const vote = this.votes.find(v => v.user_id === this.user._id && v.option_id === optionId)
               this.removeVote(vote._id)
-              .then(console.log('Vote removed from ', option.name))
-              .catch(error => console.error(error))
+                .then(console.log('Vote removed from ', option.name))
+                .catch(error => console.error(error))
           } else {
             if (this.remainingVotes <= 0){
               this.updateLastExceededVoteDateTime()
               return
             }
-              this.addVote({poll_id: this.getActivePoll._id, option_id: optionId})
+            this.addVote({poll_id: this.getActivePoll._id, option_id: optionId})
               .then(console.log('Vote added for ', option.name))
               .catch(error => console.error(error))
           }
@@ -138,10 +140,9 @@ export default {
   },
   mounted: function (){
       utils.shuffle(this.optionColors.colors)
-      console.log('Current swiper instance object',  this.$refs.voteSwiper.swiper)
       
       queries.getVotesForCurrentPoll()
-      .catch(error => console.error(error))
+        .catch(error => console.error(error))
   }
 }
 </script>
@@ -174,7 +175,7 @@ export default {
     align-items: center;
   }
 
-    .voted {
-        opacity: 0.8;
-    }
-  </style>
+  .voted {
+      opacity: 0.8;
+  }
+</style>

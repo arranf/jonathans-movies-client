@@ -70,10 +70,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.not-active {
-   pointer-events: none;
-   cursor: default;
-}
-</style>

@@ -20,8 +20,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 /* http://kodhus.com/newsite/step-progress-bar-css-only/ */
+
+$primary: #03A9F4;
+$primary-lighter: #29B6F6;
 
   .progressbar {
       width: 100%;
@@ -53,7 +56,7 @@ export default {
       text-align: center;
       margin: 0 auto 10px auto;
       border-radius: 50%;
-      background-color: white;
+      background-color: #ffffff;
   }
   /* Line */
   .progressbar li:after {
@@ -70,15 +73,15 @@ export default {
       content: none;
   }
   .progressbar li.active {
-      color: green;
+      color: $primary;
   }
   .progressbar li.active:before {
-      border-color: #55b776;
-      background-color: #55b776;
-      color: white;
+      border-color: $primary-lighter;
+      background-color: $primary-lighter;
+      color: #ffffff;
   }
   .progressbar li.active + li:after {
-      background-color: #55b776;
+      background-color: $primary-lighter;
   }
 
 </style>
