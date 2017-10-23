@@ -54,7 +54,7 @@ export default {
     }
     return false
   },
-  isCurrentPollinVoting (state, getters, rootState, rootGetters) {
+  isCurrentPollInVoting (state, getters, rootState, rootGetters) {
     let activePoll = getters.getActivePoll
     if (activePoll) {
       let currentDateTime = rootState.time.now
@@ -91,7 +91,7 @@ export default {
     const poll = getters.getPollFinishingUpTo(withinMinutes)
     if (poll) {
       let currentDateTime = rootState.time.now
-      return (poll.startDateTime <= currentDateTime && (poll.pollTransitionDateTime !== undefined &&
+      return (poll.startDateTime <= currentDateTime && (poll.pollTransitionDateTime === undefined ||
         poll.pollTransitionDateTime <= currentDateTime))
     }
     return false

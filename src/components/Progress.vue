@@ -1,11 +1,12 @@
-<template>
-<div class="text-center mx-auto w-100">
-  <ul class="progressbar d-block" v-if="getPollFinishingUpTo(10)">
-    <li v-if="doesCurrentPollHaveNominations" class="active">Nominations</li>
-    <li :class="{ active: isVotingCurrentOrOverForPollFinishingUpTo(10) }">Voting</li>
-    <li :class="{ active: isItResultsForPollFinishingUpTo(10) }">Results</li>
-  </ul>
-</div>
+<template >
+  <div class="w-100 my-1">
+    <ul class="progressbar" v-if="getPollFinishingUpTo(10)">
+      <li v-if="doesCurrentPollHaveNominations" :class="{'w-33': !doesCurrentPollHaveNominations}" class="active">Nomination</li>
+      <li :class="{ active: isVotingCurrentOrOverForPollFinishingUpTo(10), 'w-33': !doesCurrentPollHaveNominations }">Voting</li>
+      <li :class="{ active: isItResultsForPollFinishingUpTo(10), 'w-33': !doesCurrentPollHaveNominations }">Results</li>
+      <li :class="{'w-33': !doesCurrentPollHaveNominations}">Watch</li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -23,7 +24,12 @@ export default {
 /* http://kodhus.com/newsite/step-progress-bar-css-only/ */
 
   .progressbar {
+      width: 100%;
       counter-reset: step;
+      padding-left: 0;
+      padding-top: 0.5em;
+      margin-left: auto;
+      margin-right: auto;
   }
   .progressbar li {
       list-style-type: none;
@@ -35,12 +41,13 @@ export default {
       text-transform: uppercase;
       color: #7d7d7d;
   }
+  /* Circle */
   .progressbar li:before {
-      width: 30px;
-      height: 30px;
+      width: 3em;
+      height: 3em;
       content: counter(step);
       counter-increment: step;
-      line-height: 30px;
+      line-height: 3em;
       border: 2px solid #7d7d7d;
       display: block;
       text-align: center;
@@ -48,6 +55,7 @@ export default {
       border-radius: 50%;
       background-color: white;
   }
+  /* Line */
   .progressbar li:after {
       width: 100%;
       height: 2px;
@@ -66,8 +74,11 @@ export default {
   }
   .progressbar li.active:before {
       border-color: #55b776;
+      background-color: #55b776;
+      color: white;
   }
   .progressbar li.active + li:after {
       background-color: #55b776;
   }
+
 </style>

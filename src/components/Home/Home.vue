@@ -1,8 +1,7 @@
 <template>
-    <div class="d-flex flex-column justify-content-center container-fluid" :class="{'h-60': getActivePoll && !isCurrentPollInNomination}">
+    <div class="d-flex flex-column justify-content-center container-fluid" :class="{'h-50': getActivePoll && !isCurrentPollInNomination}">
       <div class="h-100 align-items-stretch justify-content-center" >
-
-        <selected-options v-if="isCurrentPollInNomination"></selected-options>
+        <selected-options v-if="isCurrentPollInNomination" />
         <vote-for-option v-else-if="getActivePoll"></vote-for-option>
         <results v-else></results>
       </div>
@@ -14,7 +13,6 @@ import { mapState, mapGetters, mapActions } from 'vuex'
 import queries from '@/api'
 import VoteForOption from '@/components/Home/VoteForOption'
 import Results from '@/components/Results/Results'
-import InfoFooter from '@/components/InfoFooter'
 import SelectedOptions from './Nominated/SelectedOptions'
 
 export default {
@@ -22,8 +20,7 @@ export default {
     components: {
         VoteForOption,
         Results,
-        InfoFooter,
-        SelectedOptions
+        SelectedOptions,
     },
     data() {
         return {
