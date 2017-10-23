@@ -1,6 +1,6 @@
 <template>
   <modal :pivotY="0.05" :name="`${film._id}-modal`" height="auto" width="85%" @opened="modalOpened()" :scrollable="true">
-      <div class="card" v-if="film.data">
+      <div class="card" v-show="film.data && shouldDisplay" v-images-loaded="imageRendered">
         <img class="card-img-top" :src="backdropImage" :alt="`{film.name} Backdrop`">
         <div class="card-body">
           <h4 class="card-title d-inline-block">{{film.name}} <small>{{getFilmYear}}</small></h4> <a v-once :href="getImdbLink" target="_blank" class="card-link float-right"><i class="fa fa-imdb fa-2x" aria-hidden="true"></i></a>
@@ -11,7 +11,7 @@
           <a href="#" @click="addNomination()" :class="shouldNominate" class="card-link font-weight-bold link-primary">Nominate</a>
         </div>
       </div>
-      <loading-bounce v-else></loading-bounce>
+      <loading-bounce v-show="!(film.data && shouldDisplay)"></loading-bounce>
     </modal>
 </template>
 
@@ -20,12 +20,22 @@ import queries from '@/api'
 import utils from '@/utils'
 import tmdbApi from '@/api/tmdb'
 import {mapGetters} from 'vuex'
+import imagesLoaded from 'vue-images-loaded'
 import LoadingBounce from '@/components/Loading/LoadingBounce'
+
 
 export default {
   name: 'MovieInfoModal',
   props:  ['film', 'showNominate'],
-    components :{
+    data () {
+      return {
+        shouldDisplay: false
+      }
+    },
+    directives: {
+      imagesLoaded
+    },
+    components: {
       LoadingBounce
     },
     methods: {
@@ -42,7 +52,8 @@ export default {
             .then(() => {this.hideModal(); this.$router.push('/')})
             .catch(error => console.error(error))
         }
-      }
+      },
+      imageRendered: function () { this.shouldDisplay = true}
     },
     computed: {
       ...mapGetters('option', ['hasNominationsRemaining', 'hasNominationsRemaining']),
