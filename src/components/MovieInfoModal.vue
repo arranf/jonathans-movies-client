@@ -3,13 +3,12 @@
       <div class="card" v-if="film.data">
         <img class="card-img-top" :src="backdropImage" :alt="`{film.name} Backdrop`">
         <div class="card-body">
-          <h4 class="card-title">{{film.name}} <small>{{getFilmYear}}</small></h4>
+          <h4 class="card-title d-inline-block">{{film.name}} <small>{{getFilmYear}}</small></h4> <a v-once :href="getImdbLink" target="_blank" class="card-link float-right"><i class="fa fa-imdb fa-2x" aria-hidden="true"></i></a>
           <p class="text-muted"><span class="font-weight-bold">Runtime</span>: {{film.data.runtime}} mins | <span class="font-weight-bold">Genres</span> {{film.genres.join(', ')}}</p>
           <p class="card-text">{{film.overview}}</p>
         </div>
-        <div class="card-body">
-          <a v-if="showNominate && isCurrentPollInNomination" href="#" @click="addNomination()" :class="shouldNominate" class="card-link font-weight-bold">Nominate</a>
-          <a v-once :href="getImdbLink" target="_blank" class="card-link">More Information</a>
+        <div class="card-body" v-if="showNominate && isCurrentPollInNomination" >
+          <a href="#" @click="addNomination()" :class="shouldNominate" class="card-link font-weight-bold link-primary">Nominate</a>
         </div>
       </div>
       <loading-bounce v-else></loading-bounce>
@@ -70,3 +69,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.fa-imdb {
+  color: #FDD835;
+}
+</style>
