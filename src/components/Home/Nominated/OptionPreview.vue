@@ -66,7 +66,7 @@ export default {
       return utils.selectRandom(constants.colors['800'])
     },
     showModal: function() {
-      utils.showModal(this, this.option.film._id)
+      if (this.option.film) { utils.showModal(this, this.option.film._id) }
     }
   },
   data () {
