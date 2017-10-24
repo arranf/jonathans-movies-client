@@ -27,10 +27,11 @@ export default {
       return getters.getOptionsForPollByUser(activePoll._id, user._id)
     }
   },
-  nominationsRemaining: (state, getters) => {
+  nominationsRemaining: (state, getters, rootState, rootGetters) => {
+    const activePoll = rootGetters['poll/getActivePoll']
     const userNominations = getters.getUserNominations
-    if (userNominations && userNominations.length > 0) {
-      return 1
+    if (activePoll && userNominations) {
+      return activePoll.numberOfNominations - (userNominations.length || 0)
     }
     return 0
   },
