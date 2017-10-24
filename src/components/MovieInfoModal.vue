@@ -1,18 +1,17 @@
 <template>
   <modal :pivotY="0.05" :name="`${film._id}-modal`" height="auto" width="85%" @opened="modalOpened()" :scrollable="true">
-      <div class="card" v-if="film.data">
+      <div class="card" v-show="film.data && shouldDisplay" v-images-loaded="imageRendered">
         <img class="card-img-top" :src="backdropImage" :alt="`{film.name} Backdrop`">
         <div class="card-body">
-          <h4 class="card-title">{{film.name}} <small>{{getFilmYear}}</small></h4>
-          <p class="text-muted"><span class="font-weight-bold">Runtime</span>: {{film.data.runtime}} mins | <span class="font-weight-bold">Genres</span> {{film.genres.join(', ')}}</p>
+          <h4 class="card-title d-inline-block">{{film.name}} <small>{{getFilmYear}}</small></h4> <a v-if="film" :href="getImdbLink" target="_blank" class="card-link float-right"><i class="fa fa-imdb fa-2x" aria-hidden="true"></i></a>
+          <p v-if="film.data" class="text-muted"><span class="font-weight-bold">Runtime</span>: {{film.data.runtime}} mins | <span class="font-weight-bold">Genres</span> {{film.genres.join(', ')}}</p>
           <p class="card-text">{{film.overview}}</p>
         </div>
-        <div class="card-body">
-          <a v-if="showNominate && isCurrentPollInNomination" href="#" @click="addNomination()" :class="shouldNominate" class="card-link font-weight-bold">Nominate</a>
-          <a v-once :href="getImdbLink" target="_blank" class="card-link">More Information</a>
+        <div class="card-body" v-if="showNominate && isCurrentPollInNomination" >
+          <a href="#" @click="addNomination()" :class="shouldNominate" class="card-link font-weight-bold link-primary">Nominate</a>
         </div>
       </div>
-      <loading-bounce v-else></loading-bounce>
+      <loading-bounce v-show="!film.data || !shouldDisplay"></loading-bounce>
     </modal>
 </template>
 
@@ -21,12 +20,22 @@ import queries from '@/api'
 import utils from '@/utils'
 import tmdbApi from '@/api/tmdb'
 import {mapGetters} from 'vuex'
+import imagesLoaded from 'vue-images-loaded'
 import LoadingBounce from '@/components/Loading/LoadingBounce'
+
 
 export default {
   name: 'MovieInfoModal',
   props:  ['film', 'showNominate'],
-    components :{
+    data () {
+      return {
+        shouldDisplay: false
+      }
+    },
+    directives: {
+      imagesLoaded
+    },
+    components: {
       LoadingBounce
     },
     methods: {
@@ -43,7 +52,8 @@ export default {
             .then(() => {this.hideModal(); this.$router.push('/')})
             .catch(error => console.error(error))
         }
-      }
+      },
+      imageRendered: function () { this.shouldDisplay = true}
     },
     computed: {
       ...mapGetters('option', ['hasNominationsRemaining', 'hasNominationsRemaining']),
@@ -55,7 +65,8 @@ export default {
         return ''
       },
       getImdbLink: function () {
-        return `https://www.imdb.com/title/${this.film.data.imdb_id}`
+        if (this.film && this.film.data && this.film.data.imdb_id)
+          return `https://www.imdb.com/title/${this.film.data.imdb_id}`
       },
       getFilmYear: function(){
         if (this.film && this.film.release_date) {
@@ -72,8 +83,7 @@ export default {
 </script>
 
 <style scoped>
-.not-active {
-   pointer-events: none;
-   cursor: default;
+.fa-imdb {
+  color: #FDD835;
 }
 </style>

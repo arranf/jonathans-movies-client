@@ -1,8 +1,7 @@
 <template>
    <div v-if="allFilms" v-infinite-scroll="fetchNextPage" infinite-scroll-disabled="busy" infinite-scroll-distance="10" class="scroll">
-     <template v-for="film in allFilms">
-      <film-suggestion class="m-1" :key="film._id" :film="film">
-      </film-suggestion>
+     <template v-for="(film, index) in allFilms">
+      <film-suggestion class="m-1" :film="film" :key="index"/>
     </template>
     <loading-bounce v-if="busy"></loading-bounce>
   </div>  

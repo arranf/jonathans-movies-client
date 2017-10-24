@@ -1,7 +1,7 @@
 <template>
   <div class="spinner">
-    <div class="double-bounce1"></div>
-    <div class="double-bounce2"></div>
+    <div class="double-bounce1 bg-primary"></div>
+    <div class="double-bounce2 bg-primary"></div>
   </div>
 </template>
 
@@ -25,7 +25,6 @@ export default {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: #333;
   opacity: 0.6;
   position: absolute;
   top: 0;

@@ -1,10 +1,10 @@
 <template>
-    <footer class="h-100">
+    <footer class="h-100 bg-primary">
         <div class="container-fluid" >
             <div class="row equal-height" v-if="user && getActivePoll">
                 <div class="col-6">
                   <div class="card">
-                      <div class="card-body d-flex align-items-center justify-content-center">
+                      <div class="card body d-flex align-items-center justify-content-center">
                           <p class="card-text text-center" v-if="isCurrentPollInNomination">{{remainingTimeInNominationWordsForCurrentPoll}}</p>
                           <p class="card-text text-center" v-else-if="isCurrentPollInVoting">{{remainingTimeWordsForCurrentPoll}}</p>
                       </div>
@@ -21,7 +21,7 @@
             </div>
 
           <div >
-            <ul class="list-inline list-unstyled">
+            <ul class="list-inline list-unstyled footer-links">
               <li class="list-inline-item"><router-link to="/create" v-if="user && user.isAdmin && !getActivePoll">Create Poll</router-link></li>
               <li class="list-inline-item"><router-link to="/nominate" v-if="user">Nominate</router-link></li>
               <li class="list-inline-item"><button type="button" class="btn btn-link" v-if="user && user.isAdmin && getActivePoll" @click.prevent="stopPoll()">Stop Poll</button></li>
@@ -44,7 +44,6 @@ export default {
   computed: {
       ...mapGetters('vote', {votes: 'list'}),
       ...mapGetters('poll', {polls: 'find'}),
-      ...mapGetters('vote', {findVotesInStore: 'find'}),
       ...mapGetters('poll', ['getActivePoll', 'remainingTimeWordsForCurrentPoll', 'isCurrentPollInNomination', 'isCurrentPollInVoting', 'remainingTimeInNominationWordsForCurrentPoll']),
       ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
       ...mapGetters('option', {remainingNominations: 'nominationsRemaining'}),
@@ -91,11 +90,10 @@ export default {
 footer {
   padding-top: 0.5rem;
   flex-shrink: 0;
-  background-color: #efefef;
   text-align: center;
 }
 
-.heart {
-    color: red;
+.footer-links a, .footer-links button {
+   color: #ffffff;
 }
 </style>

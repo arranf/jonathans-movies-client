@@ -39,3 +39,8 @@ html { font-size: 100%; } /* This means 16px by default or is adjusted by the us
 .card {
   flex: 1;
 }
+
+.not-active {
+  pointer-events: none;
+  cursor: default;
+}
