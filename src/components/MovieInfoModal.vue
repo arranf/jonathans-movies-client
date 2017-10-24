@@ -3,15 +3,15 @@
       <div class="card" v-show="film.data && shouldDisplay" v-images-loaded="imageRendered">
         <img class="card-img-top" :src="backdropImage" :alt="`{film.name} Backdrop`">
         <div class="card-body">
-          <h4 class="card-title d-inline-block">{{film.name}} <small>{{getFilmYear}}</small></h4> <a v-once :href="getImdbLink" target="_blank" class="card-link float-right"><i class="fa fa-imdb fa-2x" aria-hidden="true"></i></a>
-          <p class="text-muted"><span class="font-weight-bold">Runtime</span>: {{film.data.runtime}} mins | <span class="font-weight-bold">Genres</span> {{film.genres.join(', ')}}</p>
+          <h4 class="card-title d-inline-block">{{film.name}} <small>{{getFilmYear}}</small></h4> <a v-if="film" :href="getImdbLink" target="_blank" class="card-link float-right"><i class="fa fa-imdb fa-2x" aria-hidden="true"></i></a>
+          <p v-if="film.data" class="text-muted"><span class="font-weight-bold">Runtime</span>: {{film.data.runtime}} mins | <span class="font-weight-bold">Genres</span> {{film.genres.join(', ')}}</p>
           <p class="card-text">{{film.overview}}</p>
         </div>
         <div class="card-body" v-if="showNominate && isCurrentPollInNomination" >
           <a href="#" @click="addNomination()" :class="shouldNominate" class="card-link font-weight-bold link-primary">Nominate</a>
         </div>
       </div>
-      <loading-bounce v-show="!(film.data && shouldDisplay)"></loading-bounce>
+      <loading-bounce v-show="!film.data || !shouldDisplay"></loading-bounce>
     </modal>
 </template>
 
@@ -65,7 +65,8 @@ export default {
         return ''
       },
       getImdbLink: function () {
-        return `https://www.imdb.com/title/${this.film.data.imdb_id}`
+        if (this.film && this.film.data && this.film.data.imdb_id)
+          return `https://www.imdb.com/title/${this.film.data.imdb_id}`
       },
       getFilmYear: function(){
         if (this.film && this.film.release_date) {
