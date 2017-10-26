@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input type="text" v-model="searchQuery" @input="getSuggestions()" name="movies" class="form-control" :class="{'is-invalid': errors.has('movies')}" v-validate="moviesRules" @focus="completed = true" @blur="completed = false" :placeholder="placeholder()">
+    <input type="text" v-model="searchQuery" @input="getSuggestions()" name="movies" class="form-control" :class="{'is-invalid': errors.has('movies')}" v-validate="moviesRules" @focus="completed = true" @blur="completed = false" :placeholder="getRandomPlaceholder()">
     <div v-if="suggestions.length > 0 && !completed" class="autocomplete-suggestions">
       <div @click="fillBox(suggest)" class="autocomplete-suggestion autocomplete-selected" :key="suggest.tmdbid" v-for="suggest in suggestions">
         {{suggest.name}}
@@ -15,7 +15,8 @@
 <script>
 import debounce from 'lodash/debounce'
 import queries from '@/api'
-import { focus } from 'vue-focus';
+import { focus } from 'vue-focus'
+import utils from '@/utils'
 
 export default {
   data() {
@@ -23,13 +24,13 @@ export default {
       suggestions: [],
       searchQuery: '',
       chosenFilm: {},
-      completed: false
+      completed: false,
+      placeholders: ['The Assassin', 'Zoolander 2', 'Titanic 2', 'Beauty and the Beast']
     }
   },
   props: [
     'index',
-    'needed', // Tells the component if options are needed
-    'placeholder'
+    'needed' // Tells the component if options are needed
   ],
   methods: {
     getResults: function () {
@@ -53,7 +54,10 @@ export default {
       this.chosenFilm = {name: toFill.name, film_id: toFill._id} 
       this.completed = true
       this.$emit('fill', this.index, this.chosenFilm)
-    }  
+    },
+    getRandomPlaceholder: function () {
+      return utils.selectRandom(this.placeholders)
+    }
   },
   mounted() {
     this.getSuggestions = debounce(this.getResults, 300, {leading: true})

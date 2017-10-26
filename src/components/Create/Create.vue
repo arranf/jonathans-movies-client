@@ -14,7 +14,7 @@
                   <label :for="index">Option {{ index + 1 }}</label>
                 </div>
                 <div class="col col-md-4">
-                  <movie-suggest :id="index+'-suggest'" :index="index" :needed="!haveNominations" :placeholder="getRandomPlaceholder" @fill="fillOption"></movie-suggest>
+                  <movie-suggest :id="index+'-suggest'" :index="index" :needed="!haveNominations" @fill="fillOption"></movie-suggest>
                 </div>
               </div>
             </div>
@@ -118,7 +118,6 @@ import MovieSuggest from './MovieSuggest'
 import feathersClient from '@/api/feathers-client'
 import {mapActions, mapGetters, mapState} from 'vuex'
 import router from '@/router'
-import utils from '@/utils'
 
 export default {
   name: 'Create',
@@ -132,8 +131,7 @@ export default {
       haveNominations: false,
       nominationsMinutes: '3',
       nominations: '3',
-      options: [{name: "", film_id: null}],
-      placeholders: ['The Assassin', 'Zoolander 2', 'Titanic 2', 'Beauty and the Beast']
+      options: [{name: "", film_id: null}]
     }
   },
   methods: {
@@ -168,9 +166,6 @@ export default {
         numberOfNominations: numberOfNominations
       })
       router.push('/home')
-    },
-    getRandomPlaceholder: function () {
-      return utils.selectRandom(this.placeholders)
     }
   },
   computed: {
