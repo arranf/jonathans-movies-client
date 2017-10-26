@@ -14,7 +14,7 @@
                   <label :for="index">Option {{ index + 1 }}</label>
                 </div>
                 <div class="col col-md-4">
-                  <movie-suggest :id="index+'-suggest'" :index="index" @fill="fillOption"></movie-suggest>
+                  <movie-suggest :id="index+'-suggest'" :index="index" :needed="!haveNominations" :placeholder="getRandomPlaceholder" @fill="fillOption"></movie-suggest>
                 </div>
               </div>
             </div>
@@ -32,7 +32,10 @@
                 <label for="numberOfMinutes">Number of Minutes</label> 
               </div>
               <div class="col col-md-2">
-                <input class="form-control" id="numberOfMinutes" type="number" pattern="[0-9]" min="1" max="10" v-model="minutes"></input>
+                <input name="numberOfMinutes" class="form-control" :class="{'is-invalid': errors.has('numberOfMinutes')}" data-vv-delay="1000" type="number" pattern="[0-9]" min="1" max="10" v-model="minutes" v-validate="'required|decimal:0|min:1|max:10'"></input>
+                <div v-show="errors.has('numberOfMinutes')" class="invalid-feedback">
+                  Please provide a valid time limit between 1 and 10 mins
+                </div>
               </div>
             </div>
           </div>
@@ -44,7 +47,10 @@
                 <label for="numberOfVotes">Number of Votes</label> 
               </div>
               <div class="col col-md-2">
-                <input class="form-control" id="numberOfVotes" type="number" pattern="[0-9]" min="1" max="4" v-model="votes"></input>
+                <input name="numberOfVotes" class="form-control" :class="{'is-invalid': errors.has('numberOfVotes')}" data-vv-delay="1000" type="number" pattern="[0-9]" min="1" max="4" v-model="votes" v-validate="'required|decimal:0|min:1|max:4'"></input>
+                <div v-show="errors.has('numberOfVotes')" class="invalid-feedback">
+                  Please provide a valid number of votes between 1 and 4
+                </div>
               </div>
             </div>
           </div>
@@ -69,7 +75,10 @@
                 <label for="nominationLength">Nomination Time Limit (mins)</label>
               </div>
               <div class="col col-md-2">
-                <input class="form-control" id="nominationLength" type="number" pattern="[0-9]*" min="1" max="60" v-model="nominationsMinutes">
+                <input name="nominationLength" class="form-control" :class="{'is-invalid': errors.has('nominationLength')}" data-vv-delay="1000" type="number" pattern="[0-9]*" min="1" max="60" v-model="nominationsMinutes" v-validate="nominationLengthRules">
+                <div v-show="errors.has('nominationLength')" class="invalid-feedback">
+                  Please provide a valid nomination time limit between 1 and 60 mins
+                </div>
               </div>
             </div>
           </div>
@@ -81,7 +90,10 @@
                 <label for="numberOfNominations">Number of Nominations</label>
               </div>
               <div class="col col-md-2">
-                <input class="form-control" id="numberOfNominations" type="number" pattern="[0-9]" min="1" max="5" v-model="nominations">
+                <input name="numberOfNominations" class="form-control" :class="{'is-invalid': errors.has('numberOfNominations')}" data-vv-delay="1000" type="number" pattern="[0-9]" min="1" max="5" v-model="nominations" v-validate="numberOfNominationsRules">
+                <div v-show="errors.has('numberOfNominations')" class="invalid-feedback">
+                  Please provide a valid number of nominations between 1 and 4
+                </div>
               </div>
             </div>
           </div>
@@ -178,6 +190,12 @@ export default {
           && this.nominationsMinutes
           && this.nominations
         )
+    },
+    nominationLengthRules: function () {
+      return this.haveNominations ? 'required|decimal:0|min:1|max:60' : ''
+    },
+    numberOfNominationsRules: function () {
+      return this.haveNominations ? 'required|decimal:0|min:1|max:4' : ''
     }
   }
 }

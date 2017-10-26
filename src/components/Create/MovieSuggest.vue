@@ -1,10 +1,13 @@
 <template>
   <div>
-    <input type="text" v-model="searchQuery" @input="getSuggestions()" name="movies" class="form-control" @focus="completed = true" @blur="completed = false">
+    <input type="text" v-model="searchQuery" @input="getSuggestions()" name="movies" class="form-control" :class="{'is-invalid': errors.has('movies')}" v-validate="moviesRules" @focus="completed = true" @blur="completed = false" :placeholder="placeholder()">
     <div v-if="suggestions.length > 0 && !completed" class="autocomplete-suggestions">
       <div @click="fillBox(suggest)" class="autocomplete-suggestion autocomplete-selected" :key="suggest.tmdbid" v-for="suggest in suggestions">
         {{suggest.name}}
       </div>
+    </div>
+    <div v-show="errors.has('movies')" class="invalid-feedback">
+      Please provide at least 2 options
     </div>
   </div>
 </template>
@@ -24,7 +27,9 @@ export default {
     }
   },
   props: [
-    'index'
+    'index',
+    'needed', // Tells the component if options are needed
+    'placeholder'
   ],
   methods: {
     getResults: function () {
@@ -52,6 +57,11 @@ export default {
   },
   mounted() {
     this.getSuggestions = debounce(this.getResults, 300, {leading: true})
+  },
+  computed: {
+    moviesRules: function () {
+      return this.needed && this.index < 2 ? 'required' : ''
+    }
   }
 }
 </script>
