@@ -26,7 +26,10 @@ import LoadingBounce from '@/components/Loading/LoadingBounce'
 
 export default {
   name: 'MovieInfoModal',
-  props:  ['film', 'showNominate'],
+  props:  {
+    'film': {type: Object},
+    showNominate: {default: true, type: Boolean}
+    },
     data () {
       return {
         shouldDisplay: false

@@ -12,7 +12,7 @@
             <div class="col-2">
               <span class="badge badge-primary">{{film.score}}</span>
             </div>
-            <div class="col-6">
+            <div class="col-6" v-if="film.genres">
               {{film.genres.join(', ')}}
             </div>
             <div class="col-4">

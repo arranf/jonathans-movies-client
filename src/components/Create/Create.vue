@@ -137,13 +137,23 @@ export default {
     },
     startPoll: function () {
       const currentTime = parseInt(new Date().getTime())
+      let pollTransitionDateTime = null
+      let numberOfNominations = null
+
+      if (this.haveNominations) {
+        pollTransitionDateTime = currentTime + parseInt(this.nominationsMinutes) * 60000
+        numberOfNominations = parseInt(this.nominations)
+      }
+
       this.createPoll({
         numberOfVotes: parseInt(this.votes),
         startDateTime: currentTime,
         endDateTime: currentTime + parseInt(this.minutes) *  60000,
         options: this.options.filter(o => o
           && (typeof o === 'object' || o.trim().length > 0)
-        )
+        ),
+        pollTransitionDateTime: pollTransitionDateTime,
+        numberOfNominations: numberOfNominations
       })
       router.push('/home')
     },
