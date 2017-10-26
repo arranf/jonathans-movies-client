@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input type="text" v-model="searchQuery" @input="getSuggestions()" name="movies" class="form-control" :class="{'is-invalid': errors.has('movies')}" v-validate="moviesRules" @focus="completed = true" @blur="completed = false" :placeholder="getRandomPlaceholder()">
+    <input type="text" v-model="searchQuery" @input="getSuggestions()" name="movies" class="form-control" :class="{'is-invalid': errors.has('movies')}" v-validate="moviesRules" data-vv-delay="1000" @focus="completed = true" @blur="completed = false" :placeholder="chosenPlaceholder ? chosenPlaceholder : getRandomPlaceholder()" />
     <div v-if="suggestions.length > 0 && !completed" class="autocomplete-suggestions">
       <div @click="fillBox(suggest)" class="autocomplete-suggestion autocomplete-selected" :key="suggest.tmdbid" v-for="suggest in suggestions">
         {{suggest.name}}
@@ -25,7 +25,8 @@ export default {
       searchQuery: '',
       chosenFilm: {},
       completed: false,
-      placeholders: ['The Assassin', 'Zoolander 2', 'Titanic 2', 'Beauty and the Beast']
+      placeholders: ['The Assassin', 'Zoolander 2', 'Titanic 2', 'Beauty and the Beast'],
+      chosenPlaceholder: ''
     }
   },
   props: [
@@ -56,7 +57,9 @@ export default {
       this.$emit('fill', this.index, this.chosenFilm)
     },
     getRandomPlaceholder: function () {
-      return utils.selectRandom(this.placeholders)
+      let chosenPlaceholder = utils.selectRandom(this.placeholders)
+      this.chosenPlaceholder = chosenPlaceholder
+      return chosenPlaceholder
     }
   },
   mounted() {
