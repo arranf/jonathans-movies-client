@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid mb-3">
     <div class="row ">
       <div class="col">
         <h2 class="mt-4 pb-3">Create a Poll</h2>
@@ -129,8 +129,8 @@ export default {
       minutes: '3',
       votes: '2',
       haveNominations: false,
-      nominationsMinutes: '3',
-      nominations: '3',
+      nominationsMinutes: '5',
+      nominations: '1',
       options: [{name: "", film_id: null}]
     }
   },
