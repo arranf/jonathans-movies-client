@@ -48,6 +48,7 @@ export default {
       ...mapGetters('poll', ['getActivePoll', 'remainingTimeWordsForCurrentPoll', 'isCurrentPollInNomination', 'isCurrentPollInVoting', 'remainingTimeInNominationWordsForCurrentPoll']),
       ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
       ...mapGetters('option', {remainingNominations: 'nominationsRemaining'}),
+      ...mapGetters('time', ['getNow']),
       ...mapState('auth', ['user']),
       ...mapGetters('errors', ['shouldShowErrorForExceedVote']),
       displayError:  function() {
@@ -68,13 +69,17 @@ export default {
       ...mapActions('poll', {updatePoll: 'patch'}),
       ...mapActions('auth', ['logout']),
       stopPoll: function () {
-        const currentTime = parseInt(new Date().getTime())
+        const currentTime = this.getNow
         const data = {'endDateTime': currentTime}
         this.updatePoll([this.getActivePoll._id, data, {}])
       },
       stopNominations: function () {
-        const currentTime = parseInt(new Date().getTime())
-        const data = {'pollTransitionDateTime': currentTime}
+        const currentTime = this.getNow
+        const oldTransitionTime = this.getActivePoll.pollTransitionDateTime
+        const data = {
+          'pollTransitionDateTime': currentTime,
+          'endDateTime': this.getActivePoll.endDateTime - (oldTransitionTime - currentTime)
+        }
         this.updatePoll([this.getActivePoll._id, data, {}])
       },
       logoutAndRedirect: function () {
