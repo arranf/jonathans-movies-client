@@ -1,6 +1,6 @@
 <template>
-  <div class="container-fluid mb-3">
-    <div class="row ">
+  <div class="container d-flex flex-column align-items-center justify-content-center text-center  mb-3">
+    <div class="row">
       <div class="col">
         <h2 class="mt-4 pb-3">Create a Poll</h2>
         <form autocomplete="off">
