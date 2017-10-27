@@ -7,7 +7,7 @@
               <div class="form-group row">
                 <label for="search" class="col-sm-2 col-form-label">Search</label>
                 <div class="col-sm-10">
-                  <input class="form-control" id="search" placeholder="Double Dragon">
+                  <input v-model="searchTitle" class="form-control" id="search" placeholder="Double Dragon">
                 </div>
               </div>
             </div>
@@ -24,8 +24,8 @@
               </div>
             </div>
             <div class="card-body">
-              <button @click.prevent="requery()" type="submit" class="btn btn-primary">Submit</button>
-              <button type="reset" class="btn btn-outline-secondary">Reset</button>
+              <button @click.prevent="requery" type="submit" class="btn btn-primary">Submit</button>
+              <button @click.prevent="reset" type="reset" class="btn btn-outline-secondary">Reset</button>
             </div>
          </form>
         </div>
@@ -36,7 +36,7 @@
     <loading-bounce v-show="busy" />
     <div style="bottom: 4.5em; right: 2em; position: absolute;">
       <a class="icon btn btn-lg btn-danger btn-circle" @click="displayFilterOptionsModal()">
-        <i class="fa fa-plus text-white" aria-disabled="true"></i>
+        <i class="fa fa-search text-white" aria-disabled="true"></i>
       </a>
     </div>
   </div>  
@@ -56,6 +56,7 @@ require('@/../node_modules/animate.css/animate.css')
     name: 'FilmSelector',
     data: function () {
       return {
+        searchTitle: '',
         page: 0,
         limit: 50,
         loadedAll: false,
@@ -64,7 +65,7 @@ require('@/../node_modules/animate.css/animate.css')
         sort: {name: 1},
         genres: [],
         elements: {
-          genreFilters: true
+          genreFilters: false
         }
       }
     },
@@ -84,8 +85,11 @@ require('@/../node_modules/animate.css/animate.css')
           $sort: this.sort,
           $skip: this.limit * this.page,
         }}
-        if (this.genres.length > 0){
+        if (this.genres.length > 0) {
           query.query['genres'] = this.genres
+        }
+        if (this.searchTitle) {
+          query.query['$search'] = this.searchTitle
         }
         return query
       }
@@ -93,6 +97,13 @@ require('@/../node_modules/animate.css/animate.css')
     methods: {
       ...mapActions('films', {queryFilms: 'find'}),
       ...mapMutations('films', {clearFilms: 'clearAll'}),
+      reset: function () {
+        this.page = 0
+        this.searchTitle = ''
+        this.genres = []
+        this.total = 51
+        this.$modal.hide('filterOptions')
+      },
       fetchNextPage: function () {
         const offset = this.limit * this.page
         if (offset >= this.total){
@@ -105,7 +116,7 @@ require('@/../node_modules/animate.css/animate.css')
       displayFilterOptionsModal: function () {
         this.$modal.show('filterOptions')
       },
-      getFilms: function (){
+      getFilms: function () {
         this.queryFilms(this.query)
             .then(response => {this.total = response.total; this.busy = false})
             .catch(error => {console.error(error); this.busy = false})
@@ -117,7 +128,7 @@ require('@/../node_modules/animate.css/animate.css')
         this.clearFilms()
         this.getFilms()
       },
-      changeGenre(genre) {
+      changeGenre (genre) {
         const index = this.genres.indexOf(genre) 
         if (index !== -1){
           this.genres.splice(index, 1)
