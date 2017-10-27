@@ -159,7 +159,6 @@ require('@/../node_modules/animate.css/animate.css')
 
   .fab {
     bottom: 10em; right: 2em; position: absolute;
-    z-index: 999;
+    z-index: 998;
   }
-
 </style>
