@@ -58,8 +58,9 @@ export default {
     let activePoll = getters.getActivePoll
     if (activePoll) {
       let currentDateTime = rootState.time.now
-      return (activePoll.startDateTime <= currentDateTime && ((activePoll.pollTransitionDateTime !== undefined &&
-              activePoll.pollTransitionDateTime <= currentDateTime) || activePoll.endDateTime > currentDateTime))
+      return activePoll.startDateTime <= currentDateTime && activePoll.endDateTime > currentDateTime &&
+        ((activePoll.pollTransitionDateTime !== undefined && activePoll.pollTransitionDateTime <= currentDateTime) ||
+        activePoll.pollTransitionDateTime === undefined)
     }
   },
   doesCurrentPollHaveNominations (state, getters) {
