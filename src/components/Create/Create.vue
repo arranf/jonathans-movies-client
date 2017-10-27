@@ -9,11 +9,11 @@
           <!-- Options Input -->
           <div class="form-group">
             <div v-for="(option, index) in options" :key="index">
-              <div class="row my-1">
-                <div class="col col-md-auto">
+              <div class="row my-2">
+                <div class="col-12 col">
                   <label :for="index">Option {{ index + 1 }}</label>
                 </div>
-                <div class="col col-md-4">
+                <div class="col col-md-6">
                   <movie-suggest :id="index+'-suggest'" :index="index" :needed="!haveNominations" @fill="fillOption"></movie-suggest>
                 </div>
               </div>

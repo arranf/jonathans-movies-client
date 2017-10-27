@@ -1,7 +1,7 @@
 <template>
   <div>
     <input type="text" v-model="searchQuery" @input="getSuggestions()" name="movies" class="form-control" :class="{'is-invalid': errors.has('movies')}" v-validate="moviesRules" data-vv-delay="1000" @focus="completed = true" @blur="completed = false" :placeholder="chosenPlaceholder ? chosenPlaceholder : getRandomPlaceholder()" />
-    <div v-if="suggestions.length > 0 && !completed" class="autocomplete-suggestions">
+    <div v-if="suggestions.length > 0 && !completed" class="autocomplete-suggestions w-90">
       <div @click="fillBox(suggest)" class="autocomplete-suggestion autocomplete-selected" :key="suggest.tmdbid" v-for="suggest in suggestions">
         {{suggest.name}}
       </div>
@@ -74,8 +74,15 @@ export default {
 </script>
 
 <style scoped>
-  .autocomplete-suggestions { border: 1px solid #999; background: #fff; cursor: default; overflow: auto; }
-  .autocomplete-suggestion { padding: 10px 5px; font-size: 1.2em; white-space: nowrap; overflow: hidden; }
+  .autocomplete-suggestions { 
+    border: 1px solid #000; 
+    background: #fff; 
+    cursor: pointer; 
+    overflow: auto; 
+    position: absolute;
+    z-index: 999;
+   }
+  .autocomplete-suggestion { padding: 10px 5px; font-size: 1em; white-space: nowrap; overflow: hidden; }
   .autocomplete-selected { background: #f0f0f0; }
   .autocomplete-suggestions strong { font-weight: normal; color: #3399ff; }
 </style>
