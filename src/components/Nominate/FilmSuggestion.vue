@@ -1,6 +1,6 @@
 <template>
   <div>
-    <movie-info-modal :film="film" :show-nominate="true"></movie-info-modal>
+    <movie-info-modal :film="film" :show-nominate="true" />
 
     <div class="card-group">
       <div class="card" @click="showModal()">
@@ -10,7 +10,7 @@
         <div class="card-body">
           <div class="row d-flex">
             <div class="col-2">
-              <span class="badge badge-primary">{{film.score}}</span>
+              <span class="badge badge-secondary">{{film.score}}</span>
             </div>
             <div class="col-6" v-if="film.genres">
               {{film.genres.join(', ')}}
