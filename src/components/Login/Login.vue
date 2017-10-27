@@ -79,7 +79,14 @@ export default {
           this.isInternalLogin = !this.isInternalLogin
         },
         facebookLogin: function() {
-          const url = process.env.NODE_ENV === 'production' ? "https://api.jonathansmovies.com/auth/facebook" : "http://localhost:3030/auth/facebook"
+          let url
+          if (process.env.NODE_ENV === 'production') {
+            "https://api.jonathansmovies.com/auth/facebook"
+           } else if (process.env.NODE_ENV ==='staging'){
+             url = "https://staging-api.jonathansmovies.com/auth/facebook"
+           } else {
+             url = "http://localhost:3030/auth/facebook"
+           } 
           this.logout()
             .then(window.location = url)
         }
