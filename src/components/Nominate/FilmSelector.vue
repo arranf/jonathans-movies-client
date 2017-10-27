@@ -34,7 +34,7 @@
       <film-suggestion class="m-1" :film="film" :key="index"/>
     </template>
     <loading-bounce v-show="busy" />
-    <div style="bottom: 4.5em; right: 2em; position: absolute;">
+    <div class="fab">
       <a class="icon btn btn-lg btn-danger btn-circle" @click="displayFilterOptionsModal()">
         <i class="fa fa-search text-white" aria-disabled="true"></i>
       </a>
@@ -102,7 +102,13 @@ require('@/../node_modules/animate.css/animate.css')
         this.searchTitle = ''
         this.genres = []
         this.total = 51
+      },
+      requery: function () {
         this.$modal.hide('filterOptions')
+        this.page = 0
+        this.busy = true
+        this.clearFilms()
+        this.getFilms()
       },
       fetchNextPage: function () {
         const offset = this.limit * this.page
@@ -120,13 +126,6 @@ require('@/../node_modules/animate.css/animate.css')
         this.queryFilms(this.query)
             .then(response => {this.total = response.total; this.busy = false})
             .catch(error => {console.error(error); this.busy = false})
-      },
-      requery: function () {
-        this.$modal.hide('filterOptions')
-        this.page = 0
-        this.busy = true
-        this.clearFilms()
-        this.getFilms()
       },
       changeGenre (genre) {
         const index = this.genres.indexOf(genre) 
@@ -150,33 +149,17 @@ require('@/../node_modules/animate.css/animate.css')
   }
 
   .icon:hover {
-    -webkit-animation: bounce 0.5s;
-    animation: bounce 0.5s;
+    -webkit-animation: bounce 0.7s;
+    animation: bounce 0.7s;
   }
 
   .btn-circle {
     border-radius: 100%
   }
 
-  input[type="checkbox"] {
-    // position: absolute;
-    opacity: 0;
-    & + label {
-        display: block;
-        padding: .4em .8em;
-        line-height: 1.5;
-        color: #fff;
-        background-color: #444;
-        &:hover, &:focus, &:active {
-            background-color: #DDE3ED;
-            color:  #333;
-        }
-    }
-    &:checked + label {
-        background-color: #DDE3ED;
-        color:  #333;
-        &:hover, &:focus, &:active { background-color: #eee; }
-    } 
-}
+  .fab {
+    bottom: 10em; right: 2em; position: absolute;
+    z-index: 999;
+  }
 
 </style>
