@@ -29,10 +29,13 @@
           <div class="form-group">
             <div class="row">
               <div class="col col-md-auto">
-                <label for="numberOfMinutes">Number of Minutes</label> 
+                <label for="numberOfMinutes">Voting Length</label> 
               </div>
               <div class="col col-md-2">
-                <input name="numberOfMinutes" class="form-control" :class="{'is-invalid': errors.has('numberOfMinutes')}" data-vv-delay="1000" type="number" pattern="[0-9]" min="1" max="10" v-model="minutes" v-validate="'required|decimal:0|min:1|max:10'"></input>
+                <div class="input-group">
+                  <input name="numberOfMinutes" class="form-control" :class="{'is-invalid': errors.has('numberOfMinutes')}" data-vv-delay="1000" type="number" pattern="[0-9]" min="1" max="10" v-model="minutes" v-validate="'required|decimal:0|min:1|max:10'"></input>
+                  <span class="input-group-addon">mins</span>
+                </div>
                 <div v-show="errors.has('numberOfMinutes')" class="invalid-feedback">
                   Please provide a valid time limit between 1 and 10 mins
                 </div>
@@ -72,10 +75,13 @@
           <div class="form-group" v-if="haveNominations">
             <div class="row">
               <div class="col col-md-auto">
-                <label for="nominationLength">Nomination Time Limit (mins)</label>
+                <label for="nominationLength">Nomination Length</label>
               </div>
               <div class="col col-md-2">
-                <input name="nominationLength" class="form-control" :class="{'is-invalid': errors.has('nominationLength')}" data-vv-delay="1000" type="number" pattern="[0-9]*" min="1" max="60" v-model="nominationsMinutes" v-validate="nominationLengthRules">
+                <div class="input-group">
+                  <input name="nominationLength" class="form-control" :class="{'is-invalid': errors.has('nominationLength')}" data-vv-delay="1000" type="number" pattern="[0-9]*" min="1" max="60" v-model="nominationsMinutes" v-validate="nominationLengthRules">
+                  <span class="input-group-addon">mins</span>
+                </div>
                 <div v-show="errors.has('nominationLength')" class="invalid-feedback">
                   Please provide a valid nomination time limit between 1 and 60 mins
                 </div>
