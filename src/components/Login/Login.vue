@@ -80,11 +80,11 @@ export default {
         },
         facebookLogin: function() {
           let url
-          if (process.env.NODE_ENV === 'production') {
+          if (process.env.BRANCH !== undefined && process.env.BRANCH === 'develop') {
+            url = "https://staging-api.jonathansmovies.com/auth/facebook"
+          } else if (process.env.NODE_ENV === 'production') {
             "https://api.jonathansmovies.com/auth/facebook"
-           } else if (process.env.NODE_ENV ==='staging'){
-             url = "https://staging-api.jonathansmovies.com/auth/facebook"
-           } else {
+          }  else {
              url = "http://localhost:3030/auth/facebook"
            } 
           this.logout()
