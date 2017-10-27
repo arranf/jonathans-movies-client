@@ -147,18 +147,21 @@ export default {
     },
     startPoll: function () {
       const currentTime = parseInt(new Date().getTime())
-      let pollTransitionDateTime = null
-      let numberOfNominations = null
+      let pollTransitionDateTime
+      let numberOfNominations
+      let endDateTime = currentTime + parseInt(this.minutes) *  60000
 
       if (this.haveNominations) {
-        pollTransitionDateTime = currentTime + parseInt(this.nominationsMinutes) * 60000
+        const nominationLengthSeconds = parseInt(this.nominationsMinutes) * 60000
+        pollTransitionDateTime = currentTime + nominationLengthSeconds
         numberOfNominations = parseInt(this.nominations)
+        endDateTime += nominationLengthSeconds
       }
 
       this.createPoll({
         numberOfVotes: parseInt(this.votes),
         startDateTime: currentTime,
-        endDateTime: currentTime + parseInt(this.minutes) *  60000,
+        endDateTime: endDateTime,
         options: this.options.filter(o => o
           && (typeof o === 'object' || o.trim().length > 0)
         ),
