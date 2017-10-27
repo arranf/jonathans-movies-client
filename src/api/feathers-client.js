@@ -5,7 +5,7 @@ import auth from 'feathers-authentication-client'
 import io from 'socket.io-client'
 
 let socket
-if (process.env.BRANCH !== undefined && process.env.BRANCH === 'develop') {
+if (process.env.BRANCH && process.env.BRANCH === 'develop') {
   socket = io('https://staging-api.jonathansmovies.com', {'transports': ['websocket']})
 } else if (process.env.NODE_ENV === 'production') {
   socket = io('https://api.jonathansmovies.com', {'transports': ['websocket']})
