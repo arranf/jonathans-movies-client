@@ -52,7 +52,6 @@
     "html-webpack-plugin": "^2.28.0",
     "http-proxy-middleware": "^0.17.3",
     "humanize-duration": "^3.10.1",
-    "lazyload": "^2.0.0-beta.2",
     "less": "^2.7.2",
     "less-loader": "^4.0.5",
     "lodash": "^4.17.4",
