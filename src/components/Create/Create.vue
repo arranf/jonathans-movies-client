@@ -33,7 +33,7 @@
               </div>
               <div class="col col-md-6">
                 <div class="input-group">
-                  <input name="numberOfMinutes" class="form-control" :class="{'is-invalid': errors.has('numberOfMinutes')}" data-vv-delay="1000" type="number" pattern="[0-9]" min="1" max="10" v-model="minutes" v-validate="'required|decimal:0|min:1|max:10'"></input>
+                  <input name="numberOfMinutes" class="form-control" :class="{'is-invalid': errors.has('numberOfMinutes')}" data-vv-delay="1000" type="number" pattern="[0-9]" min="1" max="10" v-model="minutes" v-validate="'required|numeric|between:1,10'"></input>
                   <span class="input-group-addon">mins</span>
                 </div>
                 <div v-show="errors.has('numberOfMinutes')" class="invalid-feedback">
@@ -50,7 +50,7 @@
                 <label for="numberOfVotes">Number of Votes</label> 
               </div>
               <div class="col col-md-6">
-                <input name="numberOfVotes" class="form-control" :class="{'is-invalid': errors.has('numberOfVotes')}" data-vv-delay="1000" type="number" pattern="[0-9]" min="1" max="4" v-model="votes" v-validate="'required|decimal:0|min:1|max:4'"></input>
+                <input name="numberOfVotes" class="form-control" :class="{'is-invalid': errors.has('numberOfVotes')}" data-vv-delay="1000" type="number" pattern="[0-9]" min="1" max="4" v-model="votes" v-validate="'required|numeric|between:1,4'"></input>
                 <div v-show="errors.has('numberOfVotes')" class="invalid-feedback">
                   Please provide a valid number of votes between 1 and 4
                 </div>
@@ -182,7 +182,8 @@ export default {
     ...mapState('auth', ['user']),
     canStart: function () {
       return this.minutes  
-        && this.votes 
+        && this.votes
+        && !this.errors.items[0]
         && ( // Either have appropriate options...
           (this.options.length >= 2
           && this.options[0]
@@ -196,10 +197,10 @@ export default {
         )
     },
     nominationLengthRules: function () {
-      return this.haveNominations ? 'required|decimal:0|min:1|max:60' : ''
+      return this.haveNominations ? 'required|numeric|between:1,60' : ''
     },
     numberOfNominationsRules: function () {
-      return this.haveNominations ? 'required|decimal:0|min:1|max:4' : ''
+      return this.haveNominations ? 'required|numeric|between:1,4' : ''
     }
   }
 }
