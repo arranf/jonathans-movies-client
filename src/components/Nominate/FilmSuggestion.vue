@@ -5,18 +5,15 @@
     <div class="card-group">
       <div class="card" @click="showModal()">
         <div class="card-body">
-          <h4 class="card-title d-inline">{{film.name}} <small>{{getFilmYear}}</small></h4> 
+          <h4 class="card-title d-inline" v-once>{{film.name}} <small>{{getFilmYear}}</small></h4> 
         </div>
         <div class="card-body">
           <div class="row d-flex">
-            <div class="col-2">
-              <span class="badge badge-secondary">{{film.score}}</span>
-            </div>
-            <div class="col-6" v-if="film.genres">
-              {{film.genres.join(', ')}}
-            </div>
             <div class="col-4">
-              <button :disabled="!hasNominationsRemaining" class="btn btn-danger btn-sm" @click="addNomination">Nominate</button>
+              <span v-once class="badge badge-info">{{film.score}}</span>
+            </div>
+            <div class="col-8" v-once v-if="film.genres">
+              {{film.genres.join(', ')}}
             </div>
           </div>
         </div>
