@@ -83,13 +83,14 @@ export default {
 </script>
 
 <style>
+/* iPhone 4 */
 .movie-poster {
-  width: 11.5rem;
+  width: 11rem;
   margin-right: 0.5em; margin-left: 0.5em;
 }
 
 .fake-movie-poster {
-  height: 17rem;
+  height: 16rem;
 }
 
 @media (min-height: 500px) {
@@ -102,23 +103,25 @@ export default {
   }
 }
 
+/* iPhone 5 */
 @media (min-height: 550px) {
 	.movie-poster {
-      width: 12.3rem;
+      width: 11.5rem;
     }
   
   .fake-movie-poster {
-    height: 18rem; 
+    height: 16.8rem; 
   }
 }
 
+/* S5 */
 @media (min-height: 600px) {
 	.movie-poster {
-      width: 15rem;
+      width: 14rem;
     }
   
   .fake-movie-poster {
-    height: 22rem; 
+    height: 20.5rem; 
   }
 }
 
@@ -133,13 +136,14 @@ export default {
   }
 }
 
+/* Nexus 6 + iPhone 6 Plus*/
 @media (min-height: 700px) {
 	.movie-poster {
-      width: 21rem;
+      width: 18rem;
     }
   
   .fake-movie-poster {
-    height: 31rem;
+    height: 26.5rem;
   }
 }
 

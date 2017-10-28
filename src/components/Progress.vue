@@ -1,5 +1,5 @@
 <template >
-  <div class="w-100 my-1 pl-1">
+  <div class="w-100 mt-1 mb-3 pl-1 p-md-4">
     <ul class="progressbar" v-if="getPollFinishingUpTo(10)">
       <li v-if="doesCurrentPollHaveNominations" :class="{'w-33': !doesCurrentPollHaveNominations}" class="active">Nomination</li>
       <li :class="{ active: isVotingCurrentOrOverForPollFinishingUpTo(10), 'w-33': !doesCurrentPollHaveNominations }">Voting</li>

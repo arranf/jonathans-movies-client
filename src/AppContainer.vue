@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column" style="height:100vh" id="app">
     <progress-indicator />
-    <router-view class="content m-h-60"></router-view>
+    <router-view class="content m-h-50"></router-view>
     <div class="footer w-100">
       <info-footer class="h-100"></info-footer>
     </div>
