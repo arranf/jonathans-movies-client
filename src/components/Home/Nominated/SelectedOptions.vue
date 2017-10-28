@@ -17,7 +17,14 @@ export default {
     OptionPreview
   },
   computed: {
-    ...mapGetters('option', ['getOptionsForCurrentPoll'])
+    ...mapGetters('option', ['getOptionsForCurrentPoll']),
+    ...mapGetters('poll', ['getActivePoll']),
+    currentPollOptions: function () {
+      return getOptionsForCurrentPoll.reverse()
+    }
+  },
+  created() {
+    queries.getOptionsForMostRecentPoll(this.getActivePoll._id)
   }
 }
 </script>
