@@ -34,7 +34,7 @@
       <film-suggestion class="m-1" :film="film" :key="index"/>
     </template>
     <loading-bounce v-show="busy" />
-    <div class="fab">
+    <div class="fab" :class="[getActivePoll ? 'high-fab' : 'low-fab']">
       <a class="icon btn btn-lg btn-danger btn-circle" @click="displayFilterOptionsModal()">
         <i class="fa fa-search text-white" aria-disabled="true"></i>
       </a>
@@ -78,6 +78,7 @@ require('@/../node_modules/animate.css/animate.css')
     },
     computed: {
       ...mapGetters('films', {queryLocalFilms: 'find', allFilms: 'list'}),
+      ...mapGetters('poll', ['getActivePoll']),
       totalGenres: () => constants.genres,
       query: function () {
         let query = {query: {
@@ -158,7 +159,16 @@ require('@/../node_modules/animate.css/animate.css')
   }
 
   .fab {
-    bottom: 10em; right: 2em; position: absolute;
+    position: absolute;
     z-index: 998;
   }
+
+  .high-fab {
+    bottom: 10em; right: 2em; 
+  }
+
+  .low-fab {
+    bottom: 4.5em; right: 2em; 
+  }
+
 </style>
