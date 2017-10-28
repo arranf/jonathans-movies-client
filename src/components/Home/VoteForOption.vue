@@ -1,7 +1,7 @@
 <template>
   <swiper :options="swiperOption" :not-next-tick="notNextTick" class="swiper-box"  ref="voteSwiper">
         <template v-for="option in getOptionsForCurrentPoll" >
-                <swiper-slide @click="vote()" :key="option._id" class="swiper-item" :class="{voted: isVoted(option._id)}" :style="{backgroundColor: getColor(option._id)}" >
+                <swiper-slide :key="option._id" class="swiper-item" :class="{voted: isVoted(option._id)}" :style="{backgroundColor: getColor(option._id)}" >
                     <div class="container">
                         <div class="row">
                             <div class="col">
@@ -43,8 +43,10 @@ export default {
         notNextTick: true,
         swiperOption: {
                 simulateTouch: true,
-                preventClicks: true,
+                preventClicks: false,
                 onClick: this.vote,
+                onTransitionStart: () => this.swiperOption.preventClicks = true,
+                onTransitionEnd: () => this.swiperOption.preventClicks = false,
                 setWrapperSize: true,
                 initialSlide: 0,
                 slidesPerView: 3,
