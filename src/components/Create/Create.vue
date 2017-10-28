@@ -10,10 +10,10 @@
           <div class="form-group">
             <div v-for="(option, index) in options" :key="index">
               <div class="row my-2">
-                <div class="col-12 col">
+                <div class="col-12">
                   <label :for="index">Option {{ index + 1 }}</label>
                 </div>
-                <div class="col col-md-6">
+                <div class="col">
                   <movie-suggest :id="index+'-suggest'" :index="index" :needed="!haveNominations" @fill="fillOption"></movie-suggest>
                 </div>
               </div>
@@ -31,7 +31,7 @@
               <div class="col col-md-auto">
                 <label for="numberOfMinutes">Voting Length</label> 
               </div>
-              <div class="col col-md-2">
+              <div class="col col-md-6">
                 <div class="input-group">
                   <input name="numberOfMinutes" class="form-control" :class="{'is-invalid': errors.has('numberOfMinutes')}" data-vv-delay="1000" type="number" pattern="[0-9]" min="1" max="10" v-model="minutes" v-validate="'required|decimal:0|min:1|max:10'"></input>
                   <span class="input-group-addon">mins</span>
@@ -49,7 +49,7 @@
               <div class="col col-md-auto">
                 <label for="numberOfVotes">Number of Votes</label> 
               </div>
-              <div class="col col-md-2">
+              <div class="col col-md-6">
                 <input name="numberOfVotes" class="form-control" :class="{'is-invalid': errors.has('numberOfVotes')}" data-vv-delay="1000" type="number" pattern="[0-9]" min="1" max="4" v-model="votes" v-validate="'required|decimal:0|min:1|max:4'"></input>
                 <div v-show="errors.has('numberOfVotes')" class="invalid-feedback">
                   Please provide a valid number of votes between 1 and 4
@@ -77,7 +77,7 @@
               <div class="col col-md-auto">
                 <label for="nominationLength">Nomination Length</label>
               </div>
-              <div class="col col-md-2">
+              <div class="col col-md-6">
                 <div class="input-group">
                   <input name="nominationLength" class="form-control" :class="{'is-invalid': errors.has('nominationLength')}" data-vv-delay="1000" type="number" pattern="[0-9]*" min="1" max="60" v-model="nominationsMinutes" v-validate="nominationLengthRules">
                   <span class="input-group-addon">mins</span>
@@ -95,7 +95,7 @@
               <div class="col col-md-auto">
                 <label for="numberOfNominations">Number of Nominations</label>
               </div>
-              <div class="col col-md-2">
+              <div class="col col-md-auto">
                 <input name="numberOfNominations" class="form-control" :class="{'is-invalid': errors.has('numberOfNominations')}" data-vv-delay="1000" type="number" pattern="[0-9]" min="1" max="5" v-model="nominations" v-validate="numberOfNominationsRules">
                 <div v-show="errors.has('numberOfNominations')" class="invalid-feedback">
                   Please provide a valid number of nominations between 1 and 4
