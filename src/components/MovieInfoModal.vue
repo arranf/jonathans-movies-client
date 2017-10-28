@@ -46,13 +46,13 @@ export default {
         if (!this.film.data) {
           tmdbApi.getMovieData(this.film.tmdb_id)
             .then(response => this.$set(this.film, 'data', response.data))
-            .catch(error => {console.error(error); this.hideModal()})
+            .catch(error => {console.error(error); this.hideModal(this. this.film._id)})
         }
       },
       addNomination: function () {
-        if (showNominate) {
+        if (this.showNominate) {
           queries.addNomination(this.film)
-            .then(() => {this.hideModal(); this.$router.push('/')})
+            .then(() => {utils.hideModal(this, this.film._id); this.$router.push('/')})
             .catch(error => console.error(error))
         }
       },
