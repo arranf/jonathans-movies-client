@@ -77,7 +77,7 @@ require('@/../node_modules/animate.css/animate.css')
       LoadingBounce
     },
     computed: {
-      ...mapGetters('films', {queryLocalFilms: 'find', allFilms: 'list'}),
+      ...mapGetters('films', {allFilms: 'list'}),
       ...mapGetters('poll', ['getActivePoll']),
       totalGenres: () => constants.genres,
       query: function () {
@@ -138,6 +138,7 @@ require('@/../node_modules/animate.css/animate.css')
       }
     },
     created() {
+      this.clearFilms()
       this.queryFilms(this.query)
     }
   }
