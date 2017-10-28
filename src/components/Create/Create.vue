@@ -149,7 +149,7 @@ export default {
       this.options.push({name: "", film_id: null})
     },
     fillOption: function (index, film) {
-      this.options[index] = film
+      this.$set(this.options, index, film)
     },
     startPoll: function () {
       const currentTime = parseInt(new Date().getTime())
@@ -169,7 +169,7 @@ export default {
         startDateTime: currentTime,
         endDateTime: endDateTime,
         options: this.options.filter(o => o
-          && (typeof o === 'object' && o.name.trim().length > 0 || (typeof o !== 'object' && o.trim().length > 0))
+          && typeof o === 'object' && o.name.trim().length > 0
         ),
         pollTransitionDateTime: pollTransitionDateTime,
         numberOfNominations: numberOfNominations
@@ -184,15 +184,15 @@ export default {
       return this.minutes  
         && this.votes 
         && ( // Either have appropriate options...
-          this.options.length >= 2
+          (this.options.length >= 2
           && this.options[0]
           && this.options[1]
           && this.options[0].name.trim().length > 0
-          && this.options[1].name.trim().length > 0
+          && this.options[1].name.trim().length > 0)
           || // ...or setup a nomination phase 
-          this.haveNominations
+          (this.haveNominations
           && this.nominationsMinutes
-          && this.nominations
+          && this.nominations)
         )
     },
     nominationLengthRules: function () {
