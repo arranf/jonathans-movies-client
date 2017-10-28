@@ -1,6 +1,6 @@
 <template>
    <div v-if="allFilms" v-infinite-scroll="fetchNextPage" infinite-scroll-disabled="busy" infinite-scroll-distance="10" class="scroll">
-     <modal :pivotY="0.05" name="filterOptions" height="auto" width="85%" :scrollable="true">
+     <modal :pivotY="0.05" name="filterOptions" height="auto" width="85%" :scrollable="true" @before-open="beforeOpen" @opened="opened" >
        <div class="card">
          <form>
             <div class="card-body">
@@ -135,7 +135,9 @@ require('@/../node_modules/animate.css/animate.css')
         } else {
           this.genres.push(genre)
         }
-      }
+      },
+      beforeOpen: () => {document.body.classList.remove('v--modal-block-scroll')},
+      opened: () => {document.body.classList.add('v--modal-block-scroll')}
     },
     created() {
       this.clearFilms()

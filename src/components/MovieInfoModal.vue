@@ -1,5 +1,5 @@
 <template>
-  <modal :pivotY="0.05" :name="`${film._id}-modal`" height="auto" width="85%" @opened="modalOpened()" :scrollable="true">
+  <modal :pivotY="0.05" :name="`${film._id}-modal`" height="auto" width="85%" @before-open="beforeOpen" @opened="modalOpened()" :scrollable="true">
       <div class="card" v-show="film.data && shouldDisplay" v-images-loaded="imageRendered">
         <img class="card-img-top" :src="backdropImage" :alt="`{film.name} Backdrop`">
         <div class="card-body">
@@ -43,6 +43,7 @@ export default {
     },
     methods: {
       modalOpened: function () {
+        document.body.classList.add('v--modal-block-scroll')
         if (!this.film.data) {
           tmdbApi.getMovieData(this.film.tmdb_id)
             .then(response => this.$set(this.film, 'data', response.data))
@@ -56,7 +57,8 @@ export default {
             .catch(error => console.error(error))
         }
       },
-      imageRendered: function () { this.shouldDisplay = true}
+      imageRendered: function () { this.shouldDisplay = true},
+      beforeOpen: function () {document.body.classList.remove('v--modal-block-scroll')}
     },
     computed: {
       ...mapGetters('option', ['hasNominationsRemaining', 'hasNominationsRemaining']),
