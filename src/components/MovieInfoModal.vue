@@ -7,7 +7,7 @@
           <p v-if="film.data" class="text-muted"><span class="font-weight-bold">Runtime</span>: {{film.data.runtime}} mins | <span class="font-weight-bold">Genres</span> {{film.genres.join(', ')}}</p>
           <p class="card-text">{{film.overview}}</p>
         </div>
-        <div class="card-body" v-if="showNominate && isCurrentPollInNomination && hasNominationsRemaining" >
+        <div class="card-body mb-2" v-if="showNominate && isCurrentPollInNomination && hasNominationsRemaining" >
           <a href="#" @click="addNomination()" :class="shouldNominate" class="card-link font-weight-bold link-primary">Nominate</a>
         </div>
       </div>
