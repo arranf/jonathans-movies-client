@@ -23,8 +23,8 @@
           <div >
             <ul v-if="user" class="list-inline list-unstyled footer-links">
               <li v-if="user.isAdmin && !getActivePoll" class="list-inline-item"><router-link to="/create">Create Poll</router-link></li>
-              <li v-if="this.$routename !== 'Movies'" class="list-inline-item"><router-link to="/movies">Movies</router-link></li>
-              <li v-if="this.$routename === 'Movies'" class="list-inline-item"><router-link to="/home">Back</router-link></li>
+              <li v-if="this.$route.name !== 'Movies'" class="list-inline-item"><router-link to="/movies">Movies</router-link></li>
+              <li v-if="this.$route.name === 'Movies'" class="list-inline-item"><router-link to="/home">Back</router-link></li>
               <li v-if="user.isAdmin && isCurrentPollInVoting" class="list-inline-item"><button type="button" class="btn btn-link" @click.prevent="stopPoll()">Stop Poll</button></li>
               <li v-if="user.isAdmin && isCurrentPollInNomination" class="list-inline-item"><button type="button" class="btn btn-link" @click.prevent="stopNominations()">Stop Nominations</button></li>
               <li class="list-inline-item"><button class="btn btn-link" role="button" @click="logoutAndRedirect()">Logout</button></li>
