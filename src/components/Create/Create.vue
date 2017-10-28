@@ -184,7 +184,7 @@ export default {
       return this.minutes  
         && this.votes 
         && ( // Either have appropriate options...
-          this.options.length > 2
+          this.options.length >= 2
           && this.options[0]
           && this.options[1]
           && this.options[0].name.trim().length > 0
