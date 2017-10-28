@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex scroll flex-row-reverse" v-if="getOptionsForCurrentPoll">
+  <div class="d-flex scroll flex-row" v-if="getOptionsForCurrentPoll">
     <template v-for="option in getOptionsForCurrentPoll">
       <option-preview class="scroll-item" :key="option._id" :option="option"></option-preview>
     </template>
