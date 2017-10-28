@@ -60,8 +60,8 @@ const router = new Router({
       }
     },
     {
-      path: '/nominate',
-      name: 'Nominate',
+      path: '/movies',
+      name: 'Movies',
       component: Nominate
     }
   ]
