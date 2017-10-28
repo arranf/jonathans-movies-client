@@ -39,8 +39,6 @@ import {mapGetters, mapState, mapActions} from 'vuex'
 import queries from '@/api'
 import router from '@/router'
 
-require('csshake/dist/csshake-horizontal.min.css')
-
 export default {
   name: 'InfoFooter',
   computed: {
@@ -55,8 +53,6 @@ export default {
       displayError:  function() {
          if (this.shouldShowErrorForExceedVote) {
            return {
-          'shake-horizontal': true, 
-          'shake-constant': true,
           'border': true,
           'border-danger': true,
           'text-danger': true
