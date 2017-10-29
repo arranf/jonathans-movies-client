@@ -20,7 +20,7 @@ export default {
     ...mapGetters('option', ['getOptionsForCurrentPoll']),
     ...mapGetters('poll', ['getActivePoll']),
     currentPollOptions: function () {
-      return getOptionsForCurrentPoll.reverse()
+      return this.getOptionsForCurrentPoll.reverse()
     }
   },
   created() {
