@@ -67,7 +67,6 @@ export default {
                 return feathersClient.passport.verifyJWT(token.accessToken);
             })
             .then( () => {
-                console.log('User', this.current); 
                 router.push('home')
             })
             .catch(error => {console.error(error); this.isError = true})
