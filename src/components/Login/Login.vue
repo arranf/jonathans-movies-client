@@ -9,7 +9,7 @@
                 Oops that username & password combination wasn't quite correct.
               </div>
               <div v-if="!isInternalLogin">
-                <a href="#" @click.prevent="facebookLogin()" class="btn btn-primary btn-block">Log In with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span></a>
+                <a href="#" @click.prevent="facebookLogin()" class="btn btn-facebook btn-block">Log In with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span></a>
                 <p class="py-1 my-1">or</p>
                 <button @click="swapLoginType()" class="btn btn-info btn-block">Log In</button>
                 <div class="pt-1">
@@ -33,7 +33,7 @@
                 </div>
                     <button type="submit" @click.prevent="tryLogin()" class="btn btn-primary" :disabled="isDisabled">Submit</button>
                     <button role="button" class="btn btn-outline-secondary" @click="swapLoginType()">Back</button>
-                </form>
+              </form>
           </div>
       </div>
   </div>
@@ -67,7 +67,6 @@ export default {
                 return feathersClient.passport.verifyJWT(token.accessToken);
             })
             .then( () => {
-                console.log('User', this.current); 
                 router.push('home')
             })
             .catch(error => {console.error(error); this.isError = true})
@@ -79,9 +78,16 @@ export default {
           this.isInternalLogin = !this.isInternalLogin
         },
         facebookLogin: function() {
-          const url = process.env.NODE_ENV === 'production' ? "https://api.jonathansmovies.com/auth/facebook" : "http://localhost:3030/auth/facebook"
+          let url
+          if (process.env.BRANCH !== undefined && process.env.BRANCH === 'develop') {
+            url = "https://staging-api.jonathansmovies.com/auth/facebook"
+          } else if (process.env.NODE_ENV === 'production') {
+            "https://api.jonathansmovies.com/auth/facebook"
+          }  else {
+             url = "http://localhost:3030/auth/facebook"
+           } 
           this.logout()
-          .then(window.location = url)
+            .then(window.location = url)
         }
     },
     computed: {
@@ -92,3 +98,11 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+  .btn-facebook {
+    background-color: #3b5998;
+    border-color: #3b5998;
+    color: #ffffff;
+  }
+</style>

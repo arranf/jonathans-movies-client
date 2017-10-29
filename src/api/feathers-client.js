@@ -5,10 +5,12 @@ import auth from 'feathers-authentication-client'
 import io from 'socket.io-client'
 
 let socket
-if (process.env.NODE_ENV !== 'production') {
-  socket = io('http://localhost:3030', {'transports': ['websocket']})
-} else {
+if (process.env.BRANCH && process.env.BRANCH === 'develop') {
+  socket = io('https://staging-api.jonathansmovies.com', {'transports': ['websocket']})
+} else if (process.env.NODE_ENV === 'production') {
   socket = io('https://api.jonathansmovies.com', {'transports': ['websocket']})
+} else {
+  socket = io('http://localhost:3030', {'transports': ['websocket']})
 }
 
 const feathersClient = feathers()

@@ -1,11 +1,11 @@
 <template>
 <div class="h-100">
-  <div v-if="getMostRecentPoll && datacollection.datasets && datacollection.datasets.length > 0 && datacollection.datasets[0].data.length > 0">
+  <div v-if="getMostRecentPoll && dataCollection.datasets && dataCollection.datasets.length > 0 && winningOptions.length > 0">
     <h1 class="text-center"><i class="fa fa-trophy" aria-hidden="true"></i>
     <br/>
     {{winningOptions.length > 1 ? winningOptions.slice(0, winningOptions.length - 1).join(', ') + " and " + winningOptions.slice(-1) : winningOptions[0]}}</h1>
     <h6 class="text-center">{{howLongAgoMostRecentPoll}}</h6>   
-   <pie-chart :chart-data="datacollection" :options="{responsive: true, maintainAspectRatio: false}"></pie-chart>
+   <pie-chart :chart-data="dataCollection" :options="{responsive: true, maintainAspectRatio: false}"></pie-chart>
   </div>
   <div v-else>
     <h1 class="text-center">
@@ -30,29 +30,31 @@ export default {
   },
   data () {
     return {
-      datacollection: {datasets: [], labels: []},
-      winningOptions: []
+      backgroundColors: []
     }
   },
   computed: {
     ...mapGetters('vote', ['getGraphData', 'getHighestVotedOptionsForPoll']),
     ...mapGetters('poll', ['getMostRecentPoll', 'howLongAgoMostRecentPoll']),
     ...mapGetters('option', {getOption: 'get'}),
-    ...mapState('vote', ['isFindPending'])
+    ...mapState('vote', ['isFindPending']),
+    dataCollection: function () {
+      const graphData = this.getGraphData(this.getMostRecentPoll._id)
+      if (!graphData){
+        return {datasets: [], labels: []}
+      }
+      return {datasets: [{data: graphData.data, label: 'Vote', backgroundColor: this.backgroundColors}], labels: graphData.labels}
+    },
+    winningOptions: function () {
+      return this.getHighestVotedOptionsForPoll(this.getMostRecentPoll._id)
+    }
   },
   mounted () {
     queries.getCurrentPoll()
-    .then(data => queries.getVotesForMostRecentPoll(this.getMostRecentPoll._id))
-    .then(data => queries.getOptionsForMostRecentPoll(this.getMostRecentPoll._id))
-    .then(data => {
-        const graphData = this.getGraphData(this.getMostRecentPoll._id)
-        const backgroundColors = [];
-        graphData.labels.forEach(label => backgroundColors.push(utils.selectRandom(constants.colors['800'])))
-        this.datacollection = {datasets: [{data: graphData.data, label: 'Vote', backgroundColor: backgroundColors}], labels: graphData.labels}
-        this.winningOptions = this.getHighestVotedOptionsForPoll(this.getMostRecentPoll._id)
-      })
-      .catch(error => error)
-
+      .then(() => queries.getVotesForMostRecentPoll(this.getMostRecentPoll._id))
+      .then(() => queries.getOptionsForMostRecentPoll(this.getMostRecentPoll._id))
+      .then(response => this.backgroundColors = utils.selectRandomArraySize(constants.colors['800'], response.data.length))
+      .catch(error => console.log(error))
   }
 }
 </script>

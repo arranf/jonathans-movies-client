@@ -1,24 +1,24 @@
 <template>
-  <div class="container mt-4">
+  <div class="container d-flex text-center justify-content-center align-items-center mt-4">
       <div class="row h-100 justify-content-center align-items-center">
           <div class="col">
               <div>
                   <h1>Sign Up!</h1>
               </div>
               <div v-if="isError" class="alert alert-danger" role="alert">
-                  Whoops! Looks like one or both of your fields are invalid.
+                  Looks like something went wrong!
               </div>
               <form>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input name="email" v-validate="'required|email'" data-vv-delay="1000"  type="email" class="form-control" :class="{'is-invalid': errors.has('email')}" v-model="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    <input name="email" v-validate="'required|email'" data-vv-delay="1000" type="email" class="form-control" :class="{'is-invalid': errors.has('email')}" v-model="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
                     <div v-if="errors.has('email')" class="invalid-feedback">
                         Please provide a valid email address.
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input name="password" v-validate="'required'"  type="password" v-model="password" class="form-control" :class="{'is-invalid': errors.has('password')}"  id="password" placeholder="Password">
+                    <input name="password" v-validate="'required'" type="password" v-model="password" class="form-control" :class="{'is-invalid': errors.has('password')}"  id="password" placeholder="Password">
                     <div v-if="errors.has('password')" class="invalid-feedback">
                         Please enter a password
                     </div>
@@ -52,24 +52,23 @@ export default {
         router.push('/home')
       },
       trySignUp: function() {
+        const password = this.password
+        const email = this.email
           this.signUp({
               strategy: 'local',
-              email: this.email,
-              password: this.password
+              email: email,
+              password: password
           })
           .then( () => this.authenticate({
               strategy: 'local',
-              email: this.email,
-              password: this.password
+              email: email,
+              password: password
           }))
           .then(token => {
             console.log('Authenticated!', token);
             return feathersClient.passport.verifyJWT(token.accessToken);
           })
-          .then( () => {
-              console.log('User', this.current); 
-              router.push('home')
-          })
+          .then( () => router.push('home'))
           .catch(error => {console.error(error); this.isError = true})
       }
   },

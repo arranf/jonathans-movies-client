@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import VeeValidate from 'vee-validate'
+import VueModal from 'vue-js-modal'
 import App from './AppContainer'
 import router from './router'
 import store from './store/'
@@ -14,14 +15,17 @@ import RavenVue from 'raven-js/plugins/vue'
 require('font-awesome-webpack2')
 require('styles/main.scss')
 
-Raven
+if (process.env.NODE_ENV === 'production' && process.env.BRANCH !== 'develop') {
+  Raven
   .config('https://5e5d7f63477a49289a3e7556f761afb7@sentry.io/221248')
   .addPlugin(RavenVue, Vue)
   .install()
+}
 
 Vue.config.productionTip = false
 
 Vue.use(VeeValidate)
+Vue.use(VueModal)
 
 /* eslint-disable no-new */
 new Vue({

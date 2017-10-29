@@ -23,7 +23,7 @@ const getters = {
     return state.lastExceededVoteDateTime
   },
   shouldShowErrorForExceedVote (state, getters, rootState, rootGetters) {
-    return state.lastExceededVoteDateTime >= rootGetters['time/getNow'] - 800
+    return state.lastExceededVoteDateTime >= rootGetters['time/getNow'] - 1500
   }
 }
 

@@ -1,9 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import Home from '@/components/Home/Home'
 import Login from '@/components/Login/Login'
 import SignUp from '@/components/SignUp/SignUp'
 import Create from '@/components/Create/Create'
+import Nominate from '@/components/Nominate/Nominate'
+
 import store from '@/store'
 import feathersClient from '@/api/feathers-client'
 
@@ -55,6 +58,11 @@ const router = new Router({
       meta: {
         admin: true
       }
+    },
+    {
+      path: '/movies',
+      name: 'Movies',
+      component: Nominate
     }
   ]
 })
