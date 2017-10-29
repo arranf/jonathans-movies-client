@@ -44,6 +44,9 @@ export default {
     const maxVote = voteCountByOption.reduce((acc, value) => {
       return (acc >= value.totalVotes ? acc : value.totalVotes)
     }, 0)
+    if (maxVote === 0) {
+      return []
+    }
     return voteCountByOption.reduce((acc, value) => {
       if (value.totalVotes === maxVote) {
         const option = rootGetters['option/get'](value.option_id)

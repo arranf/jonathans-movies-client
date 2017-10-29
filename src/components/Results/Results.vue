@@ -1,6 +1,6 @@
 <template>
 <div class="h-100">
-  <div v-if="getMostRecentPoll && dataCollection.datasets && dataCollection.datasets.length > 0 && dataCollection.datasets[0].data.length > 0">
+  <div v-if="getMostRecentPoll && dataCollection.datasets && dataCollection.datasets.length > 0 && winningOptions.length > 0">
     <h1 class="text-center"><i class="fa fa-trophy" aria-hidden="true"></i>
     <br/>
     {{winningOptions.length > 1 ? winningOptions.slice(0, winningOptions.length - 1).join(', ') + " and " + winningOptions.slice(-1) : winningOptions[0]}}</h1>
