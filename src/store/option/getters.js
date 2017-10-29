@@ -37,5 +37,10 @@ export default {
   },
   hasNominationsRemaining: (state, getters) => {
     return getters.nominationsRemaining > 0
+  },
+  isOptionForCurrentPoll: (state, getters, rootState, rootGetters) => filmId => {
+    const activePoll = rootGetters['poll/getActivePoll']
+    if (!activePoll || !filmId) { return false }
+    return getters.list.some(o => o.film_id === filmId && o.poll_id === activePoll._id)
   }
 }
