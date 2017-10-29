@@ -18,9 +18,16 @@ export default {
     return null
   },
   getVotesByOption: (state, getters, rootState, rootGetters) => pollId => {
+    const optionsForPoll = rootGetters['option/getOptionsForPoll'](pollId)
     const votes = Object.values(state.keyedById).filter(v => v.poll_id === pollId)
     const groupedVotes = groupBy(votes, 'option_id')
-    return loMap(groupedVotes, (value, key) => ({option_id: key, votes: value}))
+    let votesByOption = loMap(groupedVotes, (value, key) => ({option_id: key, votes: value}))
+    optionsForPoll.forEach(option => {
+      if (!votesByOption.find(gv => gv.option_id === option._id)) {
+        votesByOption.push({option_id: option._id, votes: []})
+      }
+    })
+    return votesByOption
   },
   getVoteCountsByOption: (state, getters, rootState, rootGetters) => pollId => {
     return getters.getVotesByOption(pollId)

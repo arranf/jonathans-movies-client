@@ -33,6 +33,22 @@ const functions = {
   selectRandom: function (array) {
     return array[Math.floor(Math.random() * array.length)]
   },
+  selectRandomArraySize: function (array, size) {
+    let newArray = []
+    while ((size - newArray.length) >= array.length) {
+      let shuffleArray = [].concat(array)
+      functions.shuffle(array)
+      newArray = newArray.concat(shuffleArray)
+    }
+    let index = 0
+    while (newArray.length < size) {
+      let shuffleArray = [].concat(array)
+      functions.shuffle(array)
+      newArray.push(shuffleArray[index])
+      index++
+    }
+    return newArray
+  },
   getHighestVotedOptions: function (arr) {
     const maxVote = arr.reduce((acc, value) => {
       return (acc > value.totalVotes ? acc : value.totalVotes)
