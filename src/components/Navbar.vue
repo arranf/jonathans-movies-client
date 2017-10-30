@@ -24,7 +24,7 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'navbar',
   computed: {
-      ...mapGetters('users', {currentUser: 'current'})
+    ...mapGetters('users', {currentUser: 'current'})
   }
 }
 </script>

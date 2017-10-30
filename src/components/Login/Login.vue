@@ -41,61 +41,61 @@
 
 <script>
 import feathersClient from '@/api/feathers-client'
-import {mapActions, mapGetters, mapState} from 'vuex'
+import {mapActions, mapState} from 'vuex'
 import router from '@/router'
 
 export default {
   name: 'Login',
-    data() {
-        return {
-            password: '',
-            email: '',
-            isError: false,
-            isInternalLogin: false
-        }
-    },
-    methods: {
-        ...mapActions('auth',['authenticate', 'logout']),
-        tryLogin: function() {
-            this.authenticate({
-                strategy: 'local',
-                email: this.email,
-                password: this.password
-            })
-            .then(token => {
-                console.log('Authenticated!', token);
-                return feathersClient.passport.verifyJWT(token.accessToken);
-            })
-            .then( () => {
-                router.push('home')
-            })
-            .catch(error => {console.error(error); this.isError = true})
-        },
-        toSignUp: function() {
-            router.push('/signup')
-        },
-        swapLoginType: function() {
-          this.isInternalLogin = !this.isInternalLogin
-        },
-        facebookLogin: function() {
-          let url
-          if (process.env.BRANCH === 'develop') {
-            url = "https://staging-api.jonathansmovies.com/auth/facebook"
-          } else if (process.env.NODE_ENV === 'production') {
-            url = "https://api.jonathansmovies.com/auth/facebook"
-          } else {
-            url = "http://localhost:3030/auth/facebook"
-          } 
-          this.logout()
-            .then(window.location = url)
-        }
-    },
-    computed: {
-        ...mapState('auth', ['user']),
-        isDisabled: function () {
-            return !(this.password && this.email)
-        }
+  data () {
+    return {
+      password: '',
+      email: '',
+      isError: false,
+      isInternalLogin: false
     }
+  },
+  methods: {
+    ...mapActions('auth', ['authenticate', 'logout']),
+    tryLogin: function () {
+      this.authenticate({
+        strategy: 'local',
+        email: this.email,
+        password: this.password
+      })
+        .then(token => {
+          console.log('Authenticated!', token)
+          return feathersClient.passport.verifyJWT(token.accessToken)
+        })
+        .then(() => {
+          router.push('home')
+        })
+        .catch(error => { console.error(error); this.isError = true })
+    },
+    toSignUp: function () {
+      router.push('/signup')
+    },
+    swapLoginType: function () {
+      this.isInternalLogin = !this.isInternalLogin
+    },
+    facebookLogin: function () {
+      let url
+      if (process.env.BRANCH === 'develop') {
+        url = 'https://staging-api.jonathansmovies.com/auth/facebook'
+      } else if (process.env.NODE_ENV === 'production') {
+        url = 'https://api.jonathansmovies.com/auth/facebook'
+      } else {
+        url = 'http://localhost:3030/auth/facebook'
+      }
+      this.logout()
+        .then(window.location = url)
+    }
+  },
+  computed: {
+    ...mapState('auth', ['user']),
+    isDisabled: function () {
+      return !(this.password && this.email)
+    }
+  }
 }
 </script>
 

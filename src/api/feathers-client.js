@@ -14,9 +14,9 @@ if (process.env.BRANCH && process.env.BRANCH === 'develop') {
 }
 
 const feathersClient = feathers()
-.configure(hooks())
-.configure(socketio(socket))
-.configure(auth({storage: window.localStorage}))
+  .configure(hooks())
+  .configure(socketio(socket))
+  .configure(auth({storage: window.localStorage}))
 
 feathersClient.service('/users')
 feathersClient.service('/poll')

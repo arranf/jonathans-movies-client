@@ -42,54 +42,54 @@ import router from '@/router'
 export default {
   name: 'InfoFooter',
   computed: {
-      ...mapGetters('vote', {votes: 'list'}),
-      ...mapGetters('poll', {polls: 'find'}),
-      ...mapGetters('poll', ['getActivePoll', 'remainingTimeWordsForCurrentPoll', 'isCurrentPollInNomination', 'isCurrentPollInVoting', 'remainingTimeInNominationWordsForCurrentPoll']),
-      ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
-      ...mapGetters('option', {remainingNominations: 'nominationsRemaining'}),
-      ...mapGetters('time', ['getNow']),
-      ...mapState('auth', ['user']),
-      ...mapGetters('errors', ['shouldShowErrorForExceedVote']),
-      displayError:  function() {
-         if (this.shouldShowErrorForExceedVote) {
-           return {
+    ...mapGetters('vote', {votes: 'list'}),
+    ...mapGetters('poll', {polls: 'find'}),
+    ...mapGetters('poll', ['getActivePoll', 'remainingTimeWordsForCurrentPoll', 'isCurrentPollInNomination', 'isCurrentPollInVoting', 'remainingTimeInNominationWordsForCurrentPoll']),
+    ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
+    ...mapGetters('option', {remainingNominations: 'nominationsRemaining'}),
+    ...mapGetters('time', ['getNow']),
+    ...mapState('auth', ['user']),
+    ...mapGetters('errors', ['shouldShowErrorForExceedVote']),
+    displayError: function () {
+      if (this.shouldShowErrorForExceedVote) {
+        return {
           'border': true,
           'border-danger': true,
           'text-danger': true
-          }
-        } else {
-          return {}
         }
+      } else {
+        return {}
       }
+    }
   },
   methods: {
-      ...mapActions('poll', {updatePoll: 'patch'}),
-      ...mapActions('auth', ['logout']),
-      stopPoll: function () {
-        const currentTime = this.getNow
-        const data = {'endDateTime': currentTime}
-        this.updatePoll([this.getActivePoll._id, data, {}])
-      },
-      stopNominations: function () {
-        const currentTime = this.getNow
-        const oldTransitionTime = this.getActivePoll.pollTransitionDateTime
-        const data = {
-          'pollTransitionDateTime': currentTime,
-          'endDateTime': this.getActivePoll.endDateTime - (oldTransitionTime - currentTime)
-        }
-        this.updatePoll([this.getActivePoll._id, data, {}])
-      },
-      logoutAndRedirect: function () {
-        this.logout()
-        router.push('/')
+    ...mapActions('poll', {updatePoll: 'patch'}),
+    ...mapActions('auth', ['logout']),
+    stopPoll: function () {
+      const currentTime = this.getNow
+      const data = {'endDateTime': currentTime}
+      this.updatePoll([this.getActivePoll._id, data, {}])
+    },
+    stopNominations: function () {
+      const currentTime = this.getNow
+      const oldTransitionTime = this.getActivePoll.pollTransitionDateTime
+      const data = {
+        'pollTransitionDateTime': currentTime,
+        'endDateTime': this.getActivePoll.endDateTime - (oldTransitionTime - currentTime)
       }
+      this.updatePoll([this.getActivePoll._id, data, {}])
+    },
+    logoutAndRedirect: function () {
+      this.logout()
+      router.push('/')
+    }
   },
-  beforeUpdate: function() {
-      if (this.user && !this.gotVoteandPolls && this.getActivePoll) {
-        queries.getCurrentPoll()
+  beforeUpdate: function () {
+    if (this.user && !this.gotVoteandPolls && this.getActivePoll) {
+      queries.getCurrentPoll()
         .then(queries.getVotesForCurrentPoll())
         .then(this.gotVoteandPolls = true)
-      }
+    }
   }
 }
 </script>

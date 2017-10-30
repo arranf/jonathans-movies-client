@@ -15,11 +15,10 @@
 <script>
 import debounce from 'lodash/debounce'
 import queries from '@/api'
-import { focus } from 'vue-focus'
 import utils from '@/utils'
 
 export default {
-  data() {
+  data () {
     return {
       suggestions: [],
       searchQuery: '',
@@ -35,12 +34,12 @@ export default {
   ],
   methods: {
     getResults: function () {
-      if (this.completed){
+      if (this.completed) {
         this.completed = false
       }
-      
+
       queries.getFilmSuggestions(this.searchQuery).then(response => {
-        if (response && response.data){
+        if (response && response.data) {
           this.suggestions.splice(0, this.suggestions.length)
           response.data.forEach((result) => {
             this.suggestions.push(result)
@@ -50,9 +49,9 @@ export default {
 
       this.$emit('fill', this.index, {name: this.searchQuery, film_id: null})
     },
-    fillBox: function(toFill) {
+    fillBox: function (toFill) {
       this.searchQuery = toFill.name
-      this.chosenFilm = {name: toFill.name, film_id: toFill._id} 
+      this.chosenFilm = {name: toFill.name, film_id: toFill._id}
       this.completed = true
       this.$emit('fill', this.index, this.chosenFilm)
     },
@@ -62,7 +61,7 @@ export default {
       return chosenPlaceholder
     }
   },
-  mounted() {
+  mounted () {
     this.getSuggestions = debounce(this.getResults, 300, {leading: true})
   },
   computed: {

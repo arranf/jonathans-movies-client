@@ -30,7 +30,7 @@ export default {
       return this.getOptionsForCurrentPoll.reverse()
     }
   },
-  created() {
+  created () {
     queries.getOptionsForMostRecentPoll(this.getActivePoll._id)
   }
 }

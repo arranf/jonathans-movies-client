@@ -18,7 +18,7 @@
 
 <script>
 import PieChart from './PieChart.js'
-import {mapActions, mapGetters, mapState} from 'vuex'
+import {mapGetters, mapState} from 'vuex'
 import utils from '@/utils'
 import constants from '@/constants'
 import queries from '@/api'
@@ -40,7 +40,7 @@ export default {
     ...mapState('vote', ['isFindPending']),
     dataCollection: function () {
       const graphData = this.getGraphData(this.getMostRecentPoll._id)
-      if (!graphData){
+      if (!graphData) {
         return {datasets: [], labels: []}
       }
       return {datasets: [{data: graphData.data, label: 'Vote', backgroundColor: this.backgroundColors}], labels: graphData.labels}
@@ -53,7 +53,7 @@ export default {
     queries.getCurrentPoll()
       .then(() => queries.getVotesForMostRecentPoll(this.getMostRecentPoll._id))
       .then(() => queries.getOptionsForMostRecentPoll(this.getMostRecentPoll._id))
-      .then(response => this.backgroundColors = utils.selectRandomArraySize(constants.colors['800'], response.data.length))
+      .then(response => { this.backgroundColors = utils.selectRandomArraySize(constants.colors['800'], response.data.length) })
       .catch(error => console.log(error))
   }
 }

@@ -1,6 +1,35 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "eslint.enable": false,
-    "editor.tabSize": 2,
-    "editor.detectIndentation": false
+    "editor.renderWhitespace": "boundary",
+    "editor.detectIndentation": false,
+    "[javascript]": {
+      "editor.tabSize": 2,
+      "editor.insertSpaces": true
+    },
+    "[vue]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true
+    },
+    "eslint.options": {
+        "extensions": [".html", ".js", ".vue", ".jsx"]
+    },
+    "eslint.enable": true,
+    "eslint.validate": [
+      {
+          "language": "html",
+          "autoFix": true
+      },
+      {
+          "language": "vue",
+          "autoFix": true
+      },
+      {
+        "language": "vue-html",
+        "autoFix": true
+      },
+      {
+          "language": "javascript",
+          "autoFix": true
+      }
+    ]
   }

@@ -29,36 +29,36 @@ import {mapGetters} from 'vuex'
 
 import MovieInfoModal from '@/components/MovieInfoModal'
 
-  export default {
-    props:  ['film'],
-    components: {
-      MovieInfoModal
+export default {
+  props: ['film'],
+  components: {
+    MovieInfoModal
+  },
+  methods: {
+    showModal: function () {
+      utils.showModal(this, this.film._id)
     },
-    methods: {
-      showModal: function() {
-         utils.showModal(this, this.film._id)
-      },
-      hideModal: function () {
-        utils.hideModal(this, this.film._id)
-      },
-      addNomination: function () {
-        queries.addNomination(this.film)
-          .then(() => {this.hideModal(); this.$router.push('/')})
-          .catch(error => console.error(error))
+    hideModal: function () {
+      utils.hideModal(this, this.film._id)
+    },
+    addNomination: function () {
+      queries.addNomination(this.film)
+        .then(() => { this.hideModal(); this.$router.push('/') })
+        .catch(error => console.error(error))
+    }
+  },
+  computed: {
+    ...mapGetters('option', ['hasNominationsRemaining']),
+    getFilmYear: function () {
+      if (this.film && this.film.release_date) {
+        return utils.getYearFromTmdbReleaseDate(this.film.release_date)
       }
     },
-    computed: {
-      ...mapGetters('option', ['hasNominationsRemaining']),
-      getFilmYear: function(){
-        if (this.film && this.film.release_date) {
-          return utils.getYearFromTmdbReleaseDate(this.film.release_date)
-        }
-      },
-      shouldNominate: function () {
-        return {
-          shouldNominate: {'text-muted': !this.hasNominationsRemaining, 'not-active': !this.hasNominationsRemaining}
-        }
+    shouldNominate: function () {
+      return {
+        shouldNominate: {'text-muted': !this.hasNominationsRemaining, 'not-active': !this.hasNominationsRemaining}
       }
     }
   }
+}
 </script>

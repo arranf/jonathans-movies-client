@@ -33,50 +33,50 @@
 
 <script>
 import feathersClient from '@/api/feathers-client'
-import {mapActions, mapGetters, mapState} from 'vuex'
+import {mapActions, mapState} from 'vuex'
 import router from '@/router'
 
 export default {
   name: 'SignUp',
-  data() {
-      return {
-          password: '',
-          email: '',
-          isError: false
-      }
+  data () {
+    return {
+      password: '',
+      email: '',
+      isError: false
+    }
   },
   methods: {
-      ...mapActions('users', {signUp: 'create'}),
-      ...mapActions('auth', ['authenticate']),
-      toHome: function () {
-        router.push('/home')
-      },
-      trySignUp: function() {
-        const password = this.password
-        const email = this.email
-          this.signUp({
-              strategy: 'local',
-              email: email,
-              password: password
-          })
-          .then( () => this.authenticate({
-              strategy: 'local',
-              email: email,
-              password: password
-          }))
-          .then(token => {
-            console.log('Authenticated!', token);
-            return feathersClient.passport.verifyJWT(token.accessToken);
-          })
-          .then( () => router.push('home'))
-          .catch(error => {console.error(error); this.isError = true})
-      }
+    ...mapActions('users', {signUp: 'create'}),
+    ...mapActions('auth', ['authenticate']),
+    toHome: function () {
+      router.push('/home')
+    },
+    trySignUp: function () {
+      const password = this.password
+      const email = this.email
+      this.signUp({
+        strategy: 'local',
+        email: email,
+        password: password
+      })
+        .then(() => this.authenticate({
+          strategy: 'local',
+          email: email,
+          password: password
+        }))
+        .then(token => {
+          console.log('Authenticated!', token)
+          return feathersClient.passport.verifyJWT(token.accessToken)
+        })
+        .then(() => router.push('home'))
+        .catch(error => { console.error(error); this.isError = true })
+    }
   },
   computed: {
-      ...mapState('auth', ['user']),
-      isDisabled: function () {
-          return !(this.password && this.email)
-      }
+    ...mapState('auth', ['user']),
+    isDisabled: function () {
+      return !(this.password && this.email)
+    }
   }
 }
 </script>

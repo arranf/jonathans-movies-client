@@ -17,9 +17,9 @@ require('styles/main.scss')
 
 if (process.env.NODE_ENV === 'production' && process.env.BRANCH !== 'develop') {
   Raven
-  .config('https://5e5d7f63477a49289a3e7556f761afb7@sentry.io/221248')
-  .addPlugin(RavenVue, Vue)
-  .install()
+    .config('https://5e5d7f63477a49289a3e7556f761afb7@sentry.io/221248')
+    .addPlugin(RavenVue, Vue)
+    .install()
 }
 
 Vue.config.productionTip = false

@@ -33,118 +33,115 @@ require('swiper/dist/css/swiper.css')
 
 export default {
   name: 'VoteForOption',
-  data() {
-      return {
-        optionColors: {
-            currentIndex: 0,
-            colors: constants.colors['800'],
-            optionColorMap: {}
-        },
-        notNextTick: true,
-        swiperOption: {
-                simulateTouch: true,
-                preventClicks: false,
-                onClick: this.vote,
-                onTransitionStart: () => this.swiperOption.preventClicks = true,
-                onTransitionEnd: () => this.swiperOption.preventClicks = false,
-                setWrapperSize: true,
-                initialSlide: 0,
-                slidesPerView: 3,
-                spaceBetween: 40,
-                mousewheelControl : true,
-                observeParents:true,
-                preventClicks: false,
-                loop: false,
-                pagination : '.swiper-pagination',
-                paginationClickable :true,
-                prevButton:'.swiper-button-prev',
-                nextButton:'.swiper-button-next',
-                // https://github.com/surmon-china/vue-awesome-swiper/blob/master/examples/33-responsive-breakpoints.vue
-                breakpoints: {
-                576: {
-                  slidesPerView: 1,
-                  spaceBetween: 10
-                },
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 20
-                },
-                992: {
-                  slidesPerView: 3,
-                  spaceBetween: 30
-                },
-                1200: {
-                  slidesPerView: 4,
-                  spaceBetween: 40
-                }
-              },
+  data () {
+    return {
+      optionColors: {
+        currentIndex: 0,
+        colors: constants.colors['800'],
+        optionColorMap: {}
+      },
+      notNextTick: true,
+      swiperOption: {
+        simulateTouch: true,
+        preventClicks: true,
+        onClick: this.vote,
+        setWrapperSize: true,
+        initialSlide: 0,
+        slidesPerView: 3,
+        spaceBetween: 40,
+        mousewheelControl: true,
+        observeParents: true,
+        loop: false,
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        prevButton: '.swiper-button-prev',
+        nextButton: '.swiper-button-next',
+        // https://github.com/surmon-china/vue-awesome-swiper/blob/master/examples/33-responsive-breakpoints.vue
+        breakpoints: {
+          576: {
+            slidesPerView: 1,
+            spaceBetween: 10
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 20
+          },
+          992: {
+            slidesPerView: 3,
+            spaceBetween: 30
+          },
+          1200: {
+            slidesPerView: 4,
+            spaceBetween: 40
+          }
         }
       }
+    }
   },
   components: {
     swiper,
     swiperSlide
   },
   methods: {
-      ...mapActions('vote', {addVote: 'create'}),
-      ...mapActions('vote', {removeVote: 'remove'}),
-      ...mapActions('errors', ['updateLastExceededVoteDateTime']),
-      getColor: function (optionId){
-          let optionColors = this.optionColors
-          if (optionId in optionColors.optionColorMap){
-              return optionColors.optionColorMap[optionId]
-          }
-          
-          let currentIndex = optionColors.currentIndex
-          this.optionColors.optionColorMap[optionId] = optionColors.colors[currentIndex]
-          if (currentIndex+1 === optionColors.colors.length){
-              optionColors.currentIndex = 0
-          } else {
-              optionColors.currentIndex++
-          }
-          return optionColors.optionColorMap[optionId]
-      },
-      vote: function(){
-          const index = this.$refs.voteSwiper.swiper.clickedIndex
-          if (index == null){
-              console.error('Could not get option index')
-              return
-          }
-
-          const option = this.getOptionsForCurrentPoll[index]
-          const optionId = option._id
-          if (this.isVoted(optionId)) {
-              const vote = this.votes.find(v => v.user_id === this.user._id && v.option_id === optionId)
-              this.removeVote(vote._id)
-                .then(console.log('Vote removed from ', option.name))
-                .catch(error => console.error(error))
-          } else {
-            if (this.remainingVotes <= 0){
-              this.updateLastExceededVoteDateTime()
-              return
-            }
-            this.addVote({poll_id: this.getActivePoll._id, option_id: optionId})
-              .then(console.log('Vote added for ', option.name))
-              .catch(error => console.error(error))
-          }
-      },
-      isVoted: function(optionId){
-          return this.votes.some( v => v.user_id === this.user._id && v.option_id === optionId )
+    ...mapActions('vote', {addVote: 'create'}),
+    ...mapActions('vote', {removeVote: 'remove'}),
+    ...mapActions('errors', ['updateLastExceededVoteDateTime']),
+    getColor: function (optionId) {
+      let optionColors = this.optionColors
+      if (optionId in optionColors.optionColorMap) {
+        return optionColors.optionColorMap[optionId]
       }
+
+      let currentIndex = optionColors.currentIndex
+      this.optionColors.optionColorMap[optionId] = optionColors.colors[currentIndex]
+      if (currentIndex + 1 === optionColors.colors.length) {
+        optionColors.currentIndex = 0
+      } else {
+        optionColors.currentIndex++
+      }
+      return optionColors.optionColorMap[optionId]
+    },
+    vote: function () {
+      const index = this.$refs.voteSwiper.swiper.clickedIndex
+      if (index == null) {
+        console.error('Could not get option index')
+        return
+      }
+
+      const option = this.getOptionsForCurrentPoll[index]
+      const optionId = option._id
+      if (this.isVoted(optionId)) {
+        const vote = this.votes.find(v => v.user_id === this.user._id && v.option_id === optionId)
+        this.removeVote(vote._id)
+          .then(console.log('Vote removed from ', option.name))
+          .catch(error => console.error(error))
+      } else {
+        if (this.remainingVotes <= 0) {
+          this.updateLastExceededVoteDateTime()
+          return
+        }
+        this.addVote({poll_id: this.getActivePoll._id, option_id: optionId})
+          .then(console.log('Vote added for ', option.name))
+          .catch(error => console.error(error))
+      }
+    },
+    isVoted: function (optionId) {
+      return this.votes.some(v => v.user_id === this.user._id && v.option_id === optionId)
+    }
   },
   computed: {
-      ...mapGetters('vote', {findVote: 'find'}), ...mapGetters('vote', {votes: 'list'}),
-      ...mapState('auth', ['user']),
-      ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
-      ...mapGetters('option', ['getOptionsForCurrentPoll']),
-      ...mapGetters('poll', ['getActivePoll']),
-      ...mapGetters('errors', ['shouldShowErrorForExceedVote'])
+    ...mapGetters('vote', {findVote: 'find'}),
+    ...mapGetters('vote', {votes: 'list'}),
+    ...mapState('auth', ['user']),
+    ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
+    ...mapGetters('option', ['getOptionsForCurrentPoll']),
+    ...mapGetters('poll', ['getActivePoll']),
+    ...mapGetters('errors', ['shouldShowErrorForExceedVote'])
   },
-  mounted: function (){
-      utils.shuffle(this.optionColors.colors)
-      
-      queries.getVotesForCurrentPoll()
-        .catch(error => console.error(error))
+  mounted: function () {
+    utils.shuffle(this.optionColors.colors)
+    queries.getVotesForCurrentPoll()
+      .catch(error => console.error(error))
   }
 }
 </script>

@@ -46,104 +46,103 @@
 import FilmSuggestion from './FilmSuggestion'
 import infiniteScroll from 'vue-infinite-scroll'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
-import queries from '@/api'
 import LoadingBounce from '@/components/Loading/LoadingBounce'
 import constants from '@/constants'
 
 require('@/../node_modules/animate.css/animate.css')
 
-  export default {
-    name: 'FilmSelector',
-    data: function () {
-      return {
-        searchTitle: '',
-        page: 0,
-        limit: 50,
-        loadedAll: false,
-        busy: false,
-        total: 51,
-        sort: {name: 1},
-        genres: [],
-        elements: {
-          genreFilters: false
-        }
+export default {
+  name: 'FilmSelector',
+  data: function () {
+    return {
+      searchTitle: '',
+      page: 0,
+      limit: 50,
+      loadedAll: false,
+      busy: false,
+      total: 51,
+      sort: {name: 1},
+      genres: [],
+      elements: {
+        genreFilters: false
       }
-    },
-    directives: {
-      infiniteScroll
-    },
-    components: {
-      FilmSuggestion,
-      LoadingBounce
-    },
-    computed: {
-      ...mapGetters('films', {allFilms: 'list'}),
-      ...mapGetters('poll', ['getActivePoll']),
-      totalGenres: () => constants.genres,
-      query: function () {
-        let query = {query: {
-          $limit: this.limit,
-          $sort: this.sort,
-          $skip: this.limit * this.page,
-        }}
-        if (this.genres.length > 0) {
-          query.query['genres'] = this.genres
-        }
-        if (this.searchTitle) {
-          query.query['$search'] = this.searchTitle
-        }
-        return query
-      }
-    },
-    methods: {
-      ...mapActions('films', {queryFilms: 'find'}),
-      ...mapMutations('films', {clearFilms: 'clearAll'}),
-      reset: function () {
-        this.page = 0
-        this.searchTitle = ''
-        this.genres = []
-        this.total = 51
-      },
-      requery: function () {
-        this.$modal.hide('filterOptions')
-        this.page = 0
-        this.busy = true
-        this.clearFilms()
-        this.getFilms()
-      },
-      fetchNextPage: function () {
-        const offset = this.limit * this.page
-        if (offset >= this.total){
-          return
-        }
-        this.busy = true
-        this.page++
-        this.getFilms()
-      },
-      displayFilterOptionsModal: function () {
-        this.$modal.show('filterOptions')
-      },
-      getFilms: function () {
-        this.queryFilms(this.query)
-            .then(response => {this.total = response.total; this.busy = false})
-            .catch(error => {console.error(error); this.busy = false})
-      },
-      changeGenre (genre) {
-        const index = this.genres.indexOf(genre) 
-        if (index !== -1){
-          this.genres.splice(index, 1)
-        } else {
-          this.genres.push(genre)
-        }
-      },
-      beforeOpen: () => {document.body.classList.remove('v--modal-block-scroll')},
-      opened: () => {document.body.classList.add('v--modal-block-scroll')}
-    },
-    created() {
-      this.clearFilms()
-      this.queryFilms(this.query)
     }
+  },
+  directives: {
+    infiniteScroll
+  },
+  components: {
+    FilmSuggestion,
+    LoadingBounce
+  },
+  computed: {
+    ...mapGetters('films', {allFilms: 'list'}),
+    ...mapGetters('poll', ['getActivePoll']),
+    totalGenres: () => constants.genres,
+    query: function () {
+      let query = {query: {
+        $limit: this.limit,
+        $sort: this.sort,
+        $skip: this.limit * this.page
+      }}
+      if (this.genres.length > 0) {
+        query.query['genres'] = this.genres
+      }
+      if (this.searchTitle) {
+        query.query['$search'] = this.searchTitle
+      }
+      return query
+    }
+  },
+  methods: {
+    ...mapActions('films', {queryFilms: 'find'}),
+    ...mapMutations('films', {clearFilms: 'clearAll'}),
+    reset: function () {
+      this.page = 0
+      this.searchTitle = ''
+      this.genres = []
+      this.total = 51
+    },
+    requery: function () {
+      this.$modal.hide('filterOptions')
+      this.page = 0
+      this.busy = true
+      this.clearFilms()
+      this.getFilms()
+    },
+    fetchNextPage: function () {
+      const offset = this.limit * this.page
+      if (offset >= this.total) {
+        return
+      }
+      this.busy = true
+      this.page++
+      this.getFilms()
+    },
+    displayFilterOptionsModal: function () {
+      this.$modal.show('filterOptions')
+    },
+    getFilms: function () {
+      this.queryFilms(this.query)
+        .then(response => { this.total = response.total; this.busy = false })
+        .catch(error => { console.error(error); this.busy = false })
+    },
+    changeGenre (genre) {
+      const index = this.genres.indexOf(genre)
+      if (index !== -1) {
+        this.genres.splice(index, 1)
+      } else {
+        this.genres.push(genre)
+      }
+    },
+    beforeOpen: () => { document.body.classList.remove('v--modal-block-scroll') },
+    opened: () => { document.body.classList.add('v--modal-block-scroll') }
+  },
+  created () {
+    this.clearFilms()
+    this.queryFilms(this.query)
   }
+}
 </script>
 
 

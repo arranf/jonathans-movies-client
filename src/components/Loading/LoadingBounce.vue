@@ -7,7 +7,7 @@
 
 <script>
 export default {
-   name: 'LoadingBounce',
+  name: 'LoadingBounce'
 }
 </script>
 

@@ -31,7 +31,7 @@ export default {
   computed: {
     ...mapState('option', {waitingForOptionFind: 'isFindPending'}),
     lastWatched: function () {
-      if (this.option.film && this.option.film.lastWatched){
+      if (this.option.film && this.option.film.lastWatched) {
         return utils.humanizeTimeToNowImprecise(this.option.film.lastWatched) + ' ago'
       }
       return null
@@ -53,7 +53,7 @@ export default {
         return `https://www.imdb.com/title/${this.option.film.data.imdb_id}`
       }
     },
-    getFilmYear: function() {
+    getFilmYear: function () {
       if (this.option.film && this.option.film.release_date) {
         return utils.getYearFromTmdbReleaseDate(this.option.film.release_date)
       }
@@ -65,7 +65,7 @@ export default {
     getColor: function () {
       return utils.selectRandom(constants.colors['800'])
     },
-    showModal: function() {
+    showModal: function () {
       if (this.option.film) { utils.showModal(this, this.option.film._id) }
     }
   },
@@ -74,8 +74,8 @@ export default {
       fetchedData: false
     }
   },
-  created() {
-    if (this.option.film ) {
+  created () {
+    if (this.option.film) {
       this.getFilmData(this.option)
     }
   }

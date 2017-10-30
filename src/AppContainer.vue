@@ -11,7 +11,7 @@
 <script>
 import InfoFooter from '@/components/InfoFooter'
 import ProgressIndicator from '@/components/Progress.vue'
-        
+
 export default {
   name: 'app',
   components: {

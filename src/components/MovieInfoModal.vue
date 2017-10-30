@@ -23,68 +23,66 @@ import {mapGetters} from 'vuex'
 import imagesLoaded from 'vue-images-loaded'
 import LoadingBounce from '@/components/Loading/LoadingBounce'
 
-
 export default {
   name: 'MovieInfoModal',
-  props:  {
-      film: {type: Object},
-      showNominate: {default: true, type: Boolean}
-    },
-    data () {
-      return {
-        shouldDisplay: false
+  props: {
+    film: {type: Object},
+    showNominate: {default: true, type: Boolean}
+  },
+  data () {
+    return {
+      shouldDisplay: false
+    }
+  },
+  directives: {
+    imagesLoaded
+  },
+  components: {
+    LoadingBounce
+  },
+  methods: {
+    modalOpened: function () {
+      document.body.classList.add('v--modal-block-scroll')
+      if (!this.film.data) {
+        tmdbApi.getMovieData(this.film.tmdb_id)
+          .then(response => this.$set(this.film, 'data', response.data))
+          .catch(error => { console.error(error); this.hideModal(this.this.film._id) })
       }
     },
-    directives: {
-      imagesLoaded
+    addNomination: function () {
+      if (this.showNominate && this.hasNominationsRemaining && !this.isOptionForCurrentPoll(this.film_id)) {
+        queries.addNomination(this.film)
+          .then(() => { utils.hideModal(this, this.film._id); this.$router.push('/') })
+          .catch(error => console.error(error))
+      }
     },
-    components: {
-      LoadingBounce
+    imageRendered: function () { this.shouldDisplay = true },
+    beforeOpen: function () { document.body.classList.remove('v--modal-block-scroll') }
+  },
+  computed: {
+    ...mapGetters('option', ['hasNominationsRemaining', 'hasNominationsRemaining', 'isOptionForCurrentPoll']),
+    ...mapGetters('poll', ['isCurrentPollInNomination']),
+    backdropImage: function () {
+      if (this.film.data) {
+        return utils.getTmdbBackdropImage(this.film.data.backdrop_path)
+      }
+      return ''
     },
-    methods: {
-      modalOpened: function () {
-        document.body.classList.add('v--modal-block-scroll')
-        if (!this.film.data) {
-          tmdbApi.getMovieData(this.film.tmdb_id)
-            .then(response => this.$set(this.film, 'data', response.data))
-            .catch(error => {console.error(error); this.hideModal(this. this.film._id)})
-        }
-      },
-      addNomination: function () {
-        if (this.showNominate && this.hasNominationsRemaining && !this.isOptionForCurrentPoll(this.film_id)) {
-          queries.addNomination(this.film)
-            .then(() => {utils.hideModal(this, this.film._id); this.$router.push('/')})
-            .catch(error => console.error(error))
-        }
-      },
-      imageRendered: function () { this.shouldDisplay = true},
-      beforeOpen: function () {document.body.classList.remove('v--modal-block-scroll')}
+    getImdbLink: function () {
+      if (this.film && this.film.data && this.film.data.imdb_id) { return `https://www.imdb.com/title/${this.film.data.imdb_id}` }
     },
-    computed: {
-      ...mapGetters('option', ['hasNominationsRemaining', 'hasNominationsRemaining', 'isOptionForCurrentPoll']),
-      ...mapGetters('poll', ['isCurrentPollInNomination']),
-      backdropImage: function () {
-        if (this.film.data) {
-          return utils.getTmdbBackdropImage(this.film.data.backdrop_path)
-        }
-        return ''
-      },
-      getImdbLink: function () {
-        if (this.film && this.film.data && this.film.data.imdb_id)
-          return `https://www.imdb.com/title/${this.film.data.imdb_id}`
-      },
-      getFilmYear: function(){
-        if (this.film && this.film.release_date) {
-          return utils.getYearFromTmdbReleaseDate(this.film.release_date)
-        }
-      },
-      shouldNominate: function () {
-        return {
-          'text-muted': !this.hasNominationsRemaining || this.isOptionForCurrentPoll(this.film._id), 
-          'not-active': !this.hasNominationsRemaining || this.isOptionForCurrentPoll(this.film._id)
-        }
+    getFilmYear: function () {
+      if (this.film && this.film.release_date) {
+        return utils.getYearFromTmdbReleaseDate(this.film.release_date)
+      }
+    },
+    shouldNominate: function () {
+      return {
+        'text-muted': !this.hasNominationsRemaining || this.isOptionForCurrentPoll(this.film._id),
+        'not-active': !this.hasNominationsRemaining || this.isOptionForCurrentPoll(this.film._id)
       }
     }
+  }
 }
 </script>
 

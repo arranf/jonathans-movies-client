@@ -121,7 +121,6 @@
 
 <script>
 import MovieSuggest from './MovieSuggest'
-import feathersClient from '@/api/feathers-client'
 import {mapActions, mapGetters, mapState} from 'vuex'
 import router from '@/router'
 
@@ -137,7 +136,7 @@ export default {
       haveNominations: false,
       nominationsMinutes: '5',
       nominations: '1',
-      options: [{name: "", film_id: null}]
+      options: [{name: '', film_id: null}]
     }
   },
   methods: {
@@ -146,7 +145,7 @@ export default {
       router.push('/home')
     },
     addOption: function () {
-      this.options.push({name: "", film_id: null})
+      this.options.push({name: '', film_id: null})
     },
     fillOption: function (index, film) {
       this.$set(this.options, index, film)
@@ -155,7 +154,7 @@ export default {
       const currentTime = parseInt(new Date().getTime())
       let pollTransitionDateTime
       let numberOfNominations
-      let endDateTime = currentTime + parseInt(this.minutes) *  60000
+      let endDateTime = currentTime + parseInt(this.minutes) * 60000
 
       if (this.haveNominations) {
         const nominationLengthSeconds = parseInt(this.nominationsMinutes) * 60000
@@ -168,8 +167,8 @@ export default {
         numberOfVotes: parseInt(this.votes),
         startDateTime: currentTime,
         endDateTime: endDateTime,
-        options: this.options.filter(o => o
-          && typeof o === 'object' && o.name.trim().length > 0
+        options: this.options.filter(o => o &&
+          typeof o === 'object' && o.name.trim().length > 0
         ),
         pollTransitionDateTime: pollTransitionDateTime,
         numberOfNominations: numberOfNominations
@@ -181,19 +180,18 @@ export default {
     ...mapGetters('poll', ['getActivePoll']),
     ...mapState('auth', ['user']),
     canStart: function () {
-      return this.minutes  
-        && this.votes
-        && !this.errors.items[0]
-        && ( // Either have appropriate options...
-          (this.options.length >= 2
-          && this.options[0]
-          && this.options[1]
-          && this.options[0].name.trim().length > 0
-          && this.options[1].name.trim().length > 0)
-          || // ...or setup a nomination phase 
-          (this.haveNominations
-          && this.nominationsMinutes
-          && this.nominations)
+      return this.minutes &&
+        this.votes &&
+        !this.errors.items[0] &&
+        ( // Either have appropriate options...
+          (this.options.length >= 2 &&
+          this.options[0] &&
+          this.options[1] &&
+          this.options[0].name.trim().length > 0 &&
+          this.options[1].name.trim().length > 0) || // ...or setup a nomination phase
+          (this.haveNominations &&
+          this.nominationsMinutes &&
+          this.nominations)
         )
     },
     nominationLengthRules: function () {
