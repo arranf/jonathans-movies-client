@@ -5,14 +5,14 @@
     <div class="card-group">
       <div class="card" @click="showModal()">
         <div class="card-body">
-          <h4 class="card-title d-inline" v-once>{{film.name}} <small>{{getFilmYear}}</small></h4> 
+          <h4 class="card-title d-inline">{{film.name}} <small>{{getFilmYear}}</small></h4> 
         </div>
         <div class="card-body">
           <div class="row d-flex">
             <div class="col-4">
-              <span v-once class="badge badge-info">{{film.score}}</span>
+              <span class="badge badge-info">{{film.score}}</span>
             </div>
-            <div class="col-8" v-once v-if="film.genres">
+            <div class="col-8" v-if="film.genres">
               {{film.genres.join(', ')}}
             </div>
           </div>
