@@ -79,13 +79,13 @@ export default {
         },
         facebookLogin: function() {
           let url
-          if (process.env.BRANCH !== undefined && process.env.BRANCH === 'develop') {
+          if (process.env.BRANCH === 'develop') {
             url = "https://staging-api.jonathansmovies.com/auth/facebook"
           } else if (process.env.NODE_ENV === 'production') {
-            "https://api.jonathansmovies.com/auth/facebook"
-          }  else {
-             url = "http://localhost:3030/auth/facebook"
-           } 
+            url = "https://api.jonathansmovies.com/auth/facebook"
+          } else {
+            url = "http://localhost:3030/auth/facebook"
+          } 
           this.logout()
             .then(window.location = url)
         }
