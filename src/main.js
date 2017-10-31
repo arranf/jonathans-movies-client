@@ -14,6 +14,7 @@ import RavenVue from 'raven-js/plugins/vue'
 // Import assets
 require('font-awesome-webpack2')
 require('styles/main.scss')
+require('../node_modules/material-design-lite/material.min.js')
 
 if (process.env.NODE_ENV === 'production' && process.env.BRANCH !== 'develop') {
   Raven
