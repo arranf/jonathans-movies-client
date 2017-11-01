@@ -6,7 +6,7 @@
     <div v-if="isError" class="alert alert-danger" role="alert">
       Oops that username & password combination wasn't quite correct.
     </div>
-    <div v-if="!isInternalLogin">
+    <div id="loginOptions" v-if="!isInternalLogin">
       <mdl-button id="facebook" raised class="btn-facebook btn-block mdl-js-ripple-effect" @click.native.prevent="facebookLogin()">Log In with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span></mdl-button>
       <p class="py-1 my-1">or</p>
       <mdl-button id="login" @click.native.prevent="swapLoginType()" colored raised class="btn-block mdl-js-ripple-effect">Log In</mdl-button>
@@ -15,7 +15,7 @@
       </div>
     </div>
     <!-- Login Form -->
-    <form class="d-flex flex-column align-items-center justify-content-center" v-if="isInternalLogin">
+    <form id="internalLoginForm" class="d-flex flex-column align-items-center justify-content-center" v-if="isInternalLogin">
       <div class="w-100">
         <i class="fa fa-inbox px-2 mdl-color-text--grey-600"></i> <mdl-textfield floating-label="Email" type="email" v-model="email" />
       </div>
