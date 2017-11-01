@@ -115,6 +115,7 @@
     "vue-mdl": "^1.1.1",
     "vue-style-loader": "^3.0.3",
     "vue-template-compiler": "^2.5.2",
+    "vue-test-utils": "^1.0.0-beta.4",
     "webpack": "^3.7.1",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-middleware": "^1.12.0",
