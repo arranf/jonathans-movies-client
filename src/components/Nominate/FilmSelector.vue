@@ -118,6 +118,7 @@ require('@/../node_modules/animate.css/animate.css')
         this.searchTitle = ''
         this.genres = []
         this.total = 51
+        this.floorRating = 0
       },
       requery: function () {
         this.$modal.hide('filterOptions')
