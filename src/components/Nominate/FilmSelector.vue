@@ -105,7 +105,7 @@ require('@/../node_modules/animate.css/animate.css')
           query.query['$search'] = this.searchTitle
         }
         if (this.floorRating > 0){
-          query.query['score'] = {'$gt': this.floorRating}
+          query.query['score'] = {'$gte': this.floorRating}
         }
         return query
       }
