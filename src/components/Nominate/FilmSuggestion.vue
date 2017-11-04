@@ -10,7 +10,7 @@
         <div class="card-body">
           <div class="row d-flex">
             <div class="col-4">
-              <span v-once class="badge badge-info">{{film.score}}</span>
+              <span v-once class="badge badge-info">{{film.score}} <i class="fa fa-star" aria-disabled="true"></i></span>
             </div>
             <div class="col-8" v-once v-if="film.genres">
               {{film.genres.join(', ')}}
