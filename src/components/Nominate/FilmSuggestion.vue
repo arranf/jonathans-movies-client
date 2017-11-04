@@ -43,7 +43,12 @@ import MovieInfoModal from '@/components/MovieInfoModal'
       },
       addNomination: function () {
         queries.addNomination(this.film)
-          .then(() => {this.hideModal(); this.$router.push('/')})
+          .then(() => {
+            this.hideModal();
+            if (!this.hasNominationsRemaining) {
+              this.$router.push('/')
+            }
+           })
           .catch(error => console.error(error))
       }
     },
@@ -52,11 +57,6 @@ import MovieInfoModal from '@/components/MovieInfoModal'
       getFilmYear: function(){
         if (this.film && this.film.release_date) {
           return utils.getYearFromTmdbReleaseDate(this.film.release_date)
-        }
-      },
-      shouldNominate: function () {
-        return {
-          shouldNominate: {'text-muted': !this.hasNominationsRemaining, 'not-active': !this.hasNominationsRemaining}
         }
       }
     }
