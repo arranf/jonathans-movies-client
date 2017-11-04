@@ -24,6 +24,14 @@
               </div>
             </div>
             <div class="card-body">
+            <div @click.prevent="elements.ratingFilter = !elements.ratingFilter">{{elements.ratingFilter ? 'Hide' : 'Show'}} Rating Filter <i class="fa" :class="[elements.ratingFilter ? 'fa-chevron-right' : 'fa-chevron-down']"></i></div>
+              <div v-if="elements.ratingFilter" class="row">
+                <div class="col">
+                  <vue-slider v-model="floorRating" :formatter="'Min. {value}'" :max="10" :min="0" :interval="0.1" />
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
               <button @click.prevent="requery" type="submit" class="btn btn-primary">Submit</button>
               <button @click.prevent="reset" type="reset" class="btn btn-outline-secondary">Reset</button>
             </div>
@@ -44,6 +52,7 @@
 
 <script>
 import FilmSuggestion from './FilmSuggestion'
+import VueSlider from 'vue-slider-component';
 import infiniteScroll from 'vue-infinite-scroll'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 import queries from '@/api'
@@ -64,8 +73,10 @@ require('@/../node_modules/animate.css/animate.css')
         total: 51,
         sort: {name: 1},
         genres: [],
+        floorRating: 0.0,
         elements: {
-          genreFilters: false
+          genreFilters: false,
+          ratingFilter: false
         }
       }
     },
@@ -74,7 +85,8 @@ require('@/../node_modules/animate.css/animate.css')
     },
     components: {
       FilmSuggestion,
-      LoadingBounce
+      LoadingBounce,
+      VueSlider
     },
     computed: {
       ...mapGetters('films', {allFilms: 'list'}),
@@ -91,6 +103,9 @@ require('@/../node_modules/animate.css/animate.css')
         }
         if (this.searchTitle) {
           query.query['$search'] = this.searchTitle
+        }
+        if (this.floorRating > 0){
+          query.query['score'] = {'$gt': this.floorRating}
         }
         return query
       }
