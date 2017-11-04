@@ -119,6 +119,8 @@ require('@/../node_modules/animate.css/animate.css')
         this.genres = []
         this.total = 51
         this.floorRating = 0
+        this.$modal.hide('filterOptions')
+        this.getFilms()
       },
       requery: function () {
         this.$modal.hide('filterOptions')
