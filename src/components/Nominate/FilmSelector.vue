@@ -24,6 +24,14 @@
               </div>
             </div>
             <div class="card-body">
+            <div @click.prevent="elements.ratingFilter = !elements.ratingFilter">{{elements.ratingFilter ? 'Hide' : 'Show'}} Rating Filter <i class="fa" :class="[elements.ratingFilter ? 'fa-chevron-right' : 'fa-chevron-down']"></i></div>
+              <div v-if="elements.ratingFilter" class="row">
+                <div class="col">
+                  <vue-slider v-model="floorRating" :formatter="'Min. {value}'" :max="10" :min="0" :interval="0.1" />
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
               <button @click.prevent="requery" type="submit" class="btn btn-primary">Submit</button>
               <button @click.prevent="reset" type="reset" class="btn btn-outline-secondary">Reset</button>
             </div>
@@ -44,6 +52,7 @@
 
 <script>
 import FilmSuggestion from './FilmSuggestion'
+import VueSlider from 'vue-slider-component';
 import infiniteScroll from 'vue-infinite-scroll'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 import LoadingBounce from '@/components/Loading/LoadingBounce'
@@ -51,22 +60,24 @@ import constants from '@/constants'
 
 require('@/../node_modules/animate.css/animate.css')
 
-export default {
-  name: 'FilmSelector',
-  data: function () {
-    return {
-      searchTitle: '',
-      page: 0,
-      limit: 50,
-      loadedAll: false,
-      busy: false,
-      total: 51,
-      sort: {name: 1},
-      genres: [],
-      elements: {
-        genreFilters: false
+  export default {
+    name: 'FilmSelector',
+    data: function () {
+      return {
+        searchTitle: '',
+        page: 0,
+        limit: 50,
+        loadedAll: false,
+        busy: false,
+        total: 51,
+        sort: {name: 1},
+        genres: [],
+        floorRating: 0.0,
+        elements: {
+          genreFilters: false,
+          ratingFilter: false
+        }
       }
-    }
   },
   directives: {
     infiniteScroll
@@ -74,25 +85,6 @@ export default {
   components: {
     FilmSuggestion,
     LoadingBounce
-  },
-  computed: {
-    ...mapGetters('films', {allFilms: 'list'}),
-    ...mapGetters('poll', ['getActivePoll']),
-    totalGenres: () => constants.genres,
-    query: function () {
-      let query = {query: {
-        $limit: this.limit,
-        $sort: this.sort,
-        $skip: this.limit * this.page
-      }}
-      if (this.genres.length > 0) {
-        query.query['genres'] = this.genres
-      }
-      if (this.searchTitle) {
-        query.query['$search'] = this.searchTitle
-      }
-      return query
-    }
   },
   methods: {
     ...mapActions('films', {queryFilms: 'find'}),
@@ -110,17 +102,78 @@ export default {
       this.clearFilms()
       this.getFilms()
     },
-    fetchNextPage: function () {
-      const offset = this.limit * this.page
-      if (offset >= this.total) {
-        return
-      }
-      this.busy = true
-      this.page++
-      this.getFilms()
+    components: {
+      FilmSuggestion,
+      LoadingBounce,
+      VueSlider
     },
-    displayFilterOptionsModal: function () {
-      this.$modal.show('filterOptions')
+    computed: {
+      ...mapGetters('films', {allFilms: 'list'}),
+      ...mapGetters('poll', ['getActivePoll']),
+      totalGenres: () => constants.genres,
+      query: function () {
+        let query = {query: {
+          $limit: this.limit,
+          $sort: this.sort,
+          $skip: this.limit * this.page,
+        }}
+        if (this.genres.length > 0) {
+          query.query['genres'] = this.genres
+        }
+        if (this.searchTitle) {
+          query.query['$search'] = this.searchTitle
+        }
+        if (this.floorRating > 0){
+          query.query['score'] = {'$gte': this.floorRating}
+        }
+        return query
+      }
+    },
+    methods: {
+      ...mapActions('films', {queryFilms: 'find'}),
+      ...mapMutations('films', {clearFilms: 'clearAll'}),
+      reset: function () {
+        this.page = 0
+        this.searchTitle = ''
+        this.genres = []
+        this.total = 51
+        this.floorRating = 0
+        this.$modal.hide('filterOptions')
+        this.getFilms()
+      },
+      requery: function () {
+        this.$modal.hide('filterOptions')
+        this.page = 0
+        this.clearFilms()
+        this.getFilms()
+      },
+      fetchNextPage: function () {
+        const offset = this.limit * this.page
+        if (offset >= this.total){
+          return
+        }
+        this.page++
+        this.getFilms()
+      },
+      displayFilterOptionsModal: function () {
+        this.$modal.show('filterOptions')
+      },
+      getFilms: function () {
+        this.busy = true
+        this.queryFilms(this.query)
+            .then(response => {this.total = response.total; this.busy = false})
+            .catch(error => {console.error(error); this.busy = false})
+      },
+      changeGenre (genre) {
+        const index = this.genres.indexOf(genre) 
+        if (index !== -1){
+          this.genres.splice(index, 1)
+        } else {
+          this.genres.push(genre)
+        }
+      },
+      beforeOpen: () => {document.body.classList.remove('v--modal-block-scroll')},
+      opened: () => {document.body.classList.add('v--modal-block-scroll')}
     },
     getFilms: function () {
       this.queryFilms(this.query)

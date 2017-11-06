@@ -10,7 +10,7 @@
         <div class="card-body">
           <div class="row d-flex">
             <div class="col-4">
-              <span class="badge badge-info">{{film.score}}</span>
+              <span v-once class="badge badge-info">{{film.score}} <i class="fa fa-star" aria-disabled="true"></i></span>
             </div>
             <div class="col-8" v-if="film.genres">
               {{film.genres.join(', ')}}
@@ -38,25 +38,30 @@ export default {
     showModal: function () {
       utils.showModal(this, this.film._id)
     },
-    hideModal: function () {
-      utils.hideModal(this, this.film._id)
-    },
-    addNomination: function () {
-      queries.addNomination(this.film)
-        .then(() => { this.hideModal(); this.$router.push('/') })
-        .catch(error => console.error(error))
-    }
-  },
-  computed: {
-    ...mapGetters('option', ['hasNominationsRemaining']),
-    getFilmYear: function () {
-      if (this.film && this.film.release_date) {
-        return utils.getYearFromTmdbReleaseDate(this.film.release_date)
+    methods: {
+      showModal: function() {
+         utils.showModal(this, this.film._id)
+      },
+      hideModal: function () {
+        utils.hideModal(this, this.film._id)
+      },
+      addNomination: function () {
+        queries.addNomination(this.film)
+          .then(() => {
+            this.hideModal();
+            if (!this.hasNominationsRemaining) {
+              this.$router.push('/')
+            }
+           })
+          .catch(error => console.error(error))
       }
     },
-    shouldNominate: function () {
-      return {
-        shouldNominate: {'text-muted': !this.hasNominationsRemaining, 'not-active': !this.hasNominationsRemaining}
+    computed: {
+      ...mapGetters('option', ['hasNominationsRemaining']),
+      getFilmYear: function(){
+        if (this.film && this.film.release_date) {
+          return utils.getYearFromTmdbReleaseDate(this.film.release_date)
+        }
       }
     }
   }

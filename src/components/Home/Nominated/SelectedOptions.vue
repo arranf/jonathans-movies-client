@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex scroll flex-row" v-if="getOptionsForCurrentPoll">
-    <div v-if="nominationsRemaining > 0" class="card w-50 m-4" style="flex: 0 0 auto">
+    <div v-if="nominationsRemaining > 0" class="card w-60 m-4" style="flex: 0 0 auto">
       <div class="card-body">
         <h4 class="card-title">Nominate Something</h4>
         <p class="card-text">You've got {{nominationsRemaining}} nominations. Why not pick a movie?</p>
