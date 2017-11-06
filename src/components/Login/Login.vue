@@ -3,9 +3,7 @@
     <div>
       <h1>Login</h1>
     </div>
-    <div v-if="isError" class="alert alert-danger" role="alert">
-      Oops that username & password combination wasn't quite correct.
-    </div>
+    <mdl-snackbar display-on="loginError"></mdl-snackbar>
     <div id="loginOptions" v-if="!isInternalLogin">
       <mdl-button id="facebook" raised class="btn-facebook btn-block mdl-js-ripple-effect" @click.native.prevent="facebookLogin()">Log In with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span></mdl-button>
       <p class="py-1 my-1">or</p>
@@ -30,7 +28,7 @@
 
 <script>
 import feathersClient from '@/api/feathers-client'
-import { MdlButton, MdlTextfield } from 'vue-mdl'
+import { MdlButton, MdlTextfield, MdlSnackbar } from 'vue-mdl'
 import {mapActions, mapState} from 'vuex'
 import router from '@/router'
 
@@ -40,7 +38,6 @@ export default {
     return {
       password: '',
       email: '',
-      isError: false,
       isInternalLogin: false
     }
   },
@@ -59,7 +56,7 @@ export default {
         .then(() => {
           router.push('home')
         })
-        .catch(error => { console.error(error); this.isError = true })
+        .catch(error => { console.error(error); this.$root.$emit('loginError', { message: 'Unable to complete log in' }) })
     },
     toSignUp: function () {
       router.push('/signup')
@@ -90,7 +87,8 @@ export default {
   },
   components: {
     MdlButton,
-    MdlTextfield
+    MdlTextfield,
+    MdlSnackbar
   }
 }
 </script>
