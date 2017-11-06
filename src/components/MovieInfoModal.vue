@@ -8,7 +8,7 @@
           <p class="card-text">{{film.overview}}</p>
         </div>
         <div class="card-body mb-2" v-if="showNominate && isCurrentPollInNomination && hasNominationsRemaining" >
-          <a href="#" @click="addNomination()" :class="shouldNominate" class="card-link font-weight-bold link-primary">Nominate</a>
+          <a href="#" @click="addNomination()" :class="shouldNominate" class="card-link font-weight-bold link-primary">{{ !this.isOptionForCurrentPoll(this.film._id) ? 'Nominate' : 'Nominated' }}</a>
         </div>
       </div>
       <loading-bounce v-show="!film.data || !shouldDisplay"></loading-bounce>
@@ -81,9 +81,33 @@ export default {
         'text-muted': !this.hasNominationsRemaining || this.isOptionForCurrentPoll(this.film._id),
         'not-active': !this.hasNominationsRemaining || this.isOptionForCurrentPoll(this.film._id)
       }
+    }    
+    },
+    methods: {
+      modalOpened: function () {
+        document.body.classList.add('v--modal-block-scroll')
+        if (!this.film.data) {
+          tmdbApi.getMovieData(this.film.tmdb_id)
+            .then(response => this.$set(this.film, 'data', response.data))
+            .catch(error => {console.error(error); this.hideModal(this. this.film._id)})
+        }
+      },
+      addNomination: function () {
+        if (this.showNominate && this.hasNominationsRemaining && !this.isOptionForCurrentPoll(this.film_id)) {
+          queries.addNomination(this.film)
+            .then(() => {
+              utils.hideModal(this, this.film._id); 
+              if (!this.hasNominationsRemaining) {
+                this.$router.push('/')
+              }
+              })
+            .catch(error => console.error(error))
+        }
+      },
+      imageRendered: function () { this.shouldDisplay = true},
+      beforeOpen: function () {document.body.classList.remove('v--modal-block-scroll')}
     }
   }
-}
 </script>
 
 <style scoped>
