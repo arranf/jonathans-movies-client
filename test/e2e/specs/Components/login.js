@@ -12,8 +12,6 @@ module.exports = {
       .url(devServer)
       .waitForElementVisible('#app', 5000)
       // Inital page
-      .assert.containsText('h1', 'Login')
-      .assert.elementCount('button', 2)
       .assert.elementPresent('#login')
       .assert.elementPresent('#facebook')
       // Should be taken to login form
@@ -48,6 +46,20 @@ module.exports = {
       .click('#facebook')
       .pause(1000)
       .assert.urlContains('https://www.facebook.com')
+      .end()
+  },
+  'snackbar': function (browser) {
+    const devServer = browser.globals.devServerURL
+
+    browser
+      .url(devServer)
+      .waitForElementVisible('#app', 5000)
+      .assert.elementNotPresent('.mdl-snackbar--active')
+      .click('#login')
+      .setValue('input[type=email]', 'valid@email.com')
+      .setValue('input[type=password]', 'password')
+      .click('#submit')
+      .waitForElementVisible('.mdl-snackbar--active', 5000)
       .end()
   }
 }
