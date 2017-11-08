@@ -39,8 +39,8 @@ export default {
       utils.showModal(this, this.film._id)
     },
     methods: {
-      showModal: function() {
-         utils.showModal(this, this.film._id)
+      showModal: function () {
+        utils.showModal(this, this.film._id)
       },
       hideModal: function () {
         utils.hideModal(this, this.film._id)
@@ -48,17 +48,17 @@ export default {
       addNomination: function () {
         queries.addNomination(this.film)
           .then(() => {
-            this.hideModal();
+            this.hideModal()
             if (!this.hasNominationsRemaining) {
               this.$router.push('/')
             }
-           })
+          })
           .catch(error => console.error(error))
       }
     },
     computed: {
       ...mapGetters('option', ['hasNominationsRemaining']),
-      getFilmYear: function(){
+      getFilmYear: function () {
         if (this.film && this.film.release_date) {
           return utils.getYearFromTmdbReleaseDate(this.film.release_date)
         }

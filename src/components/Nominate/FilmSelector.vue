@@ -52,7 +52,7 @@
 
 <script>
 import FilmSuggestion from './FilmSuggestion'
-import VueSlider from 'vue-slider-component';
+import VueSlider from 'vue-slider-component'
 import infiniteScroll from 'vue-infinite-scroll'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 import LoadingBounce from '@/components/Loading/LoadingBounce'
@@ -60,24 +60,24 @@ import constants from '@/constants'
 
 require('@/../node_modules/animate.css/animate.css')
 
-  export default {
-    name: 'FilmSelector',
-    data: function () {
-      return {
-        searchTitle: '',
-        page: 0,
-        limit: 50,
-        loadedAll: false,
-        busy: false,
-        total: 51,
-        sort: {name: 1},
-        genres: [],
-        floorRating: 0.0,
-        elements: {
-          genreFilters: false,
-          ratingFilter: false
-        }
+export default {
+  name: 'FilmSelector',
+  data: function () {
+    return {
+      searchTitle: '',
+      page: 0,
+      limit: 50,
+      loadedAll: false,
+      busy: false,
+      total: 51,
+      sort: {name: 1},
+      genres: [],
+      floorRating: 0.0,
+      elements: {
+        genreFilters: false,
+        ratingFilter: false
       }
+    }
   },
   directives: {
     infiniteScroll
@@ -115,7 +115,7 @@ require('@/../node_modules/animate.css/animate.css')
         let query = {query: {
           $limit: this.limit,
           $sort: this.sort,
-          $skip: this.limit * this.page,
+          $skip: this.limit * this.page
         }}
         if (this.genres.length > 0) {
           query.query['genres'] = this.genres
@@ -123,7 +123,7 @@ require('@/../node_modules/animate.css/animate.css')
         if (this.searchTitle) {
           query.query['$search'] = this.searchTitle
         }
-        if (this.floorRating > 0){
+        if (this.floorRating > 0) {
           query.query['score'] = {'$gte': this.floorRating}
         }
         return query
@@ -149,7 +149,7 @@ require('@/../node_modules/animate.css/animate.css')
       },
       fetchNextPage: function () {
         const offset = this.limit * this.page
-        if (offset >= this.total){
+        if (offset >= this.total) {
           return
         }
         this.page++
@@ -161,19 +161,19 @@ require('@/../node_modules/animate.css/animate.css')
       getFilms: function () {
         this.busy = true
         this.queryFilms(this.query)
-            .then(response => {this.total = response.total; this.busy = false})
-            .catch(error => {console.error(error); this.busy = false})
+          .then(response => { this.total = response.total; this.busy = false })
+          .catch(error => { console.error(error); this.busy = false })
       },
       changeGenre (genre) {
-        const index = this.genres.indexOf(genre) 
-        if (index !== -1){
+        const index = this.genres.indexOf(genre)
+        if (index !== -1) {
           this.genres.splice(index, 1)
         } else {
           this.genres.push(genre)
         }
       },
-      beforeOpen: () => {document.body.classList.remove('v--modal-block-scroll')},
-      opened: () => {document.body.classList.add('v--modal-block-scroll')}
+      beforeOpen: () => { document.body.classList.remove('v--modal-block-scroll') },
+      opened: () => { document.body.classList.add('v--modal-block-scroll') }
     },
     getFilms: function () {
       this.queryFilms(this.query)

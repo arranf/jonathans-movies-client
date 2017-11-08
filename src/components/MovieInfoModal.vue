@@ -52,7 +52,12 @@ export default {
     addNomination: function () {
       if (this.showNominate && this.hasNominationsRemaining && !this.isOptionForCurrentPoll(this.film_id)) {
         queries.addNomination(this.film)
-          .then(() => { utils.hideModal(this, this.film._id); this.$router.push('/') })
+          .then(() => {
+            utils.hideModal(this, this.film._id)
+            if (!this.hasNominationsRemaining) {
+              this.$router.push('/')
+            }
+          })
           .catch(error => console.error(error))
       }
     },
@@ -81,33 +86,9 @@ export default {
         'text-muted': !this.hasNominationsRemaining || this.isOptionForCurrentPoll(this.film._id),
         'not-active': !this.hasNominationsRemaining || this.isOptionForCurrentPoll(this.film._id)
       }
-    }    
-    },
-    methods: {
-      modalOpened: function () {
-        document.body.classList.add('v--modal-block-scroll')
-        if (!this.film.data) {
-          tmdbApi.getMovieData(this.film.tmdb_id)
-            .then(response => this.$set(this.film, 'data', response.data))
-            .catch(error => {console.error(error); this.hideModal(this. this.film._id)})
-        }
-      },
-      addNomination: function () {
-        if (this.showNominate && this.hasNominationsRemaining && !this.isOptionForCurrentPoll(this.film_id)) {
-          queries.addNomination(this.film)
-            .then(() => {
-              utils.hideModal(this, this.film._id); 
-              if (!this.hasNominationsRemaining) {
-                this.$router.push('/')
-              }
-              })
-            .catch(error => console.error(error))
-        }
-      },
-      imageRendered: function () { this.shouldDisplay = true},
-      beforeOpen: function () {document.body.classList.remove('v--modal-block-scroll')}
     }
   }
+}
 </script>
 
 <style scoped>

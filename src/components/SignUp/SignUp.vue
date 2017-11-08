@@ -1,48 +1,39 @@
 <template>
-  <div class="container d-flex text-center justify-content-center align-items-center mt-4">
-      <div class="row h-100 justify-content-center align-items-center">
-          <div class="col">
-              <div>
-                  <h1>Sign Up!</h1>
-              </div>
-              <div v-if="isError" class="alert alert-danger" role="alert">
-                  Looks like something went wrong!
-              </div>
-              <form>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input name="email" v-validate="'required|email'" data-vv-delay="1000" type="email" class="form-control" :class="{'is-invalid': errors.has('email')}" v-model="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
-                    <div v-if="errors.has('email')" class="invalid-feedback">
-                        Please provide a valid email address.
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input name="password" v-validate="'required'" type="password" v-model="password" class="form-control" :class="{'is-invalid': errors.has('password')}"  id="password" placeholder="Password">
-                    <div v-if="errors.has('password')" class="invalid-feedback">
-                        Please enter a password
-                    </div>
-                </div>
-                <button type="submit" @click.prevent="trySignUp()" class="btn btn-primary" :disabled="isDisabled">Submit</button>
-                <button type="submit" role="button" class="btn btn-outline-secondary" @click.prevent="toHome()">Back</button>
-              </form>
-          </div>
+  <div class="flex-column d-flex text-center justify-content-center align-items-center mt-4">
+    <div>
+        <h1>Sign Up</h1>
+    </div>
+    <mdl-snackbar display-on="signUpError"></mdl-snackbar>
+    <form class="d-flex flex-column align-items-center justify-content-center">
+      <div class="w-100">
+        <i class="fa fa-inbox px-2 mdl-color-text--grey-600"></i> <mdl-textfield floating-label="Email" type="email" v-model="email" />
       </div>
+      <div class="w-100">
+        <i class="fa fa-key px-2 mdl-color-text--grey-600"></i> <mdl-textfield floating-label="Password" type="password" v-model="password" />
+      </div>
+      <mdl-button id="submit" accent raised class="mdl-js-ripple-effect" :disabled="isDisabled" @click.native.prevent="trySignUp()">Submit</mdl-button>
+      <mdl-button id="back" class="mdl-js-ripple-effect" @click.native.prevent="toHome()">Back</mdl-button>
+    </form>
   </div>
 </template>
 
 <script>
 import feathersClient from '@/api/feathers-client'
+import { MdlButton, MdlTextfield, MdlSnackbar } from 'vue-mdl'
 import {mapActions, mapState} from 'vuex'
 import router from '@/router'
 
 export default {
   name: 'SignUp',
+  components: {
+    MdlButton,
+    MdlTextfield,
+    MdlSnackbar
+  },
   data () {
     return {
       password: '',
-      email: '',
-      isError: false
+      email: ''
     }
   },
   methods: {
@@ -69,13 +60,15 @@ export default {
           return feathersClient.passport.verifyJWT(token.accessToken)
         })
         .then(() => router.push('home'))
-        .catch(error => { console.error(error); this.isError = true })
+        .catch(error => { console.error(error); this.$root.$emit('signUpError', { message: 'Unable to complete sign up' }) })
     }
   },
   computed: {
     ...mapState('auth', ['user']),
     isDisabled: function () {
-      return !(this.password && this.email)
+      // W3 Email regex: http://emailregex.com/
+      const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      return !(this.password && this.email && regex.test(this.email))
     }
   }
 }
