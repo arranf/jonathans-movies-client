@@ -66,7 +66,9 @@ export default {
   computed: {
     ...mapState('auth', ['user']),
     isDisabled: function () {
-      return !(this.password && this.email)
+      // W3 Email regex: http://emailregex.com/
+      const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      return !(this.password && this.email && regex.test(this.email))
     }
   }
 }
