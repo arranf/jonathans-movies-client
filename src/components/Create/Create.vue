@@ -108,7 +108,6 @@ export default {
     canStart: function () {
       return this.minutes &&
         this.votes &&
-        !this.errors.items[0] &&
         ( // Either have appropriate options...
           (this.options.length >= 2 &&
           this.options[0] &&
