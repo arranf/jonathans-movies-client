@@ -1,7 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import VeeValidate from 'vee-validate'
 import VueModal from 'vue-js-modal'
 import App from './AppContainer'
 import router from './router'
@@ -25,7 +24,6 @@ if (process.env.NODE_ENV === 'production' && process.env.BRANCH !== 'develop') {
 
 Vue.config.productionTip = false
 
-Vue.use(VeeValidate)
 Vue.use(VueModal)
 
 /* eslint-disable no-new */
