@@ -4,17 +4,21 @@
     <form autocomplete="off">
       <!-- Prevent automcomplete -->
       <input autocomplete="false" name="hidden" type="text" style="display:none;">
-         
+
       <!-- Options Input -->
-      <div v-for="(option, index) in options" :key="index">
-        <div class="w-100 my-2">
-          <movie-suggest :id="index+'-suggest'" :index="index" :needed="!haveNominations" @fill="fillOption"></movie-suggest>
-        </div>
+      <div class="w-100 my-2">
+        <movie-suggest @fill="fillOption"></movie-suggest>
       </div>
-      <div class="w-100">
-          <mdl-button colored id="addAnother" class="mdl-js-ripple-effect" @click.native.prevent="addOption()"><i class="fa fa-plus" aria-disabled="true"><span class="sr-only">Add Option</span></i></mdl-button>  
-      </div>
+
+      <ul class="mdl-list">
+        <li v-for="option in options" :key="option.name" class="mdl-list__item">
+          <span class="mdl-list__item-primary-content">
+            {{option.name}} 
+          </span>
+        </li>
+      </ul>
       
+      <!-- Poll Settings -->
       <div class="w-100">
         <mdl-textfield floating-label="Voting Length" type="number" pattern="[1-9]" min="1" max="10" error="Provide a number of minutes between 1 and 9" v-model="minutes" />
       </div>
@@ -27,17 +31,20 @@
         <mdl-switch id="nomination-phase" v-model="haveNominations">{{haveNominations ? 'Have Nominations' : 'Don\'t Have Nominations' }}</mdl-switch>
       </div>
 
-      <div v-if="haveNominations">
-        <div class="w-100">
-          <mdl-textfield floating-label="Nominations Length" type="number" pattern="[1-9][0-9]*" min="1" max="60" error="Provide a number of minutes between 1 and 60" v-model="nominationsMinutes" />
-        </div>
+      <transition name="fade">
+        <div v-if="haveNominations">
+          <div class="w-100">
+            <mdl-textfield floating-label="Nominations Length" type="number" pattern="[1-9][0-9]*" min="1" max="60" error="Provide a number of minutes between 1 and 60" v-model="nominationsMinutes" />
+          </div>
 
-        <div class="w-100">
-          <mdl-textfield floating-label="Number of Votes" type="number" pattern="[1-4]" min="1" max="4" error="Provide a number of nominations between 1 and 4" v-model="nominations" />
+          <div class="w-100">
+            <mdl-textfield floating-label="Number of Votes" type="number" pattern="[1-4]" min="1" max="4" error="Provide a number of nominations between 1 and 4" v-model="nominations" />
+          </div>
         </div>
-      </div>
+      </transition>
+
     </form>
-    <div class="w-100">
+    <div class="mt-3 w-100">
       <mdl-button accent raised class="mdl-js-ripple-effect" @click.native.prevent="startPoll()" :disabled="!canStart">Start Poll</mdl-button>
       <mdl-button class="mdl-js-ripple-effect" @click.native.prevent="toHome()">Back</mdl-button>
     </div>
@@ -65,16 +72,13 @@ export default {
       haveNominations: false,
       nominationsMinutes: '5',
       nominations: '1',
-      options: [{name: '', film_id: null}]
+      options: []
     }
   },
   methods: {
     ...mapActions('poll', {createPoll: 'create', updatePoll: 'update'}),
-    addOption: function () {
-      this.options.push({name: '', film_id: null})
-    },
-    fillOption: function (index, film) {
-      this.$set(this.options, index, film)
+    fillOption: function (film) {
+      this.options.push({name: film.name, film_id: film.film_id})
     },
     startPoll: function () {
       const currentTime = parseInt(new Date().getTime())
@@ -122,3 +126,12 @@ export default {
   }
 }
 </script>
+
+<style>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0
+}
+</style>

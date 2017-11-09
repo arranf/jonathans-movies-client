@@ -1,37 +1,34 @@
 <template>
   <div>
-    <input type="text" v-model="searchQuery" @input="getSuggestions()" name="movies" class="form-control" :class="{'is-invalid': errors.has('movies')}" v-validate="moviesRules" data-vv-delay="1000" @focus="completed = true" @blur="completed = false" :placeholder="chosenPlaceholder ? chosenPlaceholder : getRandomPlaceholder()" />
-    <div v-if="suggestions.length > 0 && !completed" class="autocomplete-suggestions w-90">
-      <div @click="fillBox(suggest)" class="autocomplete-suggestion autocomplete-selected" :key="suggest.tmdbid" v-for="suggest in suggestions">
-        {{suggest.name}}
-      </div>
+    <div ref="container" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" v-on-clickaway="away" @focus="showSuggestions = true">
+      <input @focus="showSuggestions = true" ref="focusTarget" class="mdl-textfield__input" id="movie-suggest" type="text" v-model="searchQuery" @input="getSuggestions()" >
+      <label class="mdl-textfield__label" :for="'movie-suggest'">Movie Title</label>
     </div>
-    <div v-show="errors.has('movies')" class="invalid-feedback">
-      Please provide at least 2 options
+    <button role="button" @click.prevent="submit"><i class="fa fa-check" aria-disabled="true"></i></button>
+    <div v-if="suggestions.length > 0 && !completed && showSuggestions" class="autocomplete-suggestions w-90">
+      <div @click="fillBox(suggest)" class="autocomplete-suggestion autocomplete-selected" :key="suggest.tmdbid" v-for="suggest in suggestions">
+        {{suggest.name}} {{getYear(suggest.release_date)}}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mixin as clickaway } from 'vue-clickaway'
 import debounce from 'lodash/debounce'
 import queries from '@/api'
 import utils from '@/utils'
 
 export default {
+  mixins: [ clickaway ],
   data () {
     return {
       suggestions: [],
       searchQuery: '',
-      chosenFilm: {},
       completed: false,
-      placeholders: ['The Assassin', 'Zoolander 2', 'Titanic 2', 'Beauty and the Beast'],
-      chosenPlaceholder: ''
+      showSuggestions: true
     }
   },
-  props: [
-    'index',
-    'needed' // Tells the component if options are needed
-  ],
   methods: {
     getResults: function () {
       if (this.completed) {
@@ -46,43 +43,36 @@ export default {
           })
         }
       })
-
-      this.$emit('fill', this.index, {name: this.searchQuery, film_id: null})
+    },
+    submit: function () {
+      let chosenFilm = {name: this.searchQuery, film_id: null}
+      this.$emit('fill', chosenFilm)
+      this.searchQuery = ''
     },
     fillBox: function (toFill) {
       this.searchQuery = toFill.name
-      this.chosenFilm = {name: toFill.name, film_id: toFill._id}
+      let chosenFilm = {name: toFill.name, film_id: toFill._id}
       this.completed = true
-      this.$emit('fill', this.index, this.chosenFilm)
+      this.$emit('fill', chosenFilm)
+      this.searchQuery = ''
     },
-    getRandomPlaceholder: function () {
-      let chosenPlaceholder = utils.selectRandom(this.placeholders)
-      this.chosenPlaceholder = chosenPlaceholder
-      return chosenPlaceholder
+    away: function () {
+      this.showSuggestions = false
+    },
+    getYear: function (releaseDate) {
+      return `(${utils.getYearFromTmdbReleaseDate(releaseDate)})`
     }
   },
   mounted () {
+    componentHandler.upgradeElement(this.$refs.container) //eslint-disable-line
     this.getSuggestions = debounce(this.getResults, 300, {leading: true})
-  },
-  computed: {
-    moviesRules: function () {
-      return this.needed && this.index < 2 ? 'required' : ''
-    }
   }
 }
 </script>
 
 <style scoped>
-  .autocomplete-suggestions { 
-    border: 1px solid #000; 
-    background: #fff; 
-    cursor: pointer; 
-    overflow: auto; 
-    position: absolute;
-    z-index: 999;
+   .autocomplete-suggestions {
+      z-index: 999;
    }
-  .autocomplete-suggestion { padding: 10px 5px; font-size: 1em; white-space: nowrap; overflow: hidden; }
-  .autocomplete-selected { background: #f0f0f0; }
-  .autocomplete-suggestions strong { font-weight: normal; color: #3399ff; }
 </style>
 
