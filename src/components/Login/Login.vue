@@ -34,6 +34,11 @@ import router from '@/router'
 
 export default {
   name: 'Login',
+  components: {
+    MdlButton,
+    MdlTextfield,
+    MdlSnackbar
+  },
   data () {
     return {
       password: '',
@@ -84,11 +89,6 @@ export default {
       const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
       return !(this.password && this.email && regex.test(this.email))
     }
-  },
-  components: {
-    MdlButton,
-    MdlTextfield,
-    MdlSnackbar
   }
 }
 </script>

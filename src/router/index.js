@@ -71,7 +71,20 @@ router.beforeEach((to, from, next) => {
   const user = store.state.auth.user
 
   if (!user && to.path !== '/' && to.path !== '/signup') {
-    next('/')
+    // TODO Refactor into generic method
+    store.dispatch('auth/authenticate')
+      .then(response => {
+        return feathersClient.passport.verifyJWT(response.accessToken)
+      })
+      .then(payload => {
+        return feathersClient.service('users').get(payload.userId)
+      })
+      .then(() => {
+        next()
+      })
+      .catch(function (error) {
+        console.error('Error authenticating in router beforeEnter', error)
+      })
   } else if (to.matched.some(record => record.meta.admin) && !user.isAdmin) {
     next(false)
   } else {
