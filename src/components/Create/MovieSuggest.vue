@@ -4,7 +4,7 @@
       <input @focus="showSuggestions = true" ref="focusTarget" class="mdl-textfield__input" id="movie-suggest" type="text" v-model="searchQuery" @input="getSuggestions()" >
       <label class="mdl-textfield__label" :for="'movie-suggest'">Movie Title</label>
     </div>
-    <button role="button" @click.prevent="submit"><i class="fa fa-check" aria-disabled="true"></i></button>
+    <mdl-button accent @click.native.prevent="submit" :disabled="!isSearchQueryEmpty"><i class="fa fa-check" aria-disabled="true"></i></mdl-button>
     <div v-if="suggestions.length > 0 && !completed && showSuggestions" class="autocomplete-suggestions w-90">
       <div @click="fillBox(suggest)" class="autocomplete-suggestion autocomplete-selected" :key="suggest.tmdbid" v-for="suggest in suggestions">
         {{suggest.name}} {{getYear(suggest.release_date)}}
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { MdlButton } from 'vue-mdl'
 import { mixin as clickaway } from 'vue-clickaway'
 import debounce from 'lodash/debounce'
 import queries from '@/api'
@@ -21,6 +22,9 @@ import utils from '@/utils'
 
 export default {
   mixins: [ clickaway ],
+  components: {
+    MdlButton
+  },
   data () {
     return {
       suggestions: [],
@@ -28,6 +32,10 @@ export default {
       completed: false,
       showSuggestions: true
     }
+  },
+  mounted () {
+    componentHandler.upgradeElement(this.$refs.container) //eslint-disable-line
+    this.getSuggestions = debounce(this.getResults, 300, {leading: true})
   },
   methods: {
     getResults: function () {
@@ -45,9 +53,11 @@ export default {
       })
     },
     submit: function () {
-      let chosenFilm = {name: this.searchQuery, film_id: null}
-      this.$emit('fill', chosenFilm)
-      this.searchQuery = ''
+      if (this.searchQuery.trim() !== '') {
+        let chosenFilm = {name: this.searchQuery, film_id: null}
+        this.$emit('fill', chosenFilm)
+        this.searchQuery = ''
+      }
     },
     fillBox: function (toFill) {
       this.searchQuery = toFill.name
@@ -63,9 +73,10 @@ export default {
       return `(${utils.getYearFromTmdbReleaseDate(releaseDate)})`
     }
   },
-  mounted () {
-    componentHandler.upgradeElement(this.$refs.container) //eslint-disable-line
-    this.getSuggestions = debounce(this.getResults, 300, {leading: true})
+  computed: {
+    isSearchQueryEmpty: function () {
+      return this.searchQuery.trim() !== ''
+    }
   }
 }
 </script>
