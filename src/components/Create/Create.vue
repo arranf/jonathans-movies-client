@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex flex-column align-items-center justify-content-center text-center mb-3">
+  <div class="d-flex flex-column align-items-center justify-content-start mb-3">
     <h2 class="mt-4 pb-3">Create a Poll</h2>
-    <form autocomplete="off">
+    <form class="ml-2" autocomplete="off">
       <!-- Prevent automcomplete -->
       <input autocomplete="false" name="hidden" type="text" style="display:none;">
 
@@ -10,44 +10,45 @@
         <movie-suggest @fill="fillOption"></movie-suggest>
       </div>
 
-      <ul class="mdl-list">
-        <li v-for="option in options" :key="option.name" class="mdl-list__item">
-          <span class="mdl-list__item-primary-content">
-            {{option.name}} 
-          </span>
-        </li>
-      </ul>
+      <!-- Options List -->
+      <div v-if="options.length > 0" class="w-60">
+        <p>{{haveNominations ? 'Pre-Selected Movies' : 'Selected Movies' }}</p>
+        <ul class="mdl-list" >
+          <li v-for="(option, index) in options" :key="option.name" class="list-item mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              {{option.name}}
+            </span>
+             <a class="mdl-list__item-secondary-action" @click.prevent="removeOption(index)" href="#"> <i class="text-muted fa fa-times"  aria-disabled="true"></i></a>
+          </li>
+        </ul>
+      </div>
       
       <!-- Poll Settings -->
-      <div class="w-100">
-        <mdl-textfield floating-label="Voting Length" type="number" pattern="[1-9]" min="1" max="10" error="Provide a number of minutes between 1 and 9" v-model="minutes" />
-      </div>
+      <mdl-textfield floating-label="Voting Length (Minutes)" type="number" pattern="[1-9]" min="1" max="10" error="Provide a number of minutes between 1 and 9" v-model="minutes" />
 
-      <div class="w-100">
-        <mdl-textfield floating-label="Number of Votes" type="number" pattern="[1-4]" min="1" max="4" error="Provide a number of votes between 1 and 4" v-model="votes" />
-      </div>
+      <mdl-textfield floating-label="Number of Votes" type="number" pattern="[1-4]" min="1" max="4" error="Provide a number of votes between 1 and 4" v-model="votes" />
 
-      <div class="w-100">
-        <mdl-switch id="nomination-phase" v-model="haveNominations">{{haveNominations ? 'Have Nominations' : 'Don\'t Have Nominations' }}</mdl-switch>
-      </div>
+      <!-- Nominations -->
+      <mdl-switch id="nomination-phase" v-model="haveNominations">{{haveNominations ? 'With Nominations' : 'No Nominations' }}</mdl-switch>
 
       <transition name="fade">
         <div v-if="haveNominations">
-          <div class="w-100">
-            <mdl-textfield floating-label="Nominations Length" type="number" pattern="[1-9][0-9]*" min="1" max="60" error="Provide a number of minutes between 1 and 60" v-model="nominationsMinutes" />
+          <div>
+            <mdl-textfield floating-label="Nominations Length (Minutes)" type="number" pattern="[1-9][0-9]*" min="1" max="60" error="Provide a number of minutes between 1 and 60" v-model="nominationsMinutes" />
           </div>
 
-          <div class="w-100">
+          <div>
             <mdl-textfield floating-label="Number of Votes" type="number" pattern="[1-4]" min="1" max="4" error="Provide a number of nominations between 1 and 4" v-model="nominations" />
           </div>
         </div>
       </transition>
-
-    </form>
-    <div class="mt-3 w-100">
+    
+    <div class="mt-3">
       <mdl-button accent raised class="mdl-js-ripple-effect" @click.native.prevent="startPoll()" :disabled="!canStart">Start Poll</mdl-button>
       <mdl-button class="mdl-js-ripple-effect" @click.native.prevent="toHome()">Back</mdl-button>
     </div>
+
+    </form>
   </div>
 </template>
 
@@ -77,8 +78,14 @@ export default {
   },
   methods: {
     ...mapActions('poll', {createPoll: 'create', updatePoll: 'update'}),
+    toHome: function () {
+      router.push('/home')
+    },
     fillOption: function (film) {
       this.options.push({name: film.name, film_id: film.film_id})
+    },
+    removeOption: function (index) {
+      this.options.splice(index, 1)
     },
     startPoll: function () {
       const currentTime = parseInt(new Date().getTime())
@@ -103,7 +110,7 @@ export default {
         pollTransitionDateTime: pollTransitionDateTime,
         numberOfNominations: numberOfNominations
       })
-      router.push('/home')
+      this.toHome()
     }
   },
   computed: {
@@ -133,5 +140,12 @@ export default {
 }
 .fade-enter, .fade-leave-to {
   opacity: 0
+}
+
+.list-item {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  min-height: 2em; 
+  font-size: 100%;
 }
 </style>
