@@ -8,7 +8,7 @@
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
     "build": "node build/build.js && cp _redirects dist/",
-    "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
+    "unit": "jest test/unit/specs --coverage",
     "e2e": "node test/e2e/runner.js",
     "test": "yarn run unit && yarn run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
@@ -27,6 +27,7 @@
     "axios": "^0.16.2",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.0.1",
+    "babel-jest": "^21.2.0",
     "babel-loader": "^7.1.1",
     "babel-plugin-istanbul": "^4.1.5",
     "babel-plugin-transform-runtime": "^6.22.0",
@@ -70,6 +71,7 @@
     "http-proxy-middleware": "^0.17.4",
     "humanize-duration": "^3.10.1",
     "inject-loader": "^3.0.1",
+    "jest": "^21.2.1",
     "karma": "^1.7.1",
     "karma-coverage": "^1.1.1",
     "karma-mocha": "^1.3.0",
@@ -111,6 +113,7 @@
     "vue-focus": "^2.1.0",
     "vue-images-loaded": "^1.1.2",
     "vue-infinite-scroll": "^2.0.2",
+    "vue-jest": "^1.0.2",
     "vue-js-modal": "1.3.4",
     "vue-loader": "^13.3.0",
     "vue-mdl": "^1.1.1",
@@ -122,6 +125,30 @@
     "webpack-dev-middleware": "^1.12.0",
     "webpack-hot-middleware": "^2.19.1",
     "webpack-merge": "^4.1.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    },
+    "setupFiles": [
+      "<rootDir>/test/unit/setup"
+    ],
+    "mapCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{js,vue}",
+      "!src/main.js",
+      "!src/router/index.js",
+      "!**/node_modules/**"
+    ]
   },
   "engines": {
     "node": ">= 4.0.0",

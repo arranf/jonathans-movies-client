@@ -1,6 +1,11 @@
 /* eslint-disable */
-import { mount } from 'vue-test-utils'
 
+jest.mock('@/api', () => ({
+  getFilmSuggestions: jest.fn(() => Promise.resolve({data: [{name: 'Double Dragon', release_date: '2017-01-01'}]}))
+}))
+
+import { mount } from 'vue-test-utils'
+import queries from '@/api' // queries is from the mock from above
 import MovieSuggest from '@/components/Create/MovieSuggest'
 
 describe('MovieSuggest.vue', () => {
