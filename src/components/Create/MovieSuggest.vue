@@ -4,7 +4,7 @@
       <input @focus="showSuggestions = true" ref="focusTarget" class="mdl-textfield__input" id="movie-suggest" type="text" v-model="searchQuery" @input="getSuggestions()" >
       <label class="mdl-textfield__label" :for="'movie-suggest'">Movie Title</label>
     </div>
-    <mdl-button accent @click.native.prevent="submit" :disabled="!isSearchQueryEmpty"><i class="fa fa-check" aria-disabled="true"></i></mdl-button>
+    <mdl-button id="add" accent @click.native.prevent="submit" :disabled="!isSearchQueryEmpty"><i class="fa fa-check" aria-disabled="true"></i></mdl-button>
     <div v-if="suggestions.length > 0 && !completed && showSuggestions" class="autocomplete-suggestions w-90">
       <div @click="fillBox(suggest)" class="autocomplete-suggestion autocomplete-selected" :key="suggest.tmdbid" v-for="suggest in suggestions">
         {{suggest.name}} {{getYear(suggest.release_date)}}
@@ -35,10 +35,9 @@ export default {
   },
   mounted () {
     componentHandler.upgradeElement(this.$refs.container) //eslint-disable-line
-    this.getSuggestions = debounce(this.getResults, 300, {leading: true})
   },
   methods: {
-    getResults: function () {
+    getSuggestions: debounce(function () {
       if (this.completed) {
         this.completed = false
       }
@@ -51,7 +50,7 @@ export default {
           })
         }
       })
-    },
+    }, 300, {leading: true}),
     submit: function () {
       if (this.searchQuery.trim() !== '') {
         let chosenFilm = {name: this.searchQuery, film_id: null}
