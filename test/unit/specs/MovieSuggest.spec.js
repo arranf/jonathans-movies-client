@@ -18,30 +18,29 @@ describe('MovieSuggest.vue', () => {
   })
 
   it('The button should be disabled when there is no query', () => {
-    expect(wrapper.find('input').element.value).to.equal('')
-    expect(wrapper.find('#add').element.getAttribute('disabled')).to.equal('disabled')
+    expect(wrapper.find('input').element.value).toBe('')
+    expect(wrapper.find('#add').element.getAttribute('disabled')).toBe('disabled')
   })
 
   it('The button should be enabled when there is a query', () => {
     let input = wrapper.find('input')
-    expect(input.element.value).to.equal('')
+    expect(input.element.value).toBe('')
     input.element.value = 'Input'
     input.trigger('input')
-    expect(wrapper.find('#add').element.getAttribute('disabled')).to.equal.null
+    expect(wrapper.find('#add').element.getAttribute('disabled')).toBeNull()
   })
 
   it('Should emit fill with a name and null id when the add button is pressed', () => {
     let input = wrapper.find('input')
-    expect(input.element.value).to.equal('')
+    expect(input.element.value).toBe('')
     input.element.value = 'Film Name'
     input.trigger('input')
     wrapper.find('#add').trigger('click')
     
     let emittedFill = wrapper.emitted().fill
-    expect(emittedFill).to.exist
-    console.log(emittedFill[0][0])
-    expect(emittedFill[0][0].film_id).to.be.null
-    expect(emittedFill[0][0].name).to.equal('Film Name')
+    expect(emittedFill).toBeDefined()
+    expect(emittedFill[0][0].film_id).toBeNull()
+    expect(emittedFill[0][0].name).toBe('Film Name')
   })
 
   // Emits text and id on clicked suggestion

@@ -17,42 +17,41 @@ describe('Login.vue', () => {
   })
 
   it('should not display snackbar when initially created', () => {
-    expect(wrapper.contains('.mdl-snackbar--active')).to.be.false
+    expect(wrapper.contains('.mdl-snackbar--active')).toBe(false)
   })
 
   it('should render the div containing the login buttons when the component is initially created', () => {
     let loginDiv = wrapper.find('#loginOptions')
-    expect(loginDiv.contains('#facebook')).to.be.true
-    expect(loginDiv.contains('#login')).to.be.true
+    expect(loginDiv.contains('#facebook')).toBe(true)
+    expect(loginDiv.contains('#login')).toBe(true)
   })
 
   it('should not render the div containing the login buttons after the login button is clicked', () => {
     let loginButton = wrapper.find('#login')
     loginButton.trigger('click')
-    expect(wrapper.contains('#loginOptions')).to.be.false
+    expect(wrapper.contains('#loginOptions')).toBe(false)
   })
 
   it('should render the login form when the login button is clicked', () => {
     const loginButton = wrapper.find('#login')
     loginButton.trigger('click')
-    expect(wrapper.contains('#internalLoginForm')).to.be.true
+    expect(wrapper.contains('#internalLoginForm')).toBe(true)
   })
 
   it('should not render the login form when the component is initially created', () => {
-    expect(wrapper.contains('#internalLoginForm')).to.be.false
+    expect(wrapper.contains('#internalLoginForm')).toBe(false)
   })
 
   it('should disable the submit button on the login form when a valid email is entered with no password', () => {
     let loginButton = wrapper.find('#login')
     loginButton.trigger('click')
     let email = wrapper.find('input[type=email]')
-    expect(email).to.be.an('object')
-    console.log(email)
+    expect(typeof email).toBe('object')
     email.element.value = 'invalidemail'
     email.trigger('input')
     let submitButton = wrapper.find('#submit')
-    expect(submitButton).to.be.an('object')
-    expect(submitButton.element.getAttribute('disabled')).to.equal('disabled')
+    expect(typeof submitButton).toBe('object')
+    expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
   })
 
   it('should disable the submit button on the login form when a password is entered with no email', () => {
@@ -60,20 +59,20 @@ describe('Login.vue', () => {
     let loginButton = wrapper.find('#login')
     loginButton.trigger('click')
     let password = wrapper.find('input[type=password]')
-    expect(password).to.be.an('object')
+    expect(typeof password).toBe('object')
     password.element.value = 'password'
     password.trigger('input')
 
     let submitButton = wrapper.find('#submit')
-    expect(submitButton).to.be.an('object')
-    expect(submitButton.element.getAttribute('disabled')).to.equal('disabled')
+    expect(typeof submitButton).toBe('object')
+    expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
   })
 
   it('should disable the submit button on the login form when an no email or password are entered', () => {
     const wrapper = mount(Login)
     wrapper.find('#login').trigger('click')
     let submitButton = wrapper.find('#submit')
-    expect(submitButton.element.getAttribute('disabled')).to.equal('disabled')
+    expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
   })
 
   it('should disable the submit button on the login form when an invalid email is entered with a password', () => {
@@ -87,7 +86,7 @@ describe('Login.vue', () => {
     password.trigger('input')
 
     let submitButton = wrapper.find('#submit')
-    expect(submitButton.element.getAttribute('disabled')).to.equal('disabled')
+    expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
   })
 
   it('should enable the submit button on the login form when a valid email is entered with a password', () => {
@@ -101,7 +100,7 @@ describe('Login.vue', () => {
     password.trigger('input')
 
     let submitButton = wrapper.find('#submit')
-    expect(submitButton.element.getAttribute('disabled')).to.be.null
+    expect(submitButton.element.getAttribute('disabled')).toBeNull()
   })
 
   //TODO
