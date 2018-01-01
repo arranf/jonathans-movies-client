@@ -11,10 +11,10 @@ import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
+import '@/assets/styles/main.scss'
 
 // Import assets
 require('font-awesome-webpack2')
-require('styles/main.scss')
 
 if (process.env.NODE_ENV === 'production' && process.env.BRANCH !== 'develop') {
   Raven
