@@ -1,11 +1,16 @@
 /* eslint-disable */
 import { mount } from 'vue-test-utils'
+// import { __createMocks as createStoreMocks } from '@/store';
 import Login from '@/components/Login/Login'
+
+// jest.mock('@/store')
 
 describe('Login.vue', () => {
   let wrapper
 
   beforeEach(() => {
+    // const wrapper = createLocalVue();
+    wrapper.use(Vuex);
     wrapper = mount(Login, {
       attachToDocument: true
     })
