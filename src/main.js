@@ -9,7 +9,6 @@ import '@/api/feathers-client'
 
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
-import { MdButton, MdContent, MdTabs } from 'vue-material/dist/components'
 import 'vue-material/dist/vue-material.min.css'
 import 'vue-material/dist/theme/default.css'
 

@@ -1,37 +1,26 @@
 <template>
-  <div class="d-flex flex-column" style="height:100vh" id="app">
-    <progress-indicator />
-    <router-view class="content m-h-50"></router-view>
-    <div class="footer w-100">
-      <info-footer class="h-100"></info-footer>
-    </div>
+  <div class="page-container" style="height:100vh">
+    <md-app>
+      <md-app-drawer>
+        <drawer-list />
+      </md-app-drawer>
+      <md-app-content>
+        <router-view />
+      </md-app-content>
+    </md-app>
   </div>
 </template>
 
 <script>
-import InfoFooter from '@/components/InfoFooter'
-import ProgressIndicator from '@/components/Progress.vue'
+
+import { MdApp } from 'vue-material/dist/components'
+import DrawerList from '@/components/DrawerList'
 
 export default {
   name: 'app',
   components: {
-    InfoFooter,
-    ProgressIndicator
+    DrawerList,
+    MdApp
   }
 }
 </script>
-
-<style scoped>
-.footer {
-  flex-shrink: 0;
-}
-
-.content {
-  flex: 1 0 auto;
-}
-
-.m-h-60 {
-  min-height: 60%;
-}
-</style>
-
