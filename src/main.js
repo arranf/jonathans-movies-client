@@ -9,11 +9,12 @@ import '@/api/feathers-client'
 
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
-import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/default.css'
-import '@/assets/styles/main.scss'
 
 // Import assets
+require('vue-material/dist/vue-material.min.css')
+require('vue-material/dist/theme/default.css')
+require('@/assets/styles/main.scss')
+
 require('font-awesome-webpack2')
 
 if (process.env.NODE_ENV === 'production' && process.env.BRANCH !== 'develop') {
