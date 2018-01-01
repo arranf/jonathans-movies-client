@@ -19,11 +19,6 @@
 
 <script>
 import {mapGetters, mapState, mapActions} from 'vuex'
-import Vue from 'vue'
-import { MdList, MdIcon, MdDrawer } from 'vue-material/dist/components'
-Vue.use(MdList)
-Vue.use(MdIcon)
-Vue.use(MdDrawer)
 
 export default {
   name: 'DrawerList',

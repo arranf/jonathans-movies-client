@@ -10,16 +10,6 @@
     width: 100%;
 }
 
-.mdl-textfield--floating-label input[type=password]:-webkit-autofill ~ label {
-    transform: translate3d(0, -20px, 0);
-    visibility: hidden;
-  }
-  
-  .mdl-textfield--floating-label input[type=password]:-webkit-autofill ~ label:after {
-    content: 'Password';
-    visibility: visible;
-    left: 0;
-    transform: translate3d(0, -20px, 0);
-    background: transparent;
-    color: inherit;
-  }
+.text-white {
+    color: #ffffff;
+}

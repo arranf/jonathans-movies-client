@@ -1,44 +1,50 @@
 <template>
   <div class="d-flex flex-column text-center justify-content-center align-items-center mt-4">
     <div>
-      <h1>Login</h1>
+      <h1 class="md-display-2">Login</h1>
     </div>
-    <mdl-snackbar display-on="loginError"></mdl-snackbar>
     <div id="loginOptions" v-if="!isInternalLogin">
-      <mdl-button id="facebook" raised class="btn-facebook btn-block mdl-js-ripple-effect" @click.native.prevent="facebookLogin()">Log In with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span></mdl-button>
+      <md-button id="facebook" class="btn-facebook btn-block md-raised" @click.prevent="facebookLogin()"><span class="text-white">Log In with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span></span></md-button>
       <p class="py-1 my-1">or</p>
-      <mdl-button id="login" @click.native.prevent="swapLoginType()" colored raised class="btn-block mdl-js-ripple-effect">Log In</mdl-button>
+      <md-button id="login" @click.prevent="swapLoginType()" class="btn-block md-raised md-accent">Log In</md-button>
       <div class="pt-1">
         <a id="signup" href="#" @click.prevent="toSignUp()" >Not got an account? Sign up</a>
       </div>
     </div>
+
     <!-- Login Form -->
-    <form id="internalLoginForm" class="d-flex flex-column align-items-center justify-content-center" v-if="isInternalLogin">
-      <div class="w-100">
-        <i class="fa fa-inbox px-2 mdl-color-text--grey-600"></i> <mdl-textfield floating-label="Email" type="email" v-model="email" />
+    <form id="internalLoginForm" class="d-flex flex-column align-items-center justify-content-center w-100" v-if="isInternalLogin">
+      <div class="md-layout-row md-gutter w-100">
+        <div class="md-layout-item md-size-100">
+          <md-field :class="getValidationClass('email')" md-clearable md-inline>
+            <label for="email">Email</label>
+            <md-input name="email" id="email" v-model="email" type="email"></md-input>
+          </md-field>
+        </div>
       </div>
-      <div class="w-100">
-        <i class="fa fa-key px-2 mdl-color-text--grey-600"></i> <mdl-textfield floating-label="Password" type="password" v-model="password" />
+
+      <div class="md-layout-row md-gutter w-100">
+        <div class="md-layout-item md-size-100">
+          <md-field :class="getValidationClass('password')" md-inline>
+            <label for="password">Password</label>
+            <md-input name="password" id="password" v-model="password" type="password"></md-input>
+          </md-field>
+        </div>
       </div>
-      <mdl-button id="submit" accent raised class="mdl-js-ripple-effect" :disabled="isDisabled" @click.native.prevent="tryLogin()">Submit</mdl-button>
-      <mdl-button id="back" class="mdl-js-ripple-effect" @click.native.prevent="swapLoginType()">Back</mdl-button>
+
+      <md-button id="submit" class="md-raised md-accent" :disabled="isDisabled" @click.prevent="tryLogin()">Submit</md-button>
+      <md-button id="back" class="md-raised" @click.prevent="swapLoginType()">Back</md-button>
     </form>
   </div>
 </template>
 
 <script>
 import feathersClient from '@/api/feathers-client'
-import { MdlButton, MdlTextfield, MdlSnackbar } from 'vue-mdl'
 import {mapActions, mapState} from 'vuex'
 import router from '@/router'
 
 export default {
   name: 'Login',
-  components: {
-    MdlButton,
-    MdlTextfield,
-    MdlSnackbar
-  },
   data () {
     return {
       password: '',
@@ -80,6 +86,9 @@ export default {
       }
       this.logout()
         .then(window.location = url)
+    },
+    getValidationClass: function (input) {
+      return true
     }
   },
   computed: {

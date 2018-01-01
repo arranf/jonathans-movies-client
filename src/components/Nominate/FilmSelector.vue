@@ -58,8 +58,6 @@ import {mapGetters, mapActions, mapMutations} from 'vuex'
 import LoadingBounce from '@/components/Loading/LoadingBounce'
 import constants from '@/constants'
 
-require('@/../node_modules/animate.css/animate.css')
-
 export default {
   name: 'FilmSelector',
   data: function () {
