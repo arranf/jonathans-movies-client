@@ -41,7 +41,7 @@ describe('Login.vue', () => {
  
     expect(wrapper.find('#options').exists()).toBe(true) 
  
-    let li = wrapper.findAll('#options li') 
+    let li = wrapper.findAll('#options') 
     expect(li.length).toBe(1) 
   }) 
  
