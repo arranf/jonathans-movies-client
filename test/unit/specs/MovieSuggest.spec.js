@@ -1,46 +1,55 @@
 /* eslint-disable */
 
-jest.mock('@/api', () => ({
-  getFilmSuggestions: jest.fn(() => Promise.resolve({data: [{name: 'Double Dragon', release_date: '2017-01-01'}]}))
-}))
 
-import { mount } from 'vue-test-utils'
-import queries from '@/api' // queries is from the mock from above
+import {createLocalVue, mount } from 'vue-test-utils'
+import {MdAutocomplete, MdMenu, MdHighlightText, MdField} from 'vue-material/dist/components'
+import mockQueries from '@/mocks/queries' // queries is the mock
 import MovieSuggest from '@/components/Create/MovieSuggest'
+
+jest.mock('@/api', () => mockQueries) 
 
 describe('MovieSuggest.vue', () => {
   let wrapper
+  const localVue = createLocalVue()
+  localVue.use(MdAutocomplete)
+  localVue.use(MdMenu) 
+  localVue.use(MdHighlightText) 
+  localVue.use(MdField)
 
   beforeEach(() => {
     wrapper = mount(MovieSuggest, {
-      attachToDocument: true
+      localVue,
+      mocks: {
+        queries: mockQueries
+      }
     })
   })
 
-  it('The button should be disabled when there is no query', () => {
-    expect(wrapper.find('input').element.value).toBe('')
-    expect(wrapper.find('#add').element.getAttribute('disabled')).toBe('disabled')
-  })
-
-  it('The button should be enabled when there is a query', () => {
+  it('Should emit fill with a name and null id when the \'Add Anyway!\' button is pressed', async () => {
     let input = wrapper.find('input')
     expect(input.element.value).toBe('')
-    input.element.value = 'Input'
+    input.element.value = 'Double Wagon'
     input.trigger('input')
-    expect(wrapper.find('#add').element.getAttribute('disabled')).toBeNull()
-  })
-
-  it('Should emit fill with a name and null id when the add button is pressed', () => {
-    let input = wrapper.find('input')
-    expect(input.element.value).toBe('')
-    input.element.value = 'Film Name'
-    input.trigger('input')
-    wrapper.find('#add').trigger('click')
+    await localVue.nextTick()
+    wrapper.find('#add-anyway').trigger('click')
     
     let emittedFill = wrapper.emitted().fill
     expect(emittedFill).toBeDefined()
     expect(emittedFill[0][0].film_id).toBeNull()
-    expect(emittedFill[0][0].name).toBe('Film Name')
+    expect(emittedFill[0][0].name).toBe('Double Wagon')
+  })
+
+  it('Emits text and id when a suggestion is clicked', async () => {
+    let input = wrapper.find('input')
+    input.element.value = 'Die Hard 2'
+    input.trigger('input')
+    await localVue.nextTick()
+
+    wrapper.find('div[id^=\'suggestion\']').trigger('click')
+    let emittedFill = wrapper.emitted().fill
+    expect(emittedFill).toBeDefined()
+    expect(emittedFill[0][0].film_id).anything()
+    expect(emittedFill[0][0].name).tobe('Die Hard 2')
   })
 
   // Emits text and id on clicked suggestion

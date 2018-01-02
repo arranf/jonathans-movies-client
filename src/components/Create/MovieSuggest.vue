@@ -1,17 +1,16 @@
 <template>
-  
-  <md-autocomplete md-input-name="suggest-input" md-input-id="suggest-input" v-model="searchQuery" :md-open-on-focus="false" :md-options="suggestions" @md-changed="getSuggestions" @md-selected="fillBox">
+  <md-autocomplete id="autocomplete" md-input-name="suggest-input" md-input-id="suggest-input" v-model="searchQuery" :md-open-on-focus="false" :md-options="suggestions" @md-changed="getSuggestions" @md-selected="fillBox">
       <label for="suggest-input">Movies</label>
 
       <template slot="md-autocomplete-item" slot-scope="{ item, term }">
-        <md-highlight-text :md-term="term">{{ item.name }}</md-highlight-text> <small>{{getYear(item.release_date)}}</small>
+        <div :id="`suggestion-${item._id}`"><md-highlight-text :md-term="term">{{ item.name }}</md-highlight-text> <small>{{getYear(item.release_date)}}</small></div>
       </template>
       <template slot="md-autocomplete-empty" slot-scope="{ term }">
-        <div v-if="term === ''">
+        <div v-if="term.trim() === ''">
           Start typing to search for a film
         </div>
         <div v-else>
-          Couldn't find {{term}}. <a @click.prevent="submit(term)">Add it anyway!</a>
+          Couldn't find {{term}}. <a id="add-anyway" @click.prevent="submit(term)">Add it anyway!</a>
         </div>
       </template>
   </md-autocomplete>
@@ -59,6 +58,10 @@ export default {
       const element = document.getElementsByClassName('md-clear')[0]
       const event = new Event('click', {value: ''})
       element.dispatchEvent(event)
+      this.searchQuery = ''
+      setTimeout(() => {
+        document.getElementById('suggest-input').dispatchEvent(new Event('blur'))
+      }, 50)
     }
   },
   computed: {
