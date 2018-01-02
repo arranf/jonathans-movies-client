@@ -58,7 +58,7 @@ describe('Login.vue', () => {
     expect(wrapper.contains('#internalLoginForm')).toBe(false)
   })
 
-  it('should disable the submit button on the login form when a valid email is entered with no password', () => {
+  it('should disable the submit button on the login form when a valid email is entered with no password', async () => {
     let loginButton = wrapper.find('#login')
     loginButton.trigger('click')
     let email = wrapper.find('#email')
@@ -69,14 +69,11 @@ describe('Login.vue', () => {
     expect(typeof submitButton).toBe('object')
 
     // MdField does things after nextTick
-    localVue.nextTick()
-    .then(() => {
-      expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
-    })
+    await localVue.nextTick()
+    expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
   })
 
-  it('should disable the submit button on the login form when a password is entered with no email', () => {
-    const wrapper = mount(Login)
+  it('should disable the submit button on the login form when a password is entered with no email', async () => {
     let loginButton = wrapper.find('#login')
     loginButton.trigger('click')
     let password = wrapper.find('#password')
@@ -87,22 +84,18 @@ describe('Login.vue', () => {
     expect(typeof submitButton).toBe('object')
 
     // MdField does things after nextTick
-    localVue.nextTick()
-    .then(() => {
-      expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
-    })
-
+    await localVue.nextTick()
+    expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
   })
 
   it('should disable the submit button on the login form when an no email or password are entered', () => {
-    const wrapper = mount(Login)
+
     wrapper.find('#login').trigger('click')
     let submitButton = wrapper.find('#submit')
     expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
   })
 
-  it('should disable the submit button on the login form when an invalid email is entered with a password', () => {
-    const wrapper = mount(Login)
+  it('should disable the submit button on the login form when an invalid email is entered with a password', async () => {
     wrapper.find('#login').trigger('click')
     let email = wrapper.find('#email')
     email.element.value = 'invalidemail'
@@ -113,15 +106,11 @@ describe('Login.vue', () => {
     let submitButton = wrapper.find('#submit')
 
     // MdField does things after nextTick
-    localVue.nextTick()
-    .then(() => {
-      expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
-    })
-
+    await localVue.nextTick()
+    expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
   })
 
-  it('should enable the submit button on the login form when a valid email is entered with a password', () => {
-    const wrapper = mount(Login)
+  it('should enable the submit button on the login form when a valid email is entered with a password', async () => {
     wrapper.find('#login').trigger('click')
     let emailInput = wrapper.find('#email')
     emailInput.element.value = 'avalidemail@email.com'
@@ -133,15 +122,14 @@ describe('Login.vue', () => {
     let submitButton = wrapper.find('#submit')
 
     // MdField does things after nextTick 
-    localVue.nextTick()
-      .then(() => {
-        expect(submitButton.attributes().disabled).toBeNull()
-      })
+    await localVue.nextTick()
+    expect(submitButton.attributes().disabled).toBeFalsy()
   })
   
-  it('The snackbar should appear after a failed login', () => {
-    const wrapper = mount(Login)
-    wrapper.setMethods({tryLogin: () => new Promise.reject('Login failed')})
+  it('the snackbar should not appear after a successful login', async () => {
+    const tryLoginMock = jest.fn();
+
+    wrapper.setMethods({tryLogin: tryLoginMock})
     wrapper.find('#login').trigger('click')
     let email = wrapper.find('#email')
     email.element.value = 'avalidemail@email.com'
@@ -152,10 +140,9 @@ describe('Login.vue', () => {
     let submitButton = wrapper.find('#submit')
 
     // MdField does things after nextTick 
-    localVue.nextTick()
-      .then(() => {
-        submitButton.trigger('click')
-        expect(wrapper.contains('.md-snackbar')).toBe(true)
-      })
+    await localVue.nextTick()
+    submitButton.trigger('click')
+    expect(tryLoginMock).toBeCalled()
+    expect(wrapper.contains('#snackbar')).toBe(false)
   })
 })
