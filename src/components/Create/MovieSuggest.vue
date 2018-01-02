@@ -4,7 +4,7 @@
       <input @focus="showSuggestions = true" ref="focusTarget" class="mdl-textfield__input" id="movie-suggest" type="text" v-model="searchQuery" @input="getSuggestions()" >
       <label class="mdl-textfield__label" :for="'movie-suggest'">Movie Title</label>
     </div>
-    <mdl-button id="add" accent @click.native.prevent="submit" :disabled="!isSearchQueryEmpty"><i class="fa fa-check" aria-disabled="true"></i></mdl-button>
+    <md-button id="add" class="md-raised md-accent" @click.prevent="submit" :disabled="!isSearchQueryEmpty"><md-icon>check</md-icon></md-button>
     <div v-if="suggestions.length > 0 && !completed && showSuggestions && searchQuery.length > 0" class="autocomplete-suggestions w-90">       <div @click="fillBox(suggest)" class="autocomplete-suggestion autocomplete-selected" :key="suggest.tmdbid" v-for="suggest in suggestions">
         {{suggest.name}} {{getYear(suggest.release_date)}}
       </div>
@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { MdlButton } from 'vue-mdl'
 import { mixin as clickaway } from 'vue-clickaway'
 import debounce from 'lodash/debounce'
 import queries from '@/api'
@@ -21,9 +20,6 @@ import utils from '@/utils'
 
 export default {
   mixins: [ clickaway ],
-  components: {
-    MdlButton
-  },
   data () {
     return {
       suggestions: [],
@@ -31,9 +27,6 @@ export default {
       completed: false,
       showSuggestions: true
     }
-  },
-  mounted () {
-    componentHandler.upgradeElement(this.$refs.container) //eslint-disable-line
   },
   methods: {
     getSuggestions: debounce(function () {

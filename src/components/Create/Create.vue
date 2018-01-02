@@ -1,51 +1,78 @@
 <template>
   <div class="d-flex flex-column align-items-center justify-content-start mb-3">
     <h2 class="mt-4 pb-3">Create a Poll</h2>
-    <form class="ml-2" autocomplete="off">
-      <!-- Prevent automcomplete -->
+    <form autocomplete="off" class="d-flex flex-column align-items-start justify-content-center w-100">
+      <!-- Prevent auto-complete -->
       <input autocomplete="false" name="hidden" type="text" style="display:none;">
 
-      <!-- Options Input -->
-      <div class="w-100 my-2">
-        <movie-suggest @fill="fillOption"></movie-suggest>
+      <div class="md-layout-row md-gutter w-100">
+        <div class="md-layout-item md-size-100">
+          <movie-suggest @fill="fillOption"></movie-suggest>
+        </div>
       </div>
 
-      <!-- Options List -->
-      <div v-if="options.length > 0" id="options" class="w-60">
-        <p>{{haveNominations ? 'Pre-Selected Movies' : 'Selected Movies' }}</p>
-        <ul class="mdl-list" id="options" >
-          <li v-for="(option, index) in options" :key="option.name" class="list-item mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-              {{option.name}}
-            </span>
-             <a class="mdl-list__item-secondary-action" @click.prevent="removeOption(index)" href="#"> <i class="text-muted fa fa-times"  aria-disabled="true"></i></a>
-          </li>
-        </ul>
+      <!-- options -->
+      <div class="md-layout-row md-gutter w-100" v-if="options.length > 0" id="options-container">
+        <div class="md-layout-item md-size-100">
+          <p>{{haveNominations ? 'Pre-Selected Movies' : 'Selected Movies' }}</p>
+          <div id="options">
+            <md-chip v-for="(option, index) in options" :key="option.name" class="md-primary" md-deletable @md-delete="removeOption(index)">{{option.name}}</md-chip>
+          </div>
+        </div>
       </div>
-      
-      <!-- Poll Settings -->
-      <mdl-textfield floating-label="Voting Length (Minutes)" type="number" pattern="[1-9]" min="1" max="10" error="Provide a number of minutes between 1 and 9" v-model="minutes" />
 
-      <mdl-textfield floating-label="Number of Votes" type="number" pattern="[1-4]" min="1" max="4" error="Provide a number of votes between 1 and 4" v-model="votes" />
+      <div class="md-layout-row md-gutter w-100">
+        <div class="md-layout-item md-size-100">
+          <md-field md-inline>
+            <md-icon>timelapse</md-icon>
+            <label for="minutes">Voting Time</label>
+            <md-input name="minutes" id="minutes" v-model="minutes" type="number"  pattern="[1-9]" min="1" max="10" />
+            <span class="md-helper-text">Number of minutes</span>
+          </md-field>
+        </div>
+      </div>
+
+      <div class="md-layout-row md-gutter w-100">
+        <div class="md-layout-item md-size-100">
+          <md-field md-inline>
+            <md-icon>format_list_numbered</md-icon>
+            <label for="votes">Number of Votes</label>
+            <md-input name="votes" id="votes" v-model="votes" type="number" pattern="[1-4]" min="1" max="4" />
+          </md-field>
+        </div>
+      </div>
 
       <!-- Nominations -->
-      <mdl-switch id="nomination-phase" v-model="haveNominations">{{haveNominations ? 'With Nominations' : 'No Nominations' }}</mdl-switch>
+      <md-switch id="nomination-phase" v-model="haveNominations">{{haveNominations ? 'With Nominations' : 'No Nominations' }}</md-switch>
 
       <transition name="fade">
-        <div v-if="haveNominations">
-          <div>
-            <mdl-textfield floating-label="Nominations Length (Minutes)" type="number" pattern="[1-9][0-9]*" min="1" max="60" error="Provide a number of minutes between 1 and 60" v-model="nominationsMinutes" />
+        <div v-if="haveNominations" class="md-layout md-gutter">
+          <div class="md-layout-item md-size-100">
+            <h2 class="md-subheading">Nomination Options</h2>
           </div>
 
-          <div>
-            <mdl-textfield floating-label="Number of Votes" type="number" pattern="[1-4]" min="1" max="4" error="Provide a number of nominations between 1 and 4" v-model="nominations" />
+          <div class="md-layout-item md-size-100 pa-1">
+            <md-field md-inline>
+              <md-icon>timelapse</md-icon>
+              <label for="nomination-length">Nomination Time</label>
+              <md-input name="nomination-length" id="nomination-length" v-model="nominationsMinutes" type="number" pattern="[1-9][0-9]*" min="1" max="60" />
+              <span class="md-helper-text">Number of minutes</span>
+            </md-field>
+          </div>
+          
+          <div class="md-layout-item md-size-100 pa-1">
+            <md-field md-inline>
+              <md-icon>format_list_numbered</md-icon>
+              <label for="nomination-votes">Number of Nominations</label>
+              <md-input name="nomination-votes" id="nomination-votes" v-model="nominations" type="number" pattern="[1-4]" min="1" max="4" />
+            </md-field>
           </div>
         </div>
       </transition>
     
     <div class="mt-3">
-      <mdl-button id="start-poll" accent raised class="mdl-js-ripple-effect" @click.native.prevent="startPoll()" :disabled="!canStart">Start Poll</mdl-button>
-      <mdl-button class="mdl-js-ripple-effect" @click.native.prevent="toHome()">Back</mdl-button>
+      <md-button id="start-poll" class="md-raised md-accent" @click.prevent="startPoll()" :disabled="!canStart">Start Poll</md-button>
+      <md-button @click.prevent="toHome()">Back</md-button>
     </div>
 
     </form>
@@ -53,30 +80,26 @@
 </template>
 
 <script>
-import { MdlButton, MdlTextfield, MdlSwitch } from 'vue-mdl'
 import MovieSuggest from './MovieSuggest'
-import {mapActions, mapGetters, mapState} from 'vuex'
+import {mapActions} from 'vuex'
 import router from '@/router'
 export default {
   name: 'Create',
   components: {
-    MovieSuggest,
-    MdlButton,
-    MdlTextfield,
-    MdlSwitch
+    MovieSuggest
   },
   data () {
     return {
-      minutes: '3',
-      votes: '2',
+      minutes: '',
+      votes: '',
       haveNominations: false,
-      nominationsMinutes: '5',
-      nominations: '1',
+      nominationsMinutes: '',
+      nominations: '',
       options: []
     }
   },
   methods: {
-    ...mapActions('poll', {createPoll: 'create', updatePoll: 'update'}),
+    ...mapActions('poll', {createPoll: 'create'}),
     toHome: function () {
       router.push('/home')
     },
@@ -111,8 +134,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('poll', ['getActivePoll']),
-    ...mapState('auth', ['user']),
     canStart: function () {
       return this.minutes &&
         this.votes &&
@@ -137,11 +158,5 @@ export default {
 }
 .fade-enter, .fade-leave-to {
   opacity: 0
-}
-.list-item {
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  min-height: 2em; 
-  font-size: 100%;
 }
 </style>
