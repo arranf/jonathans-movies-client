@@ -11,9 +11,9 @@
       </div>
 
       <!-- Options List -->
-      <div v-if="options.length > 0" class="w-60">
+      <div v-if="options.length > 0" id="options" class="w-60">
         <p>{{haveNominations ? 'Pre-Selected Movies' : 'Selected Movies' }}</p>
-        <ul class="mdl-list" >
+        <ul class="mdl-list" id="options" >
           <li v-for="(option, index) in options" :key="option.name" class="list-item mdl-list__item">
             <span class="mdl-list__item-primary-content">
               {{option.name}}
@@ -44,7 +44,7 @@
       </transition>
     
     <div class="mt-3">
-      <mdl-button accent raised class="mdl-js-ripple-effect" @click.native.prevent="startPoll()" :disabled="!canStart">Start Poll</mdl-button>
+      <mdl-button id="start-poll" accent raised class="mdl-js-ripple-effect" @click.native.prevent="startPoll()" :disabled="!canStart">Start Poll</mdl-button>
       <mdl-button class="mdl-js-ripple-effect" @click.native.prevent="toHome()">Back</mdl-button>
     </div>
 
@@ -57,7 +57,6 @@ import { MdlButton, MdlTextfield, MdlSwitch } from 'vue-mdl'
 import MovieSuggest from './MovieSuggest'
 import {mapActions, mapGetters, mapState} from 'vuex'
 import router from '@/router'
-
 export default {
   name: 'Create',
   components: {
@@ -92,14 +91,12 @@ export default {
       let pollTransitionDateTime
       let numberOfNominations
       let endDateTime = currentTime + parseInt(this.minutes) * 60000
-
       if (this.haveNominations) {
         const nominationLengthSeconds = parseInt(this.nominationsMinutes) * 60000
         pollTransitionDateTime = currentTime + nominationLengthSeconds
         numberOfNominations = parseInt(this.nominations)
         endDateTime += nominationLengthSeconds
       }
-
       this.createPoll({
         numberOfVotes: parseInt(this.votes),
         startDateTime: currentTime,
@@ -141,7 +138,6 @@ export default {
 .fade-enter, .fade-leave-to {
   opacity: 0
 }
-
 .list-item {
   padding-top: 0 !important;
   padding-bottom: 0 !important;

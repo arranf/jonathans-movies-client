@@ -5,8 +5,7 @@
       <label class="mdl-textfield__label" :for="'movie-suggest'">Movie Title</label>
     </div>
     <mdl-button id="add" accent @click.native.prevent="submit" :disabled="!isSearchQueryEmpty"><i class="fa fa-check" aria-disabled="true"></i></mdl-button>
-    <div v-if="suggestions.length > 0 && !completed && showSuggestions" class="autocomplete-suggestions w-90">
-      <div @click="fillBox(suggest)" class="autocomplete-suggestion autocomplete-selected" :key="suggest.tmdbid" v-for="suggest in suggestions">
+    <div v-if="suggestions.length > 0 && !completed && showSuggestions && searchQuery.length > 0" class="autocomplete-suggestions w-90">       <div @click="fillBox(suggest)" class="autocomplete-suggestion autocomplete-selected" :key="suggest.tmdbid" v-for="suggest in suggestions">
         {{suggest.name}} {{getYear(suggest.release_date)}}
       </div>
     </div>
