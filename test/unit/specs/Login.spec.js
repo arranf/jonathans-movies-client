@@ -11,12 +11,10 @@ describe('Login.vue', () => {
 
   const localVue = createLocalVue()
   localVue.use(VueMaterial)
-  console.log(localVue)
 
   beforeEach(() => {
     wrapper = mount(Login, {
       localVue,
-      // attachToDocument: true,
       // computed: {
       //   user: () => {
       //     return {
@@ -69,7 +67,12 @@ describe('Login.vue', () => {
     email.trigger('input')
     let submitButton = wrapper.find('#submit')
     expect(typeof submitButton).toBe('object')
-    expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
+
+    // MdField does things after nextTick
+    localVue.nextTick()
+    .then(() => {
+      expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
+    })
   })
 
   it('should disable the submit button on the login form when a password is entered with no email', () => {
@@ -80,10 +83,15 @@ describe('Login.vue', () => {
     expect(typeof password).toBe('object')
     password.element.value = 'password'
     password.trigger('input')
-
     let submitButton = wrapper.find('#submit')
     expect(typeof submitButton).toBe('object')
-    expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
+
+    // MdField does things after nextTick
+    localVue.nextTick()
+    .then(() => {
+      expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
+    })
+
   })
 
   it('should disable the submit button on the login form when an no email or password are entered', () => {
@@ -102,9 +110,14 @@ describe('Login.vue', () => {
     let password = wrapper.find('#password')
     password.element.value = 'password'
     password.trigger('input')
-
     let submitButton = wrapper.find('#submit')
-    expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
+
+    // MdField does things after nextTick
+    localVue.nextTick()
+    .then(() => {
+      expect(submitButton.element.getAttribute('disabled')).toBe('disabled')
+    })
+
   })
 
   it('should enable the submit button on the login form when a valid email is entered with a password', () => {
@@ -117,13 +130,11 @@ describe('Login.vue', () => {
     let passwordInput = wrapper.find('#password')
     passwordInput.element.value = 'password'
     passwordInput.trigger('input')
+    let submitButton = wrapper.find('#submit')
 
     // MdField does things after nextTick 
     localVue.nextTick()
       .then(() => {
-        let submitButton = wrapper.find('#submit')
-        console.log(wrapper.vm.password)
-        console.log(wrapper.vm.email)
         expect(submitButton.attributes().disabled).toBeNull()
       })
   })
@@ -138,16 +149,13 @@ describe('Login.vue', () => {
     let password = wrapper.find('#password')
     password.element.value = 'password'
     password.trigger('input')
-    
+    let submitButton = wrapper.find('#submit')
+
+    // MdField does things after nextTick 
     localVue.nextTick()
       .then(() => {
-        let submitButton = wrapper.find('#submit')
         submitButton.trigger('click')
         expect(wrapper.contains('.md-snackbar')).toBe(true)
       })
-
   })
-
-  //TODO
-  // Add a test (which mocks the $store and emits a loginError) to see if the snackbar is displayed on invalid login
 })
