@@ -3,8 +3,6 @@ import {createLocalVue, mount } from 'vue-test-utils'
 import VueMaterial from 'vue-material'
 
 import Login from '@/components/Login/Login'
-import { wrap } from 'module';
-
 
 describe('Login.vue', () => {
   let wrapper
