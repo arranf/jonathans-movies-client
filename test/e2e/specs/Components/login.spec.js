@@ -10,7 +10,7 @@ module.exports = {
 
     browser
       .url(devServer)
-      .waitForElementVisible('#app', 5000)
+      .waitForElementVisible('#app-container', 5000)
       // Inital page
       .assert.elementPresent('#login')
       .assert.elementPresent('#facebook')
@@ -21,11 +21,11 @@ module.exports = {
       .assert.elementNotPresent('#login')
       .assert.attributeEquals('#submit', 'disabled', 'true')
       // Test invalid form input, the submit button should still be disabled
-      .setValue('input[type=email]', 'aninvalidemail')
-      .setValue('input[type=password]', 'password')
+      .setValue('#email', 'aninvalidemail')
+      .setValue('#password', 'password')
       .assert.attributeEquals('#submit', 'disabled', 'true')
       // Test valid input, the submit button should not be disabled
-      .setValue('input[type=email]', 'valid@email.com')
+      .setValue('#email', 'valid@email.com')
       // .assert.attributeEquals('#submit', 'disabled', null)
       .assert.isNotDisabled('#submit')
       .click('#back')
@@ -42,24 +42,24 @@ module.exports = {
 
     browser
       .url(devServer)
-      .waitForElementVisible('#app', 5000)
+      .waitForElementVisible('#app-container', 5000)
       .click('#facebook')
       .pause(1000)
-      .assert.urlContains('https://www.facebook.com')
+      .assert.urlContains('facebook')
       .end()
   },
   'snackbar': function (browser) {
     const devServer = browser.globals.devServerURL
-
+    // This will fail with a test server running
     browser
       .url(devServer)
-      .waitForElementVisible('#app', 5000)
-      .assert.elementNotPresent('.mdl-snackbar--active')
+      .waitForElementVisible('#app-container', 5000)
+      .assert.elementNotPresent('.md-snackbar')
       .click('#login')
-      .setValue('input[type=email]', 'valid@email.com')
-      .setValue('input[type=password]', 'password')
+      .setValue('#email', 'valid@email.com')
+      .setValue('#password', 'password')
       .click('#submit')
-      .waitForElementVisible('.mdl-snackbar--active', 5000)
+      .waitForElementVisible('.md-snackbar', 5000)
       .end()
   }
 }
