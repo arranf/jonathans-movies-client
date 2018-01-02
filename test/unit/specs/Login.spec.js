@@ -1,23 +1,41 @@
 /* eslint-disable */
-import { mount } from 'vue-test-utils'
-// import { __createMocks as createStoreMocks } from '@/store';
-import Login from '@/components/Login/Login'
+import {createLocalVue, mount } from 'vue-test-utils'
+import VueMaterial from 'vue-material'
 
-// jest.mock('@/store')
+import Login from '@/components/Login/Login'
+import { wrap } from 'module';
+
 
 describe('Login.vue', () => {
   let wrapper
 
+  const localVue = createLocalVue()
+  localVue.use(VueMaterial)
+  console.log(localVue)
+
   beforeEach(() => {
-    // const wrapper = createLocalVue();
-    wrapper.use(Vuex);
     wrapper = mount(Login, {
-      attachToDocument: true
+      localVue,
+      // attachToDocument: true,
+      // computed: {
+      //   user: () => {
+      //     return {
+      //       _id: "695345fsfdsfsdf",
+      //       isAdmin: false,
+      //       createdAt: "2017-09-27T13:01:32.926Z",
+      //       email: "email@email.com",
+      //       facebook: {},
+      //       facebookId: "100847354",
+      //       name: "Bob Jones",
+      //       updatedAt: "2017-09-27T13:01:32.926Z"
+      //     }
+      //   }
+      // }
     })
   })
 
   it('should not display snackbar when initially created', () => {
-    expect(wrapper.contains('.mdl-snackbar--active')).toBe(false)
+    expect(wrapper.contains('.md-snackbar')).toBe(false)
   })
 
   it('should render the div containing the login buttons when the component is initially created', () => {
@@ -45,7 +63,7 @@ describe('Login.vue', () => {
   it('should disable the submit button on the login form when a valid email is entered with no password', () => {
     let loginButton = wrapper.find('#login')
     loginButton.trigger('click')
-    let email = wrapper.find('input[type=email]')
+    let email = wrapper.find('#email')
     expect(typeof email).toBe('object')
     email.element.value = 'invalidemail'
     email.trigger('input')
@@ -58,7 +76,7 @@ describe('Login.vue', () => {
     const wrapper = mount(Login)
     let loginButton = wrapper.find('#login')
     loginButton.trigger('click')
-    let password = wrapper.find('input[type=password]')
+    let password = wrapper.find('#password')
     expect(typeof password).toBe('object')
     password.element.value = 'password'
     password.trigger('input')
@@ -78,10 +96,10 @@ describe('Login.vue', () => {
   it('should disable the submit button on the login form when an invalid email is entered with a password', () => {
     const wrapper = mount(Login)
     wrapper.find('#login').trigger('click')
-    let email = wrapper.find('input[type=email]')
+    let email = wrapper.find('#email')
     email.element.value = 'invalidemail'
     email.trigger('input')
-    let password = wrapper.find('input[type=password]')
+    let password = wrapper.find('#password')
     password.element.value = 'password'
     password.trigger('input')
 
@@ -92,15 +110,42 @@ describe('Login.vue', () => {
   it('should enable the submit button on the login form when a valid email is entered with a password', () => {
     const wrapper = mount(Login)
     wrapper.find('#login').trigger('click')
-    let email = wrapper.find('input[type=email]')
+    let emailInput = wrapper.find('#email')
+    emailInput.element.value = 'avalidemail@email.com'
+    emailInput.trigger('input')
+
+    let passwordInput = wrapper.find('#password')
+    passwordInput.element.value = 'password'
+    passwordInput.trigger('input')
+
+    // MdField does things after nextTick 
+    localVue.nextTick()
+      .then(() => {
+        let submitButton = wrapper.find('#submit')
+        console.log(wrapper.vm.password)
+        console.log(wrapper.vm.email)
+        expect(submitButton.attributes().disabled).toBeNull()
+      })
+  })
+  
+  it('The snackbar should appear after a failed login', () => {
+    const wrapper = mount(Login)
+    wrapper.setMethods({tryLogin: () => new Promise.reject('Login failed')})
+    wrapper.find('#login').trigger('click')
+    let email = wrapper.find('#email')
     email.element.value = 'avalidemail@email.com'
     email.trigger('input')
-    let password = wrapper.find('input[type=password]')
+    let password = wrapper.find('#password')
     password.element.value = 'password'
     password.trigger('input')
+    
+    localVue.nextTick()
+      .then(() => {
+        let submitButton = wrapper.find('#submit')
+        submitButton.trigger('click')
+        expect(wrapper.contains('.md-snackbar')).toBe(true)
+      })
 
-    let submitButton = wrapper.find('#submit')
-    expect(submitButton.element.getAttribute('disabled')).toBeNull()
   })
 
   //TODO

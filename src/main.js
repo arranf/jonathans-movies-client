@@ -10,7 +10,7 @@ import '@/api/feathers-client'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
 
-import { MdButton, MdField, MdList, MdIcon, MdDrawer, MdApp, MdContent, MdToolbar } from 'vue-material/dist/components'
+import { MdButton, MdField, MdList, MdIcon, MdDrawer, MdApp, MdContent, MdToolbar, MdSnackbar } from 'vue-material/dist/components'
 
 Vue.use(MdList)
 Vue.use(MdIcon)
@@ -21,6 +21,7 @@ Vue.use(MdDrawer)
 Vue.use(MdApp)
 Vue.use(MdContent)
 Vue.use(MdToolbar)
+Vue.use(MdSnackbar)
 
 // Import assets
 require('vue-material/dist/vue-material.min.css')

@@ -1,5 +1,11 @@
 <template>
   <div class="d-flex flex-column text-center justify-content-center align-items-center mt-4">
+
+    <md-snackbar id="snackbar" md-position="center" :md-active.sync="showSnackbar" md-persistent>
+      <span>Unable to complete log in.</span>
+      <md-button class="md-primary" @click="showSnackbar = false">Close</md-button>
+    </md-snackbar>
+
     <div>
       <h1 class="md-display-2">Login</h1>
     </div>
@@ -18,7 +24,7 @@
         <div class="md-layout-item md-size-100">
           <md-field :class="getValidationClass('email')" md-clearable md-inline>
             <label for="email">Email</label>
-            <md-input name="email" id="email" v-model="email" type="email"></md-input>
+            <md-input name="email" id="email" v-model="email" type="email" />
           </md-field>
         </div>
       </div>
@@ -27,7 +33,7 @@
         <div class="md-layout-item md-size-100">
           <md-field :class="getValidationClass('password')" md-inline>
             <label for="password">Password</label>
-            <md-input name="password" id="password" v-model="password" type="password"></md-input>
+            <md-input name="password" id="password" v-model="password" type="password" />
           </md-field>
         </div>
       </div>
@@ -40,7 +46,7 @@
 
 <script>
 import feathersClient from '@/api/feathers-client'
-import {mapActions, mapState} from 'vuex'
+import {mapActions} from 'vuex'
 import router from '@/router'
 
 export default {
@@ -49,7 +55,8 @@ export default {
     return {
       password: '',
       email: '',
-      isInternalLogin: false
+      isInternalLogin: false,
+      showSnackbar: false
     }
   },
   methods: {
@@ -67,7 +74,7 @@ export default {
         .then(() => {
           router.push('home')
         })
-        .catch(error => { console.error(error); this.$root.$emit('loginError', { message: 'Unable to complete log in' }) })
+        .catch(error => { console.error(`Login Error: ${error}`); this.showSnackbar = true })
     },
     toSignUp: function () {
       router.push('/signup')
@@ -92,7 +99,6 @@ export default {
     }
   },
   computed: {
-    ...mapState('auth', ['user']),
     isDisabled: function () {
       // W3 Email regex: http://emailregex.com/
       const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
