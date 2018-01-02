@@ -10,7 +10,7 @@
       <md-app-drawer :md-active.sync="showNavigation">
         <drawer-list @close="showNavigation = false" />
       </md-app-drawer>
-      <md-app-content style="height:90vh">
+      <md-app-content class="content-height">
         <router-view />
       </md-app-content>
     </md-app>
@@ -30,3 +30,23 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  @import "../node_modules/vue-material/src/components/MdLayout/mixins.scss";
+
+  $md-toolbar-height: 64px;
+  $md-toolbar-height-portrait: 56px;
+  $md-toolbar-height-landscape: 48px;
+  $md-toolbar-height-dense: 48px;
+
+  .content-height {
+    min-height: calc(100vh - $md-toolbar-height);
+    
+    @include md-layout-small {
+      min-height: $md-toolbar-height-landscape;
+    }
+    @include md-layout-xsmall {
+      min-height: $md-toolbar-height-portrait;
+    }
+  }
+</style>
