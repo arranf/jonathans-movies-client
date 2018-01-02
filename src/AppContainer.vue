@@ -37,16 +37,19 @@ export default {
   $md-toolbar-height: 64px;
   $md-toolbar-height-portrait: 56px;
   $md-toolbar-height-landscape: 48px;
-  $md-toolbar-height-dense: 48px;
+
+  $md-content-height: calc(100vh - #{$md-toolbar-height});
+  $md-content-height-landscape: calc(100vh - #{$md-toolbar-height-landscape});
+  $md-content-height-portrait: calc(100vh - #{$md-toolbar-height-portrait});
 
   .content-height {
-    min-height: calc(100vh - $md-toolbar-height);
+    min-height: $md-content-height;
     
     @include md-layout-small {
-      min-height: $md-toolbar-height-landscape;
+      min-height: $md-content-height-landscape;
     }
     @include md-layout-xsmall {
-      min-height: $md-toolbar-height-portrait;
+      min-height: $md-content-height-portrait;
     }
   }
 </style>
