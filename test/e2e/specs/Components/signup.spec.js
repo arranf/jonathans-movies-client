@@ -7,7 +7,7 @@ module.exports = {
 
     browser
       .url(devServer + '/signup')
-      .waitForElementVisible('#app', 5000)
+      .waitForElementVisible('#app-container', 5000)
       .click('#back')
       .assert.urlEquals(devServer + '/')
       .end()
@@ -17,12 +17,12 @@ module.exports = {
 
     browser
       .url(devServer + '/signup')
-      .waitForElementVisible('#app', 5000)
-      .assert.elementNotPresent('.mdl-snackbar--active')
-      .setValue('input[type=email]', 'valid@email.com')
-      .setValue('input[type=password]', 'password')
+      .waitForElementVisible('#app-container', 5000)
+      .assert.elementNotPresent('#snackbar')
+      .setValue('#email', 'valid@email.com')
+      .setValue('#password', 'password')
       .click('#submit')
-      .waitForElementVisible('.mdl-snackbar--active', 5000)
+      .waitForElementVisible('#snackbar', 5000)
       .end()
   }
 }

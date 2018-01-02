@@ -1,18 +1,36 @@
 <template>
   <div class="flex-column d-flex text-center justify-content-center align-items-center mt-4">
     <div>
-        <h1>Sign Up</h1>
+      <h1 class="md-display-2">Sign Up</h1>
     </div>
-    <mdl-snackbar display-on="signUpError"></mdl-snackbar>
-    <form class="d-flex flex-column align-items-center justify-content-center">
-      <div class="w-100">
-        <i class="fa fa-inbox px-2 mdl-color-text--grey-600"></i> <mdl-textfield floating-label="Email" type="email" v-model="email" />
+    <md-snackbar id="snackbar" md-position="center" :md-active.sync="showSnackbar" md-persistent>
+      <span>Unable to complete sign up.</span>
+      <md-button class="md-primary" @click="showSnackbar = false">Close</md-button>
+    </md-snackbar>
+
+    <form id="internalLoginForm" class="d-flex flex-column align-items-center justify-content-center w-100">
+      <div class="md-layout-row md-gutter w-100">
+        <div class="md-layout-item md-size-100">
+          <md-field :class="getValidationClass('email')" md-clearable md-inline>
+            <md-icon>inbox</md-icon>
+            <label for="email">Email</label>
+            <md-input name="email" id="email" v-model="email" type="email" />
+          </md-field>
+        </div>
       </div>
-      <div class="w-100">
-        <i class="fa fa-key px-2 mdl-color-text--grey-600"></i> <mdl-textfield floating-label="Password" type="password" v-model="password" />
+
+      <div class="md-layout-row md-gutter w-100">
+        <div class="md-layout-item md-size-100">
+          <md-field :class="getValidationClass('password')" md-inline>
+            <md-icon>vpn_key</md-icon>
+            <label for="password">Password</label>
+            <md-input name="password" id="password" v-model="password" type="password" />
+          </md-field>
+        </div>
       </div>
-      <mdl-button id="submit" accent raised class="mdl-js-ripple-effect" :disabled="isDisabled" @click.native.prevent="trySignUp()">Submit</mdl-button>
-      <mdl-button id="back" class="mdl-js-ripple-effect" @click.native.prevent="toHome()">Back</mdl-button>
+
+      <md-button id="submit" class="md-raised md-accent" :disabled="isDisabled" @click.prevent="trySignUp()">Submit</md-button>
+      <md-button id="back" class="md-raised" @click.prevent="toHome()">Back</md-button>
     </form>
   </div>
 </template>
@@ -20,7 +38,7 @@
 <script>
 import feathersClient from '@/api/feathers-client'
 import { MdlButton, MdlTextfield, MdlSnackbar } from 'vue-mdl'
-import {mapActions, mapState} from 'vuex'
+import {mapActions} from 'vuex'
 import router from '@/router'
 
 export default {
@@ -33,7 +51,8 @@ export default {
   data () {
     return {
       password: '',
-      email: ''
+      email: '',
+      showSnackbar: false
     }
   },
   methods: {
@@ -60,11 +79,13 @@ export default {
           return feathersClient.passport.verifyJWT(token.accessToken)
         })
         .then(() => router.push('home'))
-        .catch(error => { console.error(error); this.$root.$emit('signUpError', { message: 'Unable to complete sign up' }) })
+        .catch(error => { console.error(error); this.showSnackbar = true })
+    },
+    getValidationClass: function () {
+      return true
     }
   },
   computed: {
-    ...mapState('auth', ['user']),
     isDisabled: function () {
       // W3 Email regex: http://emailregex.com/
       const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
