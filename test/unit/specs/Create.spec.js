@@ -12,37 +12,37 @@ describe('Login.vue', () => {
   }) 
  
   it('Initially there should be no options present', () => { 
-    expect(wrapper.find('#options').exists()).to.be.false 
+    expect(wrapper.find('#options').exists()).toBe(false) 
   }) 
  
   it('Initially, the start poll button should be disabled', () => { 
     let startPoll = wrapper.find('#start-poll') 
-    expect(startPoll.exists()).to.be.true 
-    expect(startPoll).to.be.an('object') 
-    expect(startPoll.element.getAttribute('disabled')).to.equal('disabled') 
+    expect(startPoll.exists()).toBe(true) 
+    expect(typeof startPoll).toBe('object') 
+    expect(startPoll.element.getAttribute('disabled')).toBe('disabled') 
   }) 
  
   it('The start poll button should still be disabled, when one movie is added', () => { 
     let movieSuggestion = wrapper.find('#movie-suggest') 
-    expect(movieSuggestion).to.be.an('object') 
+    expect(typeof movieSuggestion).toBe('object') 
     movieSuggestion.element.value = 'Movie 1' 
     movieSuggestion.trigger('input') 
     wrapper.find('#add').trigger('click') 
  
-    expect(wrapper.find('#start-poll').element.getAttribute('disabled')).to.equal('disabled') 
+    expect(wrapper.find('#start-poll').element.getAttribute('disabled')).toBe('disabled') 
   }) 
  
   it('When a movie is added it should appear in the options', () => { 
     let movieSuggestion = wrapper.find('#movie-suggest') 
-    expect(movieSuggestion).to.be.an('object') 
+    expect(typeof movieSuggestion).toBe('object') 
     movieSuggestion.element.value = 'Movie 1' 
     movieSuggestion.trigger('input') 
     wrapper.find('#add').trigger('click') 
  
-    expect(wrapper.find('#options').exists()).to.be.true 
+    expect(wrapper.find('#options').exists()).toBe(true) 
  
     let li = wrapper.findAll('#options li') 
-    expect(li.length).to.equal(1) 
+    expect(li.length).toBe(1) 
   }) 
  
 })
