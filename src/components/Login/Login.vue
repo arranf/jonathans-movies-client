@@ -23,6 +23,7 @@
       <div class="md-layout-row md-gutter w-100">
         <div class="md-layout-item md-size-100">
           <md-field :class="getValidationClass('email')" md-clearable md-inline>
+            <md-icon>inbox</md-icon>
             <label for="email">Email</label>
             <md-input name="email" id="email" v-model="email" type="email" />
           </md-field>
@@ -32,6 +33,7 @@
       <div class="md-layout-row md-gutter w-100">
         <div class="md-layout-item md-size-100">
           <md-field :class="getValidationClass('password')" md-inline>
+            <md-icon>vpn_key</md-icon>
             <label for="password">Password</label>
             <md-input name="password" id="password" v-model="password" type="password" />
           </md-field>
