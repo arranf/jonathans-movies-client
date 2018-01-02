@@ -12,7 +12,7 @@
       </div>
 
       <!-- options -->
-      <div class="md-layout-row md-gutter w-100" v-if="options.length > 0" id="options-container">
+      <div class="mt-2 mb-4 md-layout-row md-gutter w-100" v-if="options.length > 0" id="options-container">
         <div class="md-layout-item md-size-100">
           <p>{{haveNominations ? 'Pre-Selected Movies' : 'Selected Movies' }}</p>
           <div id="options">
