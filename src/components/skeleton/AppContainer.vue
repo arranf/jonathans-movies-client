@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import DrawerList from '@/components/DrawerList'
+import DrawerList from '@/components/skeleton/DrawerList'
 
 export default {
   name: 'app',
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "../node_modules/vue-material/src/components/MdLayout/mixins.scss";
+  @import "../../../node_modules/vue-material/src/components/MdLayout/mixins.scss";
 
   $md-toolbar-height: 64px;
   $md-toolbar-height-portrait: 56px;

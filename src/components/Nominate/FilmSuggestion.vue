@@ -27,7 +27,7 @@ import queries from '@/api'
 import utils from '@/utils'
 import {mapGetters} from 'vuex'
 
-import MovieInfoModal from '@/components/MovieInfoModal'
+import MovieInfoModal from '@/components/common/MovieInfoModal'
 
 export default {
   props: ['film'],

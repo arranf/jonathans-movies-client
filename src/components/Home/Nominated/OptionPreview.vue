@@ -20,7 +20,7 @@
 import utils from '@/utils'
 import constants from '@/constants'
 import {mapState, mapActions} from 'vuex'
-import MovieInfoModal from '@/components/MovieInfoModal'
+import MovieInfoModal from '@/components/common/MovieInfoModal'
 
 export default {
   name: 'OptionPreview',

@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import VueModal from 'vue-js-modal'
-import App from './AppContainer'
+import App from '@/components/skeleton/AppContainer'
 import router from './router'
 import store from './store/'
 import '@/api/feathers-client'

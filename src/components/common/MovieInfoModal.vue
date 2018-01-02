@@ -21,7 +21,7 @@ import utils from '@/utils'
 import tmdbApi from '@/api/tmdb'
 import {mapGetters} from 'vuex'
 import imagesLoaded from 'vue-images-loaded'
-import LoadingBounce from '@/components/Loading/LoadingBounce'
+import LoadingBounce from '@/components/common/LoadingBounce'
 
 export default {
   name: 'MovieInfoModal',

@@ -55,7 +55,7 @@ import FilmSuggestion from './FilmSuggestion'
 import VueSlider from 'vue-slider-component'
 import infiniteScroll from 'vue-infinite-scroll'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
-import LoadingBounce from '@/components/Loading/LoadingBounce'
+import LoadingBounce from '@/components/common/LoadingBounce'
 import constants from '@/constants'
 
 export default {
