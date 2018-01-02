@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column" style="height:100vh">
+  <div class="d-flex flex-column" style="height:100vh" id="app-container">
     <md-app >
       <md-app-toolbar class="md-primary">
         <md-button class="md-icon-button" @click="showNavigation = true">
