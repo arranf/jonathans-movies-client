@@ -75,6 +75,11 @@
       <md-button @click.prevent="toHome()">Back</md-button>
     </div>
 
+     <md-snackbar id="snackbar" md-position="center" :md-active.sync="showSnackbar" md-persistent>
+      <span>This movie has already been added.</span>
+      <md-button class="md-primary" @click="showSnackbar = false">Close</md-button>
+    </md-snackbar>
+
     </form>
   </div>
 </template>
@@ -95,7 +100,8 @@ export default {
       haveNominations: false,
       nominationsMinutes: '5',
       nominations: '2',
-      options: []
+      options: [],
+      showSnackbar: false
     }
   },
   methods: {
@@ -104,7 +110,11 @@ export default {
       router.push('/home')
     },
     fillOption: function (film) {
-      this.options.push({name: film.name, film_id: film.film_id})
+      if (!this.options.find(f => f.name === film.name)) {
+        this.options.push({name: film.name, film_id: film.film_id})
+      } else {
+        this.showSnackbar = true
+      }
     },
     removeOption: function (index) {
       this.options.splice(index, 1)
