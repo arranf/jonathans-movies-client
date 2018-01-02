@@ -1,11 +1,16 @@
 <template>
   <md-list>
+    <md-list-item v-if="user" to="/home">
+      <md-icon>home</md-icon>
+      <span class="md-list-item-text">Home</span>
+    </md-list-item>
+
     <md-list-item v-if="user && user.isAdmin && !getActivePoll" to="/create">
       <md-icon>create</md-icon>
       <span class="md-list-item-text">Create Poll</span>
     </md-list-item>
 
-    <md-list-item v-if="this.$route.name !== 'Movies'" to="/movies">
+    <md-list-item v-if="user && this.$route.name !== 'Movies'" to="/movies">
       <md-icon>movie</md-icon>
       <span class="md-list-item-text">Movies</span>
     </md-list-item>
