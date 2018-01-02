@@ -23,7 +23,7 @@
 
       <div class="md-layout-row md-gutter w-100">
         <div class="md-layout-item md-size-100">
-          <md-field md-inline>
+          <md-field>
             <md-icon>timelapse</md-icon>
             <label for="minutes">Voting Time</label>
             <md-input name="minutes" id="minutes" v-model="minutes" type="number"  pattern="[1-9]" min="1" max="10" />
@@ -34,7 +34,7 @@
 
       <div class="md-layout-row md-gutter w-100">
         <div class="md-layout-item md-size-100">
-          <md-field md-inline>
+          <md-field>
             <md-icon>format_list_numbered</md-icon>
             <label for="votes">Number of Votes</label>
             <md-input name="votes" id="votes" v-model="votes" type="number" pattern="[1-4]" min="1" max="4" />
@@ -52,7 +52,7 @@
           </div>
 
           <div class="md-layout-item md-size-100 pa-1">
-            <md-field md-inline>
+            <md-field>
               <md-icon>timelapse</md-icon>
               <label for="nomination-length">Nomination Time</label>
               <md-input name="nomination-length" id="nomination-length" v-model="nominationsMinutes" type="number" pattern="[1-9][0-9]*" min="1" max="60" />
@@ -61,7 +61,7 @@
           </div>
           
           <div class="md-layout-item md-size-100 pa-1">
-            <md-field md-inline>
+            <md-field>
               <md-icon>format_list_numbered</md-icon>
               <label for="nomination-votes">Number of Nominations</label>
               <md-input name="nomination-votes" id="nomination-votes" v-model="nominations" type="number" pattern="[1-4]" min="1" max="4" />
@@ -90,11 +90,11 @@ export default {
   },
   data () {
     return {
-      minutes: '',
-      votes: '',
+      minutes: '3',
+      votes: '1',
       haveNominations: false,
-      nominationsMinutes: '',
-      nominations: '',
+      nominationsMinutes: '5',
+      nominations: '2',
       options: []
     }
   },
