@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column justify-content-center container-fluid" :class="{'h-50': getActivePoll && !isCurrentPollInNomination}">
+    <div id="home-container" class="d-flex flex-column justify-content-center container-fluid" :class="{'h-50': getActivePoll && !isCurrentPollInNomination}">
       <div class="h-100 align-items-stretch justify-content-center" >
         <selected-options v-if="isCurrentPollInNomination" />
         <vote-for-option v-else-if="getActivePoll"></vote-for-option>
