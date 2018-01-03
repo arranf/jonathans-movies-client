@@ -1,18 +1,31 @@
 <template>
   <modal :pivotY="0.05" :name="`${film._id}-modal`" height="auto" width="85%" @before-open="beforeOpen" @opened="modalOpened()" :scrollable="true">
-      <div class="card" v-show="film.data && shouldDisplay" v-images-loaded="imageRendered">
-        <img class="card-img-top" :src="backdropImage" :alt="`{film.name} Backdrop`">
-        <div class="card-body">
-          <h4 class="card-title d-inline-block">{{film.name}} <small>{{getFilmYear}}</small></h4> <a v-if="film" :href="getImdbLink" target="_blank" class="card-link float-right"><i class="fa fa-imdb fa-2x" aria-hidden="true"></i></a>
-          <p v-if="film.data" class="text-muted"><span class="font-weight-bold">Runtime</span>: {{film.data.runtime}} mins | <span class="font-weight-bold">Genres</span> {{film.genres.join(', ')}}</p>
-          <p class="card-text">{{film.overview}}</p>
+    <md-card v-show="film.data && shouldDisplay" v-images-loaded="imageRendered">
+      <md-card-media>
+        <img :src="backdropImage" :alt="`{film.name} Backdrop`">
+      </md-card-media>
+      <md-card-header>
+        <div class="md-title">{{film.name}}</div>
+        <div class="md-subhead">
+          {{getFilmYear}} <span class="font-weight-bold">Runtime</span>: {{film.data.runtime}} mins | <span class="font-weight-bold">Genres</span> {{film.genres.join(', ')}}
         </div>
-        <div class="card-body mb-2" v-if="showNominate && isCurrentPollInNomination && hasNominationsRemaining" >
-          <a href="#" @click="addNomination()" :class="shouldNominate" class="card-link font-weight-bold link-primary">{{ !this.isOptionForCurrentPoll(this.film._id) ? 'Nominate' : 'Nominated' }}</a>
-        </div>
-      </div>
-      <loading-bounce v-show="!film.data || !shouldDisplay"></loading-bounce>
-    </modal>
+      </md-card-header>
+      <md-card-content>
+        {{film.overview}}
+      </md-card-content>
+      <md-card-actions>
+        <md-button>Action</md-button>
+        <md-button @click.prevent="addNomination()" v-if="showNominate && isCurrentPollInNomination" :disabled="!hasNominationsRemaining || this.isOptionForCurrentPoll(this.film._id)">
+          {{ !this.isOptionForCurrentPoll(this.film._id) ? 'Nominate' : 'Nominated' }}
+        </md-button>
+        <md-button :href="getImdbLink" target="_blank" class="card-link float-right">
+          <i class="fa fa-imdb fa-2x" aria-hidden="true"></i>
+        </md-button>
+      </md-card-actions>
+    </md-card>
+    <md-progress-spinner v-show="!film.data || !shouldDisplay" class="md-accent" md-mode="indeterminate" />
+    
+  </modal>
 </template>
 
 <script>
@@ -79,12 +92,6 @@ export default {
     getFilmYear: function () {
       if (this.film && this.film.release_date) {
         return utils.getYearFromTmdbReleaseDate(this.film.release_date)
-      }
-    },
-    shouldNominate: function () {
-      return {
-        'text-muted': !this.hasNominationsRemaining || this.isOptionForCurrentPoll(this.film._id),
-        'not-active': !this.hasNominationsRemaining || this.isOptionForCurrentPoll(this.film._id)
       }
     }
   }
