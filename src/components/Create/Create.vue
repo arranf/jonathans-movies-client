@@ -72,7 +72,7 @@
     
     <div class="mt-3">
       <md-button id="start-poll" class="md-raised md-accent" @click.prevent="startPoll()" :disabled="!canStart">Start Poll</md-button>
-      <md-button @click.prevent="toHome()">Back</md-button>
+      <md-button id="back" @click.prevent="toHome()">Back</md-button>
     </div>
 
      <md-snackbar id="snackbar" md-position="center" :md-active.sync="showSnackbar" md-persistent>
