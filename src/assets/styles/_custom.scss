@@ -15,6 +15,15 @@ html { font-size: 100%; } /* This means 16px by default or is adjusted by the us
   flex: 1;
 }
 
+.text-md-accent {
+    color: var(--md-theme-default-primary-on-background, #448aff)
+}
+
+.md-app-container {
+    transform: none !important;
+    -webkit-transform: none !important; 
+}
+
 .not-active {
   pointer-events: none;
   cursor: default;
