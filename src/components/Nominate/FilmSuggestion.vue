@@ -1,24 +1,20 @@
 <template>
-  <div>
-    <movie-info-modal :film="film" :show-nominate="true" />
+  <div @click="showModal()">
+    <movie-info-modal :show.sync="show" :film="film" :show-nominate="true" />
+    <md-card md-with-hover >
+      <md-card-header>
+        <div class="md-title">{{film.name}} <small>{{getFilmYear}}</small></div>
+        <div class="md-subhead">{{film.score}} <i class="fa fa-star" aria-disabled="true"></i></div>
+      </md-card-header>
 
-    <div class="card-group">
-      <div class="card" @click="showModal()">
-        <div class="card-body">
-          <h4 class="card-title d-inline">{{film.name}} <small>{{getFilmYear}}</small></h4> 
-        </div>
-        <div class="card-body">
-          <div class="row d-flex">
-            <div class="col-4">
-              <span v-once class="badge badge-info">{{film.score}} <i class="fa fa-star" aria-disabled="true"></i></span>
-            </div>
-            <div class="col-8" v-if="film.genres">
-              {{film.genres.join(', ')}}
-            </div>
-          </div>
-        </div>
-      </div>  
-    </div>
+      <md-card-content>
+         {{film.genres.join(', ')}}
+      </md-card-content>
+
+      <md-card-actions>
+        <md-button @click="showModal()">Details</md-button>
+      </md-card-actions>
+    </md-card>
   </div>
 </template>
 
@@ -30,39 +26,42 @@ import {mapGetters} from 'vuex'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
 
 export default {
-  props: ['film'],
+  props: {
+    film: {type: Object}
+  },
   components: {
     MovieInfoModal
   },
+  data () {
+    return {
+      show: false
+    }
+  },
   methods: {
     showModal: function () {
-      utils.showModal(this, this.film._id)
+      this.show = true
     },
-    methods: {
-      showModal: function () {
-        utils.showModal(this, this.film._id)
-      },
-      hideModal: function () {
-        utils.hideModal(this, this.film._id)
-      },
-      addNomination: function () {
-        queries.addNomination(this.film)
-          .then(() => {
-            this.hideModal()
-            if (!this.hasNominationsRemaining) {
-              this.$router.push('/')
-            }
-          })
-          .catch(error => console.error(error))
-      }
+    hideModal: function () {
+      this.hide = false
     },
-    computed: {
-      ...mapGetters('option', ['hasNominationsRemaining']),
-      getFilmYear: function () {
-        if (this.film && this.film.release_date) {
-          return utils.getYearFromTmdbReleaseDate(this.film.release_date)
-        }
+    addNomination: function () {
+      queries.addNomination(this.film)
+        .then(() => {
+          this.hideModal()
+          if (!this.hasNominationsRemaining) {
+            this.$router.push('/')
+          }
+        })
+        .catch(error => console.error(error))
+    }
+  },
+  computed: {
+    ...mapGetters('option', ['hasNominationsRemaining']),
+    getFilmYear: function () {
+      if (this.film && this.film.release_date) {
+        return utils.getYearFromTmdbReleaseDate(this.film.release_date)
       }
+      return ''
     }
   }
 }
