@@ -1,10 +1,11 @@
 <template>
-  <modal :pivotY="0.05" :name="`${film._id}-modal`" height="auto" width="85%" @before-open="beforeOpen" @opened="modalOpened()" :scrollable="true">
-    <md-card v-show="film.data && shouldDisplay" v-images-loaded="imageRendered">
+
+  <md-dialog :md-active.sync="show" @md-opened="modalOpened">
+    <md-card v-show="film.data && shouldDisplay" v-images-loaded="imageRendered" >
       <md-card-media>
         <img :src="backdropImage" :alt="`{film.name} Backdrop`">
       </md-card-media>
-      <md-card-header>
+      <md-card-header v-if="film.data">
         <div class="md-title">{{film.name}}</div>
         <div class="md-subhead">
           {{getFilmYear}} <span class="font-weight-bold">Runtime</span>: {{film.data.runtime}} mins | <span class="font-weight-bold">Genres</span> {{film.genres.join(', ')}}
@@ -14,7 +15,7 @@
         {{film.overview}}
       </md-card-content>
       <md-card-actions>
-        <md-button>Action</md-button>
+        <md-button @click="$emit('update:show', false)">Close</md-button>
         <md-button @click.prevent="addNomination()" v-if="showNominate && isCurrentPollInNomination" :disabled="!hasNominationsRemaining || this.isOptionForCurrentPoll(this.film._id)">
           {{ !this.isOptionForCurrentPoll(this.film._id) ? 'Nominate' : 'Nominated' }}
         </md-button>
@@ -23,9 +24,7 @@
         </md-button>
       </md-card-actions>
     </md-card>
-    <md-progress-spinner v-show="!film.data || !shouldDisplay" class="md-accent" md-mode="indeterminate" />
-    
-  </modal>
+  </md-dialog>
 </template>
 
 <script>
@@ -34,13 +33,13 @@ import utils from '@/utils'
 import tmdbApi from '@/api/tmdb'
 import {mapGetters} from 'vuex'
 import imagesLoaded from 'vue-images-loaded'
-import LoadingBounce from '@/components/common/LoadingBounce'
 
 export default {
   name: 'MovieInfoModal',
   props: {
     film: {type: Object},
-    showNominate: {default: true, type: Boolean}
+    showNominate: {default: true, type: Boolean},
+    show: {type: Boolean}
   },
   data () {
     return {
@@ -50,12 +49,8 @@ export default {
   directives: {
     imagesLoaded
   },
-  components: {
-    LoadingBounce
-  },
   methods: {
     modalOpened: function () {
-      document.body.classList.add('v--modal-block-scroll')
       if (!this.film.data) {
         tmdbApi.getMovieData(this.film.tmdb_id)
           .then(response => this.$set(this.film, 'data', response.data))
@@ -74,8 +69,7 @@ export default {
           .catch(error => console.error(error))
       }
     },
-    imageRendered: function () { this.shouldDisplay = true },
-    beforeOpen: function () { document.body.classList.remove('v--modal-block-scroll') }
+    imageRendered: function () { this.shouldDisplay = true }
   },
   computed: {
     ...mapGetters('option', ['hasNominationsRemaining', 'hasNominationsRemaining', 'isOptionForCurrentPoll']),
