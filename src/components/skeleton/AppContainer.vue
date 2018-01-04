@@ -1,11 +1,9 @@
 <template>
-  <div class="d-flex flex-column" style="height:100vh" id="app-container">
+<div class="" style="height:100vh" id="app-container">
+  <!-- <div class="d-flex flex-column" style="height:100vh" id="app-container"> -->
     <md-app >
       <md-app-toolbar class="md-primary">
-        <md-button class="md-icon-button" @click="showNavigation = true">
-          <md-icon>menu</md-icon>
-        </md-button>
-        <span class="md-title">Jonathan's Movies</span>
+        <toolbar @toggleNavigation="showNavigation = !showNavigation" />
       </md-app-toolbar>
       <md-app-drawer :md-active.sync="showNavigation">
         <drawer-list @close="showNavigation = false" />
@@ -19,6 +17,7 @@
 
 <script>
 import DrawerList from '@/components/skeleton/DrawerList'
+import Toolbar from '@/components/skeleton/Toolbar'
 
 export default {
   name: 'app',
@@ -26,7 +25,8 @@ export default {
     showNavigation: false
   }),
   components: {
-    DrawerList
+    DrawerList,
+    Toolbar
   }
 }
 </script>
