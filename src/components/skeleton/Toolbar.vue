@@ -50,6 +50,7 @@ export default {
       return `(${utils.getYearFromTmdbReleaseDate(releaseDate)})`
     },
     navigateToMovie () {
+      this.$router.push({name: 'Movies', params: { filmId: this.selectedFilm._id }})
       this.selectedFilm = ''
     }
   },
