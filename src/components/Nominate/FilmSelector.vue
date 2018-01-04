@@ -1,6 +1,6 @@
 <template>
    <div>
-      <div v-if="allFilms"  :infinite-scroll-immediate-check="false" :infinite-scroll-disabled="busy">
+      <div v-if="allFilms" v-infinite-scroll="fetchNextPage" :infinite-scroll-immediate-check="false" :infinite-scroll-disabled="busy">
         <!-- <md-dialog :md-active.sync="showFilters">
           <div class="md-layout">
             
