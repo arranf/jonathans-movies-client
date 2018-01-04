@@ -52,16 +52,14 @@ export default {
   methods: {
     ...mapActions('films', {fetch: 'get'}),
     modalOpened: function () {
-      console.log('Opened')
       this.film = this.getFromStore(this.filmId)
-      console.log(this.film)
-      if (this.film && !this.film.data) {
+      if (!this.film) {
+        console.error(`Error reading movie with id ${this.filmId}`)
+        this.$router.push('/movies')
+      } else if (this.film && !this.film.data) {
         tmdbApi.getMovieData(this.film.tmdb_id)
           .then(response => this.$set(this.film, 'data', response.data))
           .catch(error => { console.error(error); this.hideModal(this.this.film._id) })
-      } else {
-        console.error(`Error reading movie with id ${this.filmId}`)
-        this.$router.push('/movies')
       }
     },
     modalClosed: function () {
