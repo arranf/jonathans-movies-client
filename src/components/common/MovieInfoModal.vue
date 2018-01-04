@@ -5,9 +5,16 @@
         <img :src="backdropImage" :alt="`{film.name} Backdrop`">
       </md-card-media>
       <md-card-header>
-        <div class="md-title">{{film.name}}</div>
+        <div class="md-title w-100">
+          {{film.name}} <small>({{getFilmYear}})</small> 
+          <a :href="getImdbLink" target="_blank" style="float: right;">
+            <i class="fa fa-imdb" style="font-size:1.3em" aria-hidden="true"></i>
+          </a>
+        </div>
         <div class="md-subhead">
-          {{getFilmYear}} <span class="font-weight-bold">Runtime</span>: {{film.data.runtime}} mins | <span class="font-weight-bold">Genres</span> {{film.genres.join(', ')}}
+          {{film.data.runtime}} mins
+             <br />
+              <strong>Genres</strong>: {{film.genres.join(', ')}} 
         </div>
       </md-card-header>
       <md-card-content>
@@ -18,9 +25,7 @@
         <md-button @click.prevent="addNomination()" v-if="showNominate && isCurrentPollInNomination" :disabled="!hasNominationsRemaining || this.isOptionForCurrentPoll(this.film._id)">
           {{ !this.isOptionForCurrentPoll(this.film._id) ? 'Nominate' : 'Nominated' }}
         </md-button>
-        <md-button :href="getImdbLink" target="_blank" class="card-link float-right">
-          <i class="fa fa-imdb fa-2x" aria-hidden="true"></i>
-        </md-button>
+        
       </md-card-actions>
     </md-card>
   </md-dialog>
