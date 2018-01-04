@@ -1,11 +1,10 @@
 <template>
-
-  <md-dialog :md-active.sync="show" @md-opened="modalOpened">
-    <md-card v-show="film.data && shouldDisplay" v-images-loaded="imageRendered" >
+  <md-dialog :md-active.sync="show" @md-opened="modalOpened" @md-closed="modalClosed">
+    <md-card v-if="film && film.data" v-show="shouldDisplay" v-images-loaded="imageRendered" >
       <md-card-media>
         <img :src="backdropImage" :alt="`{film.name} Backdrop`">
       </md-card-media>
-      <md-card-header v-if="film.data">
+      <md-card-header>
         <div class="md-title">{{film.name}}</div>
         <div class="md-subhead">
           {{getFilmYear}} <span class="font-weight-bold">Runtime</span>: {{film.data.runtime}} mins | <span class="font-weight-bold">Genres</span> {{film.genres.join(', ')}}
@@ -31,31 +30,42 @@
 import queries from '@/api'
 import utils from '@/utils'
 import tmdbApi from '@/api/tmdb'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 import imagesLoaded from 'vue-images-loaded'
 
 export default {
   name: 'MovieInfoModal',
   props: {
-    film: {type: Object},
+    filmId: {type: String},
     showNominate: {default: true, type: Boolean},
     show: {type: Boolean}
   },
   data () {
     return {
-      shouldDisplay: false
+      shouldDisplay: false,
+      film: {}
     }
   },
   directives: {
     imagesLoaded
   },
   methods: {
+    ...mapActions('films', {fetch: 'get'}),
     modalOpened: function () {
-      if (!this.film.data) {
+      console.log('Opened')
+      this.film = this.getFromStore(this.filmId)
+      console.log(this.film)
+      if (this.film && !this.film.data) {
         tmdbApi.getMovieData(this.film.tmdb_id)
           .then(response => this.$set(this.film, 'data', response.data))
           .catch(error => { console.error(error); this.hideModal(this.this.film._id) })
+      } else {
+        console.error(`Error reading movie with id ${this.filmId}`)
+        this.$router.push('/movies')
       }
+    },
+    modalClosed: function () {
+      this.$router.push('/movies')
     },
     addNomination: function () {
       if (this.showNominate && this.hasNominationsRemaining && !this.isOptionForCurrentPoll(this.film_id)) {
@@ -72,8 +82,9 @@ export default {
     imageRendered: function () { this.shouldDisplay = true }
   },
   computed: {
-    ...mapGetters('option', ['hasNominationsRemaining', 'hasNominationsRemaining', 'isOptionForCurrentPoll']),
+    ...mapGetters('option', ['hasNominationsRemaining', 'isOptionForCurrentPoll']),
     ...mapGetters('poll', ['isCurrentPollInNomination']),
+    ...mapGetters('films', {getFromStore: 'get'}),
     backdropImage: function () {
       if (this.film.data) {
         return utils.getTmdbBackdropImage(this.film.data.backdrop_path)
@@ -87,6 +98,15 @@ export default {
       if (this.film && this.film.release_date) {
         return utils.getYearFromTmdbReleaseDate(this.film.release_date)
       }
+    }
+  },
+  created () {
+    if (this.show && this.filmId) {
+      this.fetch(this.filmId)
+        .then(a => {
+          console.log(`Fetched movie with id ${this.filmId}`)
+          this.modalOpened()
+        })
     }
   }
 }

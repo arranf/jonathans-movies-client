@@ -1,20 +1,15 @@
 <template>
-  <div @click="showModal()">
-    <movie-info-modal :show.sync="show" :film="film" :show-nominate="true" />
-    <md-card md-with-hover >
-      <md-card-header>
-        <div class="md-title">{{film.name}} <small>{{getFilmYear}}</small></div>
-        <div class="md-subhead">{{film.score}} <i class="fa fa-star" aria-disabled="true"></i></div>
-      </md-card-header>
+  <div>
+    <md-list-item @click="showModal()">
+        <div class="md-list-item-text">
+          <span>{{film.name}} <small>{{getFilmYear}}</small></span>
+          <span>{{film.genres.join(', ')}}</span>
+        </div>
 
-      <md-card-content>
-         {{film.genres.join(', ')}}
-      </md-card-content>
-
-      <md-card-actions>
-        <md-button @click="showModal()">Details</md-button>
-      </md-card-actions>
-    </md-card>
+        <div class="md-list-action">
+          <span class="md-primary">{{film.score}} <i class="fa fa-star text-md-accent" aria-disabled="true"></i></span>
+        </div>
+    </md-list-item>
   </div>
 </template>
 
@@ -23,26 +18,13 @@ import queries from '@/api'
 import utils from '@/utils'
 import {mapGetters} from 'vuex'
 
-import MovieInfoModal from '@/components/common/MovieInfoModal'
-
 export default {
   props: {
     film: {type: Object}
   },
-  components: {
-    MovieInfoModal
-  },
-  data () {
-    return {
-      show: false
-    }
-  },
   methods: {
     showModal: function () {
-      this.show = true
-    },
-    hideModal: function () {
-      this.hide = false
+      this.$router.push({name: 'Movies', params: { filmId: this.film._id }})
     },
     addNomination: function () {
       queries.addNomination(this.film)

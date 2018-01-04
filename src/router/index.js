@@ -60,7 +60,7 @@ const router = new Router({
       }
     },
     {
-      path: '/movies',
+      path: '/movies/:filmId?',
       name: 'Movies',
       component: Nominate
     }
