@@ -19,6 +19,7 @@ html { font-size: 100%; } /* This means 16px by default or is adjusted by the us
     color: var(--md-theme-default-primary-on-background, #448aff)
 }
 
+// Prevent fixed fabs sticking to the bottom
 .md-app-container {
     transform: none !important;
     -webkit-transform: none !important; 
