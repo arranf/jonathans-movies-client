@@ -99,7 +99,7 @@ export default {
     }
   },
   created () {
-    if (this.show && this.filmId) {
+    if (this.show && this.filmId && !this.getFromStore(this.filmId)) {
       this.fetch(this.filmId)
         .then(a => {
           console.log(`Fetched movie with id ${this.filmId}`)
