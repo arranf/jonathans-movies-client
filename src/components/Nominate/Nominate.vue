@@ -1,5 +1,5 @@
 <template>
-  <film-selector class="h-60"></film-selector>
+  <film-selector></film-selector>
 </template>
 
 <script>
