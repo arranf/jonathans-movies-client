@@ -1,6 +1,6 @@
 <template>
   <div>
-    <md-list-item @click="showModal()">
+    <md-list-item @click.prevent="showModal()">
         <div class="md-list-item-text">
           <span>{{film.name}} <small>{{getFilmYear}}</small></span>
           <span>{{film.genres.join(', ')}}</span>
