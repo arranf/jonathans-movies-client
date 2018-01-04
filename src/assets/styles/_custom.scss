@@ -19,6 +19,16 @@ html { font-size: 100%; } /* This means 16px by default or is adjusted by the us
     color: var(--md-theme-default-primary-on-background, #448aff)
 }
 
+.md-dialog.md-theme-default { 
+    background-color: transparent 
+} 
+ 
+.md-dialog-container { 
+    background-color: transparent;
+    align-items: center;
+    justify-content: center;
+}
+
 // Prevent fixed fabs sticking to the bottom
 .md-app-container {
     transform: none !important;
