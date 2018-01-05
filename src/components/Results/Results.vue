@@ -1,5 +1,5 @@
 <template>
-<div class="h-100">
+<div class="h-90 d-flex justify-content-center">
   <div v-if="getMostRecentPoll && dataCollection.datasets && dataCollection.datasets.length > 0 && winningOptions.length > 0">
     <h1 class="text-center"><i class="fa fa-trophy" aria-hidden="true"></i>
     <br/>
@@ -8,10 +8,12 @@
    <pie-chart :chart-data="dataCollection" :options="{responsive: true, maintainAspectRatio: false}"></pie-chart>
   </div>
   <div v-else>
-    <h1 class="text-center">
-      No Votes Were Cast
-    </h1>
-    <h6 class="text-center">{{howLongAgoMostRecentPoll}}</h6>   
+    <md-empty-state
+      class="md-accent"
+      md-icon="error_outline"
+      md-label="No Results"
+      md-description="There needs to be at least one vote for there to be a winner!">
+    </md-empty-state>
   </div>
 </div>
 </template>
