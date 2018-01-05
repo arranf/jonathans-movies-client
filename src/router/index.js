@@ -42,7 +42,7 @@ const router = new Router({
       }
     },
     {
-      path: '/home',
+      path: '/home/:filmId?',
       name: 'Home',
       component: Home
     },
