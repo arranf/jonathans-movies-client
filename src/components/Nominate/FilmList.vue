@@ -60,7 +60,6 @@ export default {
       showingFilm: false,
       showFilters: false,
       showSnackbar: false,
-      searchTitle: '',
       page: 0,
       limit: 50,
       loadedAll: false,
@@ -97,9 +96,6 @@ export default {
       if (this.genres.length > 0) {
         query.query['genres'] = this.genres
       }
-      if (this.searchTitle) {
-        query.query['$search'] = this.searchTitle
-      }
       if (this.floorRating > 0) {
         query.query['score'] = {'$gte': this.floorRating}
       }
@@ -111,7 +107,6 @@ export default {
     ...mapMutations('films', {clearFilms: 'clearAll'}),
     reset: function () {
       this.page = 0
-      this.searchTitle = ''
       this.genres = []
       this.total = 51
       this.floorRating = 0
