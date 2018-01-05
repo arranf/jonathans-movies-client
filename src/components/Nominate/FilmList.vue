@@ -25,7 +25,9 @@
         <movie-info-modal :show.sync="showingFilm" :filmId="$route.params.filmId" :show-nominate="true" />
 
         <md-list>
-          <film-suggestion v-for="(film, index) in allFilms" :film="film" :key="index"/>
+          <template v-for="film in allFilms">
+            <film-list-item  :film="film" :key="film._id+'item'"/>
+          </template>
         </md-list>
 
         <md-progress-bar v-show="busy" class="md-accent" md-mode="indeterminate"></md-progress-bar>
@@ -43,7 +45,7 @@
 </template>
 
 <script>
-import FilmSuggestion from './FilmSuggestion'
+import FilmListItem from './FilmListItem'
 import infiniteScroll from 'vue-infinite-scroll'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 import VueSlider from 'vue-slider-component'
@@ -73,7 +75,7 @@ export default {
     infiniteScroll
   },
   components: {
-    FilmSuggestion,
+    FilmListItem,
     MovieInfoModal,
     VueSlider
   },

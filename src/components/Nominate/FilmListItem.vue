@@ -1,16 +1,14 @@
 <template>
-  <div>
-    <md-list-item @click.prevent="showModal()">
-        <div class="md-list-item-text">
-          <span>{{film.name}} <small>{{getFilmYear}}</small></span>
-          <span>{{film.genres.join(', ')}}</span>
-        </div>
+  <md-list-item @click.prevent="showModal()">
+      <div class="md-list-item-text">
+        <span>{{film.name}} <small>{{getFilmYear}}</small></span>
+        <span>{{film.genres.join(', ')}}</span>
+      </div>
 
-        <div class="md-list-action">
-          <span class="md-primary">{{film.score}} <i class="fa fa-star text-md-accent" aria-disabled="true"></i></span>
-        </div>
-    </md-list-item>
-  </div>
+      <div class="md-list-action">
+        <span class="md-primary">{{film.score}} <i class="fa fa-star text-md-accent" aria-disabled="true"></i></span>
+      </div>
+  </md-list-item>
 </template>
 
 <script>
@@ -19,6 +17,7 @@ import utils from '@/utils'
 import {mapGetters} from 'vuex'
 
 export default {
+  name: 'FilmListItem',
   props: {
     film: {type: Object}
   },
