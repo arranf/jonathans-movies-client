@@ -36,7 +36,6 @@ export default {
   computed: {
     ...mapGetters('vote', ['getGraphData', 'getHighestVotedOptionsForPoll']),
     ...mapGetters('poll', ['getMostRecentPoll', 'howLongAgoMostRecentPoll']),
-    ...mapGetters('option', {getOption: 'get'}),
     ...mapState('vote', ['isFindPending']),
     dataCollection: function () {
       const graphData = this.getGraphData(this.getMostRecentPoll._id)
