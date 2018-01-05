@@ -1,5 +1,5 @@
 <template>
-<div class="d-flex h-90 justify-content-center">
+<div class="d-flex h-100 justify-content-center">
   <movie-info-modal :show.sync="showingFilm" :filmId="$route.params.filmId" :show-nominate="false" />
   <md-empty-state
       v-if="currentPollOptions.length === 0"
