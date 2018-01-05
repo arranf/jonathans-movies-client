@@ -54,6 +54,18 @@ export default {
     }
     return false
   },
+  percentageOfCurrentPhaseComplete (state, getters, rootState) {
+    let activePoll = getters.getActivePoll
+    let currentDateTime = rootState.time.now
+    if (getters.isCurrentPollInNomination) {
+      let total = activePoll.pollTransitionDateTime - activePoll.startDateTime
+      return 100 - ((activePoll.pollTransitionDateTime - currentDateTime) / total) * 100
+    } else if (getters.isCurrentPollInVoting) {
+      let total = activePoll.endDateTime - activePoll.pollTransitionDateTime
+      return 100 - ((activePoll.endDateTime - currentDateTime) / total) * 100
+    }
+    return 0
+  },
   isCurrentPollInVoting (state, getters, rootState, rootGetters) {
     let activePoll = getters.getActivePoll
     if (activePoll) {

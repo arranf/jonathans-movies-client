@@ -1,5 +1,7 @@
 <template>
-    <div id="home-container" class="d-flex flex-column justify-content-center container-fluid" :class="{'h-50': getActivePoll && !isCurrentPollInNomination}">
+<!-- :class="{'h-50': getActivePoll && !isCurrentPollInNomination}" -->
+    <div id="home-container" class="h-100" >
+      <md-progress-bar v-if="getActivePoll" class="md-accent" md-mode="determinate" :md-value="percentageOfCurrentPhaseComplete" />
       <div class="h-100 align-items-stretch justify-content-center" >
         <selected-options v-if="isCurrentPollInNomination" />
         <vote-for-option v-else-if="getActivePoll"></vote-for-option>
@@ -37,13 +39,16 @@ export default {
     ...mapGetters('option', {
       findOptions: 'find'
     }),
-    ...mapGetters('poll', ['getActivePoll', 'isCurrentPollInNomination'])
+    ...mapGetters('poll', ['getActivePoll', 'isCurrentPollInNomination', 'percentageOfCurrentPhaseComplete'])
   },
   methods: {
     ...mapActions('time', {startTimer: 'start'})
   },
   created: function () {
+    // Sync client time with server time
     this.startTimer()
+
+    // TODO move this to the router
     queries.getCurrentPoll()
       .then(response => {
         if (response.total > 0) {
