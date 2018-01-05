@@ -1,6 +1,7 @@
 <template>
    <div>
       <div v-if="allFilms" v-infinite-scroll="fetchNextPage()" :infinite-scroll-immediate-check="false" :infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+        <!-- TODO Move this out and make it emit update events and a filter event -->
         <md-dialog :md-active.sync="showFilters" md-on>
           <md-content class="w-100">
             <div class="md-layout-row md-layout-wrap md-gutter m-4">
@@ -11,11 +12,12 @@
                 </md-select>
               </md-field>
               <div class="pt-3 mt-1 mb-4">
-                <label class="md-label" for="rating">Rating</label>
-                <vue-slider class="px-0" name="rating" v-model="floorRating" :formatter="'Min. {value}'" :max="10" :min="0" :interval="0.1" />
+                <label class="md-label" for="rating">Minimum Rating</label>
+                <vue-slider class="px-0" name="rating" height="1" v-model="floorRating" :max="10" :min="0" :interval="0.5" />
               </div>
               <md-button @click.prevent="requery()" type="submit" class="md-accent md-raised">Submit</md-button>
               <md-button @click.prevent="reset()" type="reset">Reset</md-button>
+              <md-button @click.prevent="$emit('update:showFilters', false)">Close</md-button>
             </div>
           </md-content>
         </md-dialog>
@@ -111,11 +113,11 @@ export default {
       this.genres = []
       this.total = 51
       this.floorRating = 0
-      this.$modal.hide('filterOptions')
+      this.showFilters = false
       this.getFilms()
     },
     requery: function () {
-      this.$modal.hide('filterOptions')
+      this.showFilters = false
       this.page = 0
       this.clearFilms()
       this.getFilms()
