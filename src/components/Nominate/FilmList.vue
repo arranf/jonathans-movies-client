@@ -22,7 +22,7 @@
           </md-content>
         </md-dialog>
 
-        <movie-info-modal :show.sync="showingFilm" :filmId="$route.params.filmId" :show-nominate="true" />
+        <movie-info-modal @snackbar="setSnackbar" :show.sync="showingFilm" :filmId="$route.params.filmId" :show-nominate="true" />
 
         <md-list>
           <template v-for="film in allFilms">
@@ -38,8 +38,8 @@
       </md-button>
 
      <md-snackbar id="snackbar" md-position="center" :md-active.sync="showSnackbar" md-persistent>
-      <span>Unable to fetch more films.</span>
-      <md-button class="md-primary" @click="getFilms(); showSnackbar = false">Try Again</md-button>
+        <span>{{snackbarText}}</span>
+      <md-button class="md-primary" @click="showSnackbar = false">Close</md-button>
     </md-snackbar>
    </div>
 </template>
@@ -60,6 +60,7 @@ export default {
       showingFilm: false,
       showFilters: false,
       showSnackbar: false,
+      snackbarText: '',
       page: 0,
       limit: 50,
       loadedAll: false,
@@ -131,7 +132,15 @@ export default {
       this.busy = true
       this.queryFilms(this.query)
         .then(response => { this.total = response.total; this.busy = false; this.showSnackbar = false })
-        .catch(error => { console.error(error); this.busy = false; this.showSnackbar = true })
+        .catch(error => {
+          console.error(error)
+          this.busy = false
+          this.setSnackbar('No films can be displayed')
+        })
+    },
+    setSnackbar (text) {
+      this.showSnackbar = true
+      this.snackbarText = text
     }
   },
   created () {

@@ -37,6 +37,7 @@ import utils from '@/utils'
 import tmdbApi from '@/api/tmdb'
 import {mapGetters, mapActions} from 'vuex'
 import imagesLoaded from 'vue-images-loaded'
+import numbersToWords from 'number-to-words'
 
 export default {
   name: 'MovieInfoModal',
@@ -91,6 +92,10 @@ export default {
             this.$emit('update:show', false)
             if (!this.hasNominationsRemaining) {
               this.$router.push('/')
+            } else {
+              console.log(numbersToWords)
+              console.log(numbersToWords.toWords(this.nominationsRemaining))
+              this.$emit('snackbar', `You have ${numbersToWords.toWords(this.nominationsRemaining)} nomination ${this.nominationsRemaining > 1 ? 's' : ''}  left`)
             }
           })
           .catch(error => console.error(error))
@@ -99,7 +104,7 @@ export default {
     imageRendered: function () { this.shouldDisplay = true }
   },
   computed: {
-    ...mapGetters('option', ['hasNominationsRemaining', 'isOptionForCurrentPoll']),
+    ...mapGetters('option', ['hasNominationsRemaining', 'isOptionForCurrentPoll', 'nominationsRemaining']),
     ...mapGetters('poll', ['isCurrentPollInNomination']),
     ...mapGetters('films', ['get']),
     backdropImage: function () {
