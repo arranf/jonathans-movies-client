@@ -16,7 +16,7 @@
         <div class="md-layout-item md-size-100">
           <p>{{haveNominations ? 'Pre-Selected Movies' : 'Selected Movies' }}</p>
           <div id="options">
-            <md-chip v-for="(option, index) in options" :key="option.name" class="md-primary" md-deletable @md-delete="removeOption(index)">{{option.name}}</md-chip>
+            <md-chip v-for="(option, index) in options" :key="option.name" class="md-primary my-1" md-deletable @md-delete="removeOption(index)">{{option.name}}</md-chip>
           </div>
         </div>
       </div>
