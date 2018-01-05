@@ -57,18 +57,32 @@ export default {
   methods: {
     ...mapActions('films', {fetch: 'get'}),
     modalOpened: function () {
-      this.film = this.getFromStore(this.filmId)
-      if (!this.film) {
-        console.error(`Error reading movie with id ${this.filmId}`)
-        this.$router.push('/movies')
-      } else if (this.film && !this.film.data) {
-        tmdbApi.getMovieData(this.film.tmdb_id)
-          .then(response => this.$set(this.film, 'data', response.data))
-          .catch(error => { console.error(error); this.hideModal(this.this.film._id) })
+      this.film = this.get(this.filmId)
+      let promise
+      if (this.film) {
+        promise = Promise.resolve()
+      } else {
+        promise = this.fetch(this.filmId)
+          .then(film => {
+            // debugger
+            this.film = film
+          })
       }
+
+      promise
+        .then(() => {
+          if (!this.film) {
+            return Promise.reject(new Error(`Unable to find movie information for ${this.filmId}`))
+          } else if (!this.film.data) {
+            tmdbApi.getMovieData(this.film.tmdb_id)
+              .then((response) => this.$set(this.film, 'data', response.data))
+          }
+          return Promise.resolve()
+        })
+        .catch(error => { console.error(error); this.hideModal(this.this.film._id) })
     },
     modalClosed: function () {
-      this.$router.push('/movies')
+      this.$router.go(-1)
     },
     addNomination: function () {
       if (this.showNominate && this.hasNominationsRemaining && !this.isOptionForCurrentPoll(this.film_id)) {
@@ -87,7 +101,7 @@ export default {
   computed: {
     ...mapGetters('option', ['hasNominationsRemaining', 'isOptionForCurrentPoll']),
     ...mapGetters('poll', ['isCurrentPollInNomination']),
-    ...mapGetters('films', {getFromStore: 'get'}),
+    ...mapGetters('films', ['get']),
     backdropImage: function () {
       if (this.film.data) {
         return utils.getTmdbBackdropImage(this.film.data.backdrop_path)
@@ -104,13 +118,7 @@ export default {
     }
   },
   created () {
-    if (this.show && this.filmId && !this.getFromStore(this.filmId)) {
-      this.fetch(this.filmId)
-        .then(a => {
-          console.log(`Fetched movie with id ${this.filmId}`)
-          this.modalOpened()
-        })
-    }
+    this.modalOpened()
   }
 }
 </script>
