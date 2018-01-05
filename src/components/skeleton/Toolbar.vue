@@ -19,7 +19,7 @@
               <label>Search...</label>
       </md-autocomplete>
     </div>
-    <div class="md-toolbar-section-end" v-if="user && user.isAdmin && (isCurrentPollInVoting || isCurrentPollInNomination)">
+    <div :class="{'md-toolbar-section-end': !showMovieSearch}" v-if="user && user.isAdmin && (isCurrentPollInVoting || isCurrentPollInNomination)">
       <md-menu md-direction="bottom-start" md-align-trigger>
         <md-button md-menu-trigger class="md-icon-button">
           <md-icon>more_vert</md-icon>
