@@ -1,16 +1,14 @@
 <template>
-  <div class="d-flex align-items-center">
-    <div class="movie-poster" @click="showModal()" v-if="option" >
-      <img class="img-fluid img-thumbnail" v-if="film && film.data" :src="getFilmPoster" :alt="option.name + ' image'">
-      <div v-else class="d-flex flex-column justify-content-center fake-movie-poster" :style="{backgroundColor: getColor()}">
-        <div class="h-30 w-100 align-self-end">
-          <p style="font-size: 1.6em;" class="text-white text-center">{{option.name}}</p>
-        </div>
+  <div class="movie-poster " @click="showModal()" v-if="option" >
+    <img class="img-fluid img-thumbnail md-elevation-2" v-if="film && film.data" :src="getFilmPoster" :alt="option.name + ' image'">
+    <div v-else class="d-flex flex-column justify-content-center fake-movie-poster md-elevation-2" :style="{backgroundColor: getColor()}">
+      <div class="h-30 w-100 align-self-end">
+        <p style="font-size: 1.6em;" class="text-white text-center">{{option.name}}</p>
       </div>
-      <h4 class="md-subheading text-center">
-        {{option.name}}
-      </h4>
     </div>
+    <h4 class="md-subheading text-center">
+      {{option.name}}
+    </h4>
   </div>
 </template>
 
