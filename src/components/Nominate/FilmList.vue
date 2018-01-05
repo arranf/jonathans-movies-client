@@ -1,51 +1,24 @@
 <template>
    <div>
       <div v-if="allFilms" v-infinite-scroll="fetchNextPage()" :infinite-scroll-immediate-check="false" :infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-        <!-- <md-dialog :md-active.sync="showFilters">
-          <div class="md-layout">
-            
-          </div>
-        </md-dialog> -->
-
-        <!-- <modal :pivotY="0.05" name="filterOptions" height="auto" width="85%" :scrollable="true" @before-open="beforeOpen" @opened="opened" >
-          <div class="card">
-            <form>
-                <div class="card-body">
-                  <div class="form-group row">
-                    <label for="search" class="col-sm-2 col-form-label">Search</label>
-                    <div class="col-sm-10">
-                      <input v-model="searchTitle" class="form-control" id="search" placeholder="Double Dragon">
-                    </div>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div @click.prevent="elements.genreFilters = !elements.genreFilters">{{elements.genreFilters ? 'Hide' : 'Show'}} Genre Filters <i class="fa" :class="[elements.genreFilters ? 'fa-chevron-right' : 'fa-chevron-down']"></i></div>
-                  <div v-show="elements.genreFilters" class="row">
-                    <template v-for="genre in totalGenres">
-                      <div :key="genre.id" class="col-xs-3">
-                        <button class="m-1 btn btn-sm" :class="{active: genres.indexOf(genre.name) > -1}" @click.prevent="changeGenre(genre.name)">
-                          {{genre.name}}
-                        </button>
-                      </div>
-                    </template>
-                  </div>
-                </div>
-                <div class="card-body">
-                <div @click.prevent="elements.ratingFilter = !elements.ratingFilter">{{elements.ratingFilter ? 'Hide' : 'Show'}} Rating Filter <i class="fa" :class="[elements.ratingFilter ? 'fa-chevron-right' : 'fa-chevron-down']"></i></div>
-                  <div v-if="elements.ratingFilter" class="row">
-                    <div class="col">
-                      <vue-slider v-model="floorRating" :formatter="'Min. {value}'" :max="10" :min="0" :interval="0.1" />
-                    </div>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <button @click.prevent="requery" type="submit" class="btn btn-primary">Submit</button>
-                  <button @click.prevent="reset" type="reset" class="btn btn-outline-secondary">Reset</button>
-                </div>
-            </form>
+        <md-dialog :md-active.sync="showFilters" md-on>
+          <md-content class="w-100">
+            <div class="md-layout-row md-layout-wrap md-gutter m-4">
+              <md-field>
+                <label for="genres">Genres</label>
+                <md-select v-model="genres" name="genres" id="genres" multiple>
+                  <md-option v-for="option in totalGenres" :key="option.id" :value="option.name">{{option.name}}</md-option>
+                </md-select>
+              </md-field>
+              <div class="pt-3 mt-1 mb-4">
+                <label class="md-label" for="rating">Rating</label>
+                <vue-slider class="px-0" name="rating" v-model="floorRating" :formatter="'Min. {value}'" :max="10" :min="0" :interval="0.1" />
+              </div>
+              <md-button @click.prevent="requery()" type="submit" class="md-accent md-raised">Submit</md-button>
+              <md-button @click.prevent="reset()" type="reset">Reset</md-button>
             </div>
-        </modal> -->
-
+          </md-content>
+        </md-dialog>
 
         <movie-info-modal :show.sync="showingFilm" :filmId="$route.params.filmId" :show-nominate="true" />
 
@@ -57,7 +30,7 @@
       </div>  
 
       <md-button class="md-fab md-fab-bottom-right" @click="showFilters = true">
-        <md-icon>filter</md-icon>
+        <md-icon>filter_list</md-icon>
       </md-button>
 
      <md-snackbar id="snackbar" md-position="center" :md-active.sync="showSnackbar" md-persistent>
@@ -71,6 +44,7 @@
 import FilmSuggestion from './FilmSuggestion'
 import infiniteScroll from 'vue-infinite-scroll'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
+import VueSlider from 'vue-slider-component'
 import debounce from 'lodash/debounce'
 import constants from '@/constants'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
@@ -90,11 +64,7 @@ export default {
       total: 51,
       sort: {name: 1},
       genres: [],
-      floorRating: 0.0,
-      elements: {
-        genreFilters: false,
-        ratingFilter: false
-      }
+      floorRating: 0.0
     }
   },
   directives: {
@@ -102,7 +72,8 @@ export default {
   },
   components: {
     FilmSuggestion,
-    MovieInfoModal
+    MovieInfoModal,
+    VueSlider
   },
   watch: {
     '$route' (to, from) {
@@ -162,14 +133,6 @@ export default {
       this.queryFilms(this.query)
         .then(response => { this.total = response.total; this.busy = false; this.showSnackbar = false })
         .catch(error => { console.error(error); this.busy = false; this.showSnackbar = true })
-    },
-    changeGenre (genre) {
-      const index = this.genres.indexOf(genre)
-      if (index !== -1) {
-        this.genres.splice(index, 1)
-      } else {
-        this.genres.push(genre)
-      }
     }
   },
   created () {
@@ -186,5 +149,11 @@ export default {
   .md-fab {
     position: fixed !important;
     z-index: 3;
+  }
+
+  .md-label {
+    font-size: 16px;
+    line-height: 20px;
+    color: rgba(0,0,0,0.54);
   }
 </style>

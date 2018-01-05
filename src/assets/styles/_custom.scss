@@ -35,6 +35,10 @@ html { font-size: 100%; } /* This means 16px by default or is adjusted by the us
     -webkit-transform: none !important; 
 }
 
+.md-select-menu {
+    z-index: 999;
+}
+
 .not-active {
   pointer-events: none;
   cursor: default;
