@@ -1,27 +1,42 @@
 <template>
-  <div class="d-flex scroll flex-row" v-if="getOptionsForCurrentPoll">
-    <div v-if="nominationsRemaining > 0" class="card w-60 m-4" style="flex: 0 0 auto">
-      <div class="card-body">
-        <h4 class="card-title">Nominate Something</h4>
-        <p class="card-text">You've got {{nominationsRemaining}} nominations. Why not pick a movie?</p>
-        <router-link :to="'movies'" class="btn btn-primary btn-sm">Nominate a movie</router-link>
-      </div>
+<div class="d-flex h-90 justify-content-center">
+  <movie-info-modal :show.sync="showingFilm" :filmId="$route.params.filmId" :show-nominate="false" />
+  <md-empty-state
+      v-if="currentPollOptions.length === 0"
+      md-icon="playlist_add"
+      md-label="Nominate a movie"
+      :md-description="`You\'ve got, ${nominationsRemaining} nominations left. Use them wisely!`">
+      <md-button class="md-primary md-raised" @click="$router.push('/movies')">Nominate a movie</md-button>
+  </md-empty-state>
+
+  <div v-if="getOptionsForCurrentPoll && currentPollOptions && currentPollOptions.length > 0" class="d-flex flex-column align-items-center justify-content-center">
+
+    <h2 class="md-display-1 text-center">Nominations</h2>
+    <div class="d-flex scroll flex-row">
+      <template v-for="option in currentPollOptions">
+        <option-preview class="scroll-item" :key="option._id" :option="option"></option-preview>
+      </template>
     </div>
-    <template v-for="option in currentPollOptions">
-      <option-preview class="scroll-item" :key="option._id" :option="option"></option-preview>
-    </template>
   </div>
+</div>
 </template>
 
 <script>
 import OptionPreview from './OptionPreview'
+import MovieInfoModal from '@/components/common/MovieInfoModal'
 import queries from '@/api'
 import {mapGetters} from 'vuex'
 
 export default {
   name: 'SelectedOptions',
+  data () {
+    return {
+      showingFilm: false
+    }
+  },
   components: {
-    OptionPreview
+    OptionPreview,
+    MovieInfoModal
   },
   computed: {
     ...mapGetters('option', ['getOptionsForCurrentPoll', 'nominationsRemaining']),
@@ -32,6 +47,11 @@ export default {
   },
   created () {
     queries.getOptionsForMostRecentPoll(this.getActivePoll._id)
+  },
+  watch: {
+    '$route' (to, from) {
+      this.showingFilm = Boolean(to.params.filmId)
+    }
   }
 }
 </script>

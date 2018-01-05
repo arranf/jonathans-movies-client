@@ -1,72 +1,75 @@
 <template>
-<div>
-  <movie-info-modal v-if="option.film" :film="option.film" :show-nominate="false"></movie-info-modal>
-
-    <div class="mt-2 mb-1 movie-poster" @click="showModal()" v-if="option" >
-      <img class="img-fluid img-thumbnail" v-if="option.film && option.film.data" v-once :src="getFilmPoster" :alt="option.name + ' image'">
+  <div class="d-flex align-items-center">
+    <div class="movie-poster" @click="showModal()" v-if="option" >
+      <img class="img-fluid img-thumbnail" v-if="film && film.data" :src="getFilmPoster" :alt="option.name + ' image'">
       <div v-else class="d-flex flex-column justify-content-center fake-movie-poster" :style="{backgroundColor: getColor()}">
         <div class="h-30 w-100 align-self-end">
           <p style="font-size: 1.6em;" class="text-white text-center">{{option.name}}</p>
         </div>
       </div>
-      <h6 class="mt-1 text-muted ml-3">
+      <h4 class="md-subheading text-center">
         {{option.name}}
-      </h6>
+      </h4>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
 import utils from '@/utils'
 import constants from '@/constants'
-import {mapState, mapActions} from 'vuex'
-import MovieInfoModal from '@/components/common/MovieInfoModal'
+import {mapState, mapActions, mapGetters} from 'vuex'
 
 export default {
   name: 'OptionPreview',
   props: ['option'],
-  components: {
-    MovieInfoModal
-  },
   computed: {
     ...mapState('option', {waitingForOptionFind: 'isFindPending'}),
+    ...mapGetters('films', {getFilm: 'get'}),
     lastWatched: function () {
-      if (this.option.film && this.option.film.lastWatched) {
-        return utils.humanizeTimeToNowImprecise(this.option.film.lastWatched) + ' ago'
+      if (this.film && this.film.lastWatched) {
+        return utils.humanizeTimeToNowImprecise(this.film.lastWatched) + ' ago'
       }
       return null
     },
     getFilmBackdrop: function () {
-      if (this.option.film && this.option.film.data && this.option.film.backdrop_path) {
-        return utils.getTmdbBackdropImage(this.option.film.data.backdrop_path)
+      if (this.film && this.film.data && this.film.backdrop_path) {
+        return utils.getTmdbBackdropImage(this.film.data.backdrop_path)
       }
       return null
     },
     getFilmPoster: function () {
-      if (this.option.film && this.option.film.data) {
-        return utils.getTmdbPosterImage(this.option.film.data.poster_path)
+      if (this.film && this.film.data && this.film.data.poster_path) {
+        return utils.getTmdbPosterImage(this.film.data.poster_path)
       }
-      return null
+      return ''
     },
     getImdbLink: function () {
-      if (this.option.film && this.option.film.data && this.option.film.data.imdb_id) {
-        return `https://www.imdb.com/title/${this.option.film.data.imdb_id}`
+      if (this.film && this.film.data && this.film.data.imdb_id) {
+        return `https://www.imdb.com/title/${this.film.data.imdb_id}`
       }
     },
     getFilmYear: function () {
-      if (this.option.film && this.option.film.release_date) {
-        return utils.getYearFromTmdbReleaseDate(this.option.film.release_date)
+      if (this.film && this.film.release_date) {
+        return utils.getYearFromTmdbReleaseDate(this.film.release_date)
+      }
+      return null
+    },
+    film () {
+      if (this.option && this.option.film_id) {
+        return this.getFilm(this.option.film_id)
       }
       return null
     }
   },
   methods: {
-    ...mapActions('option', ['getFilmData']),
+    ...mapActions('option', ['getFilmDataForOption']),
     getColor: function () {
       return utils.selectRandom(constants.colors['800'])
     },
     showModal: function () {
-      if (this.option.film) { utils.showModal(this, this.option.film._id) }
+      if (this.film) {
+        this.$router.push({name: 'Home', params: { filmId: this.film._id }})
+      }
     }
   },
   data () {
@@ -75,8 +78,8 @@ export default {
     }
   },
   created () {
-    if (this.option.film) {
-      this.getFilmData(this.option)
+    if (this.option.film_id) {
+      this.getFilmDataForOption(this.option)
     }
   }
 }

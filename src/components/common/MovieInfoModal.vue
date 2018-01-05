@@ -79,7 +79,7 @@ export default {
           }
           return Promise.resolve()
         })
-        .catch(error => { console.error(error); this.hideModal(this.this.film._id) })
+        .catch(error => { console.error(error); this.$emit('update:show', false) })
     },
     modalClosed: function () {
       this.$router.go(-1)
@@ -88,7 +88,7 @@ export default {
       if (this.showNominate && this.hasNominationsRemaining && !this.isOptionForCurrentPoll(this.film_id)) {
         queries.addNomination(this.film)
           .then(() => {
-            utils.hideModal(this, this.film._id)
+            this.$emit('update:show', false)
             if (!this.hasNominationsRemaining) {
               this.$router.push('/')
             }
@@ -118,7 +118,9 @@ export default {
     }
   },
   created () {
-    this.modalOpened()
+    if (this.filmId) {
+      this.modalOpened()
+    }
   }
 }
 </script>
