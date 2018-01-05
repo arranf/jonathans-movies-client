@@ -72,6 +72,22 @@ const queries = {
     } else {
       return Promise.reject(new Error('Missing film information id'))
     }
+  },
+  stopPoll: function () {
+    const poll = store.getters['poll/getActivePoll']
+    const currentTime = store.getters['time/getNow']
+    const data = {'endDateTime': currentTime}
+    store.dispatch('poll/patch', [poll._id, data, {}])
+  },
+  stopNominations: function () {
+    const poll = store.getters['poll/getActivePoll']
+    const currentTime = store.getters['time/getNow']
+    const oldTransitionTime = poll.pollTransitionDateTime
+    const data = {
+      'pollTransitionDateTime': currentTime,
+      'endDateTime': poll.endDateTime - (oldTransitionTime - currentTime)
+    }
+    store.dispatch('poll/patch', [poll._id, data, {}])
   }
 }
 

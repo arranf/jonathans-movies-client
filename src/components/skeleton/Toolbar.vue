@@ -19,12 +19,25 @@
               <label>Search...</label>
       </md-autocomplete>
     </div>
+    <div class="md-toolbar-section-end" v-if="user && user.isAdmin && (isCurrentPollInVoting || isCurrentPollInNomination)">
+      <md-menu md-direction="bottom-start" md-align-trigger>
+        <md-button md-menu-trigger class="md-icon-button">
+          <md-icon>more_vert</md-icon>
+        </md-button>
+
+        <md-menu-content>
+          <md-menu-item @click.prevent="stopPoll()">Stop Poll</md-menu-item>
+          <md-menu-item v-if="isCurrentPollInNomination" @click.prevent="stopNominations()">Stop Nominations</md-menu-item>
+        </md-menu-content>
+      </md-menu>
+    </div>
   </div>
 </template>
 
 <script>
 import queries from '@/api'
 import utils from '@/utils'
+import {mapGetters, mapState} from 'vuex'
 
 export default {
   name: 'Toolbar',
@@ -52,9 +65,17 @@ export default {
     navigateToMovie () {
       this.$router.push({name: 'Movies', params: { filmId: this.selectedFilm._id }})
       this.selectedFilm = ''
+    },
+    stopPoll () {
+      queries.stopPoll()
+    },
+    stopNominations () {
+      queries.stopNominations()
     }
   },
   computed: {
+    ...mapState('auth', ['user']),
+    ...mapGetters('poll', ['isCurrentPollInNomination', 'isCurrentPollInVoting']),
     showMovieSearch () {
       return this.$route.name === 'Movies'
     }
