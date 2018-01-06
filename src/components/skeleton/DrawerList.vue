@@ -19,6 +19,11 @@
         <span class="md-list-item-text">Movies</span>
       </md-list-item>
 
+      <md-list-item v-if="user && user.isAdmin" to="/add">
+        <md-icon>library_add</md-icon>
+        <span class="md-list-item-text">Add to Collection</span>
+      </md-list-item>
+
       <md-list-item v-if="user" @click="logoutAndRedirect()">
         <md-icon>exit_to_app</md-icon>
         <span class="md-list-item-text">Logout</span>
