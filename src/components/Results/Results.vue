@@ -1,11 +1,10 @@
 <template>
-<div class="h-90 d-flex justify-content-center">
-  <div v-if="getMostRecentPoll && dataCollection.datasets && dataCollection.datasets.length > 0 && winningOptions.length > 0">
-    <h1 class="text-center"><i class="fa fa-trophy" aria-hidden="true"></i>
-    <br/>
-    {{winningOptions.length > 1 ? winningOptions.slice(0, winningOptions.length - 1).join(', ') + " and " + winningOptions.slice(-1) : winningOptions[0]}}</h1>
-    <h6 class="text-center">{{howLongAgoMostRecentPoll}}</h6>   
-   <pie-chart :chart-data="dataCollection" :options="{responsive: true, maintainAspectRatio: false}"></pie-chart>
+<div class="d-flex flex-column align-items-center justify-items-center">
+  <div 
+    v-if="getMostRecentPoll && dataCollection.datasets && dataCollection.datasets.length > 0 && winningOptions.length > 0"  
+    >
+    <h1 class="md-headline text-center">{{winningOptions.length > 1 ? winningOptions.slice(0, winningOptions.length - 1).join(', ') + " and " + winningOptions.slice(-1) : winningOptions[0]}} Wins</h1>
+    <pie-chart :chart-data="dataCollection" :options="{responsive: true, maintainAspectRatio: false}" />
   </div>
   <md-empty-state v-else
     class="md-accent"
