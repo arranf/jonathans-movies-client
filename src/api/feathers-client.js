@@ -13,6 +13,7 @@ if (process.env && process.env.BRANCH && process.env.BRANCH === 'develop' && pro
     console.error(e)
     console.error('Unable to create socket to staging server')
   }
+  console.info('Running staging environment!')
 } else if (process.env.NODE_ENV === 'production') {
   try {
     socket = io('https://api.jonathansmovies.com', {'transports': ['websocket']})
@@ -28,8 +29,6 @@ if (process.env && process.env.BRANCH && process.env.BRANCH === 'develop' && pro
     console.error('Unable to create local development socket')
   }
 }
-
-console.log(process.env)
 
 let feathersClient
 
