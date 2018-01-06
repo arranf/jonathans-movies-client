@@ -7,14 +7,12 @@
     <h6 class="text-center">{{howLongAgoMostRecentPoll}}</h6>   
    <pie-chart :chart-data="dataCollection" :options="{responsive: true, maintainAspectRatio: false}"></pie-chart>
   </div>
-  <div v-else>
-    <md-empty-state
-      class="md-accent"
-      md-icon="error_outline"
-      md-label="No Results"
-      md-description="There needs to be at least one vote for there to be a winner!">
-    </md-empty-state>
-  </div>
+  <md-empty-state v-else
+    class="md-accent"
+    md-icon="error_outline"
+    md-label="No Results"
+    md-description="There needs to be at least one vote for there to be a winner!">
+  </md-empty-state>
 </div>
 </template>
 
