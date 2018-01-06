@@ -8,7 +8,6 @@
         <drawer-list @close="showNavigation = false" />
       </md-app-drawer>
       <md-app-content class="content-height d-flex flex-column">
-        <!-- <progress-bar v-if="$route.path === '/movies'" /> -->
         <router-view />
         <progress-bar />
       </md-app-content>
