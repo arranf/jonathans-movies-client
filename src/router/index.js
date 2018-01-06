@@ -6,6 +6,7 @@ import Login from '@/components/Login/Login'
 import SignUp from '@/components/SignUp/SignUp'
 import Create from '@/components/Create/Create'
 import Nominate from '@/components/Nominate/Nominate'
+import Add from '@/components/Add/AddMovie'
 
 import store from '@/store'
 import feathersClient from '@/api/feathers-client'
@@ -63,6 +64,11 @@ const router = new Router({
       path: '/movies/:filmId?',
       name: 'Movies',
       component: Nominate
+    },
+    {
+      path: '/add',
+      name: 'Add',
+      component: Add
     }
   ]
 })
