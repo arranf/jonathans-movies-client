@@ -1,11 +1,10 @@
 <template>
 <!-- :class="{'h-50': getActivePoll && !isCurrentPollInNomination}" -->
-    <div id="home-container" style="max-height: 100%">
-      <div>
+    <div id="home-container" style="max-height: 100%; flex: 1;">
         <selected-options v-if="isCurrentPollInNomination" />
-        <vote-for-option class=" align-items-stretch justify-content-center" v-else-if="getActivePoll"></vote-for-option>
-        <results v-else></results>
-      </div>
+        <vote-for-option v-else-if="getActivePoll"></vote-for-option>
+        <!-- <div v-else-if="getActivePoll" style="color:tomato;"></div> -->
+        <results v-else></results>  
     </div>
 </template>
 

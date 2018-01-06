@@ -2,17 +2,11 @@
   <swiper :options="swiperOption" :not-next-tick="notNextTick" class="swiper-box"  ref="voteSwiper">
         <template v-for="option in getOptionsForCurrentPoll" >
                 <swiper-slide :key="option._id" class="swiper-item" :class="{voted: isVoted(option._id)}" :style="{backgroundColor: getColor(option._id)}" >
-                    <div class="container">
-                        <div class="row">
-                            <div class="col">
-                                {{option.name}}
-                            </div>
-                        </div>
-                        <div v-if="isVoted(option._id)" class="row">
-                            <div class="col">
-                                <i class="fa fa-check fa-2x"></i>
-                            </div>
-                        </div>
+                    <div class="text-white ">
+                      <h3 class="md-headline">{{option.name}}</h3>
+                    </div>
+                    <div :class="{hidden: !isVoted(option._id)}">
+                      <i class="fa fa-check fa-2x text-white"></i>
                     </div>
                 </swiper-slide>
         </template>
@@ -147,31 +141,29 @@ export default {
 </script>
 
 <style scoped>
-.swiper-box {
+  .swiper-box {
     width: 100%;
     height: 100%;
     margin: 0 auto;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: stretch; */
   }
   .swiper-item {
     height: 100%;
     text-align: center;
-    font-size: 1.8em ;
-    color: #ffffff;
     /* Center slide text vertically */
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
     display: flex;
     cursor: pointer; 
     cursor: hand; 
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
     justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
+    align-content: center;
+    flex-direction: column;
+  }
+
+  .hidden {
+    visibility: hidden;
   }
 
   .voted {
