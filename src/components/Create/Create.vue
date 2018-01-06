@@ -174,32 +174,34 @@ export default {
       return !this.$v.$invalid
     }
   },
-  validations: {
-    minutes: {
-      required,
-      between: between(1, 10)
-    },
-    votes: {
-      required,
-      between: between(1, 4)
-    },
-    nominationsMinutes: {
-      required: requiredIf(function () {
-        return this.haveNominations
-      }),
-      between: between(1, 60)
-    },
-    nominations: {
-      required: requiredIf(function () {
-        return this.haveNominations
-      }),
-      between: between(1, 4)
-    },
-    options: {
-      required: requiredIf(function () {
-        return !this.haveNominations
-      }),
-      minLength: !this.haveNominations ? minLength(2) : minLength(0)
+  validations () {
+    return {
+      minutes: {
+        required,
+        between: between(1, 10)
+      },
+      votes: {
+        required,
+        between: between(1, 4)
+      },
+      nominationsMinutes: {
+        required: requiredIf(function () {
+          return this.haveNominations
+        }),
+        between: between(1, 60)
+      },
+      nominations: {
+        required: requiredIf(function () {
+          return this.haveNominations
+        }),
+        between: between(1, 4)
+      },
+      options: {
+        required: requiredIf(function () {
+          return !this.haveNominations
+        }),
+        minLength: !this.haveNominations ? minLength(2) : minLength(0)
+      }
     }
   }
 }
