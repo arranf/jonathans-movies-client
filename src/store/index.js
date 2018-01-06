@@ -14,7 +14,6 @@ import filmMutations from './films/mutations'
 // import optionMutations from './option/mutations'
 
 import time from '@/store/time'
-import errors from '@/store/errors'
 
 Vue.use(Vuex)
 const { service, auth } = feathersVuex(feathersClient, { idField: '_id' })
@@ -28,8 +27,7 @@ let plugins = [service('vote', {getters: voteGetters}),
 
 const store = new Vuex.Store({
   modules: {
-    time,
-    errors
+    time
   },
   plugins: [
     ...plugins

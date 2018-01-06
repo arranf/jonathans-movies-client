@@ -79,7 +79,6 @@ export default {
   methods: {
     ...mapActions('vote', {addVote: 'create'}),
     ...mapActions('vote', {removeVote: 'remove'}),
-    ...mapActions('errors', ['updateLastExceededVoteDateTime']),
     getColor: function (optionId) {
       let optionColors = this.optionColors
       if (optionId in optionColors.optionColorMap) {
@@ -110,10 +109,6 @@ export default {
           .then(console.log('Vote removed from ', option.name))
           .catch(error => console.error(error))
       } else {
-        if (this.remainingVotes <= 0) {
-          this.updateLastExceededVoteDateTime()
-          return
-        }
         this.addVote({poll_id: this.getActivePoll._id, option_id: optionId})
           .then(console.log('Vote added for ', option.name))
           .catch(error => console.error(error))
@@ -129,8 +124,7 @@ export default {
     ...mapState('auth', ['user']),
     ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
     ...mapGetters('option', ['getOptionsForCurrentPoll']),
-    ...mapGetters('poll', ['getActivePoll']),
-    ...mapGetters('errors', ['shouldShowErrorForExceedVote'])
+    ...mapGetters('poll', ['getActivePoll'])
   },
   mounted: function () {
     utils.shuffle(this.optionColors.colors)
