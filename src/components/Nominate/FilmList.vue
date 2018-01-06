@@ -6,9 +6,9 @@
           <md-content class="w-100">
             <div class="md-layout-row md-layout-wrap md-gutter m-4">
               <md-field>
-                <label for="genres">Genres</label>
-                <md-select v-model="genres" name="genres" id="genres" multiple>
-                  <md-option v-for="option in totalGenres" :key="option.id" :value="option.name">{{option.name}}</md-option>
+                <label for="genres">Genre</label>
+                <md-select v-model="genres" name="genres" id="genres">
+                  <md-option v-for="option in totalGenres" v-once :key="'genre-'+option.id" :value="option.name">{{option.name}}</md-option>
                 </md-select>
               </md-field>
               <div class="pt-3 mt-1 mb-4">
@@ -17,7 +17,7 @@
               </div>
               <md-button @click.prevent="requery()" type="submit" class="md-accent md-raised">Submit</md-button>
               <md-button @click.prevent="reset()" type="reset">Reset</md-button>
-              <md-button @click.prevent="$emit('update:showFilters', false)">Close</md-button>
+              <md-button @click.prevent="showFilters = false">Close</md-button>
             </div>
           </md-content>
         </md-dialog>
@@ -67,7 +67,7 @@ export default {
       busy: false,
       total: 51,
       sort: {name: 1},
-      genres: [],
+      genres: '',
       floorRating: 0.0
     }
   },
@@ -94,8 +94,8 @@ export default {
         $sort: this.sort,
         $skip: this.limit * this.page
       }}
-      if (this.genres.length > 0) {
-        query.query['genres'] = this.genres
+      if (this.genres) {
+        query.query['genres'] = [this.genres]
       }
       if (this.floorRating > 0) {
         query.query['score'] = {'$gte': this.floorRating}
@@ -108,10 +108,11 @@ export default {
     ...mapMutations('films', {clearFilms: 'clearAll'}),
     reset: function () {
       this.page = 0
-      this.genres = []
+      this.genres = ''
       this.total = 51
       this.floorRating = 0
       this.showFilters = false
+      this.clearFilms()
       this.getFilms()
     },
     requery: function () {
