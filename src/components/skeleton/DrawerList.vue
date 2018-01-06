@@ -4,22 +4,22 @@
         <span class="md-title">Navigation</span>
     </md-toolbar>
     <md-list>
-      <md-list-item v-if="user" to="/home">
+      <md-list-item v-if="user" to="/home" @click="closeDrawer">
         <md-icon>home</md-icon>
         <span class="md-list-item-text">Home</span>
       </md-list-item>
 
-      <md-list-item v-if="user && user.isAdmin && !getActivePoll" to="/create">
+      <md-list-item v-if="user && user.isAdmin && !getActivePoll" to="/create" @click="closeDrawer">
         <md-icon>create</md-icon>
         <span class="md-list-item-text">Create Poll</span>
       </md-list-item>
 
-      <md-list-item v-if="user" to="/movies">
+      <md-list-item v-if="user" to="/movies" @click="closeDrawer">
         <md-icon>movie</md-icon>
         <span class="md-list-item-text">Movies</span>
       </md-list-item>
 
-      <md-list-item v-if="user && user.isAdmin" to="/add">
+      <md-list-item v-if="user && user.isAdmin" to="/add" @click="closeDrawer">
         <md-icon>library_add</md-icon>
         <span class="md-list-item-text">Add to Collection</span>
       </md-list-item>
@@ -73,7 +73,10 @@ export default {
     logoutAndRedirect: function () {
       this.$emit('close')
       this.logout()
-      this.$router.push({path: '/'})
+        .then(() => this.$router.push({path: '/'}))
+    },
+    closeDrawer () {
+      this.$emit('navigate')
     }
   }
 }

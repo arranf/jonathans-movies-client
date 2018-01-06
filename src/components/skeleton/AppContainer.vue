@@ -5,7 +5,7 @@
         <toolbar @toggleNavigation="showNavigation = !showNavigation" />
       </md-app-toolbar>
       <md-app-drawer :md-active.sync="showNavigation">
-        <drawer-list @close="showNavigation = false" />
+        <drawer-list @navigate="showNavigation = false" />
       </md-app-drawer>
       <md-app-content class="content-height d-flex flex-column">
         <router-view />
