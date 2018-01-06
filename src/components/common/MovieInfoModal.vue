@@ -22,8 +22,8 @@
       </md-card-content>
       <md-card-actions>
         <md-button @click="$emit('update:show', false)">Close</md-button>
-        <md-button @click.prevent="addNomination()" v-if="showNominate && isCurrentPollInNomination" :disabled="!hasNominationsRemaining || this.isOptionForCurrentPoll(this.film._id)">
-          {{ !this.isOptionForCurrentPoll(this.film._id) ? 'Nominate' : 'Nominated' }}
+        <md-button @click.prevent="addNomination()" v-if="nominatable">
+          {{nominateButtonText}}
         </md-button>
         
       </md-card-actions>
@@ -37,7 +37,6 @@ import utils from '@/utils'
 import tmdbApi from '@/api/tmdb'
 import {mapGetters, mapActions} from 'vuex'
 import imagesLoaded from 'vue-images-loaded'
-import numbersToWords from 'number-to-words'
 
 export default {
   name: 'MovieInfoModal',
@@ -93,9 +92,7 @@ export default {
             if (!this.hasNominationsRemaining) {
               this.$router.push('/')
             } else {
-              console.log(numbersToWords)
-              console.log(numbersToWords.toWords(this.nominationsRemaining))
-              this.$emit('snackbar', `You have ${numbersToWords.toWords(this.nominationsRemaining)} nomination ${this.nominationsRemaining > 1 ? 's' : ''}  left`)
+              this.$emit('snackbar', `Nominated ${this.film.name}. You have ${this.nominationsRemaining} nomination${this.nominationsRemaining > 1 ? 's' : ''}  left`)
             }
           })
           .catch(error => console.error(error))
@@ -120,6 +117,21 @@ export default {
       if (this.film && this.film.release_date) {
         return utils.getYearFromTmdbReleaseDate(this.film.release_date)
       }
+    },
+    nominateButtonText () {
+      if (this.isOptionForCurrentPoll(this.film._id)) {
+        return 'Nominated'
+      }
+      return 'Nominate'
+    },
+    nominatable () {
+      // Set to show nominations
+      return this.showNominate &&
+        this.isCurrentPollInNomination &&
+        // user has a nomination to spend on it
+        this.hasNominationsRemaining &&
+        // isn't already nominated
+        !this.isOptionForCurrentPoll(this.film._id)
     }
   },
   created () {

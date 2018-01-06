@@ -28,7 +28,6 @@
     "font-awesome-webpack2": "^0.0.6",
     "humanize-duration": "^3.10.1",
     "lodash": "^4.17.4",
-    "number-to-words": "^1.2.3",
     "raven-js": "^3.18.1",
     "socket.io-client": "^2.0.3",
     "vue": "^2.5.0",
