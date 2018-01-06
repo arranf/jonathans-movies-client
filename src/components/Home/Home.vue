@@ -5,9 +5,8 @@
         <vote-for-option @snackbar="setSnackbar" v-else-if="getActivePoll"></vote-for-option>
         <!-- <div v-else-if="getActivePoll" style="color:tomato;"></div> -->
         <results v-else></results>  
-        <md-snackbar id="snackbar" md-position="center" :md-active.sync="showSnackbar" md-persistent>
+        <md-snackbar id="snackbar" md-position="center" :md-active.sync="showSnackbar">
           <span>{{snackbarText}}</span>
-          <!-- <md-button class="md-primary" @click="showSnackbar = false">Close</md-button> -->
         </md-snackbar>
     </div>
 </template>
