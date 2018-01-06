@@ -1,10 +1,9 @@
 <template>
 <!-- :class="{'h-50': getActivePoll && !isCurrentPollInNomination}" -->
-    <div id="home-container" class="h-100" >
-      <md-progress-bar v-if="getActivePoll" class="md-accent" md-mode="determinate" :md-value="percentageOfCurrentPhaseComplete" />
-      <div class="h-100 align-items-stretch justify-content-center" >
+    <div id="home-container" style="max-height: 100%">
+      <div>
         <selected-options v-if="isCurrentPollInNomination" />
-        <vote-for-option v-else-if="getActivePoll"></vote-for-option>
+        <vote-for-option class=" align-items-stretch justify-content-center" v-else-if="getActivePoll"></vote-for-option>
         <results v-else></results>
       </div>
     </div>
@@ -39,12 +38,13 @@ export default {
     ...mapGetters('option', {
       findOptions: 'find'
     }),
-    ...mapGetters('poll', ['getActivePoll', 'isCurrentPollInNomination', 'percentageOfCurrentPhaseComplete'])
+    ...mapGetters('poll', ['getActivePoll', 'isCurrentPollInNomination'])
   },
   methods: {
     ...mapActions('time', {startTimer: 'start'})
   },
   created: function () {
+    // TODO Move to router
     // Sync client time with server time
     this.startTimer()
 
