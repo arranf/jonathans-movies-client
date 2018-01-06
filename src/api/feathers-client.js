@@ -6,7 +6,7 @@ import io from 'socket.io-client'
 
 let socket
 // Change Netlify staging env variable to 1 if the staging server is setup, else develop will use production API
-if (process.env.BRANCH && process.env.BRANCH === 'develop' && process.env.STAGING === '1') {
+if (process.env && process.env.BRANCH && process.env.BRANCH === 'develop' && process.env.STAGING === '1') {
   socket = io('https://staging-api.jonathansmovies.com', {'transports': ['websocket']})
 } else if (process.env.NODE_ENV === 'production') {
   socket = io('https://api.jonathansmovies.com', {'transports': ['websocket']})
