@@ -6,7 +6,7 @@
     <h1 class="md-headline text-center">{{winningOptions.length > 1 ? winningOptions.slice(0, winningOptions.length - 1).join(', ') + " and " + winningOptions.slice(-1) : winningOptions[0]}} Wins</h1>
     <pie-chart :chart-data="dataCollection" :options="{responsive: true, maintainAspectRatio: false}" />
   </div>
-  <md-empty-state v-else
+  <md-empty-state v-cloak v-else-if ="winningOptions.length === 0 && emptyStateAllowed"
     class="md-accent"
     md-icon="error_outline"
     md-label="No Results"
@@ -29,7 +29,8 @@ export default {
   },
   data () {
     return {
-      backgroundColors: []
+      backgroundColors: [],
+      emptyStateAllowed: false
     }
   },
   computed: {
@@ -44,7 +45,10 @@ export default {
       return {datasets: [{data: graphData.data, label: 'Vote', backgroundColor: this.backgroundColors}], labels: graphData.labels}
     },
     winningOptions: function () {
-      return this.getHighestVotedOptionsForPoll(this.getMostRecentPoll._id)
+      if (this.getMostRecentPoll && this.getMostRecentPoll._id) {
+        return this.getHighestVotedOptionsForPoll(this.getMostRecentPoll._id)
+      }
+      return []
     }
   },
   mounted () {
@@ -52,6 +56,7 @@ export default {
       .then(() => queries.getVotesForMostRecentPoll(this.getMostRecentPoll._id))
       .then(() => queries.getOptionsForMostRecentPoll(this.getMostRecentPoll._id))
       .then(response => { this.backgroundColors = utils.selectRandomArraySize(constants.colors['800'], response.data.length) })
+      .then(a => { this.emptyStateAllowed = true })
       .catch(error => console.log(error))
   }
 }
@@ -60,5 +65,9 @@ export default {
 <style>
 .fa-trophy {
   color: #F6BD1C;
+}
+
+[v-cloak] {
+  display: none;
 }
 </style>
