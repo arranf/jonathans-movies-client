@@ -199,7 +199,7 @@ export default {
       required: requiredIf(function () {
         return !this.haveNominations
       }),
-      minLength: minLength(2)
+      minLength: !this.haveNominations ? minLength(2) : minLength(0)
     }
   }
 }
