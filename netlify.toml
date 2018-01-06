@@ -10,7 +10,7 @@
   command = "npm run build"
   
 [context.production.environment]
-    YARN_FLAGS = "--ignore-engines"
+  YARN_FLAGS = "--ignore-engines"
 
 [context.deploy-preview.environment]
   YARN_FLAGS = "--ignore-engines"
