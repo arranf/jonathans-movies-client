@@ -1,7 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import VueModal from 'vue-js-modal'
 import App from '@/components/skeleton/AppContainer'
 import router from './router'
 import store from './store/'
@@ -49,8 +48,6 @@ if (process.env.NODE_ENV === 'production' && process.env.BRANCH && process.env.B
 }
 
 Vue.config.productionTip = false
-
-Vue.use(VueModal)
 
 /* eslint-disable no-new */
 new Vue({

@@ -37,17 +37,11 @@
 
 <script>
 import feathersClient from '@/api/feathers-client'
-import { MdlButton, MdlTextfield, MdlSnackbar } from 'vue-mdl'
 import {mapActions} from 'vuex'
 import router from '@/router'
 
 export default {
   name: 'SignUp',
-  components: {
-    MdlButton,
-    MdlTextfield,
-    MdlSnackbar
-  },
   data () {
     return {
       password: '',
