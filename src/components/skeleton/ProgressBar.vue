@@ -18,6 +18,6 @@ export default {
     width: 100%;
     position: fixed;
     bottom: 0;
-    z-index: 999;
+    z-index: 6;
   }
 </style>
