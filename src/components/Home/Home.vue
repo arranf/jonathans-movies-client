@@ -29,7 +29,7 @@ export default {
   data () {
     return {
       pollId: null,
-      showSnackbar: true,
+      showSnackbar: false,
       snackbarText: ''
     }
   },
