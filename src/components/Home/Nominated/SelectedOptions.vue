@@ -1,5 +1,5 @@
 <template>
-<div class="d-flex h-100 justify-content-center">
+<div class="">
   <movie-info-modal :show.sync="showingFilm" :filmId="$route.params.filmId" :show-nominate="false" />
   <md-empty-state
       v-if="currentPollOptions.length === 0"
@@ -8,12 +8,12 @@
       :md-description="`You\'ve got, ${nominationsRemaining} nominations left. Use them wisely!`">
       <md-button class="md-primary md-raised" @click="$router.push('/movies')">Nominate a movie</md-button>
   </md-empty-state>
-
-  <div v-if="getOptionsForCurrentPoll && currentPollOptions && currentPollOptions.length > 0" class="d-flex flex-column align-items-center justify-content-center">
+<!-- class="d-flex flex-column align-items-center justify-content-center" -->
+  <div class="d-flex flex-column" v-if="getOptionsForCurrentPoll && currentPollOptions && currentPollOptions.length > 0" >
 
     <h2 class="md-display-1 text-center">Nominations</h2>
-    <div class="d-flex scroll flex-row">
-      <template v-for="option in currentPollOptions">
+    <div class="scroll align-self-center">
+      <template  v-for="option in currentPollOptions">
         <option-preview class="scroll-item" :key="option._id" :option="option"></option-preview>
       </template>
     </div>
@@ -56,14 +56,21 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
 .scroll {
-  overflow: auto;
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  // white-space: nowrap;
   flex-wrap: nowrap;
-  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .scroll-item {
   flex: 0 0 auto;
+  // display: inline-block;
 }
 </style>
