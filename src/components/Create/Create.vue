@@ -23,21 +23,23 @@
 
       <div class="md-layout-row md-gutter w-100">
         <div class="md-layout-item md-size-100">
-          <md-field>
+          <md-field :class="formClass('minutes')">
             <md-icon>timelapse</md-icon>
             <label for="minutes">Voting Time</label>
-            <md-input name="minutes" id="minutes" v-model="minutes" type="number"  pattern="[1-9]" min="1" max="10" />
+            <md-input name="minutes" id="minutes" v-model="minutes" @input="$v.minutes.$touch()" type="number"  pattern="[1-9]" min="1" max="10" />
             <span class="md-helper-text">Number of minutes</span>
+            <span class="md-error" v-if="!$v.minutes.between || !$v.minutes.required">{{getErrorText('minutes')}}</span>
           </md-field>
         </div>
       </div>
 
       <div class="md-layout-row md-gutter w-100">
         <div class="md-layout-item md-size-100">
-          <md-field>
+          <md-field :class="formClass('votes')">
             <md-icon>format_list_numbered</md-icon>
             <label for="votes">Number of Votes</label>
-            <md-input name="votes" id="votes" v-model="votes" type="number" pattern="[1-4]" min="1" max="4" />
+            <md-input name="votes" id="votes" v-model="votes"  type="number" @input="$v.votes.$touch()" pattern="[1-4]" min="1" max="4" />
+            <span class="md-error" v-if="!$v.votes.between || !$v.votes.required">{{getErrorText('votes')}}</span>
           </md-field>
         </div>
       </div>
@@ -52,19 +54,21 @@
           </div>
 
           <div class="md-layout-item md-size-100 pa-1">
-            <md-field>
+            <md-field :class="formClass('nominationsMinutes')">
               <md-icon>timelapse</md-icon>
               <label for="nomination-length">Nomination Time</label>
-              <md-input name="nomination-length" id="nomination-length" v-model="nominationsMinutes" type="number" pattern="[1-9][0-9]*" min="1" max="60" />
+              <md-input name="nomination-length" id="nomination-length" v-model="nominationsMinutes" @input="$v.nominationsMinutes.$touch()" type="number" pattern="[1-9][0-9]*" min="1" max="60" />
               <span class="md-helper-text">Number of minutes</span>
+              <span class="md-error" v-if="!$v.nominationsMinutes.between || !$v.nominationsMinutes.required">{{getErrorText('nominationsMinutes')}}</span>
             </md-field>
           </div>
           
           <div class="md-layout-item md-size-100 pa-1">
-            <md-field>
+            <md-field :class="formClass('nominations')">
               <md-icon>format_list_numbered</md-icon>
               <label for="nomination-votes">Number of Nominations</label>
-              <md-input name="nomination-votes" id="nomination-votes" v-model="nominations" type="number" pattern="[1-4]" min="1" max="4" />
+              <md-input name="nomination-votes" id="nomination-votes" v-model="nominations" @input="$v.nominations.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
+              <span class="md-error" v-if="!$v.nominations.between || !$v.nominations.required">{{getErrorText('nominations')}}</span>
             </md-field>
           </div>
         </div>
@@ -85,6 +89,8 @@
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate'
+import { required, requiredIf, between, minLength } from 'vuelidate/lib/validators'
 import MovieSuggest from './MovieSuggest'
 import {mapActions} from 'vuex'
 import router from '@/router'
@@ -93,6 +99,7 @@ export default {
   components: {
     MovieSuggest
   },
+  mixins: [validationMixin],
   data () {
     return {
       minutes: '3',
@@ -141,22 +148,58 @@ export default {
         numberOfNominations: numberOfNominations
       })
       this.toHome()
+    },
+    formClass (formItemName) {
+      // debugger
+      if (!this.$v[formItemName]) {
+        return {}
+      }
+      return {
+        'md-invalid': this.$v[formItemName].$error
+      }
+    },
+    getErrorText (formItemName) {
+      let error = ''
+      let validation = this.$v[formItemName]
+      if (!validation.required) {
+        error = 'Required'
+      } else if (!validation.between) {
+        error = `Must be between ${validation.$params.between.min} and ${validation.$params.between.max}`
+      }
+      return error
     }
   },
   computed: {
     canStart: function () {
-      return this.minutes &&
-        this.votes &&
-        ( // Either have appropriate options...
-          (this.options.length >= 2 &&
-          this.options[0] &&
-          this.options[1] &&
-          this.options[0].name.trim().length > 0 &&
-          this.options[1].name.trim().length > 0) || // ...or setup a nomination phase
-          (this.haveNominations &&
-          this.nominationsMinutes &&
-          this.nominations)
-        )
+      return !this.$v.$invalid
+    }
+  },
+  validations: {
+    minutes: {
+      required,
+      between: between(1, 10)
+    },
+    votes: {
+      required,
+      between: between(1, 4)
+    },
+    nominationsMinutes: {
+      required: requiredIf(function () {
+        return this.haveNominations
+      }),
+      between: between(1, 60)
+    },
+    nominations: {
+      required: requiredIf(function () {
+        return this.haveNominations
+      }),
+      between: between(1, 4)
+    },
+    options: {
+      required: requiredIf(function () {
+        return !this.haveNominations
+      }),
+      minLength: minLength(2)
     }
   }
 }
