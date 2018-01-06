@@ -1,7 +1,7 @@
 <template>
   <div class="md-toolbar-row">
     <div class="md-toolbar-section-start">
-      <md-button class="md-icon-button" @click="$emit('toggleNavigation')">
+      <md-button v-if="user" class="md-icon-button" @click="$emit('toggleNavigation')">
         <md-icon>menu</md-icon>
       </md-button>
       <span v-if="!showMovieSearch" class="md-title">Jonathan's Movies</span>
