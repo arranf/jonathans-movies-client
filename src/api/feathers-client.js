@@ -14,6 +14,8 @@ if (process.env.BRANCH && process.env.BRANCH === 'develop' && process.env.STAGIN
   socket = io('http://localhost:3030', {'transports': ['websocket']})
 }
 
+console.log(process.env)
+
 let feathersClient
 
 if (process.env.NODE_ENV !== 'test') {

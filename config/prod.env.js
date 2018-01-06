@@ -1,4 +1,4 @@
 module.exports = {
   NODE_ENV: '"production"',
-  BRANCH: process.env.BRANCH.toString()
+  BRANCH: String(process.env.BRANCH)
 }
