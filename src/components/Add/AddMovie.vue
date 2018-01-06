@@ -46,7 +46,7 @@
     </transition>
 
     <md-snackbar :md-active.sync="showSnackbar">
-      <span>Error adding movie.</span>
+      <span>{{snackbarMessage}}</span>
       <md-button class="md-primary" @click="showSnackbar = false">Close</md-button>
     </md-snackbar>
   </div>
@@ -63,6 +63,7 @@ export default {
   name: 'AddMovie',
   data () {
     return {
+      snackbarMessage: '',
       showSearch: true,
       isDuplicate: false,
       showSnackbar: false,
@@ -92,7 +93,7 @@ export default {
       {
         tmdb_id: this.selectedFilm.id,
         name: this.selectedFilm.title,
-        lastWatched: '',
+        last_watched: null,
         score: this.selectedFilm.vote_average,
         overview: this.selectedFilm.overview,
         release_date: this.selectedFilm.release_date,
@@ -114,16 +115,19 @@ export default {
           this.isDuplicate = apiResponse.total > 0
           this.showSearch = false
         })
-        .catch(e => { console.error(e); this.showSnackbar = true })
+        .catch(e => { console.error(e); this.showSnackbar = true; this.snackbarMessage = 'Error fetching movie information' })
     },
     addFilm () {
       if (!this.isDuplicate) {
         this.create(this.movie)
           .then(() => {
+            this.snackbarMessage = `Successfully added ${this.movie.name}'`
             this.selectedFilm = ''
             this.movie = null
+            this.showSearch = true
+            this.showSnackbar = true
           })
-          .catch(e => { console.error(e); this.showSnackbar = true })
+          .catch(e => { console.error(e); this.showSnackbar = true; this.snackbarMessage = 'Error adding movie' })
       }
     },
     getYear (releaseDate) {
