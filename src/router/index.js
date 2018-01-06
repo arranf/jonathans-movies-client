@@ -42,7 +42,7 @@ const router = new Router({
       }
     },
     {
-      path: '/home',
+      path: '/home/:filmId?',
       name: 'Home',
       component: Home
     },
@@ -60,7 +60,7 @@ const router = new Router({
       }
     },
     {
-      path: '/movies',
+      path: '/movies/:filmId?',
       name: 'Movies',
       component: Nominate
     }
@@ -83,6 +83,7 @@ router.beforeEach((to, from, next) => {
         next()
       })
       .catch(function (error) {
+        next('/')
         console.error('Error authenticating in router beforeEnter', error)
       })
   } else if (to.matched.some(record => record.meta.admin) && !user.isAdmin) {

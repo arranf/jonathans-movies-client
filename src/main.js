@@ -1,9 +1,8 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import VeeValidate from 'vee-validate'
 import VueModal from 'vue-js-modal'
-import App from './AppContainer'
+import App from '@/components/skeleton/AppContainer'
 import router from './router'
 import store from './store/'
 import '@/api/feathers-client'
@@ -11,10 +10,36 @@ import '@/api/feathers-client'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
 
+import { MdDivider, MdEmptyState, MdDialog, MdCheckbox, MdCard, MdMenu, MdAutocomplete, MdButton, MdField, MdProgress, MdHighlightText, MdList, MdIcon, MdDrawer, MdApp, MdContent, MdToolbar, MdSnackbar, MdChips, MdSwitch } from 'vue-material/dist/components'
+
+Vue.use(MdList)
+Vue.use(MdIcon)
+Vue.use(MdDrawer)
+Vue.use(MdField)
+Vue.use(MdButton)
+Vue.use(MdDrawer)
+Vue.use(MdApp)
+Vue.use(MdContent)
+Vue.use(MdToolbar)
+Vue.use(MdSnackbar)
+Vue.use(MdChips)
+Vue.use(MdSwitch)
+Vue.use(MdAutocomplete)
+Vue.use(MdMenu)
+Vue.use(MdProgress)
+Vue.use(MdHighlightText)
+Vue.use(MdCard)
+Vue.use(MdDialog)
+Vue.use(MdCheckbox)
+Vue.use(MdEmptyState)
+Vue.use(MdDivider)
+
 // Import assets
+require('vue-material/dist/vue-material.min.css')
+require('vue-material/dist/theme/default.css')
+require('@/assets/styles/main.scss')
+
 require('font-awesome-webpack2')
-require('styles/main.scss')
-require('../node_modules/material-design-lite/material.min.js')
 
 if (process.env.NODE_ENV === 'production' && process.env.BRANCH !== 'develop') {
   Raven
@@ -25,7 +50,6 @@ if (process.env.NODE_ENV === 'production' && process.env.BRANCH !== 'develop') {
 
 Vue.config.productionTip = false
 
-Vue.use(VeeValidate)
 Vue.use(VueModal)
 
 /* eslint-disable no-new */

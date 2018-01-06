@@ -1,5 +1,4 @@
 'use strict'
-
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
@@ -9,10 +8,23 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
+const createLintingRule = () => ({
+  test: /\.(js|vue)$/,
+  loader: 'eslint-loader',
+  enforce: 'pre',
+  include: [resolve('src'), resolve('test')],
+  options: {
+    formatter: require('eslint-friendly-formatter'),
+    emitWarning: !config.dev.showEslintErrorsInOverlay
+  }
+})
+
 module.exports = {
-  entry: {
-    app: './src/main.js'
-  },
+  context: path.resolve(__dirname, '../'),
+  entry: [
+    'babel-polyfill',
+    './src/main.js'
+  ],
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
@@ -24,22 +36,12 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
-      'styles': path.resolve(__dirname, '../src/assets/styles'),
-      'bootstrap-styles': path.resolve(__dirname, '../src/assets/styles/main.scss')
+      '@': resolve('src')
     }
   },
   module: {
     rules: [
-      {
-        test: /\.(js|vue)$/,
-        loader: 'eslint-loader',
-        enforce: 'pre',
-        include: [resolve('src'), resolve('test')],
-        options: {
-          formatter: require('eslint-friendly-formatter')
-        }
-      },
+      ...(config.dev.useEslint ? [createLintingRule()] : []),
       {
         test: /\.vue$/,
         loader: 'vue-loader',
@@ -48,7 +50,7 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -66,8 +68,6 @@ module.exports = {
           name: utils.assetsPath('media/[name].[hash:7].[ext]')
         }
       },
-    // These line lines are for font-awesome-loader
-    { test: /\.(woff|ttf|eot|svg)(\?v=[a-z0-9]\.[a-z0-9]\.[a-z0-9])?$/, loader: 'url-loader?limit=100000' },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
@@ -77,5 +77,17 @@ module.exports = {
         }
       }
     ]
+  },
+  node: {
+    // prevent webpack from injecting useless setImmediate polyfill because Vue
+    // source contains it (although only uses it if it's native).
+    setImmediate: false,
+    // prevent webpack from injecting mocks to Node native modules
+    // that does not make sense for the client
+    dgram: 'empty',
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty'
   }
 }

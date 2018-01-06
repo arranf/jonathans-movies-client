@@ -2,11 +2,5 @@
 @import "/bootstrap/bootstrap_utilities";
 @import "custom";
 
-@import "../../../node_modules/material-design-lite/src/_color-definitions";
-// Variable overrides
-$color-primary: $palette-indigo-500;
-$color-secondary: $palette-red-500;
-@import "../../../node_modules/material-design-lite/src/material-design-lite";
-
 @import "flex";
 @import "sizing"

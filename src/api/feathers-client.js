@@ -14,15 +14,31 @@ if (process.env.BRANCH && process.env.BRANCH === 'develop' && process.env.STAGIN
   socket = io('http://localhost:3030', {'transports': ['websocket']})
 }
 
-const feathersClient = feathers()
-  .configure(hooks())
-  .configure(socketio(socket))
-  .configure(auth({storage: window.localStorage}))
+let feathersClient
 
-feathersClient.service('/users')
-feathersClient.service('/poll')
-feathersClient.service('/option')
-feathersClient.service('/vote')
-feathersClient.service('/time')
+if (process.env.NODE_ENV !== 'test') {
+  feathersClient = feathers()
+    .configure(hooks())
+    .configure(socketio(socket))
+    .configure(auth({storage: window.localStorage}))
+  feathersClient.service('/users')
+  feathersClient.service('/poll')
+  feathersClient.service('/option')
+  feathersClient.service('/vote')
+  feathersClient.service('/films')
+  feathersClient.service('/time')
+} else {
+  // setup in memory services
+  feathersClient = feathers()
+    .configure(hooks())
+    .configure(auth({storage: window.localStorage}))
+  const service = require('feathers-memory')
+  feathersClient.service('/users', service())
+  feathersClient.service('/poll', service())
+  feathersClient.service('/option', service())
+  feathersClient.service('/vote', service())
+  feathersClient.service('/films', service())
+  feathersClient.service('/time', service())
+}
 
 export default feathersClient

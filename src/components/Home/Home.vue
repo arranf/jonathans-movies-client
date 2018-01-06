@@ -1,10 +1,10 @@
 <template>
-    <div class="d-flex flex-column justify-content-center container-fluid" :class="{'h-50': getActivePoll && !isCurrentPollInNomination}">
-      <div class="h-100 align-items-stretch justify-content-center" >
+<!-- :class="{'h-50': getActivePoll && !isCurrentPollInNomination}" -->
+    <div id="home-container" style="max-height: 100%; flex: 1;">
         <selected-options v-if="isCurrentPollInNomination" />
         <vote-for-option v-else-if="getActivePoll"></vote-for-option>
-        <results v-else></results>
-      </div>
+        <!-- <div v-else-if="getActivePoll" style="color:tomato;"></div> -->
+        <results v-else></results>  
     </div>
 </template>
 
@@ -43,7 +43,11 @@ export default {
     ...mapActions('time', {startTimer: 'start'})
   },
   created: function () {
+    // TODO Move to router
+    // Sync client time with server time
     this.startTimer()
+
+    // TODO move this to the router
     queries.getCurrentPoll()
       .then(response => {
         if (response.total > 0) {

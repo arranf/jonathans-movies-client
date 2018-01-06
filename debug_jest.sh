@@ -1,0 +1,1 @@
+ node --inspect-brk node_modules/.bin/jest --runInBand --config test/unit/jest.conf.js
