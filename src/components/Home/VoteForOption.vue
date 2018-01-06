@@ -2,8 +2,8 @@
   <swiper :options="swiperOption" :not-next-tick="notNextTick" class="swiper-box"  ref="voteSwiper">
         <template v-for="option in getOptionsForCurrentPoll" >
                 <swiper-slide :key="option._id" class="swiper-item" :class="{voted: isVoted(option._id)}" :style="{backgroundColor: getColor(option._id)}" >
-                    <div class="text-white ">
-                      <h3 class="md-headline">{{option.name}}</h3>
+                    <div>
+                      <h3 class="text-white md-headline">{{option.name}}</h3>
                     </div>
                     <div :class="{hidden: !isVoted(option._id)}">
                       <i class="fa fa-check fa-2x text-white"></i>
@@ -109,6 +109,11 @@ export default {
           .then(console.log('Vote removed from ', option.name))
           .catch(error => console.error(error))
       } else {
+        if (this.remainingVotes <= 0) {
+          this.$emit('snackbar', 'Unable to vote. You don\'t have any votes left')
+        } else {
+          this.$emit('snackbar', `Voted for ${option.name}. You have ${this.remainingVotes} vote${this.remainingVotes > 1 ? 's' : ''} remaining`)
+        }
         this.addVote({poll_id: this.getActivePoll._id, option_id: optionId})
           .then(console.log('Vote added for ', option.name))
           .catch(error => console.error(error))
@@ -119,7 +124,6 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('vote', {findVote: 'find'}),
     ...mapGetters('vote', {votes: 'list'}),
     ...mapState('auth', ['user']),
     ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
@@ -139,18 +143,17 @@ export default {
     width: 100%;
     height: 100%;
     margin: 0 auto;
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: stretch; */
   }
   .swiper-item {
     height: 100%;
     text-align: center;
-    /* Center slide text vertically */
-    display: flex;
+
+    /* You can click this */
     cursor: pointer; 
     cursor: hand; 
+
+    /* Center slide text vertically */
+    display: flex;
     justify-content: center;
     align-content: center;
     flex-direction: column;

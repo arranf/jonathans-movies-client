@@ -2,9 +2,13 @@
 <!-- :class="{'h-50': getActivePoll && !isCurrentPollInNomination}" -->
     <div id="home-container" style="max-height: 100%; flex: 1;">
         <selected-options v-if="isCurrentPollInNomination" />
-        <vote-for-option v-else-if="getActivePoll"></vote-for-option>
+        <vote-for-option @snackbar="setSnackbar" v-else-if="getActivePoll"></vote-for-option>
         <!-- <div v-else-if="getActivePoll" style="color:tomato;"></div> -->
         <results v-else></results>  
+        <md-snackbar id="snackbar" md-position="center" :md-active.sync="showSnackbar" md-persistent>
+          <span>{{snackbarText}}</span>
+          <!-- <md-button class="md-primary" @click="showSnackbar = false">Close</md-button> -->
+        </md-snackbar>
     </div>
 </template>
 
@@ -24,7 +28,9 @@ export default {
   },
   data () {
     return {
-      pollId: null
+      pollId: null,
+      showSnackbar: true,
+      snackbarText: ''
     }
   },
   computed: {
@@ -40,7 +46,11 @@ export default {
     ...mapGetters('poll', ['getActivePoll', 'isCurrentPollInNomination'])
   },
   methods: {
-    ...mapActions('time', {startTimer: 'start'})
+    ...mapActions('time', {startTimer: 'start'}),
+    setSnackbar (snackbarText) {
+      this.showSnackbar = true
+      this.snackbarText = snackbarText
+    }
   },
   created: function () {
     // TODO Move to router
