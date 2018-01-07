@@ -39,10 +39,7 @@ module.exports = {
       '@': resolve('src')
     }
   },
-  // Prevent socketio issue https://github.com/socketio/socket.io-client/issues/933
-  externals: ['ws'],
   module: {
-    noParse: /ws/,
     rules: [
       ...(config.dev.useEslint ? [createLintingRule()] : []),
       {
