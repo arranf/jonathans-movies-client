@@ -6,8 +6,8 @@ import router from './router'
 import store from './store/'
 import '@/api/feathers-client'
 
-import Raven from 'raven-js'
-import RavenVue from 'raven-js/plugins/vue'
+// import Raven from 'raven-js'
+// import RavenVue from 'raven-js/plugins/vue'
 
 import { MdDivider, MdEmptyState, MdDialog, MdCheckbox, MdCard, MdMenu, MdAutocomplete, MdButton, MdField, MdProgress, MdHighlightText, MdList, MdIcon, MdDrawer, MdApp, MdContent, MdToolbar, MdSnackbar, MdChips, MdSwitch } from 'vue-material/dist/components'
 
@@ -40,12 +40,12 @@ require('@/assets/styles/main.scss')
 
 require('font-awesome-webpack2')
 
-if (process.env.NODE_ENV === 'production' && process.env.BRANCH && process.env.BRANCH !== 'develop') {
-  Raven
-    .config('https://5e5d7f63477a49289a3e7556f761afb7@sentry.io/221248')
-    .addPlugin(RavenVue, Vue)
-    .install()
-}
+// if (process.env.NODE_ENV === 'production' && process.env.BRANCH && process.env.BRANCH !== 'develop') {
+//   Raven
+//     .config('https://5e5d7f63477a49289a3e7556f761afb7@sentry.io/221248')
+//     .addPlugin(RavenVue, Vue)
+//     .install()
+// }
 
 Vue.config.productionTip = false
 
