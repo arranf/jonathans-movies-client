@@ -10,7 +10,7 @@
     # https://csp-evaluator.withgoogle.com/
     # Exceptions for Google Fonts and TMDB images
     # Send reports to report-uri.io
-    Content-Security-Policy: frame-ancestors 'none'; default-src 'none'; object-src 'none'; img-src 'self' image.tmdb.org"; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; report-uri arranf.report-uri.io/r/default/csp/enforce;
+    Content-Security-Policy: frame-ancestors 'none'; default-src 'none'; object-src 'none'; img-src 'self' image.tmdb.org; script-src 'self'; connect-src https://*.jonathansmovies.com https://*.api.themoviedb.org"; style-src 'self' https://fonts.googleapis.com unsafe-inline; font-src 'self' https://fonts.gstatic.com; report-uri https://arranf.report-uri.io/r/default/csp/enforce;
 
     # Don't leak origin when moving to HTTP
     # https://scotthelme.co.uk/a-new-security-header-referrer-policy/
