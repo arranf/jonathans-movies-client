@@ -1,7 +1,6 @@
-import feathers from 'feathers'
-import hooks from 'feathers-hooks'
-import socketio from 'feathers-socketio'
-import auth from 'feathers-authentication-client'
+import feathers from '@feathersjs/feathers'
+import auth from '@feathersjs/authentication-client'
+import socketio from '@feathersjs/socketio-client'
 import io from 'socket.io-client'
 
 let socket
@@ -34,9 +33,9 @@ let feathersClient
 
 if (process.env.NODE_ENV !== 'test') {
   feathersClient = feathers()
-    .configure(hooks())
     .configure(socketio(socket))
     .configure(auth({storage: window.localStorage}))
+
   feathersClient.service('/users')
   feathersClient.service('/poll')
   feathersClient.service('/option')
@@ -46,8 +45,8 @@ if (process.env.NODE_ENV !== 'test') {
 } else {
   // setup in memory services
   feathersClient = feathers()
-    .configure(hooks())
     .configure(auth({storage: window.localStorage}))
+
   const service = require('feathers-memory')
   feathersClient.service('/users', service())
   feathersClient.service('/poll', service())
