@@ -1,15 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
-import Home from '@/components/Home/Home'
-import Login from '@/components/Login/Login'
-import SignUp from '@/components/SignUp/SignUp'
-import Create from '@/components/Create/Create'
-import Nominate from '@/components/Nominate/Nominate'
-import Add from '@/components/Add/AddMovie'
-
 import store from '@/store'
 import feathersClient from '@/api/feathers-client'
+
+const Home = () => import('@/components/Home/Home')
+const Login = () => import('@/components/Login/Login')
+const SignUp = () => import('@/components/SignUp/SignUp')
+const Create = () => import('@/components/Create/Create')
+const Nominate = () => import('@/components/Nominate/Nominate')
+const Add = () => import('@/components/Add/AddMovie')
 
 Vue.use(Router)
 
