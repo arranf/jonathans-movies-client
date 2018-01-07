@@ -28,7 +28,6 @@
           <md-card-header>
             <h2 class="md-title">{{movie.name}} <small>{{getYear(movie.release_date)}}</small></h2>
             <div v-if="movie.tagline" class="md-subhead">
-              <!-- <md-icon>location_on</md-icon> -->
               <span>{{movie.tagline}}</span>
             </div>
           </md-card-header>
