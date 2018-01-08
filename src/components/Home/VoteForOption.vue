@@ -114,7 +114,7 @@ export default {
         } else {
           this.addVote({poll_id: this.getActivePoll._id, option_id: optionId})
             .then(console.log('Vote added for ', option.name))
-            .then(this.$emit('snackbar', `Voted for ${option.name}. You have ${this.remainingVotes} vote${this.remainingVotes > 1 ? 's' : ''} remaining`))
+            .then(this.$emit('snackbar', `Voted for ${option.name}. You have ${this.remainingVotes - 1} vote${this.remainingVotes > 1 ? 's' : ''} remaining`))
             .catch(error => console.error(error))
         }
       }
