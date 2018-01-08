@@ -15,12 +15,7 @@
           {{film.tagline}}
         </div>
       </md-card-header>
-      <md-card-content>
-        {{film.overview}}
-      </md-card-content>
 
-             <br />
-              
       <md-card-content>
         <h3 class="md-subheading">Information</h3>
         <div>
@@ -30,13 +25,36 @@
         </div>
       </md-card-content>
 
-      <md-card-actions>
-        <md-button @click="$emit('update:show', false)">Close</md-button>
-        <md-button @click.prevent="addNomination()" v-if="nominatable">
-          {{nominateButtonText}}
-        </md-button>
-        
-      </md-card-actions>
+      <md-card-content class="d-inline-block" v-if="film.imdb_rating || film.rotten_tomatoes_rating">
+        <h3 class="md-subheading">Ratings</h3>
+        <div>
+          <div v-if="film.imdb_rating"><strong>IMDB</strong>: {{film.imdb_rating}}</div>
+          <div v-if="film.rotten_tomatoes_rating"><strong>Rotten Tomatoes</strong>: {{film.rotten_tomatoes_rating}}%
+          </div>
+        </div>
+      </md-card-content>
+
+          <md-card-expand-trigger>
+            <md-button>
+              <md-icon>keyboard_arrow_down</md-icon> Read Plot
+            </md-button>
+          </md-card-expand-trigger>
+       <md-card-expand>
+           <md-card-expand-content>
+            <md-card-content>
+              {{film.overview}}
+            </md-card-content>
+          </md-card-expand-content>
+       </md-card-expand>
+
+       <md-card-actions>
+          <div>
+            <md-button @click.prevent="addNomination()" v-if="nominatable">
+              {{nominateButtonText}}
+            </md-button>
+            <md-button @click="$emit('update:show', false)">Close</md-button>
+          </div>
+        </md-card-actions>
     </md-card>
   </md-dialog>
 </template>
