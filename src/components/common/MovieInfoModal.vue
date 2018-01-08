@@ -1,8 +1,8 @@
 <template>
   <md-dialog :md-active.sync="show" @md-opened="modalOpened" @md-closed="modalClosed">
     <md-card v-if="film" v-show="shouldDisplay" v-images-loaded="imageRendered"  >
-      <md-card-media>
-        <img :src="backdropImage" :alt="`{{film.name}} Backdrop`">
+      <md-card-media v-if="backdropImage">
+        <img :src="backdropImage" :alt="`${film.name} Backdrop`">
       </md-card-media>
       <md-card-header>
         <div class="md-title w-100">
