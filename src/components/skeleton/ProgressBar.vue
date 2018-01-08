@@ -8,7 +8,7 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'ProgressBar',
   computed: {
-    ...mapGetters('poll', ['getActivePoll', 'isCurrentPollInNomination', 'percentageOfCurrentPhaseComplete'])
+    ...mapGetters('poll', ['getActivePoll', 'percentageOfCurrentPhaseComplete'])
   }
 }
 </script>
