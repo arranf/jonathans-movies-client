@@ -70,7 +70,7 @@ export default {
   },
   data () {
     return {
-      shouldDisplay: false,
+      shouldDisplay: false || !this.backdropImage,
       film: {},
       showOverview: false
     }
