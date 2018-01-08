@@ -6,7 +6,7 @@
       </div>
 
       <div class="md-list-action">
-        <span class="md-primary">{{film.score}} <i class="fa fa-star text-md-accent" aria-disabled="true"></i></span>
+        <span class="md-primary">{{film.imdb_rating}} <i class="fa fa-star text-md-accent" aria-disabled="true"></i></span>
       </div>
   </md-list-item>
 </template>
