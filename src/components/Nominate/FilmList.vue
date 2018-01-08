@@ -98,7 +98,7 @@ export default {
         query.query['genres'] = [this.genres]
       }
       if (this.floorRating > 0) {
-        query.query['score'] = {'$gte': this.floorRating}
+        query.query['imdb_rating'] = {'$gte': this.floorRating}
       }
       return query
     }
