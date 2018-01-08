@@ -114,7 +114,7 @@ export default {
     ...mapGetters('poll', ['isCurrentPollInNomination']),
     ...mapGetters('films', ['get']),
     backdropImage: function () {
-      if (this.film) {
+      if (this.film && this.film.backdrop_path) {
         return utils.getTmdbBackdropImage(this.film.backdrop_path)
       }
       return ''
