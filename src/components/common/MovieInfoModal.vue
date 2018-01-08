@@ -1,25 +1,35 @@
 <template>
   <md-dialog :md-active.sync="show" @md-opened="modalOpened" @md-closed="modalClosed">
-    <md-card v-if="film && film.data" v-show="shouldDisplay" v-images-loaded="imageRendered"  >
+    <md-card v-if="film" v-show="shouldDisplay" v-images-loaded="imageRendered"  >
       <md-card-media>
-        <img :src="backdropImage" :alt="`{film.name} Backdrop`">
+        <img :src="backdropImage" :alt="`{{film.name}} Backdrop`">
       </md-card-media>
       <md-card-header>
         <div class="md-title w-100">
           {{film.name}} <small>({{getFilmYear}})</small> 
-          <a :href="getImdbLink" target="_blank" style="float: right;">
+          <a v-if="getImdbLink" :href="getImdbLink" target="_blank" style="float: right;">
             <i class="fa fa-imdb" style="font-size:1.3em" aria-hidden="true"></i>
           </a>
         </div>
-        <div class="md-subhead">
-          {{film.data.runtime}} mins
-             <br />
-              <strong>Genres</strong>: {{film.genres.join(', ')}} 
+        <div v-if="film && film.tagline" class="md-subhead">
+          {{film.tagline}}
         </div>
       </md-card-header>
       <md-card-content>
         {{film.overview}}
       </md-card-content>
+
+             <br />
+              
+      <md-card-content>
+        <h3 class="md-subheading">Information</h3>
+        <div>
+          <div v-if="film.genres"><strong>Genres</strong>: {{film.genres.join(', ')}}</div>
+          <div v-if="film.runtime"><strong>Runtime</strong>: {{film.runtime}} mins</div>
+          <div v-if="film.last_watched"><strong>Last Watched</strong>: {{film.last_watched}}</div>
+        </div>
+      </md-card-content>
+
       <md-card-actions>
         <md-button @click="$emit('update:show', false)">Close</md-button>
         <md-button @click.prevent="addNomination()" v-if="nominatable">
@@ -34,7 +44,6 @@
 <script>
 import queries from '@/api'
 import utils from '@/utils'
-import tmdbApi from '@/api/tmdb'
 import {mapGetters, mapActions} from 'vuex'
 import imagesLoaded from 'vue-images-loaded'
 
@@ -58,28 +67,13 @@ export default {
     ...mapActions('films', {fetch: 'get'}),
     modalOpened: function () {
       this.film = this.get(this.filmId)
-      let promise
-      if (this.film) {
-        promise = Promise.resolve()
-      } else {
-        promise = this.fetch(this.filmId)
+      if (!this.film) {
+        this.fetch(this.filmId)
           .then(film => {
-            // debugger
             this.film = film
           })
+          .catch(error => { console.error(error); this.$emit('update:show', false) })
       }
-
-      promise
-        .then(() => {
-          if (!this.film) {
-            return Promise.reject(new Error(`Unable to find movie information for ${this.filmId}`))
-          } else if (!this.film.data) {
-            tmdbApi.getMovieData(this.film.tmdb_id)
-              .then((response) => this.$set(this.film, 'data', response.data))
-          }
-          return Promise.resolve()
-        })
-        .catch(error => { console.error(error); this.$emit('update:show', false) })
     },
     modalClosed: function () {
       this.$router.go(-1)
@@ -105,13 +99,13 @@ export default {
     ...mapGetters('poll', ['isCurrentPollInNomination']),
     ...mapGetters('films', ['get']),
     backdropImage: function () {
-      if (this.film.data) {
-        return utils.getTmdbBackdropImage(this.film.data.backdrop_path)
+      if (this.film) {
+        return utils.getTmdbBackdropImage(this.film.backdrop_path)
       }
       return ''
     },
     getImdbLink: function () {
-      if (this.film && this.film.data && this.film.data.imdb_id) { return `https://www.imdb.com/title/${this.film.data.imdb_id}` }
+      if (this.film && this.film.imdb_id) { return `https://www.imdb.com/title/${this.film.imdb_id}` }
     },
     getFilmYear: function () {
       if (this.film && this.film.release_date) {
