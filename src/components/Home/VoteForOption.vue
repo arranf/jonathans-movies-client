@@ -112,9 +112,9 @@ export default {
         if (this.remainingVotes <= 0) {
           this.$emit('snackbar', 'Unable to vote. You don\'t have any votes left')
         } else {
-          this.$emit('snackbar', `Voted for ${option.name}. You have ${this.remainingVotes} vote${this.remainingVotes > 1 ? 's' : ''} remaining`)
           this.addVote({poll_id: this.getActivePoll._id, option_id: optionId})
             .then(console.log('Vote added for ', option.name))
+            .then(this.$emit('snackbar', `Voted for ${option.name}. You have ${this.remainingVotes} vote${this.remainingVotes > 1 ? 's' : ''} remaining`))
             .catch(error => console.error(error))
         }
       }
