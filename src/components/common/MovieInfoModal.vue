@@ -34,18 +34,11 @@
         </div>
       </md-card-content>
 
-          <md-card-expand-trigger>
-            <md-button>
-              <md-icon>keyboard_arrow_down</md-icon> Read Plot
-            </md-button>
-          </md-card-expand-trigger>
-       <md-card-expand>
-           <md-card-expand-content>
-            <md-card-content>
-              {{film.overview}}
-            </md-card-content>
-          </md-card-expand-content>
-       </md-card-expand>
+      <transition name="fade">
+        <md-card-content v-if="showOverview">
+                {{film.overview}}
+        </md-card-content>
+      </transition>  
 
        <md-card-actions>
           <div>
@@ -54,6 +47,9 @@
             </md-button>
             <md-button @click="$emit('update:show', false)">Close</md-button>
           </div>
+            <md-button @click="showOverview = !showOverview">
+              <md-icon>keyboard_arrow_up</md-icon> Read Plot
+            </md-button>
         </md-card-actions>
     </md-card>
   </md-dialog>
@@ -75,7 +71,8 @@ export default {
   data () {
     return {
       shouldDisplay: false,
-      film: {}
+      film: {},
+      showOverview: false
     }
   },
   directives: {
@@ -157,5 +154,16 @@ export default {
 <style scoped>
 .fa-imdb {
   color: #FDD835;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: .4s cubic-bezier(.4,0,.2,1);
+  transform: translate3D(0,0,0);
+  will-change: opacity,margin-top;
+  transition-property: opacity,margin-top;
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
