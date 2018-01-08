@@ -5,7 +5,7 @@
         <span>{{film.genres.join(', ')}}</span>
       </div>
 
-      <div class="md-list-action">
+      <div class="md-list-action" v-if="film.imdb_rating">
         <span class="md-primary">{{film.imdb_rating}} <i class="fa fa-star text-md-accent" aria-disabled="true"></i></span>
       </div>
   </md-list-item>
