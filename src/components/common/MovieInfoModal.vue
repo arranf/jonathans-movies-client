@@ -41,15 +41,13 @@
       </transition>  
 
        <md-card-actions>
-          <div>
-            <md-button @click.prevent="addNomination()" v-if="nominatable">
-              {{nominateButtonText}}
-            </md-button>
-            <md-button @click="$emit('update:show', false)">Close</md-button>
-          </div>
-            <md-button @click="showOverview = !showOverview">
-              <md-icon>keyboard_arrow_up</md-icon> Read Plot
-            </md-button>
+        <md-button @click.prevent="addNomination()" v-if="nominatable">
+          {{nominateButtonText}}
+        </md-button>
+        <md-button @click="showOverview = !showOverview">
+          <md-icon>keyboard_arrow_up</md-icon> Read Plot
+        </md-button>
+        <md-button @click="$emit('update:show', false)">Close</md-button>
         </md-card-actions>
     </md-card>
   </md-dialog>
