@@ -3,9 +3,9 @@
         <template v-for="option in getOptionsForCurrentPoll" >
                 <swiper-slide :key="option._id" class="swiper-item" :class="{voted: isVoted(option._id)}" :style="{backgroundColor: getColor(option._id)}" >
                     <div>
-                      <h3 class="text-white md-headline">{{option.name}}</h3>
+                      <h3 class="text-white md-headline no-select">{{option.name}}</h3>
                     </div>
-                    <div :class="{hidden: !isVoted(option._id)}">
+                    <div :class="{hidden: !isVoted(option._id)}" class="no-select">
                       <i class="fa fa-check fa-2x text-white"></i>
                     </div>
                 </swiper-slide>
