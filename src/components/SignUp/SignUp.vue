@@ -28,9 +28,13 @@
           </md-field>
         </div>
       </div>
-
-      <md-button id="submit" class="md-raised md-accent" :disabled="isDisabled" @click.prevent="trySignUp()">Submit</md-button>
-      <md-button id="back" class="md-raised" @click.prevent="toHome()">Back</md-button>
+ <!-- divs here keep the buttons aligned -->
+ <div>
+   <md-button id="submit" class="md-raised md-accent" :disabled="isDisabled" @click.prevent="trySignUp()">Submit</md-button>
+ </div>
+ <div>
+    <md-button id="back" class="md-raised" @click.prevent="toHome()">Back</md-button>
+ </div>
     </form>
   </div>
 </template>
