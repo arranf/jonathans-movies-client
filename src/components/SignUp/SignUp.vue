@@ -1,82 +1,90 @@
 <template>
-  <div class="container d-flex text-center justify-content-center align-items-center mt-4">
-      <div class="row h-100 justify-content-center align-items-center">
-          <div class="col">
-              <div>
-                  <h1>Sign Up!</h1>
-              </div>
-              <div v-if="isError" class="alert alert-danger" role="alert">
-                  Looks like something went wrong!
-              </div>
-              <form>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input name="email" v-validate="'required|email'" data-vv-delay="1000" type="email" class="form-control" :class="{'is-invalid': errors.has('email')}" v-model="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
-                    <div v-if="errors.has('email')" class="invalid-feedback">
-                        Please provide a valid email address.
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input name="password" v-validate="'required'" type="password" v-model="password" class="form-control" :class="{'is-invalid': errors.has('password')}"  id="password" placeholder="Password">
-                    <div v-if="errors.has('password')" class="invalid-feedback">
-                        Please enter a password
-                    </div>
-                </div>
-                <button type="submit" @click.prevent="trySignUp()" class="btn btn-primary" :disabled="isDisabled">Submit</button>
-                <button type="submit" role="button" class="btn btn-outline-secondary" @click.prevent="toHome()">Back</button>
-              </form>
-          </div>
+  <div class="flex-column d-flex text-center justify-content-center align-items-center mt-4">
+    <div>
+      <h1 class="md-display-2">Sign Up</h1>
+    </div>
+    <md-snackbar id="snackbar" md-position="center" :md-active.sync="showSnackbar" md-persistent>
+      <span>Unable to complete sign up.</span>
+      <md-button class="md-primary" @click="showSnackbar = false">Close</md-button>
+    </md-snackbar>
+
+    <form id="internalLoginForm" class="d-flex flex-column align-items-center justify-content-center w-100">
+      <div class="md-layout-row md-gutter w-100">
+        <div class="md-layout-item md-size-100">
+          <md-field :class="getValidationClass('email')" md-clearable md-inline>
+            <md-icon>inbox</md-icon>
+            <label for="email">Email</label>
+            <md-input name="email" id="email" v-model="email" type="email" />
+          </md-field>
+        </div>
       </div>
+
+      <div class="md-layout-row md-gutter w-100">
+        <div class="md-layout-item md-size-100">
+          <md-field :class="getValidationClass('password')" md-inline>
+            <md-icon>vpn_key</md-icon>
+            <label for="password">Password</label>
+            <md-input name="password" id="password" v-model="password" type="password" />
+          </md-field>
+        </div>
+      </div>
+
+      <md-button id="submit" class="md-raised md-accent" :disabled="isDisabled" @click.prevent="trySignUp()">Submit</md-button>
+      <md-button id="back" class="md-raised" @click.prevent="toHome()">Back</md-button>
+    </form>
   </div>
 </template>
 
 <script>
 import feathersClient from '@/api/feathers-client'
-import {mapActions, mapGetters, mapState} from 'vuex'
+import {mapActions} from 'vuex'
 import router from '@/router'
 
 export default {
   name: 'SignUp',
-  data() {
-      return {
-          password: '',
-          email: '',
-          isError: false
-      }
+  data () {
+    return {
+      password: '',
+      email: '',
+      showSnackbar: false
+    }
   },
   methods: {
-      ...mapActions('users', {signUp: 'create'}),
-      ...mapActions('auth', ['authenticate']),
-      toHome: function () {
-        router.push('/home')
-      },
-      trySignUp: function() {
-        const password = this.password
-        const email = this.email
-          this.signUp({
-              strategy: 'local',
-              email: email,
-              password: password
-          })
-          .then( () => this.authenticate({
-              strategy: 'local',
-              email: email,
-              password: password
-          }))
-          .then(token => {
-            console.log('Authenticated!', token);
-            return feathersClient.passport.verifyJWT(token.accessToken);
-          })
-          .then( () => router.push('home'))
-          .catch(error => {console.error(error); this.isError = true})
-      }
+    ...mapActions('users', {signUp: 'create'}),
+    ...mapActions('auth', ['authenticate']),
+    toHome: function () {
+      router.push('/home')
+    },
+    trySignUp: function () {
+      const password = this.password
+      const email = this.email
+      this.signUp({
+        strategy: 'local',
+        email: email,
+        password: password
+      })
+        .then(() => this.authenticate({
+          strategy: 'local',
+          email: email,
+          password: password
+        }))
+        .then(token => {
+          console.log('Authenticated!', token)
+          return feathersClient.passport.verifyJWT(token.accessToken)
+        })
+        .then(() => router.push('home'))
+        .catch(error => { console.error(error); this.showSnackbar = true })
+    },
+    getValidationClass: function () {
+      return true
+    }
   },
   computed: {
-      ...mapState('auth', ['user']),
-      isDisabled: function () {
-          return !(this.password && this.email)
-      }
+    isDisabled: function () {
+      // W3 Email regex: http://emailregex.com/
+      const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      return !(this.password && this.email && regex.test(this.email))
+    }
   }
 }
 </script>

@@ -1,14 +1,14 @@
 <template>
-  <film-selector class="h-60"></film-selector>
+  <film-list></film-list>
 </template>
 
 <script>
-import FilmSelector from '@/components/Nominate/FilmSelector'
+import FilmList from '@/components/Nominate/FilmList'
 
 export default {
   name: 'Nominate',
   components: {
-    FilmSelector
+    FilmList
   }
 }
 </script>

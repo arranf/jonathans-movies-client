@@ -54,6 +54,23 @@ export default {
     }
     return false
   },
+  percentageOfCurrentPhaseComplete (state, getters, rootState) {
+    let activePoll = getters.getActivePoll
+    let currentDateTime = rootState.time.now
+    if (getters.isCurrentPollInNomination) {
+      let total = activePoll.pollTransitionDateTime - activePoll.startDateTime
+      return 100 - ((activePoll.pollTransitionDateTime - currentDateTime) / total) * 100
+    } else if (getters.isCurrentPollInVoting) {
+      let total
+      if (activePoll.pollTransitionDateTime) {
+        total = activePoll.endDateTime - activePoll.pollTransitionDateTime
+      } else {
+        total = activePoll.endDateTime - activePoll.startDateTime
+      }
+      return 100 - ((activePoll.endDateTime - currentDateTime) / total) * 100
+    }
+    return 0
+  },
   isCurrentPollInVoting (state, getters, rootState, rootGetters) {
     let activePoll = getters.getActivePoll
     if (activePoll) {
@@ -70,6 +87,7 @@ export default {
     }
     return false
   },
+  // TODO REMOVE VVVVV
   isNominationCurrentOrOverForPollFinishingUpTo: (state, getters, rootState, rootGetters) => withinMinutes => {
     const poll = getters.getPollFinishingUpTo(withinMinutes)
     if (poll) {

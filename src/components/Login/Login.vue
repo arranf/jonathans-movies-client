@@ -1,108 +1,122 @@
 <template>
-  <div class="container d-flex text-center justify-content-center align-items-center mt-4">
-      <div class="row h-100 ">
-          <div class="col">
-              <div>
-                  <h1>Login</h1>
-              </div>
-              <div v-if="isError" class="alert alert-danger" role="alert">
-                Oops that username & password combination wasn't quite correct.
-              </div>
-              <div v-if="!isInternalLogin">
-                <a href="#" @click.prevent="facebookLogin()" class="btn btn-facebook btn-block">Log In with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span></a>
-                <p class="py-1 my-1">or</p>
-                <button @click="swapLoginType()" class="btn btn-info btn-block">Log In</button>
-                <div class="pt-1">
-                  <a href="#" @click.prevent="toSignUp()" >Not got an account? Sign up</a>
-                </div>
-              </div>
-              <form v-if="isInternalLogin">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input name="email" v-validate="'required|email'" data-vv-delay="1000"  type="email" class="form-control" :class="{'is-invalid': errors.has('email')}" v-model="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
-                    <div v-if="errors.has('email')" class="invalid-feedback">
-                        Please provide a valid email address.
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input name="password" v-validate="'required'"  type="password" v-model="password" class="form-control" :class="{'is-invalid': errors.has('password')}"  id="password" placeholder="Password">
-                    <div v-if="errors.has('password')" class="invalid-feedback">
-                        Please enter a password
-                    </div>
-                </div>
-                    <button type="submit" @click.prevent="tryLogin()" class="btn btn-primary" :disabled="isDisabled">Submit</button>
-                    <button role="button" class="btn btn-outline-secondary" @click="swapLoginType()">Back</button>
-              </form>
-          </div>
+  <div class="d-flex flex-column text-center justify-content-center align-items-center mt-4">
+
+    <md-snackbar id="snackbar" md-position="center" :md-active.sync="showSnackbar" md-persistent>
+      <span>Unable to complete log in.</span>
+      <md-button class="md-primary" @click="showSnackbar = false">Close</md-button>
+    </md-snackbar>
+
+    <div>
+      <h1 class="md-display-2">Login</h1>
+    </div>
+    <div id="loginOptions" v-if="!isInternalLogin">
+      <md-button id="facebook" class="btn-facebook btn-block md-raised" @click.prevent="facebookLogin()"><span class="text-white">Log In with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span></span></md-button>
+      <p class="py-1 my-1">or</p>
+      <md-button id="login" @click.prevent="swapLoginType()" class="btn-block md-raised md-accent">Log In</md-button>
+      <div class="pt-1">
+        <a id="signup" href="#" @click.prevent="toSignUp()" >Not got an account? Sign up</a>
       </div>
+    </div>
+
+    <!-- Login Form -->
+    <form id="internalLoginForm" class="d-flex flex-column align-items-center justify-content-center w-100" v-if="isInternalLogin">
+      <div class="md-layout-row md-gutter w-100">
+        <div class="md-layout-item md-size-100">
+          <md-field :class="getValidationClass('email')" md-clearable md-inline>
+            <md-icon>inbox</md-icon>
+            <label for="email">Email</label>
+            <md-input name="email" id="email" v-model="email" type="email" />
+          </md-field>
+        </div>
+      </div>
+
+      <div class="md-layout-row md-gutter w-100">
+        <div class="md-layout-item md-size-100">
+          <md-field :class="getValidationClass('password')" md-inline>
+            <md-icon>vpn_key</md-icon>
+            <label for="password">Password</label>
+            <md-input name="password" id="password" v-model="password" type="password" />
+          </md-field>
+        </div>
+      </div>
+      <div >
+        <md-button id="submit" class="md-raised md-accent" :disabled="isDisabled" @click.prevent="tryLogin()">Submit</md-button>
+      </div>
+      <div>
+        <md-button id="back" class="md-raised" @click.prevent="swapLoginType()">Back</md-button>
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
 import feathersClient from '@/api/feathers-client'
-import {mapActions, mapGetters, mapState} from 'vuex'
+import {mapActions} from 'vuex'
 import router from '@/router'
 
 export default {
   name: 'Login',
-    data() {
-        return {
-            password: '',
-            email: '',
-            isError: false,
-            isInternalLogin: false
-        }
-    },
-    methods: {
-        ...mapActions('auth',['authenticate', 'logout']),
-        tryLogin: function() {
-            this.authenticate({
-                strategy: 'local',
-                email: this.email,
-                password: this.password
-            })
-            .then(token => {
-                console.log('Authenticated!', token);
-                return feathersClient.passport.verifyJWT(token.accessToken);
-            })
-            .then( () => {
-                router.push('home')
-            })
-            .catch(error => {console.error(error); this.isError = true})
-        },
-        toSignUp: function() {
-            router.push('/signup')
-        },
-        swapLoginType: function() {
-          this.isInternalLogin = !this.isInternalLogin
-        },
-        facebookLogin: function() {
-          let url
-          if (process.env.BRANCH === 'develop') {
-            url = "https://staging-api.jonathansmovies.com/auth/facebook"
-          } else if (process.env.NODE_ENV === 'production') {
-            url = "https://api.jonathansmovies.com/auth/facebook"
-          } else {
-            url = "http://localhost:3030/auth/facebook"
-          } 
-          this.logout()
-            .then(window.location = url)
-        }
-    },
-    computed: {
-        ...mapState('auth', ['user']),
-        isDisabled: function () {
-            return !(this.password && this.email)
-        }
+  data () {
+    return {
+      password: '',
+      email: '',
+      isInternalLogin: false,
+      showSnackbar: false
     }
+  },
+  methods: {
+    ...mapActions('auth', ['authenticate', 'logout']),
+    tryLogin: function () {
+      this.authenticate({
+        strategy: 'local',
+        email: this.email,
+        password: this.password
+      })
+        .then(token => {
+          console.log('Authenticated!', token)
+          return feathersClient.passport.verifyJWT(token.accessToken)
+        })
+        .then(() => {
+          router.push('home')
+        })
+        .catch(error => { console.error(`Login Error: ${error}`); this.showSnackbar = true })
+    },
+    toSignUp: function () {
+      router.push('/signup')
+    },
+    swapLoginType: function () {
+      this.isInternalLogin = !this.isInternalLogin
+    },
+    facebookLogin: function () {
+      let url
+      if (process.env.BRANCH === 'develop' && process.env.STAGING === '1') {
+        url = 'https://staging-api.jonathansmovies.com/auth/facebook'
+      } else if (process.env.NODE_ENV === 'production') {
+        url = 'https://api.jonathansmovies.com/auth/facebook'
+      } else {
+        url = 'http://localhost:3030/auth/facebook'
+      }
+      this.logout()
+        .then(window.location = url)
+    },
+    getValidationClass: function (input) {
+      return true
+    }
+  },
+  computed: {
+    isDisabled: function () {
+      // W3 Email regex: http://emailregex.com/
+      const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+      return !(this.password && this.email && regex.test(this.email))
+    }
+  }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .btn-facebook {
-    background-color: #3b5998;
-    border-color: #3b5998;
+    background-color: #3b5998 !important;
+    border-color: #3b5998 !important;
     color: #ffffff;
   }
 </style>

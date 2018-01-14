@@ -28,31 +28,31 @@
 
 <script>
 import {mapGetters, mapState, mapActions} from 'vuex'
-import queries from '@/api' 
+import queries from '@/api'
 
 export default {
   name: 'StatisticsFooter',
-  data() {
-      return {
-          gotVoteandPolls: false
-      }
+  data () {
+    return {
+      gotVoteandPolls: false
+    }
   },
   computed: {
-      ...mapGetters('vote', {votes: 'list'}),
-      ...mapGetters('poll', {polls: 'list'}),
-      ...mapState('auth', ['user'])
+    ...mapGetters('vote', {votes: 'list'}),
+    ...mapGetters('poll', {polls: 'list'}),
+    ...mapState('auth', ['user'])
   },
   // TODO Remove these and use api queries
   methods: {
-      ...mapActions('vote', {getVotes: 'find'}),
-      ...mapActions('poll', {getPolls: 'find'}),
+    ...mapActions('vote', {getVotes: 'find'}),
+    ...mapActions('poll', {getPolls: 'find'})
   },
-  beforeUpdate: function() {
-      if (this.user && !this.gotVoteandPolls){
-        queries.getCurrentPoll()
+  beforeUpdate: function () {
+    if (this.user && !this.gotVoteandPolls) {
+      queries.getCurrentPoll()
         .then(this.getVotes({query: {$limit: 100}}))
         .then(this.gotVoteandPolls = true)
-      }
+    }
   }
 }
 </script>

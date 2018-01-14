@@ -4,7 +4,7 @@ const queries = {
   getCurrentPoll: function () {
     return store.dispatch('poll/find', {query: {
       $sort: {endDateTime: -1},
-      $limit: 100//, 
+      $limit: 100
       // startDateTime: {
       //   $lt: store.getters['time/getNow']
       // },
@@ -29,12 +29,11 @@ const queries = {
   },
   getVotesForCurrentPoll: function () {
     const poll = store.getters['poll/getActivePoll']
-    const pollId = poll._id
-    if (poll && pollId) {
+    if (poll && poll._id) {
       return store.dispatch('vote/find', {pageinate: false,
         query: {
           $limit: 1000,
-          poll_id: pollId
+          poll_id: poll._id
         }})
     }
     return Promise.reject(new Error('Could not get current poll'))
@@ -73,6 +72,22 @@ const queries = {
     } else {
       return Promise.reject(new Error('Missing film information id'))
     }
+  },
+  stopPoll: function () {
+    const poll = store.getters['poll/getActivePoll']
+    const currentTime = store.getters['time/getNow']
+    const data = {'endDateTime': currentTime}
+    store.dispatch('poll/patch', [poll._id, data, {}])
+  },
+  stopNominations: function () {
+    const poll = store.getters['poll/getActivePoll']
+    const currentTime = store.getters['time/getNow']
+    const oldTransitionTime = poll.pollTransitionDateTime
+    const data = {
+      'pollTransitionDateTime': currentTime,
+      'endDateTime': poll.endDateTime - (oldTransitionTime - currentTime)
+    }
+    store.dispatch('poll/patch', [poll._id, data, {}])
   }
 }
 

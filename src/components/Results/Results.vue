@@ -1,24 +1,23 @@
 <template>
-<div class="h-100">
-  <div v-if="getMostRecentPoll && dataCollection.datasets && dataCollection.datasets.length > 0 && winningOptions.length > 0">
-    <h1 class="text-center"><i class="fa fa-trophy" aria-hidden="true"></i>
-    <br/>
-    {{winningOptions.length > 1 ? winningOptions.slice(0, winningOptions.length - 1).join(', ') + " and " + winningOptions.slice(-1) : winningOptions[0]}}</h1>
-    <h6 class="text-center">{{howLongAgoMostRecentPoll}}</h6>   
-   <pie-chart :chart-data="dataCollection" :options="{responsive: true, maintainAspectRatio: false}"></pie-chart>
+<div class="d-flex flex-column align-items-center justify-items-center">
+  <div 
+    v-if="getMostRecentPoll && dataCollection.datasets && dataCollection.datasets.length > 0 && winningOptions.length > 0"  
+    >
+    <h1 class="md-headline text-center">{{winningOptions.length > 1 ? winningOptions.slice(0, winningOptions.length - 1).join(', ') + " and " + winningOptions.slice(-1) : winningOptions[0]}} Wins</h1>
+    <pie-chart :chart-data="dataCollection" :options="{responsive: true, maintainAspectRatio: false}" />
   </div>
-  <div v-else>
-    <h1 class="text-center">
-      No Votes Were Cast
-    </h1>
-    <h6 class="text-center">{{howLongAgoMostRecentPoll}}</h6>   
-  </div>
+  <md-empty-state v-cloak v-else-if ="winningOptions.length === 0 && emptyStateAllowed"
+    class="md-accent"
+    md-icon="error_outline"
+    md-label="No Results"
+    md-description="There needs to be at least one vote for there to be a winner!">
+  </md-empty-state>
 </div>
 </template>
 
 <script>
 import PieChart from './PieChart.js'
-import {mapActions, mapGetters, mapState} from 'vuex'
+import {mapGetters, mapState} from 'vuex'
 import utils from '@/utils'
 import constants from '@/constants'
 import queries from '@/api'
@@ -30,30 +29,34 @@ export default {
   },
   data () {
     return {
-      backgroundColors: []
+      backgroundColors: [],
+      emptyStateAllowed: false
     }
   },
   computed: {
     ...mapGetters('vote', ['getGraphData', 'getHighestVotedOptionsForPoll']),
     ...mapGetters('poll', ['getMostRecentPoll', 'howLongAgoMostRecentPoll']),
-    ...mapGetters('option', {getOption: 'get'}),
     ...mapState('vote', ['isFindPending']),
     dataCollection: function () {
       const graphData = this.getGraphData(this.getMostRecentPoll._id)
-      if (!graphData){
+      if (!graphData) {
         return {datasets: [], labels: []}
       }
       return {datasets: [{data: graphData.data, label: 'Vote', backgroundColor: this.backgroundColors}], labels: graphData.labels}
     },
     winningOptions: function () {
-      return this.getHighestVotedOptionsForPoll(this.getMostRecentPoll._id)
+      if (this.getMostRecentPoll && this.getMostRecentPoll._id) {
+        return this.getHighestVotedOptionsForPoll(this.getMostRecentPoll._id)
+      }
+      return []
     }
   },
   mounted () {
     queries.getCurrentPoll()
       .then(() => queries.getVotesForMostRecentPoll(this.getMostRecentPoll._id))
       .then(() => queries.getOptionsForMostRecentPoll(this.getMostRecentPoll._id))
-      .then(response => this.backgroundColors = utils.selectRandomArraySize(constants.colors['800'], response.data.length))
+      .then(response => { this.backgroundColors = utils.selectRandomArraySize(constants.colors['800'], response.data.length) })
+      .then(a => { this.emptyStateAllowed = true })
       .catch(error => console.log(error))
   }
 }
@@ -62,5 +65,9 @@ export default {
 <style>
 .fa-trophy {
   color: #F6BD1C;
+}
+
+[v-cloak] {
+  display: none;
 }
 </style>

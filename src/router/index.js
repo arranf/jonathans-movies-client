@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
-import Home from '@/components/Home/Home'
-import Login from '@/components/Login/Login'
-import SignUp from '@/components/SignUp/SignUp'
-import Create from '@/components/Create/Create'
-import Nominate from '@/components/Nominate/Nominate'
-
 import store from '@/store'
 import feathersClient from '@/api/feathers-client'
+
+const Home = () => import('@/components/Home/Home')
+const Login = () => import('@/components/Login/Login')
+const SignUp = () => import('@/components/SignUp/SignUp')
+const Create = () => import('@/components/Create/Create')
+const Nominate = () => import('@/components/Nominate/Nominate')
+const Add = () => import('@/components/Add/AddMovie')
 
 Vue.use(Router)
 
@@ -42,7 +42,7 @@ const router = new Router({
       }
     },
     {
-      path: '/home',
+      path: '/home/:filmId?',
       name: 'Home',
       component: Home
     },
@@ -60,9 +60,14 @@ const router = new Router({
       }
     },
     {
-      path: '/movies',
+      path: '/movies/:filmId?',
       name: 'Movies',
       component: Nominate
+    },
+    {
+      path: '/add',
+      name: 'Add',
+      component: Add
     }
   ]
 })
@@ -71,7 +76,21 @@ router.beforeEach((to, from, next) => {
   const user = store.state.auth.user
 
   if (!user && to.path !== '/' && to.path !== '/signup') {
-    next('/')
+    // TODO Refactor into generic method
+    store.dispatch('auth/authenticate')
+      .then(response => {
+        return feathersClient.passport.verifyJWT(response.accessToken)
+      })
+      .then(payload => {
+        return feathersClient.service('users').get(payload.userId)
+      })
+      .then(() => {
+        next()
+      })
+      .catch(function (error) {
+        next('/')
+        console.error('Error authenticating in router beforeEnter', error)
+      })
   } else if (to.matched.some(record => record.meta.admin) && !user.isAdmin) {
     next(false)
   } else {

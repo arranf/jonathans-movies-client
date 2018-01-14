@@ -1,0 +1,23 @@
+.d-flex {
+    display: flex;
+}
+
+.justify-content-center {
+    -ms-flex-pack: center !important;
+    justify-content: center !important;
+}
+
+.flex-row {
+    -ms-flex-direction: row !important;
+    flex-direction: row !important;
+}
+  
+.flex-column {
+-ms-flex-direction: column !important;
+flex-direction: column !important;
+}
+
+.align-items-center {
+    -ms-flex-align: center !important;
+    align-items: center !important;
+}

@@ -1,15 +1,6 @@
+@import "../../../node_modules/normalize.css/normalize.css";
+@import "/bootstrap/bootstrap_utilities";
 @import "custom";
-// Your variable overrides
-$theme-colors: (
-  "info": #2196f3,
-  "danger": #f44336,
-  "success": #4caf50,
-  "warning": #ff9800,
-  "primary": #03A9F4,
-  "secondary": #ff5722
-);
 
-$enable-gradients: true;
-$enable-shadows: true;
-
-@import "../../../node_modules/bootstrap/scss/bootstrap";
+@import "flex";
+@import "sizing"

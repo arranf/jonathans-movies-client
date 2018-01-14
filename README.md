@@ -1,5 +1,3 @@
-# jonathans-movies-client
-
 > A Vue.js project for jonathansmovies.com
 
 ## Build Setup
@@ -16,6 +14,22 @@ yarn run build
 
 # build for production and view the bundle analyzer report
 yarn run build --report
+```
+
+## Technologies
+This project is built using [Vue](https://vuejs.org) ([Vuex](https://vuex.vuejs.org) and [Vue-Router](https://router.vuejs.org/en/)) as well as [Feathers](feathersjs.com) ([Feathers-Vuex](https://github.com/feathersjs/feathers-vuex)).
+
+We also use [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/) and [FontAwesome](https://fontawesome.io/).
+
+The frontend for this website is hosted on [Netlify])(https://netlify.com).
+
+## Developing
+You are free to use any IDE but Visual Studio Code is recommended.
+The following extensions will be helpful `Ctrl + P`
+```
+ext install vetur
+ext install vscode-eslint
+ext install sass-indented
 ```
 
 ## Resources
@@ -35,14 +49,9 @@ yarn run build --report
 [VueAwesomeSwiper](https://github.com/surmon-china/vue-awesome-swiper/vue)
 
 #### Vuex Resources
-Note: We're currently using the 1.0 beta release, make sure to switch to those branches!
 
 [Vuex Feather](https://github.com/feathersjs/feathers-vuex)
 
 [Vuex Feather Example](https://github.com/feathersjs/feathers-chat-vuex)
 
 ### Others
-
-[Bootstrap Docs](https://getbootstrap.com/docs/4.0/getting-started/introduction/)
-
-[FontAwesome](http://fontawesome.io/)
