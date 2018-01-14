@@ -3,8 +3,13 @@
     <movie-info-modal @snackbar="setSnackbar" :show.sync="showingFilm" :filmId="$route.params.filmId" :show-nominate="true" />
     <div class="d-flex flex-column" v-if="suggestions" >
 
-      <h2 class="md-display-1 text-center">Discover a Movie</h2>
-      <div class="scroll align-self-center" v-infinite-scroll="refresh" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+      <h2 class="md-display-1 text-center">Discover a Movie 
+        <md-button @click="refresh" class="md-icon-button">
+          <md-icon>refresh</md-icon>
+        </md-button>
+      </h2>
+      
+      <div class="scroll align-self-center">
         <template  v-for="film in suggestions">
           <film-preview class="scroll-item" :key="film._id" :film="film" modal-page-name="Discover"></film-preview>
         </template>
@@ -19,7 +24,6 @@
 </template>
 
 <script>
-import infiniteScroll from 'vue-infinite-scroll'
 import FilmPreview from '@/components/common/FilmPreview'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
 import queries from '@/api'
@@ -38,9 +42,6 @@ export default {
     FilmPreview,
     MovieInfoModal
   },
-  directives: {
-    infiniteScroll
-  },
   watch: {
     '$route' (to, from) {
       this.showingFilm = Boolean(to.params.filmId)
@@ -53,7 +54,7 @@ export default {
     },
     refresh () {
       queries.discoverMovies()
-        .then(discoveredFilms => { console.log(discoveredFilms); this.suggestions = discoveredFilms })
+        .then(discoveredFilms => { this.suggestions = discoveredFilms })
         .catch(e => {
           console.error(e)
           this.setSnackbar('Something went wrong. Try again.')
