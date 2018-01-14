@@ -14,9 +14,14 @@
         <span class="md-list-item-text">Create Poll</span>
       </md-list-item>
 
+      <md-list-item v-if="user" to="/discover" @click="closeDrawer">
+        <md-icon>search</md-icon>
+        <span class="md-list-item-text">Discover Movies</span>
+      </md-list-item>
+
       <md-list-item v-if="user" to="/movies" @click="closeDrawer">
         <md-icon>movie</md-icon>
-        <span class="md-list-item-text">Movies</span>
+        <span class="md-list-item-text">All Movies</span>
       </md-list-item>
 
       <md-list-item v-if="user && user.isAdmin" to="/add" @click="closeDrawer">
