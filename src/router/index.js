@@ -9,6 +9,7 @@ const SignUp = () => import('@/components/SignUp/SignUp')
 const Create = () => import('@/components/Create/Create')
 const Nominate = () => import('@/components/Nominate/Nominate')
 const Add = () => import('@/components/Add/AddMovie')
+const Discover = () => import('@/components/Discover/Discover')
 
 Vue.use(Router)
 
@@ -68,6 +69,11 @@ const router = new Router({
       path: '/add',
       name: 'Add',
       component: Add
+    },
+    {
+      path: '/discover/:filmId?',
+      name: 'Discover',
+      component: Discover
     }
   ]
 })

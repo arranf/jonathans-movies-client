@@ -10,9 +10,13 @@
       <h1 class="md-display-2">Login</h1>
     </div>
     <div id="loginOptions" v-if="!isInternalLogin">
-      <md-button id="facebook" class="btn-facebook btn-block md-raised" @click.prevent="facebookLogin()"><span class="text-white">Log In with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span></span></md-button>
-      <p class="py-1 my-1">or</p>
-      <md-button id="login" @click.prevent="swapLoginType()" class="btn-block md-raised md-accent">Log In</md-button>
+      <!-- divs here keep the buttons aligned -->
+      <div>       
+        <md-button id="facebook" class="btn-facebook btn-block md-raised" @click.prevent="facebookLogin()"><span class="text-white">Log In with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span></span></md-button>
+      </div>
+      <div>
+          <md-button id="login" @click.prevent="swapLoginType()" class="btn-block md-raised md-accent">Log In</md-button>
+      </div>
       <div class="pt-1">
         <a id="signup" href="#" @click.prevent="toSignUp()" >Not got an account? Sign up</a>
       </div>

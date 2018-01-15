@@ -88,6 +88,12 @@ const queries = {
       'endDateTime': poll.endDateTime - (oldTransitionTime - currentTime)
     }
     store.dispatch('poll/patch', [poll._id, data, {}])
+  },
+  discoverMovies: function () {
+    return store.dispatch('films/find', {paginate: false,
+      query: {
+        discover: true
+      }})
   }
 }
 

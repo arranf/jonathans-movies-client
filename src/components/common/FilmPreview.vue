@@ -1,34 +1,22 @@
 <template>
-  <div class="movie-poster " @click="showModal()" v-if="option" >
-    <img class="img-fluid img-thumbnail md-elevation-2" v-if="film" :src="getFilmPoster" :alt="option.name + ' image'">
-    <div v-else class="d-flex flex-column justify-content-center fake-movie-poster md-elevation-2" :style="{backgroundColor: getColor()}">
-      <div class="h-30 w-100 align-self-end">
-        <p style="font-size: 1.6em;" class="text-white text-center">{{option.name}}</p>
-      </div>
-    </div>
+  <div class="movie-poster " @click="showModal()" v-if="film" >
+    <img class="img-fluid img-thumbnail md-elevation-2" :src="getFilmPoster" :alt="film.name + ' image'">
     <h4 class="md-subheading text-center">
-      {{option.name}}
+      {{film.name}}
     </h4>
   </div>
 </template>
 
 <script>
 import utils from '@/utils'
-import constants from '@/constants'
-import {mapState, mapActions, mapGetters} from 'vuex'
+import {mapState, mapGetters} from 'vuex'
 
 export default {
-  name: 'OptionPreview',
-  props: ['option'],
+  name: 'FilmPreview',
+  props: ['film', 'modalPageName'],
   computed: {
     ...mapState('option', {waitingForOptionFind: 'isFindPending'}),
     ...mapGetters('films', {getFilm: 'get'}),
-    lastWatched: function () {
-      if (this.film && this.film.lastWatched) {
-        return utils.humanizeTimeToNowImprecise(this.film.lastWatched) + ' ago'
-      }
-      return null
-    },
     getFilmBackdrop: function () {
       if (this.film && this.film.backdrop_path) {
         return utils.getTmdbBackdropImage(this.film.backdrop_path)
@@ -43,7 +31,7 @@ export default {
     },
     getImdbLink: function () {
       if (this.film && this.film.imdb_id) {
-        return `https://www.imdb.com/title/${this.film.imdb_id}`
+        return `https://www.imdb.com/title/${this.film.data.imdb_id}`
       }
     },
     getFilmYear: function () {
@@ -51,22 +39,12 @@ export default {
         return utils.getYearFromTmdbReleaseDate(this.film.release_date)
       }
       return null
-    },
-    film () {
-      if (this.option && this.option.film_id) {
-        return this.getFilm(this.option.film_id)
-      }
-      return null
     }
   },
   methods: {
-    ...mapActions('option', ['getFilmDataForOption']),
-    getColor: function () {
-      return utils.selectRandom(constants.colors['800'])
-    },
     showModal: function () {
       if (this.film) {
-        this.$router.push({name: 'Home', params: { filmId: this.film._id }})
+        this.$router.push({name: this.modalPageName, params: { filmId: this.film._id }})
       }
     }
   }

@@ -1,19 +1,22 @@
 <template>
-  <swiper :options="swiperOption" :not-next-tick="notNextTick" class="swiper-box"  ref="voteSwiper">
-        <template v-for="option in getOptionsForCurrentPoll" >
-                <swiper-slide :key="option._id" class="swiper-item" :class="{voted: isVoted(option._id)}" :style="{backgroundColor: getColor(option._id)}" >
-                    <div>
-                      <h3 class="text-white md-headline no-select">{{option.name}}</h3>
-                    </div>
-                    <div :class="{hidden: !isVoted(option._id)}" class="no-select">
-                      <i class="fa fa-check fa-2x text-white"></i>
-                    </div>
-                </swiper-slide>
-        </template>
-        <div class="swiper-pagination"  slot="pagination"></div>
-        <div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
-  </swiper>
+  <div class="h-100">
+    <md-progress-spinner v-if="!isLoaded" :md-diameter="100" :md-stroke="10" md-mode="indeterminate"></md-progress-spinner>
+    <swiper v-else :options="swiperOption" :not-next-tick="notNextTick" class="swiper-box"  ref="voteSwiper">
+          <template v-for="option in getOptionsForCurrentPoll" >
+                  <swiper-slide :key="option._id" class="swiper-item" :class="{voted: isVoted(option._id)}" :style="{backgroundColor: getColor(option._id)}" >
+                      <div>
+                        <h3 class="text-white md-headline no-select">{{option.name}}</h3>
+                      </div>
+                      <div :class="{hidden: !isVoted(option._id)}" class="no-select">
+                        <i class="fa fa-check fa-2x text-white"></i>
+                      </div>
+                  </swiper-slide>
+          </template>
+          <div class="swiper-pagination"  slot="pagination"></div>
+          <div class="swiper-button-prev" slot="button-prev"></div>
+          <div class="swiper-button-next" slot="button-next"></div>
+    </swiper>
+  </div>
 </template>
 
 <script>
@@ -34,6 +37,7 @@ export default {
         colors: constants.colors['800'],
         optionColorMap: {}
       },
+      isLoaded: false,
       notNextTick: true,
       swiperOption: {
         simulateTouch: true,
@@ -111,12 +115,12 @@ export default {
       } else {
         if (this.remainingVotes <= 0) {
           this.$emit('snackbar', 'Unable to vote. You don\'t have any votes left')
-        } else {
-          this.addVote({poll_id: this.getActivePoll._id, option_id: optionId})
-            .then(console.log('Vote added for ', option.name))
-            .then(this.$emit('snackbar', `Voted for ${option.name}. You have ${this.remainingVotes - 1} vote${this.remainingVotes > 1 ? 's' : ''} remaining`))
-            .catch(error => console.error(error))
+          return
         }
+        this.addVote({poll_id: this.getActivePoll._id, option_id: optionId})
+          .then(console.log('Vote added for ', option.name))
+          .then(this.$emit('snackbar', `Voted for ${option.name}. You have ${this.remainingVotes - 1} vote${this.remainingVotes > 1 ? 's' : ''} remaining`))
+          .catch(error => { console.error(error); this.$emit('snackbar', 'Error submitting vote.') })
       }
     },
     isVoted: function (optionId) {
@@ -133,6 +137,7 @@ export default {
   mounted: function () {
     utils.shuffle(this.optionColors.colors)
     queries.getVotesForCurrentPoll()
+      .then(() => { this.isLoaded = true })
       .catch(error => console.error(error))
   }
 }
