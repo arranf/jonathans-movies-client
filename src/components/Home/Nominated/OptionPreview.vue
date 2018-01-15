@@ -1,6 +1,6 @@
 <template>
   <div class="movie-poster " @click="showModal()" v-if="option" >
-    <img class="img-fluid img-thumbnail md-elevation-2" v-if="film && film.data" :src="getFilmPoster" :alt="option.name + ' image'">
+    <img class="img-fluid img-thumbnail md-elevation-2" v-if="film" :src="getFilmPoster" :alt="option.name + ' image'">
     <div v-else class="d-flex flex-column justify-content-center fake-movie-poster md-elevation-2" :style="{backgroundColor: getColor()}">
       <div class="h-30 w-100 align-self-end">
         <p style="font-size: 1.6em;" class="text-white text-center">{{option.name}}</p>
@@ -30,20 +30,20 @@ export default {
       return null
     },
     getFilmBackdrop: function () {
-      if (this.film && this.film.data && this.film.backdrop_path) {
-        return utils.getTmdbBackdropImage(this.film.data.backdrop_path)
+      if (this.film && this.film.backdrop_path) {
+        return utils.getTmdbBackdropImage(this.film.backdrop_path)
       }
       return null
     },
     getFilmPoster: function () {
-      if (this.film && this.film.data && this.film.data.poster_path) {
-        return utils.getTmdbPosterImage(this.film.data.poster_path)
+      if (this.film && this.film.poster_path) {
+        return utils.getTmdbPosterImage(this.film.poster_path)
       }
       return ''
     },
     getImdbLink: function () {
-      if (this.film && this.film.data && this.film.data.imdb_id) {
-        return `https://www.imdb.com/title/${this.film.data.imdb_id}`
+      if (this.film && this.film.imdb_id) {
+        return `https://www.imdb.com/title/${this.film.imdb_id}`
       }
     },
     getFilmYear: function () {
@@ -68,16 +68,6 @@ export default {
       if (this.film) {
         this.$router.push({name: 'Home', params: { filmId: this.film._id }})
       }
-    }
-  },
-  data () {
-    return {
-      fetchedData: false
-    }
-  },
-  created () {
-    if (this.option.film_id) {
-      this.getFilmDataForOption(this.option)
     }
   }
 }
