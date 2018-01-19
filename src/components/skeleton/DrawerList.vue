@@ -86,34 +86,23 @@
 
   <v-list v-if="getActivePoll">
     <v-list-tile v-if="isCurrentPollInNomination">
-      <v-list-tile-action>
-          <v-icon>format_list_numbered</v-icon>
-        </v-list-tile-action>
         <v-list-tile-content>
-          <v-list-tile-title>{{remainingNominations}} Nominations Left</v-list-tile-title>
+          <v-list-tile-title>{{remainingNominations}} Nomination{{remainingNominations > 1 ? 's' : ''}} Left</v-list-tile-title>
         </v-list-tile-content>
     </v-list-tile>
     <v-list-tile v-else-if="isCurrentPollInVoting">
-      <v-list-tile-action>
-          <v-icon>format_list_numbered</v-icon>
-        </v-list-tile-action>
         <v-list-tile-content>
-          <v-list-tile-title>{{remainingVotes}} Votes Left</v-list-tile-title>
+          <v-list-tile-title>{{remainingVotes}} Vote{{remainingVotes > 1 ? 's' : ''}} Left</v-list-tile-title>
         </v-list-tile-content>
     </v-list-tile>
 
     <v-list-tile v-if="isCurrentPollInNomination">
-      <v-list-tile-action>
-          <v-icon>timelapse</v-icon>
-        </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>{{remainingTimeInNominationWordsForCurrentPoll}}</v-list-tile-title>
         </v-list-tile-content>
     </v-list-tile>
     <v-list-tile v-else-if="isCurrentPollInVoting">
-      <v-list-tile-action>
-          <v-icon>timelapse</v-icon>
-        </v-list-tile-action>
+      
         <v-list-tile-content>
           <v-list-tile-title>{{remainingTimeWordsForCurrentPoll}}</v-list-tile-title>
         </v-list-tile-content>
