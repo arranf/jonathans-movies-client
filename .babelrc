@@ -13,14 +13,7 @@
     "env": {
       "test": {
         "presets": ["env", "stage-2"],
-        "plugins": ["transform-vue-jsx", "transform-es2015-modules-commonjs", "dynamic-import-node", "syntax-dynamic-import", "babel-plugin-dynamic-import-webpack",
-                        ["transform-imports", {
-                            "vuetify": {
-                                "transform": "vuetify/es5/components/${member}",
-                                "preventFullImport": true
-                            }
-                        }]
-                    ]
+        "plugins": ["transform-vue-jsx", "transform-es2015-modules-commonjs", "dynamic-import-node", "syntax-dynamic-import", "babel-plugin-dynamic-import-webpack"]
       }
     }
   }

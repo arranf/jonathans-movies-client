@@ -1,55 +1,41 @@
 <template>
-  <div class="d-flex flex-column text-center justify-content-center align-items-center mt-4">
+  <div class="text-center mt-4">
 
-    <md-snackbar id="snackbar" md-position="center" :md-active.sync="showSnackbar" md-persistent>
+    <v-snackbar id="snackbar" :bottom="true" v-model="showSnackbar">
       <span>Unable to complete log in.</span>
-      <md-button class="md-primary" @click="showSnackbar = false">Close</md-button>
-    </md-snackbar>
+      <v-btn @click="showSnackbar = false">Close</v-btn>
+    </v-snackbar>
 
-    <div>
-      <h1 class="md-display-2">Login</h1>
+    <div class="mb-3">
+      <h1 class="display-2">Login</h1>
     </div>
     <div id="loginOptions" v-if="!isInternalLogin">
       <!-- divs here keep the buttons aligned -->
       <div>       
-        <md-button id="facebook" class="btn-facebook btn-block md-raised" @click.prevent="facebookLogin()"><span class="text-white">Log In with <i class="fa fa-facebook-official" title="Facebook"></i><span class="sr-only">Facebook</span></span></md-button>
+        <v-btn id="facebook" class="btn-facebook btn-block md-raised" @click.prevent="facebookLogin()"><span class="text-white">Log In with <span class="ico-inbox" title="Facebook"></span><span class="sr-only">Facebook</span></span></v-btn>
       </div>
       <div>
-          <md-button id="login" @click.prevent="swapLoginType()" class="btn-block md-raised md-accent">Log In</md-button>
+          <v-btn id="login" @click.prevent="swapLoginType()" class="btn-block md-raised md-accent">Log In</v-btn>
       </div>
       <div class="pt-1">
         <a id="signup" href="#" @click.prevent="toSignUp()" >Not got an account? Sign up</a>
       </div>
     </div>
 
-    <!-- Login Form -->
-    <form id="internalLoginForm" class="d-flex flex-column align-items-center justify-content-center w-100" v-if="isInternalLogin">
-      <div class="md-layout-row md-gutter w-100">
-        <div class="md-layout-item md-size-100">
-          <md-field :class="getValidationClass('email')" md-clearable md-inline>
-            <md-icon>inbox</md-icon>
-            <label for="email">Email</label>
-            <md-input name="email" id="email" v-model="email" type="email" />
-          </md-field>
-        </div>
-      </div>
 
-      <div class="md-layout-row md-gutter w-100">
-        <div class="md-layout-item md-size-100">
-          <md-field :class="getValidationClass('password')" md-inline>
-            <md-icon>vpn_key</md-icon>
-            <label for="password">Password</label>
-            <md-input name="password" id="password" v-model="password" type="password" />
-          </md-field>
-        </div>
-      </div>
-      <div >
-        <md-button id="submit" class="md-raised md-accent" :disabled="isDisabled" @click.prevent="tryLogin()">Submit</md-button>
-      </div>
-      <div>
-        <md-button id="back" class="md-raised" @click.prevent="swapLoginType()">Back</md-button>
-      </div>
-    </form>
+    <v-card id="internalLoginForm" v-if="isInternalLogin">
+      <v-card-text>
+        <v-form>
+          <v-text-field prepend-icon="inbox" name="email" label="Email" v-model="email" type="text"></v-text-field>
+          <v-text-field prepend-icon="lock" name="password" label="Password" v-model="password" id="password" type="password"></v-text-field>
+        </v-form>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn id="submit" :disabled="isDisabled" @click.prevent="tryLogin()" color="primary">Login</v-btn>
+        <v-btn id="back" @click.prevent="swapLoginType()">Back</v-btn>
+      </v-card-actions>
+    </v-card>
   </div>
 </template>
 
@@ -57,6 +43,9 @@
 import feathersClient from '@/api/feathers-client'
 import {mapActions} from 'vuex'
 import router from '@/router'
+
+// import VTextField from 'vuetify/es5/components/VTextField'
+// import VCard from 'vuetify/es5/components/VCard'
 
 export default {
   name: 'Login',
@@ -68,6 +57,10 @@ export default {
       showSnackbar: false
     }
   },
+  // components: {
+  //   VCard,
+  //   VTextField
+  // },
   methods: {
     ...mapActions('auth', ['authenticate', 'logout']),
     tryLogin: function () {

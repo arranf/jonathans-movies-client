@@ -1,40 +1,38 @@
 <template>
-  <div class="md-toolbar-row">
-    <div class="md-toolbar-section-start">
-      <md-button v-if="user" class="md-icon-button" @click="$emit('toggleNavigation')">
-        <md-icon>menu</md-icon>
-      </md-button>
-      <span v-if="!showMovieSearch" class="md-title">Jonathan's Movies</span>
-      <md-autocomplete v-if="showMovieSearch"
-            class="search"
-            v-model="selectedFilm"
-            :md-options="options"
-            @md-changed="getMovies" 
-            @md-opened="getMovies"
-            @md-selected="navigateToMovie"
-            md-layout="box">
-              <template slot="md-autocomplete-item" slot-scope="{ item, term }">
-                <div :id="`suggestion-${item._id}`"><md-highlight-text :md-term="term">{{ item.name }}</md-highlight-text> <small>{{getYear(item.release_date)}}</small></div>
-              </template>
-              <label>Search...</label>
-      </md-autocomplete>
-    </div>
-    <div :class="{'md-toolbar-section-end': !showMovieSearch}" v-if="user && user.isAdmin && (isCurrentPollInVoting || isCurrentPollInNomination)">
-      <md-menu md-direction="bottom-start" md-align-trigger>
-        <md-button md-menu-trigger class="md-icon-button">
-          <md-icon>more_vert</md-icon>
-        </md-button>
-
-        <md-menu-content>
-          <md-menu-item @click.prevent="stopPoll()">Stop Poll</md-menu-item>
-          <md-menu-item v-if="isCurrentPollInNomination" @click.prevent="stopNominations()">Stop Nominations</md-menu-item>
-        </md-menu-content>
-      </md-menu>
-    </div>
-  </div>
+  <v-toolbar dark color="primary">
+ <v-toolbar-side-icon @click="$emit('toggleNavigation')" v-if="user"></v-toolbar-side-icon>
+    <v-toolbar-title v-if="!showMovieSearch" class="white--text">Title</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <!-- <md-autocomplete v-if="showMovieSearch"
+          class="search"
+          v-model="selectedFilm"
+          :md-options="options"
+          @md-changed="getMovies" 
+          @md-opened="getMovies"
+          @md-selected="navigateToMovie"
+          md-layout="box">
+            <template slot="md-autocomplete-item" slot-scope="{ item, term }">
+              <div :id="`suggestion-${item._id}`"><md-highlight-text :md-term="term">{{ item.name }}</md-highlight-text> <small>{{getYear(item.release_date)}}</small></div>
+            </template>
+            <label>Search...</label>
+    </md-autocomplete> -->
+    <v-menu v-if="user && user.isAdmin && (isCurrentPollInVoting || isCurrentPollInNomination)" :nudge-width="100">  
+      <v-btn icon slot="activator">
+        <v-icon>more_vert</v-icon>
+      </v-btn>
+        <v-list>
+          <v-list-tile v-if="isCurrentPollInNomination" @click.prevent="stopNominations()"><v-list-tile-title>End Nomination Phase</v-list-tile-title></v-list-tile>
+          <v-list-tile @click.prevent="stopPoll()"><v-list-tile-title>Stop Poll</v-list-tile-title></v-list-tile>
+        </v-list>
+    </v-menu>
+  </v-toolbar>
 </template>
 
 <script>
+// import VToolbar from 'vuetify/es5/components/VToolbar'
+// import VMenu from 'vuetify/es5/components/VMenu'
+// import VForm from 'vuetify/es5/components/VForm'
+
 import queries from '@/api'
 import utils from '@/utils'
 import {mapGetters, mapState} from 'vuex'
@@ -47,6 +45,11 @@ export default {
       options: []
     }
   },
+  // components: {
+  //   VToolbar,
+  //   VMenu,
+  //   VForm
+  // },
   methods: {
     getMovies (searchTerm) {
       this.options = new Promise(resolve => {

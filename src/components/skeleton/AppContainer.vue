@@ -1,14 +1,14 @@
 <template>
-<div id="app-container">
-  <v-app>
+  <v-app id="app-container">
     <v-navigation-drawer app />
     <toolbar @toggleNavigation="showNavigation = !showNavigation" />
     <v-content>
       <v-container fluid fill-height>
-
-        <v-layout align-center justify-center>
-          <router-view />
-        </v-layout>
+          <v-layout align-center justify-center>
+        <v-flex xs12 sm8 md4>
+            <router-view />
+        </v-flex>
+          </v-layout>
       </v-container>
     </v-content>
   </v-app>
@@ -26,7 +26,6 @@
         <progress-bar />
       </md-app-content>
     </md-app> -->
-  </div>
 </template>
 
 <script>

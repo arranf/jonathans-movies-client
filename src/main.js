@@ -8,38 +8,15 @@ import router from './router'
 import store from './store/'
 import '@/api/feathers-client'
 
-import VApp from 'vuetify/es5/components/VApp'
-
-import Vuetify from 'vuetify/es5/components/Vuetify'
-import VSnackbar from 'vuetify/es5/components/VSnackbar'
-import VGrid from 'vuetify/es5/components/VGrid'
-import VBtn from 'vuetify/es5/components/VBtn'
-import VNavigationDrawer from 'vuetify/es5/components/VNavigationDrawer'
-import transitions from 'vuetify/es5/components/transitions'
-import { Ripple } from 'vuetify/es5/directives/'
-
-Vue.use(Vuetify, {
-  components: {
-    VApp,
-    VGrid,
-    VSnackbar,
-    VBtn,
-    VNavigationDrawer,
-    transitions
-  },
-  directives: {
-    Ripple
-  }
-})
-
-require('vuetify/src/stylus/app.styl')
-// end vuetify
+import Vuetify from 'vuetify'
+Vue.use(Vuetify)
+require('vuetify/dist/vuetify.min.css')
 
 // Import custom CSS
 require('@/assets/styles/main.scss')
 
 // TODO replace with icomoon
-require('font-awesome-webpack2')
+// require('@/assets/styles/icons.css')
 
 Vue.config.productionTip = false
 

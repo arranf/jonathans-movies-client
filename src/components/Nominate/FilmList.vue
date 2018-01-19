@@ -13,7 +13,7 @@
               </md-field>
               <div class="pt-3 mt-1 mb-4">
                 <label class="md-label" for="rating">Minimum Rating</label>
-                <vue-slider class="px-0" name="rating" height="1" v-model="floorRating" :max="10" :min="0" :interval="0.5" />
+                <!-- <vue-slider class="px-0" name="rating" height="1" v-model="floorRating" :max="10" :min="0" :interval="0.5" /> -->
               </div>
               <md-button @click.prevent="requery()" type="submit" class="md-accent md-raised">Submit</md-button>
               <md-button @click.prevent="reset()" type="reset">Reset</md-button>
@@ -48,7 +48,7 @@
 import FilmListItem from './FilmListItem'
 import infiniteScroll from 'vue-infinite-scroll'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
-import VueSlider from 'vue-slider-component'
+// import VueSlider from 'vue-slider-component'
 import debounce from 'lodash/debounce'
 import constants from '@/constants'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
@@ -76,8 +76,8 @@ export default {
   },
   components: {
     FilmListItem,
-    MovieInfoModal,
-    VueSlider
+    MovieInfoModal
+    // VueSlider
   },
   watch: {
     '$route' (to, from) {
