@@ -1,5 +1,19 @@
 <template>
 <div id="app-container">
+  <v-app>
+    <v-navigation-drawer app />
+    <toolbar @toggleNavigation="showNavigation = !showNavigation" />
+    <v-content>
+      <v-container fluid fill-height>
+
+        <v-layout align-center justify-center>
+          <router-view />
+        </v-layout>
+      </v-container>
+    </v-content>
+  </v-app>
+
+<!-- 
     <md-app>
       <md-app-toolbar class="md-primary">
         <toolbar @toggleNavigation="showNavigation = !showNavigation" />
@@ -11,7 +25,7 @@
         <router-view />
         <progress-bar />
       </md-app-content>
-    </md-app>
+    </md-app> -->
   </div>
 </template>
 
