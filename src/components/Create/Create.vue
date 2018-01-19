@@ -5,37 +5,32 @@
       <!-- Prevent auto-complete -->
       <input autocomplete="false" name="hidden" type="text" style="display:none;">
 
-      <movie-suggest @fill="fillOption"></movie-suggest>
+      <movie-suggest :placeholder="movieSuggestPlaceholder" :errors="optionsErrors" @optionsChange="updateOptions"></movie-suggest>
 
-
-      <!-- options -->
-      <div class="mt-2 mb-4 md-layout-row md-gutter w-100" v-if="options.length > 0" id="options-container">
-          <p>{{haveNominations ? 'Pre-Selected Movies' : 'Selected Movies' }}</p>
-          <div id="options">
-            <v-chip close v-for="(option, index) in options" :key="option.name" class="md-primary my-1" md-deletable @md-delete="removeOption(index)">{{option.name}}</v-chip>
-          </div>
-      </div>
       <v-switch id="nomination-phase" :label="switchLabel" v-model="haveNominations"/>
-
-      <v-text-field id="minutes" :error-messages="minutesErrors" prepend-icon="timelapse" label="Voting Time" hint="The number of minutes for voting" v-model="minutes" @input="$v.minutes.$touch()" type="number" pattern="[1-9]" min="1" max="10" />
-      <v-text-field id="votes" :error-messages="votesErrors" prepend-icon="format_list_numbered" label="Number of Votes" hint="The number of votes each person receives" v-model="votes" @input="$v.votes.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
 
       <!-- Nominations -->
       <transition name="fade">
         <div v-if="haveNominations">
-          <h3 class="subheadingfont">Nomination Options</h3>
+          <h3 class="subheadingfont">Nomination Phase Options</h3>
 
           <v-text-field id="nomination-length" :error-messages="nominationLengthErrors" prepend-icon="timelapse" label="Nomination Time" hint="The number of minutes for nominations" v-model="nominationsMinutes" @input="$v.minutes.$touch()" type="number"  pattern="[1-9][0-9]*" min="1" max="60" />
-          <v-text-field id="nomination-votes" :error-messages="nominationVotesErrors" prepend-icon="format_list_numbered" label="Number of Nominations" hint="The number of nominations each person receives" v-model="nominations" @input="$v.votes.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
+          <v-text-field id="nomination-votes" :error-messages="nominationsErrors" prepend-icon="format_list_numbered" label="Number of Nominations" hint="The number of nominations each person receives" v-model="nominations" @input="$v.votes.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
         </div>
       </transition>
+
+      <div>
+        <h3 class="subheadingfont">Voting Phase Options</h3>
+
+        <v-text-field id="minutes" :error-messages="minutesErrors" prepend-icon="timelapse" label="Voting Time" hint="The number of minutes for voting" v-model="minutes" @input="$v.minutes.$touch()" type="number" pattern="[1-9]" min="1" max="10" />
+        <v-text-field id="votes" :error-messages="votesErrors" prepend-icon="format_list_numbered" label="Number of Votes" hint="The number of votes each person receives" v-model="votes" @input="$v.votes.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
+      </div>
     
       <div class="mt-3">
-        <v-btn id="start-poll" @click.prevent="startPoll()" :disabled="!canStart">Start Poll</v-btn>
+        <v-btn id="start-poll" @click.prevent="startPoll()" :disabled="!canStart" color="primary">Start Poll</v-btn>
         <v-btn id="back" @click.prevent="toHome()">Back</v-btn>
       </div>
     </form>
-
 
     <v-snackbar id="snackbar" :bottom="true" v-model="showSnackbar">
       <span>This movie has already been added.</span>
@@ -72,12 +67,9 @@ export default {
     toHome: function () {
       router.push('/home')
     },
-    fillOption: function (film) {
-      if (!this.options.find(f => f.name === film.name)) {
-        this.options.push({name: film.name, film_id: film.film_id})
-      } else {
-        this.showSnackbar = true
-      }
+    updateOptions: function (options) {
+      this.options = options
+      this.$v.options.$touch()
     },
     removeOption: function (index) {
       this.options.splice(index, 1)
@@ -123,6 +115,9 @@ export default {
     switchLabel: function () {
       return this.haveNominations ? 'With Nominations' : 'No Nominations'
     },
+    movieSuggestPlaceholder: function () {
+      return this.haveNominations ? 'Pre-Select Movies' : 'Select Movies'
+    },
     minutesErrors () {
       const errors = []
       const minutes = this.$v.minutes
@@ -154,6 +149,13 @@ export default {
       !nominations.required && errors.push('A number of nominations for voting is required.')
       !nominations.between && errors.push(`Voting length must be between ${nominations.$params.between.min} and ${nominations.$params.between.max}`)
       return errors
+    },
+    optionsErrors () {
+      const errors = []
+      const options = this.$v.options
+      if (!options.$dirty) return errors
+      !options.required && errors.push('Options are required if there are no nominations')
+      !options.minLength && errors.push('You must have at least two options if there are no nominations')
     }
   },
   validations () {

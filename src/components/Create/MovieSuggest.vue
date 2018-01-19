@@ -1,23 +1,25 @@
 <template>
-  <md-autocomplete id="autocomplete" md-input-name="suggest-input" md-input-id="suggest-input" v-model="searchQuery" :md-open-on-focus="false" :md-options="suggestions" @md-changed="getSuggestions" @md-selected="fillBox">
-      <label for="suggest-input">Movies</label>
-
-      <template slot="md-autocomplete-item" slot-scope="{ item, term }">
-        <div :id="`suggestion-${item._id}`"><md-highlight-text :md-term="term">{{ item.name }}</md-highlight-text> <small>{{getYear(item.release_date)}}</small></div>
+  <v-select id="autocomplete" @input="fillBox" autocomplete item-text="name" return-object
+    :placeholder="placeholder" chips deletable-chips item-value="name" :loading="loading" multiple cache-items 
+    :hide-selected="true" required :items="suggestions" :error-messages="errors" :search-input.sync="searchQuery" v-model="selected">
+    <template slot="item" slot-scope="data">
+      <div v-if="searchQuery != null && searchQuery.trim() === ''">
+        Start typing to search for a film
+      </div>
+      <div v-else-if="suggestions.length > 0">
+        <v-list-tile-content>
+          <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
+          <v-list-tile-sub-title v-html="getYear(data.item.release_date)"></v-list-tile-sub-title>
+        </v-list-tile-content>
+      </div>
+      <div v-else>
+        Couldn't find {{searchQuery}}. <a id="add-anyway" @click.prevent="submit(searchQuery)">Add it anyway!</a>
+      </div>
       </template>
-      <template slot="md-autocomplete-empty" slot-scope="{ term }">
-        <div v-if="term.trim() === ''">
-          Start typing to search for a film
-        </div>
-        <div v-else>
-          Couldn't find {{term}}. <a id="add-anyway" @click.prevent="submit(term)">Add it anyway!</a>
-        </div>
-      </template>
-  </md-autocomplete>
+  </v-select>
 </template>
 
 <script>
-import debounce from 'lodash/debounce'
 import queries from '@/api'
 import utils from '@/utils'
 
@@ -25,20 +27,30 @@ export default {
   data () {
     return {
       suggestions: [],
-      searchQuery: ''
+      searchQuery: null,
+      loading: false,
+      selected: []
+    }
+  },
+  props: {
+    placeholder: String,
+    errors: Array
+  },
+  watch: {
+    searchQuery (val) {
+      val && this.getSuggestions(val)
     }
   },
   methods: {
-    getSuggestions: debounce(function (searchTerm) {
+    getSuggestions: function (searchTerm) {
+      this.loading = true
       queries.getFilmSuggestions(searchTerm).then(response => {
         if (response && response.data) {
-          this.suggestions.splice(0, this.suggestions.length)
-          response.data.forEach((result) => {
-            this.suggestions.push(result)
-          })
+          this.suggestions = response.data
+          this.loading = false
         }
       })
-    }, 300, {leading: true}),
+    },
     submit: function (searchTerm) {
       if (searchTerm.trim() !== '') {
         let chosenFilm = {name: searchTerm, film_id: null}
@@ -46,27 +58,16 @@ export default {
         this.clearSearch()
       }
     },
-    fillBox: function (film) {
-      let chosenFilm = {name: film.name, film_id: film._id}
-      this.$emit('fill', chosenFilm)
-      this.clearSearch()
+    fillBox: function (event) {
+      const reducedOptions = this.selected.map(f => {
+        if (f) {
+          return {name: f.name, film_id: f._id}
+        }
+      })
+      this.$emit('optionsChange', reducedOptions)
     },
     getYear: function (releaseDate) {
       return `(${utils.getYearFromTmdbReleaseDate(releaseDate)})`
-    },
-    clearSearch () {
-      const element = document.getElementsByClassName('md-clear')[0]
-      const event = new Event('click', {value: ''})
-      element.dispatchEvent(event)
-      this.searchQuery = ''
-      setTimeout(() => {
-        document.getElementById('suggest-input').dispatchEvent(new Event('blur'))
-      }, 50)
-    }
-  },
-  computed: {
-    isSearchQueryEmpty: function () {
-      return this.searchQuery.trim() !== ''
     }
   }
 }
