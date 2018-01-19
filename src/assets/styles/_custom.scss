@@ -6,29 +6,9 @@ body {
     height: 100vh;
 }
 
-// Prevent fixed fabs sticking to the bottom
-.md-app-container {
-    transform: none !important;
-    -webkit-transform: none !important; 
-}
 
-.text-md-accent {
-    color: var(--md-theme-default-primary-on-background, #448aff)
-}
-
-// Ensure dialogs are transparent
-.md-dialog.md-theme-default { 
-    background-color: transparent 
-} 
- 
-.md-dialog-container { 
-    background-color: transparent;
-    align-items: center;
-    justify-content: center;
-}
-
-.md-select-menu {
-    z-index: 990;
+.text-white {
+    color: #ffffff;
 }
 
 .not-active {
