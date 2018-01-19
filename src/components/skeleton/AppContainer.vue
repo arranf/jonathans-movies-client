@@ -4,11 +4,11 @@
       <drawer-list/> 
     </v-navigation-drawer>
     <toolbar @toggleNavigation="showNavigation = !showNavigation" />
+    <progress-bar class="mt-0 w-100" />
     <v-content>
       <v-container fluid fill-height>
           <v-layout align-center justify-center>
         <v-flex xs12 sm8 md4>
-            <progress-bar />
             <router-view />
         </v-flex>
           </v-layout>

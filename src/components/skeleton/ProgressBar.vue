@@ -1,5 +1,5 @@
 <template>
-  <md-progress-bar v-if="getActivePoll" class="md-accent bottom" md-mode="determinate" :md-value="percentageOfCurrentPhaseComplete" />
+  <v-progress-linear color="secondary" v-if="getActivePoll" v-model="percentageOfCurrentPhaseComplete" />
 </template>
 
 <script>
