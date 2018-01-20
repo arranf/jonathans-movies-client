@@ -12,7 +12,9 @@
     "e2e": "node test/e2e/runner.js",
     "test": "yarn run unit && yarn run e2e",
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
-    "unit-debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config test/unit/jest.conf.js"
+    "unit-debug": "node --inspect-brk node_modules/.bin/jest --runInBand --config test/unit/jest.conf.js",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "@feathersjs/client": "^3.1.2",
@@ -36,7 +38,8 @@
     "vue-router": "^2.7.0",
     "vue-slider-component": "^2.4.5",
     "vuelidate": "^0.6.1",
-    "vuex": "^2.4.0"
+    "vuex": "^2.4.0",
+    "snyk": "^1.69.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -131,5 +134,6 @@
     "fs": false,
     "net": false,
     "tls": false
-  }
+  },
+  "snyk": true
 }
