@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar :fixed="true" dark color="primary">
+  <v-toolbar app dark color="primary">
  <v-toolbar-side-icon @click="$emit('toggleNavigation')" v-if="user"></v-toolbar-side-icon>
     <v-toolbar-title v-if="!showMovieSearch" class="white--text">Jonathan's Movies</v-toolbar-title>
     <v-spacer></v-spacer>
