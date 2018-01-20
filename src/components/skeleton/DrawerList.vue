@@ -63,7 +63,7 @@
     </v-list-tile>
 
     <!-- logout -->
-    <v-list-tile v-if="user" to="/add" @click="logoutAndRedirect">
+    <v-list-tile v-if="user" @click="logoutAndRedirect">
       <v-list-tile-action>
           <v-icon>exit_to_app</v-icon>
         </v-list-tile-action>
