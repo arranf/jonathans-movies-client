@@ -14,8 +14,8 @@
         <div v-if="haveNominations">
           <h3 class="subheadingfont">Nomination Phase Options</h3>
 
-          <v-text-field id="nomination-length" :error-messages="nominationLengthErrors" prepend-icon="timelapse" label="Nomination Time" hint="The number of minutes for nominations" v-model="nominationsMinutes" @input="$v.minutes.$touch()" type="number"  pattern="[1-9][0-9]*" min="1" max="60" />
-          <v-text-field id="nomination-votes" :error-messages="nominationsErrors" prepend-icon="format_list_numbered" label="Number of Nominations" hint="The number of nominations each person receives" v-model="nominations" @input="$v.votes.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
+          <v-text-field id="nomination-length" :error-messages="nominationLengthErrors" prepend-icon="timelapse" label="Nomination Time" hint="The number of minutes for nominations" v-model="nominationsMinutes" @input="$v.nominationsMinutes.$touch()" type="number"  pattern="[1-9][0-9]*" min="1" max="60" />
+          <v-text-field id="nomination-votes" :error-messages="nominationsErrors" prepend-icon="format_list_numbered" label="Number of Nominations" hint="The number of nominations each person receives" v-model="nominations" @input="$v.nominations.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
         </div>
       </transition>
 
@@ -96,16 +96,6 @@ export default {
         numberOfNominations: numberOfNominations
       })
       this.toHome()
-    },
-    getErrorText (formItemName) {
-      let error = ''
-      let validation = this.$v[formItemName]
-      if (!validation.required) {
-        error = 'Required'
-      } else if (!validation.between) {
-        error = `Must be between ${validation.$params.between.min} and ${validation.$params.between.max}`
-      }
-      return error
     }
   },
   computed: {
