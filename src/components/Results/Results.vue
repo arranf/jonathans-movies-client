@@ -6,12 +6,11 @@
     <h1 class="md-headline text-center">{{winningOptions.length > 1 ? winningOptions.slice(0, winningOptions.length - 1).join(', ') + " and " + winningOptions.slice(-1) : winningOptions[0]}} Wins</h1>
     <pie-chart :chart-data="dataCollection" :options="{responsive: true, maintainAspectRatio: false}" />
   </div>
-  <md-empty-state v-cloak v-else-if ="winningOptions.length === 0 && emptyStateAllowed"
-    class="md-accent"
-    md-icon="error_outline"
-    md-label="No Results"
-    md-description="There needs to be at least one vote for there to be a winner!">
-  </md-empty-state>
+  <div v-cloak v-else-if="winningOptions.length === 0 && emptyStateAllowed" class="empty-state-container">
+    <v-icon size="100px" class="mb-2">error_outline</v-icon>
+    <h1 class="display-1 mb-1">No Results</h1>
+    <p class="empty-state-description">There needs to be at least one vote for there to be a winner!</p>
+  </div>
 </div>
 </template>
 
