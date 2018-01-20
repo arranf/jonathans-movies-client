@@ -1,14 +1,13 @@
 <template>
 <div class="">
-  <md-empty-state
   <movie-info-modal :show.sync="showingFilm" close-route="/home" :filmId="$route.params.filmId" :show-nominate="false" />
-      v-if="currentPollOptions.length === 0"
-      md-icon="playlist_add"
-      md-label="Nominate a movie"
-      :md-description="`You\'ve got, ${nominationsRemaining} nominations left. Use them wisely!`">
-      <md-button class="md-primary md-raised" @click="$router.push('/movies')">Nominate a movie</md-button>
-  </md-empty-state>
-<!-- class="d-flex flex-column align-items-center justify-content-center" -->
+  <div v-if="currentPollOptions.length === 0" class="empty-state-container">
+    <v-icon size="100px" class="mb-2">playlist_add</v-icon>
+    <h1 class="display-1 mb-1">Nominate a Movie</h1>
+    <p class="empty-state-description">{{`You\'ve got, ${nominationsRemaining} nominations left. Use them wisely!`}}</p>
+    <v-btn color="primary" @click="$router.push('/movies')">Nominate a movie</v-btn>
+  </div>
+
   <div class="d-flex flex-column" v-if="getOptionsForCurrentPoll && currentPollOptions && currentPollOptions.length > 0" >
 
     <h2 class="md-display-1 text-center">Nominations</h2>
