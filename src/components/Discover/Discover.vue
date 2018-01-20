@@ -1,6 +1,6 @@
 <template>
   <div>
-    <movie-info-modal @snackbar="setSnackbar" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
+    <movie-info-modal @snackbar="setSnackbar" close-route="/discover" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
     <div v-if="suggestions" v-infinite-scroll="refresh" :infinite-scroll-immediate-check="false" :infinite-scroll-disabled="busy" infinite-scroll-distance="10">
       <h2>Discover a Movie</h2>
 

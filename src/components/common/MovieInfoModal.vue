@@ -72,7 +72,8 @@ export default {
   props: {
     filmId: {type: String},
     showNominate: {default: true, type: Boolean},
-    show: {type: Boolean}
+    show: {type: Boolean},
+    closeRoute: {type: String, required: true}
   },
   data () {
     return {
@@ -97,7 +98,7 @@ export default {
       }
     },
     modalClosed: function () {
-      this.$router.go(-1)
+      this.$router.replace(this.closeRoute)
     },
     addNomination: function () {
       if (this.showNominate && this.hasNominationsRemaining && !this.isOptionForCurrentPoll(this.film_id)) {

@@ -1,7 +1,7 @@
 <template>
 <div class="">
-  <movie-info-modal :show.sync="showingFilm" :filmId="$route.params.filmId" :show-nominate="false" />
   <md-empty-state
+  <movie-info-modal :show.sync="showingFilm" close-route="/home" :filmId="$route.params.filmId" :show-nominate="false" />
       v-if="currentPollOptions.length === 0"
       md-icon="playlist_add"
       md-label="Nominate a movie"

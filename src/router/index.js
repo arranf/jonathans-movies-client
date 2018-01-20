@@ -7,7 +7,7 @@ const Home = () => import('@/components/Home/Home')
 const Login = () => import('@/components/Login/Login')
 const SignUp = () => import('@/components/SignUp/SignUp')
 const Create = () => import('@/components/Create/Create')
-const Nominate = () => import('@/components/Nominate/Nominate')
+const FilmList = () => import('@/components/Nominate/FilmList')
 const Add = () => import('@/components/Add/AddMovie')
 const Discover = () => import('@/components/Discover/Discover')
 
@@ -63,7 +63,8 @@ const router = new Router({
     {
       path: '/movies/:filmId?',
       name: 'Movies',
-      component: Nominate
+      component: FilmList,
+      props: true
     },
     {
       path: '/add',
