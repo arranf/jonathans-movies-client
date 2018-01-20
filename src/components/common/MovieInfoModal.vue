@@ -54,7 +54,7 @@
         <v-btn flat @click="showOverview = !showOverview">
           <v-icon>{{!showOverview ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</v-icon> Read Plot
         </v-btn>
-        <v-btn flat @click="$emit('update:show', false)">Close</v-btn>
+        <v-btn flat @click="closeModal()">Close</v-btn>
         </v-card-actions>
     </v-card>
    </v-dialog>
@@ -97,7 +97,8 @@ export default {
           .catch(error => { console.error(error); this.$emit('update:show', false) })
       }
     },
-    modalClosed: function () {
+    closeModal: function () {
+      this.$emit('update:show', false)
       this.$router.replace(this.closeRoute)
     },
     addNomination: function () {
@@ -157,9 +158,7 @@ export default {
   },
   watch: {
     filmId: function (newFilmId, oldFilmId) {
-      if (!newFilmId) {
-        this.modalClosed()
-      } else {
+      if (newFilmId) {
         this.modalOpened()
       }
     }
