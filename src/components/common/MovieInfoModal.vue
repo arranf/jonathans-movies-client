@@ -1,10 +1,11 @@
 <template>
-  <md-dialog :md-active.sync="show" @md-opened="modalOpened" @md-closed="modalClosed">
-    <md-card v-if="film" v-show="shouldDisplay" v-images-loaded="imageRendered"  >
-      <md-card-media v-if="backdropImage">
+<v-layout row justify-center>
+  <v-dialog  v-model="show" fullscreen transition="dialog-bottom-transition" :overlay="false">
+    <v-card v-if="film" v-show="shouldDisplay" v-images-loaded="imageRendered"  >
+      <v-card-media v-if="backdropImage">
         <img :src="backdropImage" :alt="`${film.name} Backdrop`">
-      </md-card-media>
-      <md-card-header>
+      </v-card-media>
+      <v-card-title>
         <div class="md-title w-100">
           {{film.name}} <small>({{getFilmYear}})</small> 
           <a v-if="getImdbLink" :href="getImdbLink" target="_blank" style="float: right;">
@@ -14,43 +15,44 @@
         <div v-if="film && film.tagline" class="md-subhead">
           {{film.tagline}}
         </div>
-      </md-card-header>
+      </v-card-title>
 
-      <md-card-content>
+      <v-card-text>
         <h3 class="md-subheading">Information</h3>
         <div>
           <div v-if="film.genres"><strong>Genres</strong>: {{film.genres.join(', ')}}</div>
           <div v-if="film.runtime"><strong>Runtime</strong>: {{film.runtime}} mins</div>
           <div v-if="film.last_watched"><strong>Last Watched</strong>: {{film.last_watched}}</div>
         </div>
-      </md-card-content>
+      </v-card-text>
 
-      <md-card-content class="d-inline-block" v-if="film.imdb_rating || film.rotten_tomatoes_rating">
+      <v-card-text class="d-inline-block" v-if="film.imdb_rating || film.rotten_tomatoes_rating">
         <h3 class="md-subheading">Ratings</h3>
         <div>
           <div v-if="film.imdb_rating"><strong>IMDB</strong>: {{film.imdb_rating}}</div>
           <div v-if="film.rotten_tomatoes_rating"><strong>Rotten Tomatoes</strong>: {{film.rotten_tomatoes_rating}}%
           </div>
         </div>
-      </md-card-content>
+      </v-card-text>
 
       <transition name="fade">
-        <md-card-content v-if="showOverview">
+        <v-card-text v-if="showOverview">
                 {{film.overview}}
-        </md-card-content>
+        </v-card-text>
       </transition>  
 
-       <md-card-actions>
-        <md-button @click.prevent="addNomination()" v-if="nominatable">
+       <v-card-actions>
+        <v-btn @click.prevent="addNomination()" v-if="nominatable">
           {{nominateButtonText}}
-        </md-button>
-        <md-button @click="showOverview = !showOverview">
-          <md-icon>keyboard_arrow_up</md-icon> Read Plot
-        </md-button>
-        <md-button @click="$emit('update:show', false)">Close</md-button>
-        </md-card-actions>
-    </md-card>
-  </md-dialog>
+        </v-btn>
+        <v-btn @click="showOverview = !showOverview">
+          <v-icon>keyboard_arrow_up</v-icon> Read Plot
+        </v-btn>
+        <v-btn @click="$emit('update:show', false)">Close</v-btn>
+        </v-card-actions>
+    </v-card>
+   </v-dialog>
+  </v-layout>
 </template>
 
 <script>
@@ -144,6 +146,15 @@ export default {
   created () {
     if (this.filmId) {
       this.modalOpened()
+    }
+  },
+  watch: {
+    filmId: function (newFilmId, oldFilmId) {
+      if (!newFilmId) {
+        this.modalClosed()
+      } else {
+        this.modalOpened()
+      }
     }
   }
 }
