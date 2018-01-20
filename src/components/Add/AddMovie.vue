@@ -1,55 +1,55 @@
 <template>
-  <div class="md-layout">
-  <transition>
-    <div v-if="showSearch" class="empty-state-container">
-      <v-icon size="100px" class="mb-2">library_add</v-icon>
-      <h1 class="display-1 mb-1">Add Movies</h1>
-      <p class="empty-state-description">Search to find movies to add to your online collection</p>
-      <v-select
-          @input="selectMovie" 
-          label="Find a Movie"
-          autocomplete
-          :loading="loading"
-          return-object
-          clearable
-          required
-          :items="suggestions"
-          :search-input.sync="searchQuery"
-          item-value="title"
-          item-text="title"
-          v-model="selectedFilm"
-        >
-          <template slot="item" slot-scope="data">
-            <div>
-              <v-list-tile-content>
-                <v-list-tile-title v-html="data.item.title"></v-list-tile-title>
-                <v-list-tile-sub-title v-html="getYear(data.item.release_date)"></v-list-tile-sub-title>
-              </v-list-tile-content>
-            </div>
-          </template>
-        </v-select>
-    </div>
+  <div>
+    <transition>
+      <div v-if="showSearch" class="empty-state-container">
+        <v-icon size="100px" class="mb-2">library_add</v-icon>
+        <h1 class="display-1 mb-1">Add Movies</h1>
+        <p class="empty-state-description">Search to find movies to add to your online collection</p>
+        <v-select
+            solo
+            @input="selectMovie" 
+            label="Find a Movie"
+            autocomplete
+            :loading="loading"
+            return-object
+            clearable
+            :items="suggestions"
+            :search-input.sync="searchQuery"
+            item-value="title"
+            item-text="title"
+            v-model="selectedFilm"
+          >
+            <template slot="item" slot-scope="data">
+              <div>
+                <v-list-tile-content>
+                  <v-list-tile-title v-html="data.item.title"></v-list-tile-title>
+                  <v-list-tile-sub-title v-html="getYear(data.item.release_date)"></v-list-tile-sub-title>
+                </v-list-tile-content>
+              </div>
+            </template>
+          </v-select>
+      </div>
 
-    <v-card v-if="!showSearch && movie">
-          <v-card-media v-if="movie.backdrop_path" height="200px" :src="getBackdropImage" :alt="`${movie.title} Backdrop`" />
+      <v-card v-if="!showSearch && movie">
+            <v-card-media v-if="movie.backdrop_path" height="200px" :src="getBackdropImage" :alt="`${movie.title} Backdrop`" />
 
-          <v-card-title>
-            <h2 class="md-title">{{movie.name}} <small>{{getYear(movie.release_date)}}</small></h2>
-            <div v-if="movie.tagline" class="md-subhead">
-              <span>{{movie.tagline}}</span>
-            </div>
-          </v-card-title>
+            <v-card-title>
+              <h2 class="md-title">{{movie.name}} <small>{{getYear(movie.release_date)}}</small></h2>
+              <div v-if="movie.tagline" class="md-subhead">
+                <span>{{movie.tagline}}</span>
+              </div>
+            </v-card-title>
 
-          <v-card-text>
-            {{truncatedOverview}}
-          </v-card-text>
+            <v-card-text>
+              {{truncatedOverview}}
+            </v-card-text>
 
-        <v-card-actions>
-          <v-btn @click="addFilm" :disabled="isDuplicate" color="primary">{{isDuplicate ? 'Already in Collection' : 'Add'}}</v-btn>
-          <v-btn flat @click="closePreview" >Cancel</v-btn>
-        </v-card-actions>
-      </v-card>
-    </transition>
+          <v-card-actions>
+            <v-btn @click="addFilm" :disabled="isDuplicate" color="primary">{{isDuplicate ? 'Already in Collection' : 'Add'}}</v-btn>
+            <v-btn flat @click="closePreview" >Cancel</v-btn>
+          </v-card-actions>
+        </v-card>
+      </transition>
 
     <v-snackbar v-model="showSnackbar">
       <span>{{snackbarMessage}}</span>
