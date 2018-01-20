@@ -73,7 +73,8 @@ const router = new Router({
     {
       path: '/discover/:filmId?',
       name: 'Discover',
-      component: Discover
+      component: Discover,
+      props: true
     }
   ]
 })

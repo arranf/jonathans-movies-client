@@ -2,53 +2,59 @@
 <v-layout row justify-center>
   <v-dialog  v-model="show" fullscreen transition="dialog-bottom-transition" :overlay="false">
     <v-card v-if="film" v-show="shouldDisplay" v-images-loaded="imageRendered"  >
-      <v-card-media v-if="backdropImage">
-        <img :src="backdropImage" :alt="`${film.name} Backdrop`">
-      </v-card-media>
-      <v-card-title>
-        <div class="md-title w-100">
-          {{film.name}} <small>({{getFilmYear}})</small> 
+      <v-card-media height="200px" v-if="backdropImage" :src="backdropImage" :alt="`${film.name} Backdrop`" />
+      <v-card-title primary-title>
+        <div>
+          <h1 class="headline mb-0">{{film.name}} <small>({{getFilmYear}})</small></h1>
           <a v-if="getImdbLink" :href="getImdbLink" target="_blank" style="float: right;">
-            <i class="fa fa-imdb" style="font-size:1.3em" aria-hidden="true"></i>
+            <i class="ico-imdb" style="font-size:1.3em" aria-hidden="true"></i>
           </a>
-        </div>
-        <div v-if="film && film.tagline" class="md-subhead">
-          {{film.tagline}}
+          <h3 class="subtitle grey--text text--darken-2">{{film.tagline}}</h3>
         </div>
       </v-card-title>
 
       <v-card-text>
-        <h3 class="md-subheading">Information</h3>
-        <div>
-          <div v-if="film.genres"><strong>Genres</strong>: {{film.genres.join(', ')}}</div>
-          <div v-if="film.runtime"><strong>Runtime</strong>: {{film.runtime}} mins</div>
-          <div v-if="film.last_watched"><strong>Last Watched</strong>: {{film.last_watched}}</div>
-        </div>
+        <v-container grid-list-md text-xs-left>
+          <v-layout row wrap>
+            <v-flex xs6>
+              <h3 class="md-subheading">Information</h3>
+              <div>
+                <div v-if="film.genres"><strong>Genres</strong>: {{film.genres.join(', ')}}</div>
+                <div v-if="film.runtime"><strong>Runtime</strong>: {{film.runtime}} mins</div>
+                <div v-if="film.last_watched"><strong>Last Watched</strong>: {{film.last_watched}}</div>
+              </div>
+            </v-flex>
+            <v-flex>
+              <h3 class="md-subheading">Ratings</h3>
+              <div>
+                <div v-if="film.imdb_rating"><strong>IMDB</strong>: {{film.imdb_rating}}</div>
+                <div v-if="film.rotten_tomatoes_rating"><strong>Rotten Tomatoes</strong>: {{film.rotten_tomatoes_rating}}%
+                </div>
+              </div>
+            </v-flex>
+          </v-layout>
+        </v-container>
       </v-card-text>
-
+<!-- 
       <v-card-text class="d-inline-block" v-if="film.imdb_rating || film.rotten_tomatoes_rating">
-        <h3 class="md-subheading">Ratings</h3>
-        <div>
-          <div v-if="film.imdb_rating"><strong>IMDB</strong>: {{film.imdb_rating}}</div>
-          <div v-if="film.rotten_tomatoes_rating"><strong>Rotten Tomatoes</strong>: {{film.rotten_tomatoes_rating}}%
-          </div>
-        </div>
-      </v-card-text>
+        
+      </v-card-text> -->
 
-      <transition name="fade">
+      <v-slide-y-transition>
         <v-card-text v-if="showOverview">
                 {{film.overview}}
         </v-card-text>
-      </transition>  
+      </v-slide-y-transition>
 
        <v-card-actions>
+         <v-spacer></v-spacer>
         <v-btn @click.prevent="addNomination()" v-if="nominatable">
           {{nominateButtonText}}
         </v-btn>
-        <v-btn @click="showOverview = !showOverview">
-          <v-icon>keyboard_arrow_up</v-icon> Read Plot
+        <v-btn flat @click="showOverview = !showOverview">
+          <v-icon>{{!showOverview ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</v-icon> Read Plot
         </v-btn>
-        <v-btn @click="$emit('update:show', false)">Close</v-btn>
+        <v-btn flat @click="$emit('update:show', false)">Close</v-btn>
         </v-card-actions>
     </v-card>
    </v-dialog>
