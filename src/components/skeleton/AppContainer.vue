@@ -1,6 +1,6 @@
 <template>
   <v-app id="app-container">
-    <v-navigation-drawer v-model="showNavigation" temporary absolute>
+    <v-navigation-drawer v-model="showNavigation" temporary fixed>
       <drawer-list/> 
     </v-navigation-drawer>
     <toolbar @toggleNavigation="showNavigation = !showNavigation" />
