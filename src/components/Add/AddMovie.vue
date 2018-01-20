@@ -1,53 +1,60 @@
 <template>
   <div class="md-layout">
   <transition>
-    <md-empty-state
-        v-if="showSearch"
-        md-icon="library_add"
-        md-label="Add movies"
-        md-description="Search to find movies to add to your online collection">
-        <md-autocomplete
-        v-model="selectedFilm"
-        :md-options="suggestions"
-        @md-changed="getMovies" 
-        @md-opened="getMovies"
-        @md-selected="selectMovie">
-          <template slot="md-autocomplete-item" slot-scope="{ item, term }">
-            <div :id="`suggestion-${item._id}`"><md-highlight-text :md-term="term">{{ item.title }}</md-highlight-text> <small>{{getYear(item.release_date)}}</small></div>
+    <div v-if="showSearch" class="empty-state-container">
+      <v-icon size="100px" class="mb-2">library_add</v-icon>
+      <h1 class="display-1 mb-1">Add Movies</h1>
+      <p class="empty-state-description">Search to find movies to add to your online collection</p>
+      <v-select
+          @input="selectMovie" 
+          label="Find a Movie"
+          autocomplete
+          :loading="loading"
+          return-object
+          clearable
+          required
+          :items="suggestions"
+          :search-input.sync="searchQuery"
+          item-value="title"
+          item-text="title"
+          v-model="selectedFilm"
+        >
+          <template slot="item" slot-scope="data">
+            <div>
+              <v-list-tile-content>
+                <v-list-tile-title v-html="data.item.title"></v-list-tile-title>
+                <v-list-tile-sub-title v-html="getYear(data.item.release_date)"></v-list-tile-sub-title>
+              </v-list-tile-content>
+            </div>
           </template>
-          <label>Search</label>
-      </md-autocomplete>
-    </md-empty-state>
+        </v-select>
+    </div>
 
-    <md-card v-if="!showSearch && movie">
-        <md-card-area md-inset>
-          <md-card-media v-if="movie.backdrop_path" md-ratio="16:9">
-            <img :src="getBackdropImage" :alt="`${movie.title} Backdrop`">
-          </md-card-media>
+    <v-card v-if="!showSearch && movie">
+          <v-card-media v-if="movie.backdrop_path" height="200px" :src="getBackdropImage" :alt="`${movie.title} Backdrop`" />
 
-          <md-card-header>
+          <v-card-title>
             <h2 class="md-title">{{movie.name}} <small>{{getYear(movie.release_date)}}</small></h2>
             <div v-if="movie.tagline" class="md-subhead">
               <span>{{movie.tagline}}</span>
             </div>
-          </md-card-header>
+          </v-card-title>
 
-          <md-card-content>
-            {{movie.overview}}
-          </md-card-content>
-        </md-card-area>
+          <v-card-text>
+            {{truncatedOverview}}
+          </v-card-text>
 
-        <md-card-actions>
-          <md-button @click="addFilm" :disabled="isDuplicate" class="md-primary md-raised">{{isDuplicate ? 'Already in Collection' : 'Add'}}</md-button>
-          <md-button @click="showSearch = true" >Cancel</md-button>
-        </md-card-actions>
-      </md-card>
+        <v-card-actions>
+          <v-btn @click="addFilm" :disabled="isDuplicate" color="primary">{{isDuplicate ? 'Already in Collection' : 'Add'}}</v-btn>
+          <v-btn flat @click="closePreview" >Cancel</v-btn>
+        </v-card-actions>
+      </v-card>
     </transition>
 
-    <md-snackbar :md-active.sync="showSnackbar">
+    <v-snackbar v-model="showSnackbar">
       <span>{{snackbarMessage}}</span>
-      <md-button class="md-primary" @click="showSnackbar = false">Close</md-button>
-    </md-snackbar>
+      <v-btn color="primary" @click="showSnackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -66,25 +73,25 @@ export default {
       showSearch: true,
       isDuplicate: false,
       showSnackbar: false,
-      selectedFilm: '',
+      selectedFilm: null,
+      searchQuery: null,
       suggestions: [],
-      movie: null
+      movie: null,
+      loading: false
     }
   },
   methods: {
     ...mapActions('films', ['create', 'find']),
     getMovies: function (searchTerm) {
       if (searchTerm) {
-        this.suggestions = new Promise(resolve => {
-          tmdbApi.searchForMovie(searchTerm)
-            .then(response => {
-              if (response && response.data) {
-                resolve(response.data.results)
-              } else {
-                resolve([])
-              }
-            })
-        })
+        this.loading = true
+        tmdbApi.searchForMovie(searchTerm)
+          .then(response => {
+            if (response && response.data) {
+              this.suggestions = response.data.results.slice(0, 5)
+            }
+            this.loading = false
+          })
       }
     },
     selectMovie () {
@@ -131,6 +138,16 @@ export default {
     },
     getYear (releaseDate) {
       return `(${utils.getYearFromTmdbReleaseDate(releaseDate)})`
+    },
+    closePreview () {
+      this.showSearch = true
+      this.selectedFilm = null
+      this.searchQuery = null
+    }
+  },
+  watch: {
+    searchQuery (val) {
+      val && this.getMovies(this.searchQuery)
     }
   },
   computed: {
@@ -139,6 +156,12 @@ export default {
         return utils.getTmdbBackdropImage(this.movie.backdrop_path)
       }
       return ''
+    },
+    truncatedOverview () {
+      if (!this.movie.overview.length > 350) {
+        return this.movie.overview
+      }
+      return this.movie.overview.substring(0, 350) + (this.movie.overview.length > 350 ? '...' : '')
     }
   }
 }
