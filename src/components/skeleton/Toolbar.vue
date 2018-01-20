@@ -1,7 +1,7 @@
 <template>
   <v-toolbar dark color="primary">
  <v-toolbar-side-icon @click="$emit('toggleNavigation')" v-if="user"></v-toolbar-side-icon>
-    <v-toolbar-title v-if="!showMovieSearch" class="white--text">Title</v-toolbar-title>
+    <v-toolbar-title v-if="!showMovieSearch" class="white--text">Jonathan's Movies</v-toolbar-title>
     <v-spacer></v-spacer>
     <!-- <md-autocomplete v-if="showMovieSearch"
           class="search"
