@@ -24,7 +24,7 @@
                 <div v-if="film.last_watched"><strong>Last Watched</strong>: {{film.last_watched}}</div>
               </div>
             </v-flex>
-            <v-flex>
+            <v-flex xs6>
               <h3 class="md-subheading">Ratings</h3>
               <div>
                 <div v-if="film.imdb_rating"><strong>IMDB</strong>: {{film.imdb_rating}}</div>
