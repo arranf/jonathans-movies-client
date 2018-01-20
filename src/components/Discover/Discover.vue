@@ -9,6 +9,9 @@
             <v-flex xs6 :key="film._id+index" v-for="(film, index) in suggestions">
               <film-preview :film="film" modal-page-name="Discover"></film-preview>
             </v-flex>
+            <v-flex xs12>
+              <v-progress-linear color="secondary" v-if="busy" indeterminate />
+            </v-flex>
           </v-layout>
         </v-container>
     </div>
