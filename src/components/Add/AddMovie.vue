@@ -117,6 +117,8 @@ export default {
           movie.imdb_id = tmdbResponse.data.imdb_id
           movie.tagline = tmdbResponse.data.tagline
           movie.runtime = tmdbResponse.data.runtime
+          this.searchQuery = ''
+          this.suggestions = []
           this.movie = movie
           this.isDuplicate = apiResponse.total > 0
           this.showSearch = false
