@@ -1,7 +1,7 @@
 <template>
   <div id="home-container" >
       <movie-info-modal :show.sync="showingFilm" close-route="/home" :filmId="filmId" :show-nominate="false" />
-      <div class="w-90">
+      <div class="w-85">
         <selected-options v-if="isCurrentPollInNomination" />
         <vote-for-option @snackbar="setSnackbar" v-else-if="getActivePoll"></vote-for-option>
         <results v-else></results> 
