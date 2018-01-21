@@ -1,6 +1,6 @@
 import client from '@/api/feathers-client'
 
-const maxCount = 20
+const maxCount = 10
 
 const state = {
   now: new Date().getTime(),
@@ -17,7 +17,7 @@ const actions = {
           commit('incrementCounter')
           if (state.counter === 0) {
             dispatch('setInitialTime').then(
-              commit('incrementCounter'), commit('incrementCounter')
+              commit('incrementCounter')
             )
           } else {
             commit('updateTime')

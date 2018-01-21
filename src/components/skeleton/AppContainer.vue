@@ -1,18 +1,21 @@
 <template>
-<div id="app-container">
-    <md-app>
-      <md-app-toolbar class="md-primary">
-        <toolbar @toggleNavigation="showNavigation = !showNavigation" />
-      </md-app-toolbar>
-      <md-app-drawer :md-active.sync="showNavigation">
-        <drawer-list @navigate="showNavigation = false" />
-      </md-app-drawer>
-      <md-app-content class="content-height d-flex flex-column">
-        <router-view />
-        <progress-bar />
-      </md-app-content>
-    </md-app>
-  </div>
+  <v-app id="app-container">
+    <v-navigation-drawer app v-model="showNavigation" temporary>
+      <drawer-list/> 
+    </v-navigation-drawer>
+    <toolbar @toggleNavigation="showNavigation = !showNavigation" />
+    
+    <v-content>
+      <progress-bar  />
+      <v-container fluid fill-height>
+          <v-layout align-center justify-center>
+        <v-flex xs12 sm8 md4>
+            <router-view />
+        </v-flex>
+          </v-layout>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
@@ -32,27 +35,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-// Can't make this scoped
-  @import "../../../node_modules/vue-material/src/components/MdLayout/mixins.scss";
-
-  $md-toolbar-height: 64px;
-  $md-toolbar-height-portrait: 56px;
-  $md-toolbar-height-landscape: 48px;
-
-  $md-content-height: calc(100vh - #{$md-toolbar-height});
-  $md-content-height-landscape: calc(100vh - #{$md-toolbar-height-landscape});
-  $md-content-height-portrait: calc(100vh - #{$md-toolbar-height-portrait});
-
-  .content-height {
-    min-height: $md-content-height;
-    
-    @include md-layout-small {
-      min-height: $md-content-height-landscape;
-    }
-    @include md-layout-xsmall {
-      min-height: $md-content-height-portrait;
-    }
-  }
-</style>

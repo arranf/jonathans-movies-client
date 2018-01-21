@@ -1,90 +1,41 @@
 <template>
-  <div class="d-flex flex-column align-items-center justify-content-start mb-3">
-    <h2 class="mt-4 pb-3">Create a Poll</h2>
-    <form autocomplete="off" class="d-flex flex-column align-items-start justify-content-center w-100">
+  <div class="mb-3">
+    <h2 class="display-2 mt-4 pb-3">Create a Poll</h2>
+    <form autocomplete="off" class="">
       <!-- Prevent auto-complete -->
       <input autocomplete="false" name="hidden" type="text" style="display:none;">
 
-      <div class="md-layout-row md-gutter w-100">
-        <div class="md-layout-item md-size-100">
-          <movie-suggest @fill="fillOption"></movie-suggest>
-        </div>
-      </div>
+      <movie-suggest :placeholder="movieSuggestPlaceholder" :errors="optionsErrors" @optionsChange="updateOptions"></movie-suggest>
 
-      <!-- options -->
-      <div class="mt-2 mb-4 md-layout-row md-gutter w-100" v-if="options.length > 0" id="options-container">
-        <div class="md-layout-item md-size-100">
-          <p>{{haveNominations ? 'Pre-Selected Movies' : 'Selected Movies' }}</p>
-          <div id="options">
-            <md-chip v-for="(option, index) in options" :key="option.name" class="md-primary my-1" md-deletable @md-delete="removeOption(index)">{{option.name}}</md-chip>
-          </div>
-        </div>
-      </div>
-
-      <div class="md-layout-row md-gutter w-100">
-        <div class="md-layout-item md-size-100">
-          <md-field :class="formClass('minutes')">
-            <md-icon>timelapse</md-icon>
-            <label for="minutes">Voting Time</label>
-            <md-input name="minutes" id="minutes" v-model="minutes" @input="$v.minutes.$touch()" type="number"  pattern="[1-9]" min="1" max="10" />
-            <span class="md-helper-text">Number of minutes</span>
-            <span class="md-error" v-if="!$v.minutes.between || !$v.minutes.required">{{getErrorText('minutes')}}</span>
-          </md-field>
-        </div>
-      </div>
-
-      <div class="md-layout-row md-gutter w-100">
-        <div class="md-layout-item md-size-100">
-          <md-field :class="formClass('votes')">
-            <md-icon>format_list_numbered</md-icon>
-            <label for="votes">Number of Votes</label>
-            <md-input name="votes" id="votes" v-model="votes"  type="number" @input="$v.votes.$touch()" pattern="[1-4]" min="1" max="4" />
-            <span class="md-error" v-if="!$v.votes.between || !$v.votes.required">{{getErrorText('votes')}}</span>
-          </md-field>
-        </div>
-      </div>
+      <v-switch id="nomination-phase" :label="switchLabel" v-model="haveNominations"/>
 
       <!-- Nominations -->
-      <md-switch id="nomination-phase" v-model="haveNominations">{{haveNominations ? 'With Nominations' : 'No Nominations' }}</md-switch>
-
       <transition name="fade">
-        <div v-if="haveNominations" class="md-layout md-gutter">
-          <div class="md-layout-item md-size-100">
-            <h2 class="md-subheading">Nomination Options</h2>
-          </div>
+        <div v-if="haveNominations">
+          <h3 class="subheadingfont">Nomination Phase Options</h3>
 
-          <div class="md-layout-item md-size-100 pa-1">
-            <md-field :class="formClass('nominationsMinutes')">
-              <md-icon>timelapse</md-icon>
-              <label for="nomination-length">Nomination Time</label>
-              <md-input name="nomination-length" id="nomination-length" v-model="nominationsMinutes" @input="$v.nominationsMinutes.$touch()" type="number" pattern="[1-9][0-9]*" min="1" max="60" />
-              <span class="md-helper-text">Number of minutes</span>
-              <span class="md-error" v-if="!$v.nominationsMinutes.between || !$v.nominationsMinutes.required">{{getErrorText('nominationsMinutes')}}</span>
-            </md-field>
-          </div>
-          
-          <div class="md-layout-item md-size-100 pa-1">
-            <md-field :class="formClass('nominations')">
-              <md-icon>format_list_numbered</md-icon>
-              <label for="nomination-votes">Number of Nominations</label>
-              <md-input name="nomination-votes" id="nomination-votes" v-model="nominations" @input="$v.nominations.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
-              <span class="md-error" v-if="!$v.nominations.between || !$v.nominations.required">{{getErrorText('nominations')}}</span>
-            </md-field>
-          </div>
+          <v-text-field id="nomination-length" :error-messages="nominationLengthErrors" prepend-icon="timelapse" label="Nomination Time" hint="The number of minutes for nominations" v-model="nominationsMinutes" @input="$v.nominationsMinutes.$touch()" type="number"  pattern="[1-9][0-9]*" min="1" max="60" />
+          <v-text-field id="nomination-votes" :error-messages="nominationsErrors" prepend-icon="format_list_numbered" label="Number of Nominations" hint="The number of nominations each person receives" v-model="nominations" @input="$v.nominations.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
         </div>
       </transition>
+
+      <div>
+        <h3 class="subheadingfont">Voting Phase Options</h3>
+
+        <v-text-field id="minutes" :error-messages="minutesErrors" prepend-icon="timelapse" label="Voting Time" hint="The number of minutes for voting" v-model="minutes" @input="$v.minutes.$touch()" type="number" pattern="[1-9]" min="1" max="10" />
+        <v-text-field id="votes" :error-messages="votesErrors" prepend-icon="format_list_numbered" label="Number of Votes" hint="The number of votes each person receives" v-model="votes" @input="$v.votes.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
+      </div>
     
-    <div class="mt-3">
-      <md-button id="start-poll" class="md-raised md-accent" @click.prevent="startPoll()" :disabled="!canStart">Start Poll</md-button>
-      <md-button id="back" @click.prevent="toHome()">Back</md-button>
-    </div>
-
-     <md-snackbar id="snackbar" md-position="center" :md-active.sync="showSnackbar" md-persistent>
-      <span>This movie has already been added.</span>
-      <md-button class="md-primary" @click="showSnackbar = false">Close</md-button>
-    </md-snackbar>
-
+      <div class="mt-3">
+        <v-btn id="start-poll" @click.prevent="startPoll()" :disabled="!canStart" color="primary">Start Poll</v-btn>
+        <v-btn id="back" @click.prevent="toHome()">Back</v-btn>
+      </div>
     </form>
+
+    <v-snackbar id="snackbar" :bottom="true" v-model="showSnackbar">
+      <span>This movie has already been added.</span>
+      <v-btn class="md-primary" @click="showSnackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -116,12 +67,9 @@ export default {
     toHome: function () {
       router.push('/home')
     },
-    fillOption: function (film) {
-      if (!this.options.find(f => f.name === film.name)) {
-        this.options.push({name: film.name, film_id: film.film_id})
-      } else {
-        this.showSnackbar = true
-      }
+    updateOptions: function (options) {
+      this.options = options
+      this.$v.options.$touch()
     },
     removeOption: function (index) {
       this.options.splice(index, 1)
@@ -148,30 +96,56 @@ export default {
         numberOfNominations: numberOfNominations
       })
       this.toHome()
-    },
-    formClass (formItemName) {
-      // debugger
-      if (!this.$v[formItemName]) {
-        return {}
-      }
-      return {
-        'md-invalid': this.$v[formItemName].$error
-      }
-    },
-    getErrorText (formItemName) {
-      let error = ''
-      let validation = this.$v[formItemName]
-      if (!validation.required) {
-        error = 'Required'
-      } else if (!validation.between) {
-        error = `Must be between ${validation.$params.between.min} and ${validation.$params.between.max}`
-      }
-      return error
     }
   },
   computed: {
     canStart: function () {
       return !this.$v.$invalid
+    },
+    switchLabel: function () {
+      return this.haveNominations ? 'With Nominations' : 'No Nominations'
+    },
+    movieSuggestPlaceholder: function () {
+      return this.haveNominations ? 'Pre-Select Movies' : 'Select Movies'
+    },
+    minutesErrors () {
+      const errors = []
+      const minutes = this.$v.minutes
+      if (!minutes.$dirty) return errors
+      !minutes.required && errors.push('A number of minutes for voting is required.')
+      !minutes.between && errors.push(`Voting length must be between ${minutes.$params.between.min} and ${minutes.$params.between.max}`)
+      return errors
+    },
+    votesErrors () {
+      const errors = []
+      const votes = this.$v.votes
+      if (!votes.$dirty) return errors
+      !votes.required && errors.push('A number of votes for voting is required.')
+      !votes.between && errors.push(`Voting length must be between ${votes.$params.between.min} and ${votes.$params.between.max}`)
+      return errors
+    },
+    nominationLengthErrors () {
+      const errors = []
+      const nominationsMinutes = this.$v.nominationsMinutes
+      if (!nominationsMinutes.$dirty) return errors
+      !nominationsMinutes.required && errors.push('A number of nominationMinutes for voting is required.')
+      !nominationsMinutes.between && errors.push(`Voting length must be between ${nominationsMinutes.$params.between.min} and ${nominationsMinutes.$params.between.max}`)
+      return errors
+    },
+    nominationsErrors () {
+      const errors = []
+      const nominations = this.$v.nominations
+      if (!nominations.$dirty) return errors
+      !nominations.required && errors.push('A number of nominations for voting is required.')
+      !nominations.between && errors.push(`Voting length must be between ${nominations.$params.between.min} and ${nominations.$params.between.max}`)
+      return errors
+    },
+    optionsErrors () {
+      const errors = []
+      const options = this.$v.options
+      if (!options.$dirty) return errors
+      !options.required && errors.push('Options are required if there are no nominations')
+      !options.minLength && errors.push('You must have at least two options if there are no nominations')
     }
   },
   validations () {

@@ -1,65 +1,114 @@
 <template>
-  <div>
-    <md-toolbar class="md-transparent" md-elevation="0">
-        <span class="md-title">Navigation</span>
-    </md-toolbar>
-    <md-list>
-      <md-list-item v-if="user" to="/home" @click="closeDrawer">
-        <md-icon>home</md-icon>
-        <span class="md-list-item-text">Home</span>
-      </md-list-item>
+<div>
+  <v-toolbar flat>
+    <v-list>
+      <v-list-tile>
+        <v-list-tile-title class="title">
+          Navigation
+        </v-list-tile-title>
+      </v-list-tile>
+    </v-list>
+  </v-toolbar>
+  <v-divider></v-divider>
 
-      <md-list-item v-if="user && user.isAdmin && !getActivePoll" to="/create" @click="closeDrawer">
-        <md-icon>create</md-icon>
-        <span class="md-list-item-text">Create Poll</span>
-      </md-list-item>
+  <v-list>
+    <!-- home -->
+    <v-list-tile v-if="user" to="/home">
+      <v-list-tile-action>
+          <v-icon>home</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>Home</v-list-tile-title>
+        </v-list-tile-content>
+    </v-list-tile>
 
-      <md-list-item v-if="user" to="/discover" @click="closeDrawer">
-        <md-icon>search</md-icon>
-        <span class="md-list-item-text">Discover Movies</span>
-      </md-list-item>
+    <!-- create poll -->
+    <v-list-tile v-if="user && user.isAdmin && !getActivePoll" to="/create">
+      <v-list-tile-action>
+          <v-icon>create</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>Create Poll</v-list-tile-title>
+        </v-list-tile-content>
+    </v-list-tile>
 
-      <md-list-item v-if="user" to="/movies" @click="closeDrawer">
-        <md-icon>movie</md-icon>
-        <span class="md-list-item-text">All Movies</span>
-      </md-list-item>
+    <!--  discover-->
+    <v-list-tile v-if="user" to="/discover">
+      <v-list-tile-action>
+          <v-icon>search</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>Discover</v-list-tile-title>
+        </v-list-tile-content>
+    </v-list-tile>
 
-      <md-list-item v-if="user && user.isAdmin" to="/add" @click="closeDrawer">
-        <md-icon>library_add</md-icon>
-        <span class="md-list-item-text">Add to Collection</span>
-      </md-list-item>
+    <!-- all movies -->
+    <v-list-tile v-if="user" to="/movies">
+      <v-list-tile-action>
+          <v-icon>movie</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>All Movies</v-list-tile-title>
+        </v-list-tile-content>
+    </v-list-tile>
 
-      <md-list-item v-if="user" @click="logoutAndRedirect()">
-        <md-icon>exit_to_app</md-icon>
-        <span class="md-list-item-text">Logout</span>
-      </md-list-item>
-    </md-list>
+    <!-- add to library -->
+    <v-list-tile v-if="user && user.isAdmin" to="/add">
+      <v-list-tile-action>
+          <v-icon>library_add</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>Add to Collection</v-list-tile-title>
+        </v-list-tile-content>
+    </v-list-tile>
 
-    <md-toolbar v-if="getActivePoll" class="md-transparent" md-elevation="0">
-        <!-- <span class="md-title">Jonathan's Movies</span> -->
-    </md-toolbar>
-    <md-divider />
-    <md-list  v-if="getActivePoll">
-      <md-list-item v-if="isCurrentPollInNomination" >
-        <md-icon>format_list_numbered</md-icon>
-        <span class="md-list-item-text">{{remainingNominations}} Nominations Left</span>
-      </md-list-item>
-      <md-list-item v-else-if="isCurrentPollInVoting" >
-        <md-icon>format_list_numbered</md-icon>
-        <span class="md-list-item-text">{{remainingVotes}} Votes Left</span>
-      </md-list-item>
-      <md-list-item  v-if="isCurrentPollInNomination">
-        <md-icon>timelapse</md-icon>
-        <span class="md-list-item-text">{{remainingTimeInNominationWordsForCurrentPoll}}</span>        
-      </md-list-item>
-      <md-list-item  v-else-if="isCurrentPollInVoting">
-        <md-icon>timelapse</md-icon>
-        <span class="md-list-item-text">{{remainingTimeWordsForCurrentPoll}}</span>
-      </md-list-item>
-    </md-list>
+    <!-- logout -->
+    <v-list-tile v-if="user" @click="logoutAndRedirect">
+      <v-list-tile-action>
+          <v-icon>exit_to_app</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>Logout</v-list-tile-title>
+        </v-list-tile-content>
+    </v-list-tile>
+  </v-list>
 
-    
-  </div>
+  <v-toolbar v-if="getActivePoll" flat>
+    <v-list>
+      <v-list-tile>
+        <v-list-tile-title class="title">
+          Poll Information
+        </v-list-tile-title>
+      </v-list-tile>
+    </v-list>
+  </v-toolbar>
+  <v-divider v-if="getActivePoll"></v-divider>
+
+  <v-list v-if="getActivePoll">
+    <v-list-tile v-if="isCurrentPollInNomination">
+        <v-list-tile-content>
+          <v-list-tile-title>{{remainingNominations}} Nomination{{remainingNominations > 1 ? 's' : ''}} Left</v-list-tile-title>
+        </v-list-tile-content>
+    </v-list-tile>
+    <v-list-tile v-else-if="isCurrentPollInVoting">
+        <v-list-tile-content>
+          <v-list-tile-title>{{remainingVotes}} Vote{{remainingVotes > 1 ? 's' : ''}} Left</v-list-tile-title>
+        </v-list-tile-content>
+    </v-list-tile>
+
+    <v-list-tile v-if="isCurrentPollInNomination">
+        <v-list-tile-content>
+          <v-list-tile-title>{{remainingTimeInNominationWordsForCurrentPoll}}</v-list-tile-title>
+        </v-list-tile-content>
+    </v-list-tile>
+    <v-list-tile v-else-if="isCurrentPollInVoting">
+      
+        <v-list-tile-content>
+          <v-list-tile-title>{{remainingTimeWordsForCurrentPoll}}</v-list-tile-title>
+        </v-list-tile-content>
+    </v-list-tile>
+  </v-list>
+</div>
 </template>
 
 <script>
@@ -76,12 +125,8 @@ export default {
   methods: {
     ...mapActions('auth', ['logout']),
     logoutAndRedirect: function () {
-      this.$emit('close')
       this.logout()
         .then(() => this.$router.push({path: '/'}))
-    },
-    closeDrawer () {
-      this.$emit('navigate')
     }
   }
 }

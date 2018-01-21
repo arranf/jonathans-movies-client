@@ -1,14 +1,10 @@
 <template>
-  <md-list-item @click.prevent="showModal()">
-      <div class="md-list-item-text">
-        <span>{{film.name}} <small>{{getFilmYear}}</small></span>
-        <span>{{film.genres.join(', ')}}</span>
-      </div>
-
-      <div class="md-list-action" v-if="film.imdb_rating">
-        <span class="md-primary">{{film.imdb_rating}} <i class="fa fa-star text-md-accent" aria-disabled="true"></i></span>
-      </div>
-  </md-list-item>
+  <v-list-tile @click.prevent="showModal()">
+      <v-list-tile-content>
+        <v-list-tile-title v-text="film.name.substring(0, 30) + (film.name.length > 30 ? '...' : '')"></v-list-tile-title>
+        <v-list-tile-sub-title v-html="getFilmYear"></v-list-tile-sub-title>
+      </v-list-tile-content>
+  </v-list-tile>
 </template>
 
 <script>

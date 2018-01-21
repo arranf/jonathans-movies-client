@@ -1,25 +1,25 @@
 <template>
   <div>
-    <movie-info-modal @snackbar="setSnackbar" :show.sync="showingFilm" :filmId="$route.params.filmId" :show-nominate="true" />
-    <div class="d-flex flex-column" v-if="suggestions" >
+    <movie-info-modal @snackbar="setSnackbar" close-route="/discover" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
+    <div v-if="suggestions" v-infinite-scroll="refresh" :infinite-scroll-immediate-check="false" :infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+      <h2 class="text-center">Discover a Movie</h2>
 
-      <h2 class="md-display-1 text-center">Discover a Movie 
-        <md-button @click="refresh" class="md-icon-button">
-          <md-icon>refresh</md-icon>
-        </md-button>
-      </h2>
-      
-      <div class="scroll align-self-center">
-        <template  v-for="film in suggestions">
-          <film-preview class="scroll-item" :key="film._id" :film="film" modal-page-name="Discover"></film-preview>
-        </template>
-      </div>
+        <v-container grid-list-md text-xs-center>
+          <v-layout row wrap>
+            <v-flex xs6 :key="film._id+index" v-for="(film, index) in suggestions">
+              <film-preview :film="film" modal-page-name="Discover"></film-preview>
+            </v-flex>
+            <v-flex xs12>
+              <v-progress-linear color="secondary" v-if="busy" indeterminate />
+            </v-flex>
+          </v-layout>
+        </v-container>
     </div>
 
-    <md-snackbar :md-active.sync="showSnackbar">
+    <v-snackbar v-model="showSnackbar" :bottom="true">
       <span>{{snackbarMessage}}</span>
-      <md-button class="md-primary" @click="showSnackbar = false">Close</md-button>
-    </md-snackbar>
+      <v-btn color="primary" @click="showSnackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -27,6 +27,7 @@
 import FilmPreview from '@/components/common/FilmPreview'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
 import queries from '@/api'
+import infiniteScroll from 'vue-infinite-scroll'
 
 export default {
   name: 'Suggestions',
@@ -35,16 +36,23 @@ export default {
       showingFilm: false,
       suggestions: [],
       showSnackbar: false,
-      snackbarMessage: ''
+      snackbarMessage: '',
+      busy: false
     }
+  },
+  directives: {
+    infiniteScroll
   },
   components: {
     FilmPreview,
     MovieInfoModal
   },
+  props: {
+    filmId: String
+  },
   watch: {
-    '$route' (to, from) {
-      this.showingFilm = Boolean(to.params.filmId)
+    'filmId' (to, from) {
+      this.showingFilm = Boolean(this.filmId)
     }
   },
   methods: {
@@ -54,7 +62,7 @@ export default {
     },
     refresh () {
       queries.discoverMovies()
-        .then(discoveredFilms => { this.suggestions = discoveredFilms })
+        .then(discoveredFilms => { this.suggestions = this.suggestions.concat(discoveredFilms) })
         .catch(e => {
           console.error(e)
           this.setSnackbar('Something went wrong. Try again.')
@@ -63,7 +71,7 @@ export default {
   },
   created () {
     // route watcher won't be called on initial load
-    this.showingFilm = Boolean(this.$route.params.filmId)
+    this.showingFilm = Boolean(this.filmId)
     this.refresh()
   }
 }
@@ -72,6 +80,7 @@ export default {
 <style lang="scss">
 .scroll {
   display: flex;
+  flex-direction: row;
   overflow-x: scroll;
   overflow-y: hidden;
   // white-space: nowrap;

@@ -1,7 +1,8 @@
 <template>
-  <div class="movie-poster " @click="showModal()" v-if="film" >
-    <img class="img-fluid img-thumbnail md-elevation-2" :src="getFilmPoster" :alt="film.name + ' image'">
-    <h4 class="md-subheading text-center">
+  <div @click="showModal()" v-if="film" class="h-100" >
+    <img v-if="film.poster_path" class="img-fluid" :src="getFilmPoster" :alt="film.name + ' image'">
+    <div v-else class="h-90" :style="{backgroundColor: getColor()}"></div>
+    <h4 class="">
       {{film.name}}
     </h4>
   </div>
@@ -9,6 +10,7 @@
 
 <script>
 import utils from '@/utils'
+import constants from '@/constants'
 import {mapState, mapGetters} from 'vuex'
 
 export default {
@@ -46,6 +48,9 @@ export default {
       if (this.film) {
         this.$router.push({name: this.modalPageName, params: { filmId: this.film._id }})
       }
+    },
+    getColor: function () {
+      return utils.selectRandom(constants.colors['800'])
     }
   }
 }
