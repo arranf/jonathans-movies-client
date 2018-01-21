@@ -22,8 +22,6 @@ import {mapActions, mapState, mapGetters} from 'vuex'
 import queries from '@/api'
 import OptionPreview from '@/components/Home/Nominated/OptionPreview'
 
-// require('swiper/dist/css/swiper.css')
-
 export default {
   name: 'VoteForOption',
   data () {
@@ -82,20 +80,5 @@ export default {
 <style scoped>
   .input-group {
     width: unset !important;
-  }
-
-  .swiper-item {
-    /* height: 100%; */
-    /* text-align: center; */
-
-    /* You can click this */
-    cursor: pointer; 
-    cursor: hand; 
-
-    /* Center slide text vertically */
-    /* display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-direction: column; */
   }
 </style>
