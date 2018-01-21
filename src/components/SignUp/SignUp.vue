@@ -1,40 +1,19 @@
 <template>
-  <div class="flex-column d-flex text-center justify-content-center align-items-center mt-4">
+  <div class="">
     <div>
-      <h1 class="md-display-2">Sign Up</h1>
+      <h1 class="display-2">Sign Up</h1>
     </div>
-    <md-snackbar id="snackbar" md-position="center" :md-active.sync="showSnackbar" md-persistent>
+    <v-snackbar id="snackbar" bottom v-model="showSnackbar">
       <span>Unable to complete sign up.</span>
-      <md-button class="md-primary" @click="showSnackbar = false">Close</md-button>
-    </md-snackbar>
+    </v-snackbar>
 
     <form id="internalLoginForm" class="d-flex flex-column align-items-center justify-content-center w-100">
-      <div class="md-layout-row md-gutter w-100">
-        <div class="md-layout-item md-size-100">
-          <md-field :class="getValidationClass('email')" md-clearable md-inline>
-            <md-icon>inbox</md-icon>
-            <label for="email">Email</label>
-            <md-input name="email" id="email" v-model="email" type="email" />
-          </md-field>
-        </div>
-      </div>
+      <v-text-field prepend-icon="inbox" name="email" label="Email" v-model="email" type="text"></v-text-field>
+      <v-text-field prepend-icon="lock" name="password" label="Password" v-model="password" id="password" type="password"></v-text-field>
 
-      <div class="md-layout-row md-gutter w-100">
-        <div class="md-layout-item md-size-100">
-          <md-field :class="getValidationClass('password')" md-inline>
-            <md-icon>vpn_key</md-icon>
-            <label for="password">Password</label>
-            <md-input name="password" id="password" v-model="password" type="password" />
-          </md-field>
-        </div>
-      </div>
- <!-- divs here keep the buttons aligned -->
- <div>
-   <md-button id="submit" class="md-raised md-accent" :disabled="isDisabled" @click.prevent="trySignUp()">Submit</md-button>
- </div>
- <div>
-    <md-button id="back" class="md-raised" @click.prevent="toHome()">Back</md-button>
- </div>
+      
+      <v-btn id="submit" :disabled="isDisabled" @click.prevent="trySignUp()" color="primary">Signup</v-btn>
+      <v-btn id="back" @click.prevent="toHome()">Back</v-btn>
     </form>
   </div>
 </template>
