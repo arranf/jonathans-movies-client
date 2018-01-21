@@ -1,19 +1,16 @@
 <template>
   <v-select id="autocomplete" @input="fillBox" autocomplete item-text="name" return-object
-    :placeholder="placeholder" chips deletable-chips item-value="name" :loading="loading" multiple cache-items 
-    :hide-selected="true" required :items="suggestions" :error-messages="errors" :search-input.sync="searchQuery" v-model="selected">
+    :placeholder="placeholder" chips deletable-chips item-value="name" no-data-text="Couldn't find that movie" :loading="loading" multiple cache-items 
+    :hide-selected="true" :items="suggestions" :error-messages="errors" :search-input.sync="searchQuery" v-model="selected">
     <template slot="item" slot-scope="data">
-      <div v-if="searchQuery != null && searchQuery.trim() === ''">
+      <!-- <div v-if="searchQuery != null && searchQuery.trim() === ''">
         Start typing to search for a film
-      </div>
-      <div v-else-if="suggestions.length > 0">
+      </div> -->
+      <div v-if="suggestions.length > 0">
         <v-list-tile-content>
           <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
           <v-list-tile-sub-title v-html="getYear(data.item.release_date)"></v-list-tile-sub-title>
         </v-list-tile-content>
-      </div>
-      <div v-else>
-        Couldn't find {{searchQuery}}. <a id="add-anyway" @click.prevent="submit(searchQuery)">Add it anyway!</a>
       </div>
       </template>
   </v-select>
@@ -51,11 +48,10 @@ export default {
         }
       })
     },
-    submit: function (searchTerm) {
-      if (searchTerm.trim() !== '') {
-        let chosenFilm = {name: searchTerm, film_id: null}
+    submit: function () {
+      if (this.searchQuery.trim() !== '') {
+        let chosenFilm = {name: this.searchQuery, film_id: null}
         this.$emit('fill', chosenFilm)
-        this.clearSearch()
       }
     },
     fillBox: function (event) {
