@@ -1,14 +1,12 @@
 <template>
-<!-- :class="{'h-50': getActivePoll && !isCurrentPollInNomination}" -->
-    <div id="home-container" style="max-height: 100%; flex: 1;">
-        <selected-options v-if="isCurrentPollInNomination" />
-        <vote-for-option @snackbar="setSnackbar" v-else-if="getActivePoll"></vote-for-option>
-        <!-- <div v-else-if="getActivePoll" style="color:tomato;"></div> -->
-        <results v-else></results>  
-        <v-snackbar id="snackbar" :bottom="true" v-model="showSnackbar">
-          <span>{{snackbarText}}</span>
-        </v-snackbar>
-    </div>
+  <div id="home-container">
+      <selected-options v-if="isCurrentPollInNomination" />
+      <vote-for-option @snackbar="setSnackbar" v-else-if="getActivePoll"></vote-for-option>
+      <results v-else></results>  
+      <v-snackbar id="snackbar" :bottom="true" v-model="showSnackbar">
+        <span>{{snackbarText}}</span>
+      </v-snackbar>
+  </div>
 </template>
 
 <script>
