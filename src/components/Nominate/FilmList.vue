@@ -26,7 +26,10 @@
         <movie-info-modal @snackbar="setSnackbar" close-route="/movies" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
 
         <v-list>
-          <film-list-item v-for="film in allFilms" :film="film" :key="film._id+'item'"/>
+          <template v-for="(film, index) in allFilms">
+            <film-list-item  :film="film" :key="film._id+'item'"/>
+            <v-divider v-if="index + 1 < allFilms.length" :key="index"></v-divider>
+          </template>
         </v-list> 
 
         <v-progress-linear v-show="busy" :indeterminate="true" />
