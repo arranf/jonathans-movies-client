@@ -3,10 +3,10 @@
     <img class="img-fluid img-thumbnail" v-if="film" :src="getFilmPoster" :alt="option.name + ' image'">
     <div v-else class="d-flex flex-column justify-content-center fake-movie-poster" :style="{backgroundColor: getColor()}">
       <div class="h-30 w-100 align-self-end">
-        <p style="font-size: 1.6em;" class="text-white text-center">{{option.name}}</p>
+        <p style="subtitle" class="text-white text-center">{{option.name}}</p>
       </div>
     </div>
-    <h4 class="md-subheading text-center">
+    <h4 class="text-center">
       {{option.name}}
     </h4>
   </div>

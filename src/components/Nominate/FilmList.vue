@@ -39,7 +39,7 @@
         <v-icon>filter_list</v-icon>
       </v-btn>
 
-     <v-snackbar id="snackbar" v-model="showSnackbar" >
+     <v-snackbar :bottom="true" id="snackbar" v-model="showSnackbar" >
         <span>{{snackbarText}}</span>
       <v-btn @click="showSnackbar = false">Close</v-btn>
     </v-snackbar>
