@@ -1,7 +1,7 @@
 <template>
-  <div class="movie-poster" @click="showModal()" v-if="option" >
-    <img class="img-fluid img-thumbnail md-elevation-2" v-if="film" :src="getFilmPoster" :alt="option.name + ' image'">
-    <div v-else class="d-flex flex-column justify-content-center fake-movie-poster md-elevation-2" :style="{backgroundColor: getColor()}">
+  <div @click="showModal()" v-if="option" >
+    <img class="img-fluid img-thumbnail" v-if="film" :src="getFilmPoster" :alt="option.name + ' image'">
+    <div v-else class="d-flex flex-column justify-content-center fake-movie-poster" :style="{backgroundColor: getColor()}">
       <div class="h-30 w-100 align-self-end">
         <p style="font-size: 1.6em;" class="text-white text-center">{{option.name}}</p>
       </div>
@@ -19,7 +19,10 @@ import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: 'OptionPreview',
-  props: ['option'],
+  props: {
+    option: {type: Object, required: true},
+    showInfo: {type: Boolean, default: true}
+  },
   computed: {
     ...mapGetters('films', {getFilm: 'get'}),
     lastWatched: function () {
@@ -47,7 +50,7 @@ export default {
       return utils.selectRandom(constants.colors['800'])
     },
     showModal: function () {
-      if (this.film) {
+      if (this.film && this.showInfo) {
         this.$router.push({name: 'Home', params: { filmId: this.film._id }})
       }
     }
@@ -59,80 +62,3 @@ export default {
   }
 }
 </script>
-
-<style>
-/* iPhone 4 */
-.movie-poster {
-  width: 11rem;
-  margin-right: 0.5em; margin-left: 0.5em;
-}
-
-.fake-movie-poster {
-  height: 16rem;
-}
-
-@media (min-height: 500px) {
-	.movie-poster {
-      width: 12rem;
-    }
-  
-  .fake-movie-poster {
-    height: 17.5rem; 
-  }
-}
-
-/* iPhone 5 */
-@media (min-height: 550px) {
-	.movie-poster {
-      width: 11.5rem;
-    }
-  
-  .fake-movie-poster {
-    height: 16.8rem; 
-  }
-}
-
-/* S5 */
-@media (min-height: 600px) {
-	.movie-poster {
-      width: 14rem;
-    }
-  
-  .fake-movie-poster {
-    height: 20.5rem; 
-  }
-}
-
-/* iPhone6 */
-@media (min-height: 650px) {
-	.movie-poster {
-      width: 16rem;
-    }
-  
-  .fake-movie-poster {
-    height: 23.5rem;
-  }
-}
-
-/* Nexus 6 + iPhone 6 Plus*/
-@media (min-height: 700px) {
-	.movie-poster {
-      width: 18rem;
-    }
-  
-  .fake-movie-poster {
-    height: 26.5rem;
-  }
-}
-
-/* iPad Portrait */
-@media (min-height: 1000px) {
-	.movie-poster {
-      width: 24rem;
-    }
-  
-  .fake-movie-poster {
-    height: 32.5rem;
-  }
-}
-</style>
