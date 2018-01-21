@@ -1,5 +1,5 @@
 <template>
-  <div class="movie-poster " @click="showModal()" v-if="option" >
+  <div class="movie-poster" @click="showModal()" v-if="option" >
     <img class="img-fluid img-thumbnail md-elevation-2" v-if="film" :src="getFilmPoster" :alt="option.name + ' image'">
     <div v-else class="d-flex flex-column justify-content-center fake-movie-poster md-elevation-2" :style="{backgroundColor: getColor()}">
       <div class="h-30 w-100 align-self-end">
@@ -53,14 +53,14 @@ export default {
       return null
     },
     film () {
-      if (this.option && this.option.film_id) {
+      if (this.option.film && this.option.film_id) {
         return this.getFilm(this.option.film_id)
       }
       return null
     }
   },
   methods: {
-    ...mapActions('option', ['getFilmDataForOption']),
+    ...mapActions('films', {fetchFilm: 'get'}),
     getColor: function () {
       return utils.selectRandom(constants.colors['800'])
     },
@@ -68,6 +68,11 @@ export default {
       if (this.film) {
         this.$router.push({name: 'Home', params: { filmId: this.film._id }})
       }
+    }
+  },
+  created () {
+    if (!this.film) {
+      this.fetchFilm(this.option.film_id)
     }
   }
 }

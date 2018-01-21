@@ -57,6 +57,7 @@ export default {
 
 <style lang="scss">
 .scroll {
+  max-width: 90vw;
   display: flex;
   overflow-x: scroll;
   overflow-y: hidden;
