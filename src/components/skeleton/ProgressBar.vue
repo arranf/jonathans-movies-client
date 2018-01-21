@@ -14,10 +14,9 @@ export default {
 </script>
 
 <style scoped>
-  .bottom {
-    width: 100%;
+  .progress-linear {
+    margin-top: 0;
     position: fixed;
-    bottom: 0;
-    z-index: 6;
+    z-index: 5;
   }
 </style>
