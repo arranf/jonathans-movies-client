@@ -48,7 +48,7 @@
 
        <v-card-actions>
          <v-spacer></v-spacer>
-        <v-btn @click.prevent="addNomination()" v-if="nominatable">
+        <v-btn flat color="primary" @click.prevent="addNomination()" v-if="nominatable">
           {{nominateButtonText}}
         </v-btn>
         <v-btn flat @click="showOverview = !showOverview">
