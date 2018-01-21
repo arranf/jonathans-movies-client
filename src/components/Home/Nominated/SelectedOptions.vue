@@ -9,12 +9,9 @@
   </div>
 
   <div class="d-flex flex-column" v-if="getOptionsForCurrentPoll && currentPollOptions && currentPollOptions.length > 0" >
-
     <h2 class="md-display-1 text-center">Nominations</h2>
     <div class="scroll align-self-center">
-      <template  v-for="option in currentPollOptions">
-        <option-preview class="scroll-item" :key="option._id" :option="option"></option-preview>
-      </template>
+      <option-preview v-for="option in currentPollOptions" class="scroll-item" :key="option._id" :option="option"></option-preview>
     </div>
   </div>
 </div>
@@ -57,7 +54,6 @@ export default {
 
 <style lang="scss">
 .scroll {
-  max-width: 90vw;
   display: flex;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -71,6 +67,9 @@ export default {
 
 .scroll-item {
   flex: 0 0 auto;
+  max-width: 80%;
+  width: 100%;
+
   // display: inline-block;
 }
 </style>
