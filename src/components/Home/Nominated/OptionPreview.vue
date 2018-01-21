@@ -1,5 +1,5 @@
 <template>
-  <div @click="showModal()" v-if="option" >
+  <div @click="showModal()" class="d-flex flex-column align-items-center" v-if="option" >
     <img class="img-fluid img-thumbnail" v-if="film" :src="getFilmPoster" :alt="option.name + ' image'">
     <div v-else class="d-flex flex-column justify-content-center fake-movie-poster" :style="{backgroundColor: getColor()}">
       <div class="h-30 w-100 align-self-end">
