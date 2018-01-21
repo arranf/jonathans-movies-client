@@ -1,9 +1,11 @@
 <template>
-  <div id="home-container">
+  <div id="home-container" >
       <movie-info-modal :show.sync="showingFilm" close-route="/home" :filmId="filmId" :show-nominate="false" />
-      <selected-options v-if="isCurrentPollInNomination" />
-      <vote-for-option @snackbar="setSnackbar" v-else-if="getActivePoll"></vote-for-option>
-      <results v-else></results>  
+      <div class="w-90">
+        <selected-options v-if="isCurrentPollInNomination" />
+        <vote-for-option @snackbar="setSnackbar" v-else-if="getActivePoll"></vote-for-option>
+        <results v-else></results> 
+      </div> 
       <v-snackbar id="snackbar" :bottom="true" v-model="showSnackbar">
         <span>{{snackbarText}}</span>
       </v-snackbar>
