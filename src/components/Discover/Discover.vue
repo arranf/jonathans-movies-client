@@ -2,9 +2,9 @@
   <div>
     <movie-info-modal @snackbar="setSnackbar" close-route="/discover" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
     <div v-if="suggestions" v-infinite-scroll="refresh" :infinite-scroll-immediate-check="false" :infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-      <h2>Discover a Movie</h2>
+      <h2 class="text-center">Discover a Movie</h2>
 
-        <v-container grid-list-md text-xs-left>
+        <v-container grid-list-md text-xs-center>
           <v-layout row wrap>
             <v-flex xs6 :key="film._id+index" v-for="(film, index) in suggestions">
               <film-preview :film="film" modal-page-name="Discover"></film-preview>
