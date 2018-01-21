@@ -16,7 +16,7 @@
         </v-container>
     </div>
 
-    <v-snackbar v-model="showSnackbar">
+    <v-snackbar v-model="showSnackbar" :bottom="true">
       <span>{{snackbarMessage}}</span>
       <v-btn color="primary" @click="showSnackbar = false">Close</v-btn>
     </v-snackbar>
