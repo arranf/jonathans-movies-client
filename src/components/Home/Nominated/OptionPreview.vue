@@ -15,23 +15,16 @@
 <script>
 import utils from '@/utils'
 import constants from '@/constants'
-import {mapState, mapActions, mapGetters} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: 'OptionPreview',
   props: ['option'],
   computed: {
-    ...mapState('option', {waitingForOptionFind: 'isFindPending'}),
     ...mapGetters('films', {getFilm: 'get'}),
     lastWatched: function () {
       if (this.film && this.film.lastWatched) {
         return utils.humanizeTimeToNowImprecise(this.film.lastWatched) + ' ago'
-      }
-      return null
-    },
-    getFilmBackdrop: function () {
-      if (this.film && this.film.backdrop_path) {
-        return utils.getTmdbBackdropImage(this.film.backdrop_path)
       }
       return null
     },
@@ -40,17 +33,6 @@ export default {
         return utils.getTmdbPosterImage(this.film.poster_path)
       }
       return ''
-    },
-    getImdbLink: function () {
-      if (this.film && this.film.imdb_id) {
-        return `https://www.imdb.com/title/${this.film.imdb_id}`
-      }
-    },
-    getFilmYear: function () {
-      if (this.film && this.film.release_date) {
-        return utils.getYearFromTmdbReleaseDate(this.film.release_date)
-      }
-      return null
     },
     film () {
       if (this.option.film && this.option.film_id) {
