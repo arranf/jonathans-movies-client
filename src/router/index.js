@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from '@/store'
 import feathersClient from '@/api/feathers-client'
+import queries from '@/api'
 
 const Home = () => import('@/components/Home/Home')
 const Login = () => import('@/components/Login/Login')
@@ -80,10 +81,22 @@ const router = new Router({
   ]
 })
 
+function initStore () {
+  store.dispatch('time/start')
+  return queries.getCurrentPoll()
+    .then(response => {
+      if (response.total > 0) {
+        const pollId = response.data[0]._id
+        return queries.getOptionsForMostRecentPoll(pollId)
+      }
+    })
+    .catch(error => console.error(error))
+}
+
 router.beforeEach((to, from, next) => {
   const user = store.state.auth.user
 
-  if (!user && to.path !== '/' && to.path !== '/signup') {
+  if (user == null && to.path !== '/' && to.path !== '/signup') {
     // TODO Refactor into generic method
     store.dispatch('auth/authenticate')
       .then(response => {
@@ -92,6 +105,7 @@ router.beforeEach((to, from, next) => {
       .then(payload => {
         return feathersClient.service('users').get(payload.userId)
       })
+      .then(() => initStore())
       .then(() => {
         next()
       })
@@ -99,10 +113,14 @@ router.beforeEach((to, from, next) => {
         next('/')
         console.error('Error authenticating in router beforeEnter', error)
       })
-  } else if (to.matched.some(record => record.meta.admin) && !user.isAdmin) {
-    next(false)
+  }
+
+  if (to.matched.some(record => record.meta.admin) && !user.isAdmin) {
+    initStore()
+      .then(() => next(false))
   } else {
-    next()
+    initStore()
+      .then(() => next())
   }
 })
 
