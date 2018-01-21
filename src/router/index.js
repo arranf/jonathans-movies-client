@@ -46,7 +46,8 @@ const router = new Router({
     {
       path: '/home/:filmId?',
       name: 'Home',
-      component: Home
+      component: Home,
+      props: true
     },
     {
       path: '/signup',

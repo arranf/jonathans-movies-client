@@ -1,6 +1,5 @@
 <template>
 <div class="">
-  <movie-info-modal :show.sync="showingFilm" close-route="/home" :filmId="$route.params.filmId" :show-nominate="false" />
   <div v-if="currentPollOptions.length === 0" class="empty-state-container">
     <v-icon size="100px" class="mb-2">playlist_add</v-icon>
     <h1 class="display-1 mb-1">Nominate a Movie</h1>
@@ -19,20 +18,13 @@
 
 <script>
 import OptionPreview from './OptionPreview'
-import MovieInfoModal from '@/components/common/MovieInfoModal'
 import queries from '@/api'
 import {mapGetters} from 'vuex'
 
 export default {
   name: 'SelectedOptions',
-  data () {
-    return {
-      showingFilm: false
-    }
-  },
   components: {
-    OptionPreview,
-    MovieInfoModal
+    OptionPreview
   },
   computed: {
     ...mapGetters('option', ['getOptionsForCurrentPoll', 'nominationsRemaining']),
@@ -43,33 +35,6 @@ export default {
   },
   created () {
     queries.getOptionsForMostRecentPoll(this.getActivePoll._id)
-  },
-  watch: {
-    '$route' (to, from) {
-      this.showingFilm = Boolean(to.params.filmId)
-    }
   }
 }
 </script>
-
-<style lang="scss">
-.scroll {
-  display: flex;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  // white-space: nowrap;
-  flex-wrap: nowrap;
-  -webkit-overflow-scrolling: touch;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-.scroll-item {
-  flex: 0 0 auto;
-  max-width: 80%;
-  width: 100%;
-
-  // display: inline-block;
-}
-</style>
