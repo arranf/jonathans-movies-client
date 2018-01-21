@@ -6,29 +6,9 @@ body {
     height: 100vh;
 }
 
-// Prevent fixed fabs sticking to the bottom
-.md-app-container {
-    transform: none !important;
-    -webkit-transform: none !important; 
-}
 
-.text-md-accent {
-    color: var(--md-theme-default-primary-on-background, #448aff)
-}
-
-// Ensure dialogs are transparent
-.md-dialog.md-theme-default { 
-    background-color: transparent 
-} 
- 
-.md-dialog-container { 
-    background-color: transparent;
-    align-items: center;
-    justify-content: center;
-}
-
-.md-select-menu {
-    z-index: 990;
+.text-white {
+    color: #ffffff;
 }
 
 .not-active {
@@ -49,3 +29,54 @@ body {
               user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome and Opera */
 }
+
+/* From bootstrap */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .img-thumbnail {
+    padding: 0.25rem;
+    background-color: #fff;
+    // border: 1px solid #dee2e6;
+    // border-radius: 0.25rem;
+    max-width: 85%;
+    height: auto;
+  }
+
+
+  /* From Vue Material */
+  .empty-state-description {
+    font-size: 16px;
+    line-height: 24px;
+    margin: 1em 0;
+  }
+
+  .empty-state-container {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      flex-direction: column;
+  }
+
+  // For SelectedOptions and VoteForOption
+  .scroll {
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    // white-space: nowrap;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  
+  .scroll-item {
+    flex: 0 0 auto;
+    max-width: 80%;
+    width: 100%;
+  
+    // display: inline-block;
+  }

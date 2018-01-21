@@ -17,8 +17,6 @@ export default {
           return tmdb.getMovieData(film.tmdb_id)
         })
         .then(response => {
-          // debugger
-          // { root: true } ?
           commit('films/setFilmData', {filmId: film._id, data: response.data}, {root: true})
         })
     }

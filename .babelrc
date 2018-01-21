@@ -13,7 +13,7 @@
     "env": {
       "test": {
         "presets": ["env", "stage-2"],
-        "plugins": ["transform-vue-jsx", "transform-es2015-modules-commonjs", "dynamic-import-node", "syntax-dynamic-import", "babel-plugin-dynamic-import-webpack", "transform-runtime"]
+        "plugins": ["transform-vue-jsx", "transform-es2015-modules-commonjs", "dynamic-import-node", "syntax-dynamic-import", "babel-plugin-dynamic-import-webpack"]
       }
     }
   }

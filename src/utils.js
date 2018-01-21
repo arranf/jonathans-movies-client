@@ -67,6 +67,9 @@ const functions = {
     return `https://image.tmdb.org/t/p/w342${slug}`
   },
   getYearFromTmdbReleaseDate: function (releaseDate) {
+    if (!releaseDate) {
+      return ''
+    }
     return new Date(releaseDate).getFullYear()
   }
 }
