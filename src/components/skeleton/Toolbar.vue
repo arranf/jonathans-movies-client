@@ -15,6 +15,7 @@
       @input="navigateToMovie"
       item-text="name"
       item-value="name"
+      no-data-text="No Movie Found"
       return-object
       ></v-select>
       <v-spacer v-else></v-spacer>
@@ -47,17 +48,25 @@ export default {
   },
   watch: {
     searchInput (newInput, oldInput) {
-      return newInput && this.getMovies(newInput)
+      if (newInput) {
+        this.getMovies(newInput)
+      } else {
+        // This hides the empty element if the input is blank otherwise it appears an option
+        this.options = []
+      }
     }
   },
   methods: {
     getMovies (searchTerm) {
       this.loading = true
       queries.getFilmSuggestions(searchTerm).then(response => {
-        if (response && response.data) {
+        if (searchTerm === '') {
+          this.options = []
+        } else if (response && response.data && response.data.length) {
           this.options = response.data
         } else {
-          this.options = []
+          // This statement exists to make the no data text work as empty arrays fail to show it
+          this.options = [{name: ''}]
         }
         this.loading = false
       })
