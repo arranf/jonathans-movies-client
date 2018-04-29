@@ -15,7 +15,9 @@
           </v-layout>
         </v-container>
     </div>
-    <v-progress-circular v-else indeterminate color="primary"></v-progress-circular>
+    <div v-else class="text-center"> 
+      <v-progress-circular indeterminate color="primary"></v-progress-circular>
+    </div>
 
     <v-snackbar v-model="showSnackbar" :bottom="true">
       <span>{{snackbarMessage}}</span>
