@@ -116,7 +116,7 @@ router.beforeEach((to, from, next) => {
       })
   }
 
-  if (to.matched.some(record => record.meta.admin) && !user.isAdmin) {
+  if (to.matched.some(record => record.meta.admin) && (!user || !user.isAdmin)) {
     initStore()
       .then(() => next(false))
   } else {
