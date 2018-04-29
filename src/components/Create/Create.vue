@@ -54,10 +54,10 @@ export default {
   data () {
     return {
       minutes: '3',
-      votes: '1',
+      votes: '2',
       haveNominations: false,
       nominationsMinutes: '5',
-      nominations: '2',
+      nominations: '1',
       options: [],
       showSnackbar: false
     }
@@ -128,8 +128,8 @@ export default {
       const errors = []
       const nominationsMinutes = this.$v.nominationsMinutes
       if (!nominationsMinutes.$dirty) return errors
-      !nominationsMinutes.required && errors.push('A number of nominationMinutes for voting is required.')
-      !nominationsMinutes.between && errors.push(`Voting length must be between ${nominationsMinutes.$params.between.min} and ${nominationsMinutes.$params.between.max}`)
+      !nominationsMinutes.required && errors.push('A number of minutes for nominations is required.')
+      !nominationsMinutes.between && errors.push(`Nomination length must be between ${nominationsMinutes.$params.between.min} and ${nominationsMinutes.$params.between.max}`)
       return errors
     },
     nominationsErrors () {
@@ -137,7 +137,7 @@ export default {
       const nominations = this.$v.nominations
       if (!nominations.$dirty) return errors
       !nominations.required && errors.push('A number of nominations for voting is required.')
-      !nominations.between && errors.push(`Voting length must be between ${nominations.$params.between.min} and ${nominations.$params.between.max}`)
+      !nominations.between && errors.push(`The number of nominations must be greater than ${nominations.$params.between.min} and less than or equal to the number of votes.`)
       return errors
     },
     optionsErrors () {
@@ -168,7 +168,7 @@ export default {
         required: requiredIf(function () {
           return this.haveNominations
         }),
-        between: between(1, 4)
+        between: this.votes ? between(1, this.votes) : between(1, 4)
       },
       options: {
         required: requiredIf(function () {
