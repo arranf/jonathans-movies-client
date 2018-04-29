@@ -28,6 +28,7 @@ import FilmPreview from '@/components/common/FilmPreview'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
 import queries from '@/api'
 import infiniteScroll from 'vue-infinite-scroll'
+import debounce from 'lodash/debounce'
 
 export default {
   name: 'Suggestions',
@@ -60,14 +61,14 @@ export default {
       this.snackbarMessage = message
       this.showSnackbar = true
     },
-    refresh () {
+    refresh: debounce(function () {
       queries.discoverMovies()
         .then(discoveredFilms => { this.suggestions = this.suggestions.concat(discoveredFilms) })
         .catch(e => {
           console.error(e)
           this.setSnackbar('Something went wrong. Try again.')
         })
-    }
+    }, 500)
   },
   created () {
     // route watcher won't be called on initial load
