@@ -31,7 +31,6 @@ import FilmPreview from '@/components/common/FilmPreview'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
 import queries from '@/api'
 import infiniteScroll from 'vue-infinite-scroll'
-import debounce from 'lodash/debounce'
 
 export default {
   name: 'Suggestions',
