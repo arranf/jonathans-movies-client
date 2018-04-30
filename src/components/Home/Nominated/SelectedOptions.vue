@@ -4,7 +4,7 @@
     <v-icon size="100px" class="mb-2">playlist_add</v-icon>
     <h1 class="display-1 mb-1">Nominate a Movie</h1>
     <p class="empty-state-description">{{`You\'ve got, ${nominationsRemaining} nominations left. Use them wisely!`}}</p>
-    <v-btn color="primary" @click="$router.push('/movies')">Nominate a movie</v-btn>
+    <v-btn color="primary" @click="$router.push('/discover')">Nominate a movie</v-btn>
   </div>
 
   <div class="d-flex flex-column" v-if="getOptionsForCurrentPoll && currentPollOptions && currentPollOptions.length > 0" >
