@@ -64,7 +64,7 @@ export default {
       this.snackbarMessage = message
       this.showSnackbar = true
     },
-    refresh: debounce(function () {
+    refresh: function () {
       console.log('Refreshing')
       this.busy = true
       queries.discoverMovies()
@@ -74,7 +74,7 @@ export default {
           this.setSnackbar('Something went wrong. Try again.')
           this.busy = false
         })
-    }, 500)
+    }
   },
   created () {
     // route watcher won't be called on initial load
