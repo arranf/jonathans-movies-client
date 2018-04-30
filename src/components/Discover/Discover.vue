@@ -1,10 +1,10 @@
 <template>
   <div>
     <movie-info-modal @snackbar="setSnackbar" close-route="/discover" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
-    <div v-if="suggestions" v-infinite-scroll="refresh" :infinite-scroll-immediate-check="false" :infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+    
+    <div v-infinite-scroll="refresh" infinite-scroll-disabled="busy" :infinite-scroll-immediate-check="true" infinite-scroll-distance="40">
       <h2 class="text-center">Discover a Movie</h2>
-
-        <v-container grid-list-md text-xs-center>
+        <v-container v-if="suggestions && suggestions.length" grid-list-md text-xs-center>
           <v-layout row wrap>
             <v-flex xs6 :key="film._id+index" v-for="(film, index) in suggestions">
               <film-preview :film="film" modal-page-name="Discover"></film-preview>
@@ -14,6 +14,9 @@
             </v-flex>
           </v-layout>
         </v-container>
+        <div v-else class="text-center"> 
+          <v-progress-circular indeterminate color="primary"></v-progress-circular>
+        </div>
     </div>
 
     <v-snackbar v-model="showSnackbar" :bottom="true">
@@ -60,12 +63,15 @@ export default {
       this.snackbarMessage = message
       this.showSnackbar = true
     },
-    refresh () {
+    refresh: function () {
+      console.log('Refreshing')
+      this.busy = true
       queries.discoverMovies()
-        .then(discoveredFilms => { this.suggestions = this.suggestions.concat(discoveredFilms) })
+        .then(discoveredFilms => { this.suggestions = this.suggestions.concat(discoveredFilms); this.busy = false })
         .catch(e => {
           console.error(e)
           this.setSnackbar('Something went wrong. Try again.')
+          this.busy = false
         })
     }
   },

@@ -88,6 +88,7 @@ export default {
   methods: {
     ...mapActions('films', {fetch: 'get'}),
     modalOpened: function () {
+      this.showOverview = false
       this.film = this.get(this.filmId)
       if (!this.film) {
         this.fetch(this.filmId)
