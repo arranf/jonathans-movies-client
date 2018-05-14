@@ -15,9 +15,6 @@ require('vuetify/dist/vuetify.min.css')
 // Import custom CSS
 require('@/assets/styles/main.scss')
 
-// TODO replace with icomoon
-// require('@/assets/styles/icons.css')
-
 Vue.config.productionTip = false
 Vue.config.devtools = process.env.NODE_ENV !== 'production'
 Vue.config.performance = process.env.NODE_ENV !== 'production'
