@@ -1,6 +1,6 @@
 import humanizeDuration from 'humanize-duration'
 import store from '@/store'
-import {colors} from './constants'
+import constants from './constants'
 
 let shortHumanizer = humanizeDuration.humanizer({
   language: 'shortEn',
@@ -16,13 +16,14 @@ let shortHumanizer = humanizeDuration.humanizer({
   round: true
 })
 
+const shuffle = function (a) {
+  for (let i = a.length; i; i--) {
+    let j = Math.floor(Math.random() * i);
+    [a[i - 1], a[j]] = [a[j], a[i - 1]]
+  }
+}
+
 const functions = {
-  shuffle: function (a) {
-    for (let i = a.length; i; i--) {
-      let j = Math.floor(Math.random() * i);
-      [a[i - 1], a[j]] = [a[j], a[i - 1]]
-    }
-  },
   humanizeTimeToNowPrecise: function (dateTimeEpochms) {
     const time = store.getters['time/getNow']
     return shortHumanizer(dateTimeEpochms - time)
@@ -34,32 +35,16 @@ const functions = {
   selectRandom: function (array) {
     return array[Math.floor(Math.random() * array.length)]
   },
-  selectRandomArraySize: function (array, size) {
-    let newArray = []
-    while ((size - newArray.length) >= array.length) {
-      let shuffleArray = [].concat(array)
-      functions.shuffle(array)
-      newArray = newArray.concat(shuffleArray)
-    }
-    let index = 0
-    while (newArray.length < size) {
-      let shuffleArray = [].concat(array)
-      functions.shuffle(array)
-      newArray.push(shuffleArray[index])
-      index++
-    }
-    return newArray
-  },
   getUniqueColors: function (count) {
-    let array = JSON.parse(JSON.stringify(colors['800']))
+    let array = JSON.parse(JSON.stringify(constants.colors['800']))
 
     while (count > array.length) {
-      array.concat(JSON.parse(JSON.stringify(colors['800'])))
+      array.concat(JSON.parse(JSON.stringify(constants.colors['800'])))
     }
     if (count < array.length) {
       array = array.slice(0, count)
     }
-    functions.shuffle(array)
+    shuffle(array)
     return array
   },
   getHighestVotedOptions: function (arr) {

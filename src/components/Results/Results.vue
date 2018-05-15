@@ -18,7 +18,6 @@
 import PieChart from './PieChart.js'
 import {mapGetters, mapState} from 'vuex'
 import utils from '@/utils'
-import constants from '@/constants'
 import queries from '@/api'
 
 export default {
