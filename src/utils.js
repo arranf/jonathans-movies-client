@@ -1,5 +1,6 @@
 import humanizeDuration from 'humanize-duration'
 import store from '@/store'
+import constants from './constants'
 
 let shortHumanizer = humanizeDuration.humanizer({
   language: 'shortEn',
@@ -15,13 +16,14 @@ let shortHumanizer = humanizeDuration.humanizer({
   round: true
 })
 
+const shuffle = function (a) {
+  for (let i = a.length; i; i--) {
+    let j = Math.floor(Math.random() * i);
+    [a[i - 1], a[j]] = [a[j], a[i - 1]]
+  }
+}
+
 const functions = {
-  shuffle: function (a) {
-    for (let i = a.length; i; i--) {
-      let j = Math.floor(Math.random() * i);
-      [a[i - 1], a[j]] = [a[j], a[i - 1]]
-    }
-  },
   humanizeTimeToNowPrecise: function (dateTimeEpochms) {
     const time = store.getters['time/getNow']
     return shortHumanizer(dateTimeEpochms - time)
@@ -33,21 +35,17 @@ const functions = {
   selectRandom: function (array) {
     return array[Math.floor(Math.random() * array.length)]
   },
-  selectRandomArraySize: function (array, size) {
-    let newArray = []
-    while ((size - newArray.length) >= array.length) {
-      let shuffleArray = [].concat(array)
-      functions.shuffle(array)
-      newArray = newArray.concat(shuffleArray)
+  getUniqueColors: function (count) {
+    let array = JSON.parse(JSON.stringify(constants.colors['800']))
+
+    while (count > array.length) {
+      array.concat(JSON.parse(JSON.stringify(constants.colors['800'])))
     }
-    let index = 0
-    while (newArray.length < size) {
-      let shuffleArray = [].concat(array)
-      functions.shuffle(array)
-      newArray.push(shuffleArray[index])
-      index++
+    if (count < array.length) {
+      array = array.slice(0, count)
     }
-    return newArray
+    shuffle(array)
+    return array
   },
   getHighestVotedOptions: function (arr) {
     const maxVote = arr.reduce((acc, value) => {
@@ -61,11 +59,15 @@ const functions = {
     }, [])
   },
   getTmdbBackdropImage: function (slug) {
-    return `https://image.tmdb.org/t/p/w1280/${slug}`
+    return `https://image.tmdb.org/t/p/w1280${slug}`
   },
   getTmdbPosterImage: function (slug) {
-    return `https://image.tmdb.org/t/p/w342${slug}`
+    return `https://image.tmdb.org/t/p/w342/${slug}`
   },
+  getTmdbPosterSrcSet: function (slug) {
+    return `https://image.tmdb.org/t/p/w154${slug} 154w,https://image.tmdb.org/t/p/w185${slug} 185w,https://image.tmdb.org/t/p/w342${slug} 342w,https://image.tmdb.org/t/p/w500${slug} 500w`
+  },
+  tmdbPosterSizes: '(min-width: 1080px) 333px, (min-width: 1024px) 280px, (min-width: 768px) 233px, 124px',
   getYearFromTmdbReleaseDate: function (releaseDate) {
     if (!releaseDate) {
       return ''

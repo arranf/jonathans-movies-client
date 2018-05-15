@@ -12,7 +12,8 @@
     <div id="loginOptions" v-if="!isInternalLogin">
       <!-- divs here keep the buttons aligned -->
       <div>       
-        <v-btn id="facebook" class="btn-facebook btn-block md-raised" @click.prevent="facebookLogin()"><span class="text-white">Log In with <span class="ico-inbox" title="Facebook"></span><span class="sr-only">Facebook</span></span></v-btn>
+        <v-btn id="facebook" class="btn-facebook btn-block md-raised" @click.prevent="facebookLogin()"><span class="text-white">Log In with Facebook</span>
+        </v-btn>
       </div>
       <div>
           <v-btn id="login" @click.prevent="swapLoginType()" class="btn-block md-raised md-accent">Log In</v-btn>
@@ -43,9 +44,6 @@
 import feathersClient from '@/api/feathers-client'
 import {mapActions} from 'vuex'
 import router from '@/router'
-
-// import VTextField from 'vuetify/es5/components/VTextField'
-// import VCard from 'vuetify/es5/components/VCard'
 
 export default {
   name: 'Login',

@@ -18,7 +18,6 @@
 import PieChart from './PieChart.js'
 import {mapGetters, mapState} from 'vuex'
 import utils from '@/utils'
-import constants from '@/constants'
 import queries from '@/api'
 
 export default {
@@ -54,7 +53,7 @@ export default {
     queries.getCurrentPoll()
       .then(() => queries.getVotesForMostRecentPoll(this.getMostRecentPoll._id))
       .then(() => queries.getOptionsForMostRecentPoll(this.getMostRecentPoll._id))
-      .then(response => { this.backgroundColors = utils.selectRandomArraySize(constants.colors['800'], response.data.length) })
+      .then(response => { this.backgroundColors = utils.getUniqueColors(response.data.length) })
       .then(a => { this.emptyStateAllowed = true })
       .catch(error => console.log(error))
   }

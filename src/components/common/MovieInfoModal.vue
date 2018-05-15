@@ -7,7 +7,9 @@
         <div>
           <h1 class="headline mb-0">{{film.name}} <small>({{getFilmYear}})</small></h1>
           <a v-if="getImdbLink" :href="getImdbLink" target="_blank" style="float: right;">
-            <i class="ico-imdb" style="font-size:1.3em" aria-hidden="true"></i>
+            <svg id="imdb">
+              <use xlink:href="/static/fa-brands.svg#imdb"></use>
+            </svg>
           </a>
           <h3 class="subtitle grey--text text--darken-2">{{film.tagline}}</h3>
         </div>
@@ -168,8 +170,10 @@ export default {
 </script>
 
 <style scoped>
-.fa-imdb {
-  color: #FDD835;
+#imdb {
+  fill: #FDD835;
+  height: 2.5em;
+  width: 2.5em;
 }
 
 .fade-enter-active, .fade-leave-active {

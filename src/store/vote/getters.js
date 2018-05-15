@@ -17,6 +17,9 @@ export default {
     }
     return null
   },
+  /**
+   * Produces an object {option_id: id, votes: []}
+   */
   getVotesByOption: (state, getters, rootState, rootGetters) => pollId => {
     const optionsForPoll = rootGetters['option/getOptionsForPoll'](pollId)
     const votes = Object.values(state.keyedById).filter(v => v.poll_id === pollId)
@@ -29,10 +32,16 @@ export default {
     })
     return votesByOption
   },
+  /**
+   * Produces an object {option_id: id, votes: count}
+   */
   getVoteCountsByOption: (state, getters, rootState, rootGetters) => pollId => {
     return getters.getVotesByOption(pollId)
       .map(gv => ({option_id: gv.option_id, totalVotes: gv.votes.length}))
   },
+  /**
+   * Produces an object {data: [1, 2], labels: ['Movie A', 'Option B']}
+   */
   getGraphData: (state, getters, rootState, rootGetters) => pollId => {
     const options = getters.getVoteCountsByOption(pollId)
     const data = options.reduce((acc, option) => { acc.push(option.totalVotes); return acc }, [])
