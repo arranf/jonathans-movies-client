@@ -159,6 +159,8 @@ export default {
     this.clearFilms()
     this.getFilms()
 
+    // Scroll listener
+    // https://jsfiddle.net/W75mP/
     function getScrollXY () {
       let scrOfX = 0
       let scrOfY = 0
