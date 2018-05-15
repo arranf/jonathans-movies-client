@@ -2,7 +2,7 @@
   <div>
     <movie-info-modal @snackbar="setSnackbar" close-route="/discover" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
     
-    <div v-infinite-scroll="refresh" infinite-scroll-disabled="busy" :infinite-scroll-immediate-check="true" infinite-scroll-distance="40">
+    <div v-infinite-scroll="refresh" :infinite-scroll-disabled="busy" :infinite-scroll-immediate-check="true" infinite-scroll-distance="40">
       <h2 class="text-center">Discover a Movie</h2>
         <v-container v-if="suggestions && suggestions.length" grid-list-md text-xs-center>
           <v-layout row wrap>

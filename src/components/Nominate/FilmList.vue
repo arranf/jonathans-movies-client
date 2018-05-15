@@ -1,6 +1,6 @@
 <template>
    <div>
-      <div v-if="allFilms" v-infinite-scroll="fetchNextPage()" :infinite-scroll-immediate-check="false" :infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+      <div v-if="allFilms"> 
         <!-- TODO Move this out and make it emit update events and a filter event -->
         <v-dialog v-model="showFilters">
           <v-card>
@@ -134,7 +134,6 @@ export default {
       this.getFilms()
     }, 500, {leading: false}),
     getFilms: function () {
-      this.busy = true
       this.queryFilms(this.query)
         .then(response => { this.total = response.total; this.busy = false; this.showSnackbar = false })
         .catch(error => {
@@ -146,13 +145,57 @@ export default {
     setSnackbar (text) {
       this.showSnackbar = true
       this.snackbarText = text
+    },
+    setBusy () {
+      this.busy = true
     }
+  },
+  beforeDestroy () {
+    document.removeEventListener('scroll', this.listener)
   },
   created () {
     // $route watcher will not be called when componenet loaded
     this.showingFilm = Boolean(this.filmId)
     this.clearFilms()
     this.getFilms()
+
+    function getScrollXY () {
+      let scrOfX = 0
+      let scrOfY = 0
+      if (typeof (window.pageYOffset) === 'number') {
+        // Netscape compliant
+        scrOfY = window.pageYOffset
+        scrOfX = window.pageXOffset
+      } else if (document.body && (document.body.scrollLeft || document.body.scrollTop)) {
+        // DOM compliant
+        scrOfY = document.body.scrollTop
+        scrOfX = document.body.scrollLeft
+      } else if (document.documentElement && (document.documentElement.scrollLeft || document.documentElement.scrollTop)) {
+        // IE6 standards compliant mode
+        scrOfY = document.documentElement.scrollTop
+        scrOfX = document.documentElement.scrollLeft
+      }
+      return [ scrOfX, scrOfY ]
+    }
+
+    // taken from http://james.padolsey.com/javascript/get-document-height-cross-browser/
+    function getDocHeight () {
+      var D = document
+      return Math.max(
+        D.body.scrollHeight, D.documentElement.scrollHeight,
+        D.body.offsetHeight, D.documentElement.offsetHeight,
+        D.body.clientHeight, D.documentElement.clientHeight
+      )
+    }
+    let setBusy = this.setBusy
+    let nextPage = this.fetchNextPage
+    this.listener = function (event) {
+      if (getDocHeight() === getScrollXY()[1] + window.innerHeight) {
+        setBusy()
+        nextPage()
+      }
+    }
+    document.addEventListener('scroll', this.listener)
   }
 }
 </script>
