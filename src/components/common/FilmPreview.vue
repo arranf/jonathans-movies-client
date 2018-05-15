@@ -1,7 +1,7 @@
 <template>
   <div @click="showModal()" v-if="film" class="h-100" >
-    <img v-if="film.poster_path" class="img-fluid" :src="getFilmPoster" :alt="film.name + ' image'">
-    <div v-else class="h-90" :style="{backgroundColor: getColor()}"></div>
+    <img v-if="film.poster_path" class="img-fluid" :src="getFilmPoster" :srcset="getFilmPosterSrcSet" :sizes="getFilmPosterSizes" :alt="film.name + ' image'">
+    <div v-if="!film.poster_path" class="h-90" :style="{backgroundColor: getColor()}"></div>
     <h4 class="">
       {{film.name}}
     </h4>
@@ -24,6 +24,15 @@ export default {
         return utils.getTmdbBackdropImage(this.film.backdrop_path)
       }
       return null
+    },
+    getFilmPosterSizes: function () {
+      return utils.tmdbPosterSizes
+    },
+    getFilmPosterSrcSet: function () {
+      if (this.film && this.film.poster_path) {
+        return utils.getTmdbPosterSrcSet(this.film.poster_path)
+      }
+      return ''
     },
     getFilmPoster: function () {
       if (this.film && this.film.poster_path) {

@@ -61,11 +61,15 @@ const functions = {
     }, [])
   },
   getTmdbBackdropImage: function (slug) {
-    return `https://image.tmdb.org/t/p/w1280/${slug}`
+    return `https://image.tmdb.org/t/p/w1280${slug}`
   },
   getTmdbPosterImage: function (slug) {
-    return `https://image.tmdb.org/t/p/w342${slug}`
+    return `https://image.tmdb.org/t/p/w342/${slug}`
   },
+  getTmdbPosterSrcSet: function (slug) {
+    return `https://image.tmdb.org/t/p/w154${slug} 154w,https://image.tmdb.org/t/p/w185${slug} 185w,https://image.tmdb.org/t/p/w342${slug} 342w,https://image.tmdb.org/t/p/w500${slug} 500w`
+  },
+  tmdbPosterSizes: '(min-width: 1080px) 333px, (min-width: 1024px) 280px, (min-width: 768px) 233px, 124px',
   getYearFromTmdbReleaseDate: function (releaseDate) {
     if (!releaseDate) {
       return ''
