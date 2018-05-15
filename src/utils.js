@@ -1,5 +1,6 @@
 import humanizeDuration from 'humanize-duration'
 import store from '@/store'
+import {colors} from './constants'
 
 let shortHumanizer = humanizeDuration.humanizer({
   language: 'shortEn',
@@ -48,6 +49,18 @@ const functions = {
       index++
     }
     return newArray
+  },
+  getUniqueColors: function (count) {
+    let array = JSON.parse(JSON.stringify(colors['800']))
+
+    while (count > array.length) {
+      array.concat(JSON.parse(JSON.stringify(colors['800'])))
+    }
+    if (count < array.length) {
+      array = array.slice(0, count)
+    }
+    functions.shuffle(array)
+    return array
   },
   getHighestVotedOptions: function (arr) {
     const maxVote = arr.reduce((acc, value) => {
