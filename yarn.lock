@@ -86,15 +86,15 @@
     debug "^3.1.0"
     jwt-decode "^2.1.0"
 
-"@feathersjs/client@^3.1.2":
-  version "3.4.4"
-  resolved "https://registry.yarnpkg.com/@feathersjs/client/-/client-3.4.4.tgz#fda21aef0d6159e48d60a0862b9e3795b9afd2be"
+"@feathersjs/client@^3.5.0":
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/@feathersjs/client/-/client-3.5.0.tgz#86b5526b58b8a050b5318bbb19ddbe356423b1e3"
   dependencies:
     "@feathersjs/authentication-client" "1.0.2"
     "@feathersjs/errors" "3.3.0"
-    "@feathersjs/feathers" "3.1.4"
+    "@feathersjs/feathers" "3.1.5"
     "@feathersjs/primus-client" "1.1.0"
-    "@feathersjs/rest-client" "1.3.4"
+    "@feathersjs/rest-client" "1.4.0"
     "@feathersjs/socketio-client" "1.1.0"
 
 "@feathersjs/commons@^1.2.0", "@feathersjs/commons@^1.3.0", "@feathersjs/commons@^1.4.0":
@@ -107,9 +107,9 @@
   dependencies:
     debug "^3.1.0"
 
-"@feathersjs/feathers@3.1.4":
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-3.1.4.tgz#474662a65525c3f9ac935669bed3af440fbed784"
+"@feathersjs/feathers@3.1.5":
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/@feathersjs/feathers/-/feathers-3.1.5.tgz#30cfa0e55066c2bdcc9ef663332235fbc76fda25"
   dependencies:
     "@feathersjs/commons" "^1.4.0"
     debug "^3.1.0"
@@ -122,9 +122,9 @@
   dependencies:
     "@feathersjs/transport-commons" "^4.0.0"
 
-"@feathersjs/rest-client@1.3.4":
-  version "1.3.4"
-  resolved "https://registry.yarnpkg.com/@feathersjs/rest-client/-/rest-client-1.3.4.tgz#1eb15eb55e0088fc2cf665136a421a7ab349b710"
+"@feathersjs/rest-client@1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@feathersjs/rest-client/-/rest-client-1.4.0.tgz#3b5d28f10a5715719bbe9f42cf4d96f322b9f47b"
   dependencies:
     "@feathersjs/commons" "^1.2.0"
     "@feathersjs/errors" "^3.0.0"
@@ -513,11 +513,11 @@ aws4@^1.2.1, aws4@^1.6.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.7.0.tgz#d4d0e9b9dbfca77bf08eeb0a8a471550fe39e289"
 
-axios@^0.16.2:
-  version "0.16.2"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.16.2.tgz#ba4f92f17167dfbab40983785454b9ac149c3c6d"
+axios@^0.18.0:
+  version "0.18.0"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.18.0.tgz#32d53e4851efdc0a11993b6cd000789d70c05102"
   dependencies:
-    follow-redirects "^1.2.3"
+    follow-redirects "^1.3.0"
     is-buffer "^1.1.5"
 
 babel-code-frame@^6.16.0, babel-code-frame@^6.22.0, babel-code-frame@^6.26.0:
@@ -3384,14 +3384,15 @@ feathers-query-filters@^2.1.2:
   dependencies:
     feathers-commons "^0.8.0"
 
-feathers-vuex@^1.0.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/feathers-vuex/-/feathers-vuex-1.1.4.tgz#a55c9ecc1388258728862c143d970aa1dda4e9c6"
+feathers-vuex@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/feathers-vuex/-/feathers-vuex-1.3.1.tgz#6cda55a0fc04cda028048cfd01dd3d53cdd2edcd"
   dependencies:
     debug "^3.1.0"
     feathers-commons "^0.8.7"
     feathers-errors "^2.9.2"
     feathers-query-filters "^2.1.2"
+    inflection "^1.12.0"
     jwt-decode "^2.2.0"
     lodash.clonedeep "^4.5.0"
     lodash.isobject "^3.0.2"
@@ -3537,7 +3538,7 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.1"
     readable-stream "^2.0.4"
 
-follow-redirects@^1.0.0, follow-redirects@^1.2.3:
+follow-redirects@^1.0.0, follow-redirects@^1.3.0:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.4.1.tgz#d8120f4518190f55aac65bb6fc7b85fcd666d6aa"
   dependencies:
@@ -4301,6 +4302,10 @@ indexes-of@^1.0.1:
 indexof@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/indexof/-/indexof-0.0.1.tgz#82dc336d232b9062179d05ab3293a66059fd435d"
+
+inflection@^1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/inflection/-/inflection-1.12.0.tgz#a200935656d6f5f6bc4dc7502e1aecb703228416"
 
 inflight@^1.0.4:
   version "1.0.6"
@@ -6685,9 +6690,9 @@ postcss-load-plugins@^2.3.0:
     cosmiconfig "^2.1.1"
     object-assign "^4.1.0"
 
-postcss-loader@^2.0.9:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/postcss-loader/-/postcss-loader-2.1.4.tgz#f44a6390e03c84108b2b2063182d1a1011b2ce76"
+postcss-loader@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/postcss-loader/-/postcss-loader-2.1.5.tgz#3c6336ee641c8f95138172533ae461a83595e788"
   dependencies:
     loader-utils "^1.1.0"
     postcss "^6.0.0"
@@ -7101,9 +7106,9 @@ range-parser@^1.0.3, range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
-raven-js@^3.18.1:
-  version "3.24.2"
-  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.24.2.tgz#c5cacb363b198812e80cd4c6714e5e478549ebcf"
+raven-js@^3.25.2:
+  version "3.25.2"
+  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.25.2.tgz#d3ad1c694f70855dda6f705204ee6ab76ba62884"
 
 raw-body@2, raw-body@2.3.2:
   version "2.3.2"
@@ -8837,9 +8842,9 @@ vuelidate@^0.6.1:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/vuelidate/-/vuelidate-0.6.2.tgz#b417f5367407b047a2548119b25db56fe2bd5753"
 
-vuetify@^1.0.0-beta.4:
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.0.17.tgz#646991024b327514b5fc50fb5c34e15451ad14b6"
+vuetify@^1.0.18:
+  version "1.0.18"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.0.18.tgz#56289ba7c6e5eee3d4ee4dacd5e7dded4aee4c08"
 
 vuex@^3.0.1:
   version "3.0.1"
