@@ -41,10 +41,10 @@ const functions = {
     while (count > array.length) {
       array.concat(JSON.parse(JSON.stringify(constants.colors['800'])))
     }
+    shuffle(array)
     if (count < array.length) {
       array = array.slice(0, count)
     }
-    shuffle(array)
     return array
   },
   getHighestVotedOptions: function (arr) {
