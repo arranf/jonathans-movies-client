@@ -33,20 +33,23 @@ export default {
     return votesByOption
   },
   /**
-   * Produces an object {option_id: id, votes: count}
+   * Produces an array of objects [{option_id: id, votes: count}]
    */
   getVoteCountsByOption: (state, getters, rootState, rootGetters) => pollId => {
     return getters.getVotesByOption(pollId)
       .map(gv => ({option_id: gv.option_id, totalVotes: gv.votes.length}))
   },
   /**
-   * Produces an object {data: [1, 2], labels: ['Movie A', 'Option B']}
+   * Produces an array [{name: 'Kill Bill', votes: 12}]
    */
   getGraphData: (state, getters, rootState, rootGetters) => pollId => {
     const options = getters.getVoteCountsByOption(pollId)
-    const data = options.reduce((acc, option) => { acc.push(option.totalVotes); return acc }, [])
-    const labels = options.reduce((acc, optionData) => { const option = rootGetters['option/get'](optionData.option_id); if (option) { acc.push(option.name) } else { acc.push('Unknown') }; return acc }, [])
-    return {'data': data, 'labels': labels}
+    function getName (id) {
+      const option = rootGetters['option/get'](id)
+      return option.name ? option.name : 'Unknown'
+    }
+    const data = options.reduce((acc, option) => { acc.push({votes: option.totalVotes, name: getName(option.option_id)}); return acc }, [])
+    return data
   },
   getHighestVotedOptionsForPoll: (state, getters, rootState, rootGetters) => pollId => {
     const voteCountByOption = getters.getVoteCountsByOption(pollId)

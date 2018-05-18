@@ -1,10 +1,10 @@
 <template>
 <div class="d-flex flex-column align-items-center justify-items-center">
   <div 
-    v-if="getMostRecentPoll && dataCollection.datasets && dataCollection.datasets.length > 0 && winningOptions.length > 0"  
+    v-if="getMostRecentPoll && winningOptions.length > 0"  
     >
     <h1 class="md-headline text-center">{{winningOptions.length > 1 ? winningOptions.slice(0, winningOptions.length - 1).join(', ') + " and " + winningOptions.slice(-1) : winningOptions[0]}} Wins</h1>
-    <pie-chart :chart-data="dataCollection" :options="{responsive: true, maintainAspectRatio: false}" />
+    <bar-chart :data="results"/>
   </div>
   <div v-cloak v-else-if="winningOptions.length === 0 && emptyStateAllowed" class="empty-state-container">
     <v-icon size="100px" class="mb-2">error_outline</v-icon>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import PieChart from './PieChart.js'
+import BarChart from './BarChart'
 import {mapGetters, mapState} from 'vuex'
 import utils from '@/utils'
 import queries from '@/api'
@@ -23,7 +23,7 @@ import queries from '@/api'
 export default {
   name: 'Results',
   components: {
-    PieChart
+    BarChart
   },
   data () {
     return {
@@ -35,12 +35,8 @@ export default {
     ...mapGetters('vote', ['getGraphData', 'getHighestVotedOptionsForPoll']),
     ...mapGetters('poll', ['getMostRecentPoll', 'howLongAgoMostRecentPoll']),
     ...mapState('vote', ['isFindPending']),
-    dataCollection: function () {
-      const graphData = this.getGraphData(this.getMostRecentPoll._id)
-      if (!graphData) {
-        return {datasets: [], labels: []}
-      }
-      return {datasets: [{data: graphData.data, label: 'Vote', backgroundColor: this.backgroundColors}], labels: graphData.labels}
+    results () {
+      return this.getGraphData(this.getMostRecentPoll._id)
     },
     winningOptions: function () {
       if (this.getMostRecentPoll && this.getMostRecentPoll._id) {
@@ -59,13 +55,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.fa-trophy {
-  color: #F6BD1C;
-}
-
-[v-cloak] {
-  display: none;
-}
-</style>
