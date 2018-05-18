@@ -1,11 +1,23 @@
 <template>
-  <v-select id="autocomplete" @input="fillBox" autocomplete item-text="name" return-object
-    :placeholder="placeholder" chips deletable-chips item-value="name" no-data-text="Couldn't find that movie" :loading="loading" multiple cache-items 
-    :hide-selected="true" :items="suggestions" :error-messages="errors" :search-input.sync="searchQuery" v-model="selected">
+  <v-select id="autocomplete" 
+    @input="fillBox" 
+    autocomplete
+    item-text="name"
+    item-value="name"
+    return-object
+    :placeholder="placeholder"
+    chips
+    deletable-chips
+    no-data-text="No movie found"
+    :loading="loading"
+    multiple
+    cache-items 
+    :hide-selected="true" 
+    :items="suggestions" 
+    :error-messages="errors"
+    :search-input.sync="searchQuery" 
+    v-model="selected">
     <template slot="item" slot-scope="data">
-      <!-- <div v-if="searchQuery != null && searchQuery.trim() === ''">
-        Start typing to search for a film
-      </div> -->
       <div v-if="suggestions.length > 0">
         <v-list-tile-content>
           <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
@@ -34,17 +46,26 @@ export default {
     errors: Array
   },
   watch: {
-    searchQuery (val) {
-      val && this.getSuggestions(val)
+    searchQuery (newInput, oldInput) {
+      if (newInput.trim()) {
+        this.getSuggestions(newInput)
+      } else {
+        // This hides the empty element if the input is blank otherwise it appears an option
+        this.options = []
+      }
     }
   },
   methods: {
     getSuggestions: function (searchTerm) {
       this.loading = true
       queries.getFilmSuggestions(searchTerm).then(response => {
-        if (response && response.data) {
+        this.loading = false
+        console.log(response.data)
+        if (response && response.data && response.data.length) {
           this.suggestions = response.data
-          this.loading = false
+        } else {
+          // This statement exists to make the no data text work as empty arrays fail to show it
+          this.suggestions = [{name: ''}]
         }
       })
     },

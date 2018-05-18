@@ -48,7 +48,7 @@ export default {
   },
   watch: {
     searchInput (newInput, oldInput) {
-      if (newInput) {
+      if (newInput.trim()) {
         this.getMovies(newInput)
       } else {
         // This hides the empty element if the input is blank otherwise it appears an option
@@ -60,12 +60,13 @@ export default {
     getMovies (searchTerm) {
       this.loading = true
       queries.getFilmSuggestions(searchTerm).then(response => {
-        if (searchTerm === '') {
+        if (searchTerm.trim() === '') {
           this.options = []
         } else if (response && response.data && response.data.length) {
           this.options = response.data
         } else {
           // This statement exists to make the no data text work as empty arrays fail to show it
+          // TODO remove this when upgrading to vuetify 1.1
           this.options = [{name: ''}]
         }
         this.loading = false
