@@ -17,6 +17,7 @@
             :search-input.sync="searchQuery"
             item-value="title"
             item-text="title"
+            no-data-text="No Movie Found"
             v-model="selectedFilm"
           >
             <template slot="item" slot-scope="data">
@@ -83,12 +84,14 @@ export default {
   methods: {
     ...mapActions('films', ['create', 'find']),
     getMovies: function (searchTerm) {
-      if (searchTerm) {
+      if (searchTerm.trim()) {
         this.loading = true
         tmdbApi.searchForMovie(searchTerm)
           .then(response => {
             if (response && response.data) {
               this.suggestions = response.data.results.slice(0, 5)
+            } else {
+              this.suggestions = [{'title': ''}]
             }
             this.loading = false
           })
@@ -149,7 +152,7 @@ export default {
   },
   watch: {
     searchQuery (val) {
-      val && this.getMovies(this.searchQuery)
+      val && val.trim() && this.getMovies(this.searchQuery)
     }
   },
   computed: {

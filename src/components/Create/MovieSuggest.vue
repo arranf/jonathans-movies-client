@@ -47,7 +47,7 @@ export default {
   },
   watch: {
     searchQuery (newInput, oldInput) {
-      if (newInput.trim()) {
+      if (newInput && newInput.trim()) {
         this.getSuggestions(newInput)
       } else {
         // This hides the empty element if the input is blank otherwise it appears an option
