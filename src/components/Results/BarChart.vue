@@ -28,7 +28,7 @@ export default {
   methods: {
     calcPercentage (option) {
       if (option.votes === 0) {
-        return '3%'
+        return '1%'
       } else {
         return Math.round((option.votes / this.getNumberOfUniqueVoters(this.getMostRecentPoll._id)) * 100) + '%'
       }
