@@ -1,6 +1,6 @@
 <template>
   <div @click="showModal()" v-if="film" class="h-100" >
-    <img v-if="film.poster_path" class="img-fluid lazyload" :src="getFilmPoster" srcset="" :data-srcset="getFilmPosterSrcSet" :data-sizes="getFilmPosterSizes" :alt="film.name + ' image'">
+    <img v-if="film.poster_path" class="img-fluid lazyload" :src="getFilmPoster" :srcset="getFilmLQPosterSrcSet" :data-srcset="getFilmPosterSrcSet" :data-sizes="getFilmPosterSizes" :alt="film.name + ' image'">
     <div v-if="!film.poster_path" class="h-90" :style="{backgroundColor: getColor()}"></div>
     <h4 class="">
       {{film.name}}
