@@ -67,6 +67,12 @@ const functions = {
   getTmdbPosterSrcSet: function (slug) {
     return `https://image.tmdb.org/t/p/w154${slug} 154w,https://image.tmdb.org/t/p/w185${slug} 185w,https://image.tmdb.org/t/p/w342${slug} 342w,https://image.tmdb.org/t/p/w500${slug} 500w`
   },
+  getTmdbLQPosterSrcSet: function (slug) {
+    return `https://s3.eu-west-2.amazonaws.com/images.jonathansmovies.com/w154${slug} 154w,https://s3.eu-west-2.amazonaws.com/images.jonathansmovies.com/w185${slug} 185w,https://s3.eu-west-2.amazonaws.com/images.jonathansmovies.com/w342${slug} 342w,https://s3.eu-west-2.amazonaws.com/images.jonathansmovies.com/w500${slug} 500w`
+  },
+  getLQPosterImage: function (slug) {
+    return `https://s3.eu-west-2.amazonaws.com/images.jonathansmovies.com/w342${slug}`
+  },
   tmdbPosterSizes: '(min-width: 1080px) 333px, (min-width: 1024px) 280px, (min-width: 768px) 233px, 124px',
   getYearFromTmdbReleaseDate: function (releaseDate) {
     if (!releaseDate) {
