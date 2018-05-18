@@ -1,5 +1,8 @@
 import client from '@/api/feathers-client'
 
+// Controls how often time is mutated
+const interval = 400
+// Controls how many interval times before a server check for time is made
 const maxCount = 10
 
 const state = {
@@ -16,13 +19,14 @@ const actions = {
         setInterval(() => {
           commit('incrementCounter')
           if (state.counter === 0) {
-            dispatch('setInitialTime').then(
-              commit('incrementCounter')
-            )
+            dispatch('setInitialTime')
+              .then(() =>
+                commit('incrementCounter')
+              )
           } else {
             commit('updateTime')
           }
-        }, 1000)
+        }, interval)
       })
     }
   },
@@ -38,7 +42,7 @@ const actions = {
 
 const mutations = {
   updateTime (state) {
-    state.now += 1000
+    state.now += interval
   },
   setStarted (state) {
     state.hasStarted = true
