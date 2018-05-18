@@ -35,11 +35,11 @@ const functions = {
   selectRandom: function (array) {
     return array[Math.floor(Math.random() * array.length)]
   },
-  getUniqueColors: function (count) {
-    let array = JSON.parse(JSON.stringify(constants.colors['800']))
+  getUniqueColors: function (count, colorRange = '800') {
+    let array = JSON.parse(JSON.stringify(constants.colors[colorRange]))
 
     while (count > array.length) {
-      array.concat(JSON.parse(JSON.stringify(constants.colors['800'])))
+      array.concat(JSON.parse(JSON.stringify(constants.colors[colorRange])))
     }
     shuffle(array)
     if (count < array.length) {

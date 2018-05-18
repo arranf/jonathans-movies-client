@@ -2,7 +2,7 @@
 <div class="d-flex flex-column align-items-center justify-items-center" style="width: 100%">
   <div v-if="getMostRecentPoll && winningOptions.length > 0" style="width: 100%">
     <h1 class="md-headline text-center">Results</h1>
-    <bar-chart style="padding-top: 3em" :data="results"/>
+    <bar-chart style="padding-top: 3em" :data="results" :colors="backgroundColors"/>
   </div>
   <div v-cloak v-else-if="winningOptions.length === 0 && emptyStateAllowed" class="empty-state-container">
     <v-icon size="100px" class="mb-2">error_outline</v-icon>
@@ -47,7 +47,7 @@ export default {
     queries.getCurrentPoll()
       .then(() => queries.getVotesForMostRecentPoll(this.getMostRecentPoll._id))
       .then(() => queries.getOptionsForMostRecentPoll(this.getMostRecentPoll._id))
-      .then(response => { this.backgroundColors = utils.getUniqueColors(response.data.length) })
+      .then(response => { this.backgroundColors = utils.getUniqueColors(response.data.length, '500') })
       .then(a => { this.emptyStateAllowed = true })
       .catch(error => console.log(error))
   }

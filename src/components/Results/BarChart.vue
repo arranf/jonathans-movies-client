@@ -1,7 +1,7 @@
 <template>
   <div class="graph-cont">
-    <template class="d-flex" v-for="option in data" >
-      <div :key="option.name+'bar'" class="bar" :id="option.name" :style="{'--width': calcPercentage(option) }"> <span class="bar-label"><strong>{{option.name}}</strong></span> <span class="bar-count" style="float:right;">{{option.votes}}</span></div>
+    <template class="d-flex" v-for="(option, index) in data" >
+      <div :key="option.name+'bar'" class="bar" :id="option.name" :style="{'--width': calcPercentage(option), '--color': colors[index] }"> <span class="bar-label"><strong>{{option.name}}</strong></span> <span class="bar-count" style="float:right;">{{option.votes}}</span></div>
     </template>
   </div>
 </template>
@@ -13,6 +13,10 @@ export default {
   name: 'BarChart',
   props: {
     data: {
+      type: Array,
+      required: true
+    },
+    colors: {
       type: Array,
       required: true
     }
@@ -81,13 +85,13 @@ export default {
   left: 0;
   height: 3em;
   top: 0;
-  background: #999;
+  background: #BDBDBD;
   z-index: 2;
 }
 
 .bar::after{
   content: '';
-  background: #2ecc71;
+  background: var(--color);
   height: 3em;
   transition: 0.7s;
   display: block;
