@@ -6,7 +6,7 @@
       <h2 class="text-center">Discover a Movie</h2>
         <v-container v-if="suggestions && suggestions.length" grid-list-md text-xs-center>
           <v-layout row wrap>
-            <v-flex xs6 :key="film._id+index" v-for="(film, index) in suggestions">
+            <v-flex xs6 md3 lg2 :key="film._id+index" v-for="(film, index) in suggestions">
               <film-preview :film="film" modal-page-name="Discover"></film-preview>
             </v-flex>
             <v-flex xs12>
