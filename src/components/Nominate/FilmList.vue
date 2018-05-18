@@ -50,7 +50,6 @@
 import FilmListItem from './FilmListItem'
 import infiniteScroll from 'vue-infinite-scroll'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
-// import VueSlider from 'vue-slider-component'
 import debounce from 'lodash/debounce'
 import constants from '@/constants'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
