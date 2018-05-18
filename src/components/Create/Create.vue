@@ -121,7 +121,7 @@ export default {
       const votes = this.$v.votes
       if (!votes.$dirty) return errors
       !votes.required && errors.push('A number of votes for voting is required.')
-      !votes.between && errors.push(`Voting length must be between ${votes.$params.between.min} and ${votes.$params.between.max}`)
+      !votes.between && errors.push(`The number of votes each person receives must be between ${votes.$params.between.min} and ${votes.$params.between.max}`)
       return errors
     },
     nominationLengthErrors () {
