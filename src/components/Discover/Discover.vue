@@ -88,7 +88,6 @@ export default {
   flex-direction: row;
   overflow-x: scroll;
   overflow-y: hidden;
-  // white-space: nowrap;
   flex-wrap: nowrap;
   -webkit-overflow-scrolling: touch;
   &::-webkit-scrollbar {
@@ -98,6 +97,5 @@ export default {
 
 .scroll-item {
   flex: 0 0 auto;
-  // display: inline-block;
 }
 </style>
