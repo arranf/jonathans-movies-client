@@ -1,6 +1,6 @@
 <template>
   <div @click="showModal()" v-if="film" class="h-100" >
-    <img v-if="film.poster_path" class="img-fluid" :src="getFilmPoster" :srcset="getFilmPosterSrcSet" :sizes="getFilmPosterSizes" :alt="film.name + ' image'">
+    <img v-if="film.poster_path" class="img-fluid lazyload" :src="getFilmPoster" srcset="" :data-srcset="getFilmPosterSrcSet" :data-sizes="getFilmPosterSizes" :alt="film.name + ' image'">
     <div v-if="!film.poster_path" class="h-90" :style="{backgroundColor: getColor()}"></div>
     <h4 class="">
       {{film.name}}
@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import lazySizes from 'lazysizes' //
 import utils from '@/utils'
 import constants from '@/constants'
 import {mapState, mapGetters} from 'vuex'
@@ -34,9 +35,15 @@ export default {
       }
       return ''
     },
+    getFilmLQPosterSrcSet: function () {
+      if (this.film && this.film.poster_path) {
+        return utils.getTmdbLQPosterSrcSet(this.film.poster_path)
+      }
+      return ''
+    },
     getFilmPoster: function () {
       if (this.film && this.film.poster_path) {
-        return utils.getTmdbPosterImage(this.film.poster_path)
+        return utils.getLQPosterImage(this.film.poster_path)
       }
       return ''
     },
@@ -140,4 +147,15 @@ export default {
     height: 32.5rem;
   }
 }
+
+.blur-up {
+		-webkit-filter: blur(5px);
+		filter: blur(5px);
+		transition: filter 400ms, -webkit-filter 400ms;
+	}
+
+	.blur-up.lazyloaded {
+		-webkit-filter: blur(0);
+		filter: blur(0);
+	}
 </style>
