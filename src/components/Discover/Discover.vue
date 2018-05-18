@@ -64,7 +64,6 @@ export default {
       this.showSnackbar = true
     },
     refresh: function () {
-      console.log('Refreshing')
       this.busy = true
       queries.discoverMovies()
         .then(discoveredFilms => { this.suggestions = this.suggestions.concat(discoveredFilms); this.busy = false })
