@@ -9,7 +9,7 @@
       <progress-bar  />
       <v-container fluid fill-height>
           <v-layout align-center justify-center>
-        <v-flex xs12 sm8 md4>
+        <v-flex xs12 sm8 md8>
             <router-view />
         </v-flex>
           </v-layout>

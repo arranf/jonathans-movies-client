@@ -42,13 +42,13 @@ export default {
 }
 
 .bar{
-  height: 30px;
+  height: 3em;
   margin: 0 auto 10px auto;
   position: relative;
 }
 
 .bar-label {
-  line-height: 30px;
+  line-height: 3em;
   font-size: 16px;
   color: white;
   padding: 0 0 0 10px;
@@ -66,7 +66,7 @@ export default {
 }
 
 .bar-count {
-  line-height: 30px;
+  line-height: 3em;
   font-size: 16px;
   color: white;
   margin-right: 15px;
@@ -79,7 +79,7 @@ export default {
   width: 100%;
   position: absolute;
   left: 0;
-  height: 30px;
+  height: 3em;
   top: 0;
   background: #999;
   z-index: 2;
@@ -88,7 +88,7 @@ export default {
 .bar::after{
   content: '';
   background: #2ecc71;
-  height: 30px;
+  height: 3em;
   transition: 0.7s;
   display: block;
   width: 100%;

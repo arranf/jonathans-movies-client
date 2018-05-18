@@ -1,10 +1,8 @@
 <template>
-<div class="d-flex flex-column align-items-center justify-items-center">
-  <div 
-    v-if="getMostRecentPoll && winningOptions.length > 0"  
-    >
-    <!-- <h1 class="md-headline text-center">{{winningOptions.length > 1 ? winningOptions.slice(0, winningOptions.length - 1).join(', ') + " and " + winningOptions.slice(-1) : winningOptions[0]}} Wins</h1> -->
-    <bar-chart :data="results"/>
+<div class="d-flex flex-column align-items-center justify-items-center" style="width: 100%">
+  <div v-if="getMostRecentPoll && winningOptions.length > 0" style="width: 100%">
+    <h1 class="md-headline text-center">Results</h1>
+    <bar-chart style="padding-top: 3em" :data="results"/>
   </div>
   <div v-cloak v-else-if="winningOptions.length === 0 && emptyStateAllowed" class="empty-state-container">
     <v-icon size="100px" class="mb-2">error_outline</v-icon>

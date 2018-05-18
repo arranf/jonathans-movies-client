@@ -46,7 +46,7 @@ export default {
     const options = getters.getVoteCountsByOption(pollId)
     function getName (id) {
       const option = rootGetters['option/get'](id)
-      return option.name ? option.name : 'Unknown'
+      return option && option.name ? option.name : 'Unknown'
     }
     const data = options.reduce((acc, option) => { acc.push({votes: option.totalVotes, name: getName(option.option_id)}); return acc }, [])
     return data.sort((a, b) => {
