@@ -27,8 +27,7 @@ describe('Create.vue', () => {
  
   it('The start poll button should still be disabled, when one movie is added and nominations are disabled', async () => { 
     let movieSuggestion = wrapper.find('#suggest-input') 
-    expect(typeof movieSuggestion).toBe('object') 
-    console.log(movieSuggestion)
+    expect(typeof movieSuggestion).toBe('object')
     movieSuggestion.element.value = 'Movie 1' 
     movieSuggestion.trigger('input') 
     await localVue.nextTick()
