@@ -54,7 +54,7 @@ span {
   color: white;
   padding: 0 0 0 10px;
   position: relative;
-  z-index: 999
+  z-index: 4
 }
 .bar::before{
   content: '';
@@ -64,7 +64,7 @@ span {
   height: 30px;
   top: 0;
   background: #ecf0f1;
-  z-index: 991;
+  z-index: 2;
 }
 .bar::after{
   content: '';
@@ -77,7 +77,7 @@ span {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 992;
+  z-index: 3;
   max-width: var(--width);
 }
 
