@@ -49,7 +49,14 @@ export default {
       return option.name ? option.name : 'Unknown'
     }
     const data = options.reduce((acc, option) => { acc.push({votes: option.totalVotes, name: getName(option.option_id)}); return acc }, [])
-    return data
+    return data.sort((a, b) => {
+      if (a.totalVotes < b.totalVotes) {
+        return -1
+      } else if (a.totalVotes > b.totalVotes) {
+        return 1
+      }
+      return 0
+    })
   },
   getHighestVotedOptionsForPoll: (state, getters, rootState, rootGetters) => pollId => {
     const voteCountByOption = getters.getVoteCountsByOption(pollId)

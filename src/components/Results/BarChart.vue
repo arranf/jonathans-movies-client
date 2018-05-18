@@ -7,13 +7,12 @@
 <script>
 export default {
   name: 'BarChart',
-  data () {
-    return {
-      backgroundColors: [],
-      emptyStateAllowed: false
+  props: {
+    data: {
+      type: Array,
+      required: true
     }
   },
-  props: ['data'],
   computed: {
     totalVotes () {
       return this.data.reduce((acc, val) => { return acc + val.votes }, {votes: 0})
@@ -23,10 +22,10 @@ export default {
     calcPercentage (option) {
       if (option.votes === 0) {
         return '0%'
-      } else if (option.votes == 100) {
+      } else if (option.votes === 100) {
         return '100%'
       } else {
-        return Math.round((option.votes / this.totalVotes) * 100) + '%'
+        return Math.ceil((option.votes / this.totalVotes) * 100) + '%'
       }
     }
   }
