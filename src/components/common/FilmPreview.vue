@@ -9,7 +9,8 @@
 </template>
 
 <script>
-import lazySizes from 'lazysizes' //
+// eslint-disable-next-line
+import lazySizes from 'lazysizes'
 import utils from '@/utils'
 import constants from '@/constants'
 import {mapState, mapGetters} from 'vuex'

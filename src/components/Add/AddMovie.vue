@@ -163,7 +163,7 @@ export default {
       return ''
     },
     truncatedOverview () {
-      if (!this.movie.overview.length > 350) {
+      if (!(this.movie.overview.length > 350)) {
         return this.movie.overview
       }
       return this.movie.overview.substring(0, 350) + (this.movie.overview.length > 350 ? '...' : '')

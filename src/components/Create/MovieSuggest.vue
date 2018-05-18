@@ -60,7 +60,6 @@ export default {
       this.loading = true
       queries.getFilmSuggestions(searchTerm).then(response => {
         this.loading = false
-        console.log(response.data)
         if (response && response.data && response.data.length) {
           this.suggestions = response.data
         } else {
