@@ -1,10 +1,14 @@
 <template>
   <div class="graph-cont">
-    <div v-for="option in data" :key="option.name" class="bar" :id="option.name" :style="{'--width': calcPercentage(option) }"> <span><strong>{{option.name}}</strong> ({{option.votes}})</span></div>
+    <template class="d-flex" v-for="option in data" >
+      <div :key="option.name+'bar'" class="bar" :id="option.name" :style="{'--width': calcPercentage(option) }"> <span class="bar-label"><strong>{{option.name}}</strong></span> <span class="bar-count" style="float:right;">{{option.votes}}</span></div>
+    </template>
   </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+
 export default {
   name: 'BarChart',
   props: {
@@ -14,18 +18,15 @@ export default {
     }
   },
   computed: {
-    totalVotes () {
-      return this.data.reduce((acc, val) => { return acc + val.votes }, {votes: 0})
-    }
+    ...mapGetters('vote', ['getNumberOfUniqueVoters']),
+    ...mapGetters('poll', ['getMostRecentPoll'])
   },
   methods: {
     calcPercentage (option) {
       if (option.votes === 0) {
-        return '0%'
-      } else if (option.votes === 100) {
-        return '100%'
+        return '3%'
       } else {
-        return Math.ceil((option.votes / this.totalVotes) * 100) + '%'
+        return Math.round((option.votes / this.getNumberOfUniqueVoters(this.getMostRecentPoll._id)) * 100) + '%'
       }
     }
   }
@@ -37,25 +38,42 @@ export default {
 .graph-cont{
   width: calc(100% - 40px);
   width: 100%;
-  max-width: 800px;
   margin: 0 auto;
 }
 
 .bar{
   height: 30px;
-  max-width: 800px;
   margin: 0 auto 10px auto;
   position: relative;
 }
 
-span {
+.bar-label {
   line-height: 30px;
   font-size: 16px;
   color: white;
   padding: 0 0 0 10px;
   position: relative;
-  z-index: 4
+  /* Make it honor width */
+  display: inline-block;
+  width: 90%;
+
+  z-index: 4;
+
+  /* Handle text overflow */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+.bar-count {
+  line-height: 30px;
+  font-size: 16px;
+  color: white;
+  margin-right: 15px;
+  position: relative;
+  z-index: 4;
+}
+
 .bar::before{
   content: '';
   width: 100%;
@@ -63,9 +81,10 @@ span {
   left: 0;
   height: 30px;
   top: 0;
-  background: #ecf0f1;
+  background: #999;
   z-index: 2;
 }
+
 .bar::after{
   content: '';
   background: #2ecc71;
@@ -73,7 +92,7 @@ span {
   transition: 0.7s;
   display: block;
   width: 100%;
-  -webkit-animation: bar-before 1 1.8s;
+  animation: bar-before 1 1.8s;
   position: absolute;
   top: 0;
   left: 0;
@@ -81,7 +100,7 @@ span {
   max-width: var(--width);
 }
 
-@-webkit-keyframes bar-before{
+@keyframes bar-before{
   0%{
     width: 0px;
   }

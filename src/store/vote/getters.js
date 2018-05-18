@@ -77,5 +77,9 @@ export default {
       }
       return acc
     }, [])
+  },
+  getNumberOfUniqueVoters: (state, getters) => pollId => {
+    const voterIds = Object.values(state.keyedById).filter(v => v.poll_id === pollId).map(v => v.user_id)
+    return new Set(voterIds).size
   }
 }
