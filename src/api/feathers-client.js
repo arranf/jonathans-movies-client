@@ -59,14 +59,7 @@ feathersClient.service('/poll')
   .on('transition', data => {
     function displayNotification () {
       if (Notification.permission === 'granted') {
-        navigator.serviceWorker.getRegistration().then(function (reg) {
-          var options = {
-            body: 'Get voting!',
-            icon: '/static/apple-touch-icon.png',
-            vibrate: [100, 50, 100]
-          }
-          reg.showNotification('Voting Started', options)
-        })
+        new Notification('Voting has started!') // eslint-disable-line no-new
       }
     }
     Notification.requestPermission(function (status) {
