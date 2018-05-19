@@ -2,6 +2,7 @@ import feathers from '@feathersjs/client'
 import io from 'socket.io-client'
 
 let socket
+
 // Change Netlify staging env variable to 1 if the staging server is setup, else develop will use production API
 if (process.env.BRANCH && process.env.BRANCH === 'develop' && process.env.STAGING === '1') {
   try {
@@ -53,5 +54,25 @@ if (process.env.NODE_ENV !== 'test') {
   feathersClient.service('/films', service())
   feathersClient.service('/time', service())
 }
+
+feathersClient.service('/poll')
+  .on('transition', data => {
+    function displayNotification () {
+      if (Notification.permission === 'granted') {
+        navigator.serviceWorker.getRegistration().then(function (reg) {
+          var options = {
+            body: 'Get voting!',
+            icon: '/static/apple-touch-icon.png',
+            vibrate: [100, 50, 100]
+          }
+          reg.showNotification('Voting Started', options)
+        })
+      }
+    }
+    Notification.requestPermission(function (status) {
+      console.log('Notification permission status:', status)
+      displayNotification()
+    })
+  })
 
 export default feathersClient
