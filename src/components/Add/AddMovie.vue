@@ -88,8 +88,8 @@ export default {
         this.loading = true
         tmdbApi.searchForMovie(searchTerm)
           .then(response => {
-            if (response && response.data) {
-              this.suggestions = response.data.results.slice(0, 5)
+            if (response) {
+              this.suggestions = response.results.slice(0, 5)
             } else {
               this.suggestions = [{'title': ''}]
             }
@@ -114,12 +114,12 @@ export default {
         .then((responses) => {
           const tmdbResponse = responses[0]
           const apiResponse = responses[1]
-          movie.backdrop_path = tmdbResponse.data.backdrop_path
-          movie.poster_path = tmdbResponse.data.poster_path
-          movie.budget = tmdbResponse.data.budget
-          movie.imdb_id = tmdbResponse.data.imdb_id
-          movie.tagline = tmdbResponse.data.tagline
-          movie.runtime = tmdbResponse.data.runtime
+          movie.backdrop_path = tmdbResponse.backdrop_path
+          movie.poster_path = tmdbResponse.poster_path
+          movie.budget = tmdbResponse.budget
+          movie.imdb_id = tmdbResponse.imdb_id
+          movie.tagline = tmdbResponse.tagline
+          movie.runtime = tmdbResponse.runtime
           this.searchQuery = ''
           this.suggestions = []
           this.movie = movie
