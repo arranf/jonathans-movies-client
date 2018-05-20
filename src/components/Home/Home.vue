@@ -3,12 +3,9 @@
       <movie-info-modal :show.sync="showingFilm" close-route="/home" :filmId="filmId" :show-nominate="false" />
       <div>
         <selected-options v-if="isCurrentPollInNomination" />
-        <vote-for-option @snackbar="setSnackbar" v-else-if="getActivePoll"></vote-for-option>
+        <vote-for-option v-else-if="getActivePoll"></vote-for-option>
         <results v-else></results> 
-      </div> 
-      <v-snackbar id="snackbar" :bottom="true" v-model="showSnackbar">
-        <span>{{snackbarText}}</span>
-      </v-snackbar>
+      </div>
   </div>
 </template>
 
@@ -29,8 +26,6 @@ export default {
   },
   data () {
     return {
-      showSnackbar: false,
-      snackbarText: '',
       showingFilm: false
     }
   },
@@ -39,12 +34,6 @@ export default {
   },
   computed: {
     ...mapGetters('poll', ['getActivePoll', 'isCurrentPollInNomination'])
-  },
-  methods: {
-    setSnackbar (snackbarText) {
-      this.showSnackbar = true
-      this.snackbarText = snackbarText
-    }
   },
   watch: {
     'filmId' (newFilmId, oldFilmId) {

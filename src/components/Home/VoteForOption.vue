@@ -33,13 +33,13 @@ export default {
     OptionPreview
   },
   methods: {
-    ...mapActions('vote', {addVote: 'create'}),
-    ...mapActions('vote', {removeVote: 'remove'}),
+    ...mapActions('vote', {addVote: 'create', removeVote: 'remove'}),
+    ...mapActions('snackbar', {setSnackbar: 'setText'}),
     vote: function (optionId) {
       let option = this.getOption(optionId)
       if (option == null) {
         console.error(`Couldn't get option for id ${optionId}`)
-        this.$emit('snackbar', 'Error submitting vote.')
+        this.setSnackbar('Error submitting vote.')
         return
       }
       if (this.isVoted(optionId)) {
@@ -49,13 +49,13 @@ export default {
           .catch(error => console.error(error))
       } else {
         if (this.remainingVotes <= 0) {
-          this.$emit('snackbar', 'Unable to vote. You don\'t have any votes left')
+          this.setSnackbar('Unable to vote. You don\'t have any votes left')
           return
         }
         this.addVote({poll_id: this.getActivePoll._id, option_id: optionId})
           .then(console.log('Vote added for ', option.name))
-          .then(this.$emit('snackbar', `Voted for ${option.name}. You have ${this.remainingVotes - 1} vote${this.remainingVotes > 1 ? 's' : ''} remaining`))
-          .catch(error => { console.error(error); this.$emit('snackbar', 'Error submitting vote.') })
+          .then(this.setSnackbar(`Voted for ${option.name}. You have ${this.remainingVotes - 1} vote${this.remainingVotes > 1 ? 's' : ''} remaining`))
+          .catch(error => { console.error(error); this.setSnackbar('Error submitting vote.') })
       }
     },
     isVoted: function (optionId) {

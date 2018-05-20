@@ -23,7 +23,7 @@
           </v-card>
         </v-dialog>
 
-        <movie-info-modal @snackbar="setSnackbar" close-route="/movies" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
+        <movie-info-modal close-route="/movies" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
 
         <v-list>
           <template v-for="(film, index) in allFilms">
@@ -38,11 +38,6 @@
       <v-btn right bottom color="accent" fab fixed @click="showFilters = true">
         <v-icon>filter_list</v-icon>
       </v-btn>
-
-     <v-snackbar :bottom="true" id="snackbar" v-model="showSnackbar" >
-        <span>{{snackbarText}}</span>
-      <v-btn @click="showSnackbar = false">Close</v-btn>
-    </v-snackbar>
    </div>
 </template>
 
@@ -60,8 +55,6 @@ export default {
     return {
       showingFilm: false,
       showFilters: false,
-      showSnackbar: false,
-      snackbarText: '',
       page: 0,
       limit: 50,
       loadedAll: false,
@@ -109,6 +102,7 @@ export default {
   methods: {
     ...mapActions('films', {queryFilms: 'find'}),
     ...mapMutations('films', {clearFilms: 'clearAll'}),
+    ...mapActions('snackbar', {setSnackbar: 'setText'}),
     reset: function () {
       this.page = 0
       this.genres = ''
@@ -134,16 +128,12 @@ export default {
     }, 500, {leading: false}),
     getFilms: function () {
       this.queryFilms(this.query)
-        .then(response => { this.total = response.total; this.busy = false; this.showSnackbar = false })
+        .then(response => { this.total = response.total; this.busy = false })
         .catch(error => {
           console.error(error)
           this.busy = false
           this.setSnackbar('No films can be displayed')
         })
-    },
-    setSnackbar (text) {
-      this.showSnackbar = true
-      this.snackbarText = text
     },
     setBusy () {
       this.busy = true

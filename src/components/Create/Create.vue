@@ -31,11 +31,6 @@
         <v-btn id="back" @click.prevent="toHome()">Back</v-btn>
       </div>
     </form>
-
-    <v-snackbar id="snackbar" :bottom="true" v-model="showSnackbar">
-      <span>This movie has already been added.</span>
-      <v-btn class="md-primary" @click="showSnackbar = false">Close</v-btn>
-    </v-snackbar>
   </div>
 </template>
 
@@ -58,8 +53,7 @@ export default {
       haveNominations: false,
       nominationsMinutes: '5',
       nominations: '1',
-      options: [],
-      showSnackbar: false
+      options: []
     }
   },
   methods: {

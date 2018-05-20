@@ -51,11 +51,6 @@
           </v-card-actions>
         </v-card>
       </transition>
-
-    <v-snackbar v-model="showSnackbar" :bottom="true">
-      <span>{{snackbarMessage}}</span>
-      <v-btn color="primary" @click="showSnackbar = false">Close</v-btn>
-    </v-snackbar>
   </div>
 </template>
 
@@ -70,10 +65,8 @@ export default {
   name: 'AddMovie',
   data () {
     return {
-      snackbarMessage: '',
       showSearch: true,
       isDuplicate: false,
-      showSnackbar: false,
       selectedFilm: null,
       searchQuery: null,
       suggestions: [],
@@ -83,6 +76,7 @@ export default {
   },
   methods: {
     ...mapActions('films', ['create', 'find']),
+    ...mapActions('snackbar', {setSnackbarText: 'setText'}),
     getMovies: function (searchTerm) {
       if (searchTerm.trim()) {
         this.loading = true
@@ -126,19 +120,18 @@ export default {
           this.isDuplicate = apiResponse.total > 0
           this.showSearch = false
         })
-        .catch(e => { console.error(e); this.showSnackbar = true; this.snackbarMessage = 'Error fetching movie information' })
+        .catch(e => { console.error(e); this.setSnackbarText('Error fetching movie information') })
     },
     addFilm () {
       if (!this.isDuplicate) {
         this.create(this.movie)
           .then(() => {
-            this.snackbarMessage = `Successfully added ${this.movie.name}'`
+            this.setSnackbarText(`Successfully added ${this.movie.name}`)
             this.selectedFilm = ''
             this.movie = null
             this.showSearch = true
-            this.showSnackbar = true
           })
-          .catch(e => { console.error(e); this.showSnackbar = true; this.snackbarMessage = 'Error adding movie' })
+          .catch(e => { console.error(e); this.setSnackbarText('Error adding movie') })
       }
     },
     getYear (releaseDate) {

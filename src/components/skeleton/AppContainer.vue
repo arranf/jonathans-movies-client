@@ -15,6 +15,7 @@
           </v-layout>
       </v-container>
     </v-content>
+    <snackbar />
   </v-app>
 </template>
 
@@ -22,6 +23,7 @@
 import DrawerList from '@/components/skeleton/DrawerList'
 import Toolbar from '@/components/skeleton/Toolbar'
 import ProgressBar from '@/components/skeleton/ProgressBar'
+import Snackbar from '@/components/skeleton/Snackbar'
 
 export default {
   name: 'app',
@@ -31,7 +33,8 @@ export default {
   components: {
     DrawerList,
     Toolbar,
-    ProgressBar
+    ProgressBar,
+    Snackbar
   }
 }
 </script>

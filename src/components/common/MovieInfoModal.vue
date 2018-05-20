@@ -89,6 +89,7 @@ export default {
   },
   methods: {
     ...mapActions('films', {fetch: 'get'}),
+    ...mapActions('snackbar', {setSnackbar: 'setText'}),
     modalOpened: function () {
       this.showOverview = false
       this.film = this.get(this.filmId)
@@ -112,7 +113,7 @@ export default {
             if (!this.hasNominationsRemaining) {
               this.$router.push('/')
             } else {
-              this.$emit('snackbar', `Nominated ${this.film.name}. You have ${this.nominationsRemaining} nomination${this.nominationsRemaining > 1 ? 's' : ''}  left`)
+              this.setSnackbar(`Nominated ${this.film.name}. You have ${this.nominationsRemaining} nomination${this.nominationsRemaining > 1 ? 's' : ''}  left`)
             }
           })
           .catch(error => console.error(error))

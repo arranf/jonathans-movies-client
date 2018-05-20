@@ -1,6 +1,6 @@
 <template>
   <div>
-    <movie-info-modal @snackbar="setSnackbar" close-route="/discover" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
+    <movie-info-modal close-route="/discover" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
     
     <div v-infinite-scroll="refresh" :infinite-scroll-disabled="busy" :infinite-scroll-immediate-check="true" infinite-scroll-distance="40">
       <h2 class="text-center">Discover a Movie</h2>
@@ -18,11 +18,6 @@
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </div>
     </div>
-
-    <v-snackbar v-model="showSnackbar" :bottom="true">
-      <span>{{snackbarMessage}}</span>
-      <v-btn color="primary" @click="showSnackbar = false">Close</v-btn>
-    </v-snackbar>
   </div>
 </template>
 
@@ -31,6 +26,7 @@ import FilmPreview from '@/components/common/FilmPreview'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
 import queries from '@/api'
 import infiniteScroll from 'vue-infinite-scroll'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Suggestions',
@@ -38,8 +34,6 @@ export default {
     return {
       showingFilm: false,
       suggestions: [],
-      showSnackbar: false,
-      snackbarMessage: '',
       busy: false
     }
   },
@@ -59,10 +53,7 @@ export default {
     }
   },
   methods: {
-    setSnackbar (message) {
-      this.snackbarMessage = message
-      this.showSnackbar = true
-    },
+    ...mapActions('snackbar', {setSnackbar: 'setText'}),
     refresh: function () {
       this.busy = true
       queries.discoverMovies()

@@ -1,11 +1,5 @@
 <template>
   <div class="text-center mt-4">
-
-    <v-snackbar id="snackbar" :bottom="true" v-model="showSnackbar">
-      <span>Unable to complete log in.</span>
-      <v-btn @click="showSnackbar = false">Close</v-btn>
-    </v-snackbar>
-
     <div class="mb-3">
       <h1 class="display-2">Login</h1>
     </div>
@@ -51,8 +45,7 @@ export default {
     return {
       password: '',
       email: '',
-      isInternalLogin: false,
-      showSnackbar: false
+      isInternalLogin: false
     }
   },
   // components: {
@@ -61,6 +54,7 @@ export default {
   // },
   methods: {
     ...mapActions('auth', ['authenticate', 'logout']),
+    ...mapActions('snackbar', {setSnackbar: 'setText'}),
     tryLogin: function () {
       this.authenticate({
         strategy: 'local',
@@ -74,7 +68,7 @@ export default {
         .then(() => {
           router.push('home')
         })
-        .catch(error => { console.error(`Login Error: ${error}`); this.showSnackbar = true })
+        .catch(error => { console.error(`Login Error: ${error}`); this.setSnackbar('Unable to complete log in.') })
     },
     toSignUp: function () {
       router.push('/signup')

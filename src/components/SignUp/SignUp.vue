@@ -3,10 +3,6 @@
     <div>
       <h1 class="display-2">Sign Up</h1>
     </div>
-    <v-snackbar id="snackbar" bottom v-model="showSnackbar">
-      <span>Unable to complete sign up.</span>
-    </v-snackbar>
-
     <form id="internalLoginForm" class="d-flex flex-column align-items-center justify-content-center w-100">
       <v-text-field prepend-icon="inbox" name="email" label="Email" v-model="email" type="text"></v-text-field>
       <v-text-field prepend-icon="lock" name="password" label="Password" v-model="password" id="password" type="password"></v-text-field>
@@ -28,13 +24,13 @@ export default {
   data () {
     return {
       password: '',
-      email: '',
-      showSnackbar: false
+      email: ''
     }
   },
   methods: {
     ...mapActions('users', {signUp: 'create'}),
     ...mapActions('auth', ['authenticate']),
+    ...mapActions('snackbar', {setSnackbar: 'setText'}),
     toHome: function () {
       router.push('/home')
     },
@@ -56,7 +52,7 @@ export default {
           return feathersClient.passport.verifyJWT(token.accessToken)
         })
         .then(() => router.push('home'))
-        .catch(error => { console.error(error); this.showSnackbar = true })
+        .catch(error => { console.error(error); this.setSnackbar('Unable to complete sign up.') })
     },
     getValidationClass: function () {
       return true

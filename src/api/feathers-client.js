@@ -1,5 +1,6 @@
 import feathers from '@feathersjs/client'
 import io from 'socket.io-client'
+import store from '@/store' // used for transition notification
 
 let socket
 
@@ -57,15 +58,18 @@ if (process.env.NODE_ENV !== 'test') {
 
 feathersClient.service('/poll')
   .on('transition', data => {
-    function displayNotification () {
-      if (Notification.permission === 'granted') {
-        new Notification('Voting has started!') // eslint-disable-line no-new
-      }
-    }
     Notification.requestPermission(function (status) {
       console.log('Notification permission status:', status)
       displayNotification()
     })
+
+    store.dispatch('snackbar/setText', 'You can now vote!')
   })
+
+function displayNotification () {
+  if (Notification.permission === 'granted') {
+    new Notification('Voting has started!') // eslint-disable-line no-new
+  }
+}
 
 export default feathersClient
