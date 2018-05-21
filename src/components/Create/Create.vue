@@ -28,7 +28,7 @@
     
       <div class="mt-3">
         <v-btn id="start-poll" @click.prevent="startPoll()" :disabled="!canStart" color="primary">Start Poll</v-btn>
-        <v-btn id="back" @click.prevent="toHome()">Back</v-btn>
+        <v-btn flat id="back" @click.prevent="toHome()">Back</v-btn>
       </div>
     </form>
   </div>
