@@ -1,12 +1,13 @@
 <template>
   <div @click="showModal()" class="d-flex flex-column align-items-center" v-if="option" >
-    <img class="img-fluid img-thumbnail" v-if="film" :src="getFilmPoster" :alt="option.name + ' image'">
+    <film-preview v-if="film" :film="film" modal-page-name="Home"/>
+    <!-- <img class="img-fluid img-thumbnail"  :src="getFilmPoster" :alt="option.name + ' image'"> -->
     <div v-else class="d-flex flex-column justify-content-center fake-movie-poster" :style="{backgroundColor: getColor()}">
       <div class="h-30 w-100 align-self-end">
         <p style="subtitle" class="text-white text-center">{{option.name}}</p>
       </div>
     </div>
-    <h4 class="text-center">
+    <h4 v-if="!film" class="text-center">
       {{option.name}}
     </h4>
   </div>
@@ -16,9 +17,13 @@
 import utils from '@/utils'
 import constants from '@/constants'
 import {mapActions, mapGetters} from 'vuex'
+import FilmPreview from '@/components/common/FilmPreview'
 
 export default {
   name: 'OptionPreview',
+  components: {
+    FilmPreview
+  },
   props: {
     option: {type: Object, required: true},
     showInfo: {type: Boolean, default: true}

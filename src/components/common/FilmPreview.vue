@@ -1,8 +1,8 @@
 <template>
-  <div @click="showModal()" v-if="film" class="h-100" >
+  <div @click="showModal()" class="d-flex flex-column align-items-center h-100" v-if="film" >
     <img v-if="film.poster_path" class="img-fluid lazyload" :src="getFilmPoster" :srcset="getFilmLQPosterSrcSet" :data-srcset="getFilmPosterSrcSet" :data-sizes="getFilmPosterSizes" :alt="film.name + ' image'">
     <div v-if="!film.poster_path" class="h-90" :style="{backgroundColor: getColor()}"></div>
-    <h4 class="">
+    <h4 class="text-center">
       {{film.name}}
     </h4>
   </div>
