@@ -86,33 +86,5 @@ export default {
       return activePoll.pollTransitionDateTime != null
     }
     return false
-  },
-  // TODO REMOVE VVVVV
-  isNominationCurrentOrOverForPollFinishingUpTo: (state, getters, rootState, rootGetters) => withinMinutes => {
-    const poll = getters.getPollFinishingUpTo(withinMinutes)
-    if (poll) {
-      let currentDateTime = rootState.time.now
-      return (poll.startDateTime <= currentDateTime &&
-        poll.pollTransitionDateTime !== undefined &&
-        poll.pollTransitionDateTime > currentDateTime)
-    }
-    return false
-  },
-  isItResultsForPollFinishingUpTo: (state, getters, rootState, rootGetters) => withinMinutes => {
-    const poll = getters.getPollFinishingUpTo(withinMinutes)
-    if (poll) {
-      let currentDateTime = rootState.time.now
-      return poll.endDateTime <= currentDateTime
-    }
-    return false
-  },
-  isVotingCurrentOrOverForPollFinishingUpTo: (state, getters, rootState, rootGetters) => withinMinutes => {
-    const poll = getters.getPollFinishingUpTo(withinMinutes)
-    if (poll) {
-      let currentDateTime = rootState.time.now
-      return (poll.startDateTime <= currentDateTime && (poll.pollTransitionDateTime === undefined ||
-        poll.pollTransitionDateTime <= currentDateTime))
-    }
-    return false
   }
 }
