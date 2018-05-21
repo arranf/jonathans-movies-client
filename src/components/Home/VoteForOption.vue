@@ -9,7 +9,7 @@
         <template v-for="option in getOptionsForCurrentPoll"  >
           <div :key="option._id" class="scroll-item d-flex align-items-center flex-column">
             <option-preview :option="option"  />
-            <v-checkbox :input-value="isVoted(option._id)" :disabled="!isVoted(option._id) && remainingVotes <= 0" @change="vote(option._id)" />
+            <v-checkbox color="success" :input-value="isVoted(option._id)" :disabled="!isVoted(option._id) && remainingVotes <= 0" @change="vote(option._id)" />
           </div>
         </template>
       </div>
