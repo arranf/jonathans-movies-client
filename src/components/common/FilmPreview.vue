@@ -17,7 +17,10 @@ import {mapState, mapGetters} from 'vuex'
 
 export default {
   name: 'FilmPreview',
-  props: ['film', 'modalPageName'],
+  props: {
+    film: {required: true, type: Object},
+    modalPageName: {required: true, type: String},
+  },
   computed: {
     ...mapState('option', {waitingForOptionFind: 'isFindPending'}),
     ...mapGetters('films', {getFilm: 'get'}),
