@@ -47,7 +47,7 @@ feathersClient.service('/poll')
       displayNotification()
     })
 
-    store.dispatch('snackbar/setText', 'Voting has begun!')
+    store.dispatch('snackbar/setText', {text: `Voting has begun! You have 3 votes.`, isPersistent: true})
   })
 
 function displayNotification () {

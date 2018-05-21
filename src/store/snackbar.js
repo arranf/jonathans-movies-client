@@ -1,16 +1,26 @@
 const state = {
-  text: ''
+  text: '',
+  isPersistent: false
 }
 
 const actions = {
-  setText ({ commit, state }, text) {
-    commit('setSnack', text)
+  setText ({ commit, state }, payload) {
+    commit('setSnack', payload)
   }
 }
 
 const mutations = {
-  setSnack (state, snackText) {
-    state.text = snackText
+  setSnack (state, payload) {
+    if (typeof payload === 'string') {
+      state.text = payload
+      state.isPersistent = false
+    } else {
+      state.text = payload.text
+      state.isPersistent = payload.isPersistent
+    }
+  },
+  setNotPersistent (state) {
+    state.isPersistent = false
   }
 }
 
