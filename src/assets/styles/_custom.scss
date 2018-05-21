@@ -59,24 +59,3 @@ body {
       text-align: center;
       flex-direction: column;
   }
-
-  // For SelectedOptions and VoteForOption
-  .scroll {
-    display: flex;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    // white-space: nowrap;
-    flex-wrap: nowrap;
-    -webkit-overflow-scrolling: touch;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-  
-  .scroll-item {
-    flex: 0 0 auto;
-    max-width: 80%;
-    width: 100%;
-  
-    // display: inline-block;
-  }
