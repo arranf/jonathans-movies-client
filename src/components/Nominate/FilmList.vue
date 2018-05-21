@@ -31,8 +31,8 @@
             <v-divider v-if="index + 1 < allFilms.length" :key="index"></v-divider>
           </template>
         </v-list> 
-
         <v-progress-linear v-show="busy" :indeterminate="true" />
+        <span class="text-center" v-if="reachedEnd">Wow, you reached the end of the list! Impressive stuff buddy.</span> 
       </div>  
 
       <v-btn right bottom color="accent" fab fixed @click="showFilters = true">
@@ -62,7 +62,8 @@ export default {
       total: 51,
       sort: {name: 1},
       floorRating: 0.0,
-      genres: []
+      genres: [],
+      reachedEnd: false
     }
   },
   props: {
@@ -118,15 +119,17 @@ export default {
       this.clearFilms()
       this.getFilms()
     },
-    fetchNextPage: debounce(function () {
+    fetchNextPage: function () {
       const offset = this.limit * this.page
       if (offset >= this.total) {
+        this.reachedEnd = true
         return
       }
+      this.busy = true
       this.page++
       this.getFilms()
-    }, 500, {leading: false}),
-    getFilms: function () {
+    },
+    getFilms: debounce(function () {
       this.queryFilms(this.query)
         .then(response => { this.total = response.total; this.busy = false })
         .catch(error => {
@@ -134,10 +137,7 @@ export default {
           this.busy = false
           this.setSnackbar('No films can be displayed')
         })
-    },
-    setBusy () {
-      this.busy = true
-    }
+    }, 500, {leading: false})
   },
   beforeDestroy () {
     document.removeEventListener('scroll', this.listener)
@@ -178,11 +178,9 @@ export default {
         D.body.clientHeight, D.documentElement.clientHeight
       )
     }
-    let setBusy = this.setBusy
     let nextPage = this.fetchNextPage
     this.listener = function (event) {
       if (getDocHeight() === getScrollXY()[1] + window.innerHeight) {
-        setBusy()
         nextPage()
       }
     }
