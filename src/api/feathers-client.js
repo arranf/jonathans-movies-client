@@ -47,12 +47,12 @@ feathersClient.service('/poll')
       displayNotification()
     })
 
-    store.dispatch('snackbar/setText', 'You can now vote!')
+    store.dispatch('snackbar/setText', 'Voting has begun!')
   })
 
 function displayNotification () {
   if (Notification.permission === 'granted') {
-    new Notification('Voting has started!') // eslint-disable-line no-new
+    new Notification('Voting has begun!') // eslint-disable-line no-new
   }
 }
 
