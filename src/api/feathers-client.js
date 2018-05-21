@@ -29,32 +29,16 @@ if (process.env.BRANCH && process.env.BRANCH === 'develop' && process.env.STAGIN
   }
 }
 
-let feathersClient
+let feathersClient = feathers()
+  .configure(feathers.socketio(socket))
+  .configure(feathers.authentication({storage: window.localStorage}))
 
-if (process.env.NODE_ENV !== 'test') {
-  feathersClient = feathers()
-    .configure(feathers.socketio(socket))
-    .configure(feathers.authentication({storage: window.localStorage}))
-
-  feathersClient.service('/users')
-  feathersClient.service('/poll')
-  feathersClient.service('/option')
-  feathersClient.service('/vote')
-  feathersClient.service('/films')
-  feathersClient.service('/time')
-} else {
-  // setup in memory services
-  feathersClient = feathers()
-    .configure(feathers.authentication({storage: window.localStorage}))
-
-  const service = require('feathers-memory')
-  feathersClient.service('/users', service())
-  feathersClient.service('/poll', service())
-  feathersClient.service('/option', service())
-  feathersClient.service('/vote', service())
-  feathersClient.service('/films', service())
-  feathersClient.service('/time', service())
-}
+feathersClient.service('/users')
+feathersClient.service('/poll')
+feathersClient.service('/option')
+feathersClient.service('/vote')
+feathersClient.service('/films')
+feathersClient.service('/time')
 
 feathersClient.service('/poll')
   .on('transition', data => {
