@@ -1,5 +1,5 @@
 <template>
-  <div @click="showModal()" class="d-flex flex-column align-items-center h-100" v-if="film" >
+  <div @click="showModal()" class="h-100" v-if="film" >
     <img v-if="film.poster_path" class="img-fluid lazyload" :src="getFilmPoster" :srcset="getFilmLQPosterSrcSet" :data-srcset="getFilmPosterSrcSet" :data-sizes="getFilmPosterSizes" :alt="film.name + ' image'">
     <div v-if="!film.poster_path" class="h-90" :style="{backgroundColor: getColor()}"></div>
     <h4 class="text-center">
@@ -17,7 +17,10 @@ import {mapState, mapGetters} from 'vuex'
 
 export default {
   name: 'FilmPreview',
-  props: ['film', 'modalPageName'],
+  props: {
+    film: {required: true, type: Object},
+    modalPageName: {required: true, type: String}
+  },
   computed: {
     ...mapState('option', {waitingForOptionFind: 'isFindPending'}),
     ...mapGetters('films', {getFilm: 'get'}),

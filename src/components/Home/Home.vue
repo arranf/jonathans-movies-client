@@ -2,8 +2,7 @@
   <div id="home-container" >
       <movie-info-modal :show.sync="showingFilm" close-route="/home" :filmId="filmId" :show-nominate="false" />
       <div>
-        <selected-options v-if="isCurrentPollInNomination" />
-        <vote-for-option v-else-if="getActivePoll"></vote-for-option>
+        <selected-options v-if="getActivePoll" />
         <results v-else></results> 
       </div>
   </div>
@@ -11,7 +10,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import VoteForOption from '@/components/Home/VoteForOption'
 import Results from '@/components/Results/Results'
 import SelectedOptions from './Nominated/SelectedOptions'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
@@ -19,7 +17,6 @@ import MovieInfoModal from '@/components/common/MovieInfoModal'
 export default {
   name: 'Home',
   components: {
-    VoteForOption,
     Results,
     SelectedOptions,
     MovieInfoModal
@@ -33,7 +30,7 @@ export default {
     filmId: String
   },
   computed: {
-    ...mapGetters('poll', ['getActivePoll', 'isCurrentPollInNomination'])
+    ...mapGetters('poll', ['getActivePoll'])
   },
   watch: {
     'filmId' (newFilmId, oldFilmId) {
