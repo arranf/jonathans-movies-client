@@ -9,7 +9,7 @@
       </div>
     </v-card-title>
     <v-card-actions>
-      <v-btn @click="vote" v-if="!isCurrentPollInNomination && getActivePoll" :disabled="!isVoted(option._id) && remainingVotes <= 0" flat color="orange">
+      <v-btn :color="voteButtonColor" @click="vote" v-if="!isCurrentPollInNomination && getActivePoll" :disabled="!isVoted(option._id) && remainingVotes <= 0" flat>
         {{voteButtonText}}
       </v-btn>
       <v-btn @click="showModal()" flat color="orange">More Info</v-btn>
@@ -39,6 +39,12 @@ export default {
         return 'Remove Vote'
       }
       return 'Vote'
+    },
+    voteButtonColor: function () {
+      if (this.isVoted(this.option._id)) {
+        return 'error'
+      }
+      return 'primary'
     },
     lastWatched: function () {
       if (this.film && this.film.lastWatched) {
