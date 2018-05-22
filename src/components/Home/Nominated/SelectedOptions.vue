@@ -22,7 +22,7 @@
     </div>
 
     <div class="d-flex flex-column" v-if="getOptionsForCurrentPoll && currentPollOptions && currentPollOptions.length > 0" >
-      <option-preview v-for="option in currentPollOptions" class="scroll-item" :key="option._id" :option="option"></option-preview>
+      <option-preview v-for="option in currentPollOptions" :key="option._id" :option="option" class="mb-3"></option-preview>
     </div>
   </div>
 </template>

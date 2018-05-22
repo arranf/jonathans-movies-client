@@ -113,7 +113,7 @@ export default {
             if (!this.hasNominationsRemaining) {
               this.$router.push('/')
             } else {
-              this.setSnackbar(`Nominated ${this.film.name}. You have ${this.nominationsRemaining} nomination${this.nominationsRemaining > 1 ? 's' : ''}  left`)
+              this.setSnackbar(`Nominated. You have ${this.nominationsRemaining} nomination${this.nominationsRemaining > 1 ? 's' : ''}  left`)
             }
           })
           .catch(error => console.error(error))

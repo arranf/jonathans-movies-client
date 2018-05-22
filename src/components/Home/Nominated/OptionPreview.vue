@@ -93,7 +93,7 @@ export default {
         }
         this.addVote({poll_id: this.getActivePoll._id, option_id: optionId})
           .then(console.log('Vote added for ', this.option.name))
-          .then(this.setSnackbar(`Voted for ${this.option.name}. You have ${this.remainingVotes - 1} vote${this.remainingVotes > 1 ? 's' : ''} remaining`))
+          .then(this.setSnackbar(`Voted! You have ${this.remainingVotes - 1} vote${this.remainingVotes > 1 ? 's' : ''} remaining`))
           .catch(error => { console.error(error); this.setSnackbar('Error submitting vote.') })
       }
     },
