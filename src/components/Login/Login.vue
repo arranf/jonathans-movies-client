@@ -48,10 +48,6 @@ export default {
       isInternalLogin: false
     }
   },
-  // components: {
-  //   VCard,
-  //   VTextField
-  // },
   methods: {
     ...mapActions('auth', ['authenticate', 'logout']),
     ...mapActions('snackbar', {setSnackbar: 'setText'}),

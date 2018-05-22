@@ -5,12 +5,6 @@ const queries = {
     return store.dispatch('poll/find', {query: {
       $sort: {endDateTime: -1},
       $limit: 100
-      // startDateTime: {
-      //   $lt: store.getters['time/getNow']
-      // },
-      // endDateTime: {
-      //   $gte: store.getters['time/getNow']
-      // }
     }})
   },
   getVotesForMostRecentPoll: function (pollId) {
