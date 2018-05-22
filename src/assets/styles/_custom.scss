@@ -6,28 +6,12 @@ body {
     height: 100vh;
 }
 
-
 .text-white {
     color: #ffffff;
 }
 
-.not-active {
-  pointer-events: none;
-  cursor: default;
-}
-
 .text-center {
     text-align: center !important;
-}
-
-.noselect {
-    -webkit-touch-callout: none; /* iOS Safari */
-      -webkit-user-select: none; /* Safari */
-       -khtml-user-select: none; /* Konqueror HTML */
-         -moz-user-select: none; /* Firefox */
-          -ms-user-select: none; /* Internet Explorer/Edge */
-              user-select: none; /* Non-prefixed version, currently
-                                    supported by Chrome and Opera */
 }
 
 /* From bootstrap */
@@ -35,16 +19,6 @@ body {
     max-width: 100%;
     height: auto;
   }
-  
-  .img-thumbnail {
-    padding: 0.25rem;
-    background-color: #fff;
-    // border: 1px solid #dee2e6;
-    // border-radius: 0.25rem;
-    max-width: 85%;
-    height: auto;
-  }
-
 
   /* From Vue Material */
   .empty-state-description {
