@@ -3,7 +3,8 @@
     <div class="mb-3">
       <h1 class="display-2">Reset Password</h1>
     </div>
-    <v-card>
+    
+    <v-card v-if="!token && !showCodeEnter && !showPasswordEntry">
       <v-card-text>
         <v-form>
           <v-text-field prepend-icon="inbox" name="email" label="Email" v-model="email" type="text"></v-text-field>
@@ -15,28 +16,123 @@
         <v-btn flat id="back" to="/login">Back</v-btn>
       </v-card-actions>
     </v-card>
+
+    <v-card v-if="showCodeEnter && !showPasswordEntry">
+      <v-card-text>
+        <v-form>
+          <v-text-field
+          name="short-token"
+          label="Reset Code"
+          mask="######"
+          v-model="shortToken"
+          type="number"
+        ></v-text-field>
+        </v-form>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn id="submitCode" :disabled="shortToken.length != 6" @click.prevent="setCode()" color="primary">Input Code</v-btn>
+        <v-btn flat id="back" to="/login">Back</v-btn>
+      </v-card-actions>
+    </v-card>
+
+    <v-card v-if="token || showPasswordEntry">
+      <v-card-text>
+        <v-form>
+          <v-text-field loading @input="checkPasswordStrength" prepend-icon="lock" name="password" label="New Password" v-model="password" id="password"
+            :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
+            :append-icon-cb="() => (hidePassword = !hidePassword)"
+            :type="hidePassword ? 'password' : 'text'">
+              <v-progress-linear
+                v-show="password"
+                slot="progress"
+                :value="progress"
+                :color="color"
+                height="4"
+                label="Strength"
+              ></v-progress-linear>
+          </v-text-field>
+        </v-form>
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn id="submit" :disabled="!password" @click.prevent="resetPassword()" color="primary">Change Password</v-btn>
+        <v-btn flat id="back" to="/login">Back</v-btn>
+      </v-card-actions>
+    </v-card>
   </div>
 </template>
 
 <script>
-import authClient from '@/api/auth-client'
+import router from '@/router'
 import {mapActions} from 'vuex'
+import zxcvbn from 'zxcvbn'
+
+import queries from '@/api'
+import authClient from '@/api/auth-client'
 
 export default {
   name: 'Reset',
   data () {
     return {
-      email: ''
+      email: '',
+      showCodeEnter: false,
+      shortToken: '',
+      hidePassword: true,
+      showPasswordEntry: false,
+      password: '',
+      passwordStrength: 0
+    }
+  },
+  props: {
+    token: {
+      type: String
     }
   },
   methods: {
     ...mapActions('snackbar', {setSnackbar: 'setText'}),
+    ...mapActions('auth', ['authenticate', 'logout']),
     requestReset () {
       const user = {email: this.email}
       authClient.sendResetPwd(user)
-        .then((result) => console.log(result))
+        .then((result) => {
+          // Show short token input
+          this.showCodeEnter = true
+        })
         // one source of error is a not-verified user
-        .catch((e) => authClient.resendVerifySignup(user))
+        .catch((e) => {
+          console.log(e)
+          // Show error
+          authClient.resendVerifySignup(user)
+        })
+    },
+    setCode () {
+      if (this.shortToken.length === 6) {
+        this.showPasswordEntry = true
+      }
+      // TODO some unlikely error handling
+    },
+    checkPasswordStrength () {
+      let result = zxcvbn(this.password)
+      this.passwordStrength = result.score
+    },
+    resetPassword () {
+      let promise
+      if (this.token) {
+        promise = authClient.resetPwdLong(this.token, this.password)
+      } else {
+        promise = authClient.resetPwdShort(this.shortToken, {email: this.email}, this.password)
+      }
+      promise
+        .then(() => this.showConfirm())
+        .catch((e) => this.setSnackbar(e))
+    },
+    showConfirm () {
+      this.setSnackbar('Password Reset')
+      if (this.email && this.password) {
+        this.authenticate(this.email)
+      }
+      router.push('/home')
     }
   },
   computed: {
@@ -44,6 +140,21 @@ export default {
       // W3 Email regex: http://emailregex.com/
       const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
       return !(this.email && regex.test(this.email))
+    },
+    color () {
+      const colors = ['red', 'orange', 'amber', 'light-green', 'green']
+      return colors[this.passwordStrength]
+    },
+    progress () {
+      if (this.passwordStrength === 0) {
+        return 3
+      }
+      return Math.min(100, this.passwordStrength * 25)
+    }
+  },
+  created () {
+    if (this.token) {
+      this.email = queries.getUserFromResetToken(this.token)
     }
   }
 }
