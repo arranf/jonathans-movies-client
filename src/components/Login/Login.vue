@@ -83,9 +83,6 @@ export default {
       }
       this.logout()
         .then(window.location = url)
-    },
-    getValidationClass: function (input) {
-      return true
     }
   },
   computed: {
