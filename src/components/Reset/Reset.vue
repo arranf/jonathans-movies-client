@@ -17,24 +17,32 @@
       </v-card-actions>
     </v-card>
 
-    <v-card v-if="showCodeEnter && !showPasswordEntry">
-      <v-card-text>
-        <v-form>
-          <v-text-field
-          name="short-token"
-          label="Reset Code"
-          mask="######"
-          v-model="shortToken"
-          type="number"
-        ></v-text-field>
-        </v-form>
-      </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn id="submitCode" :disabled="shortToken.length != 6" @click.prevent="setCode()" color="primary">Input Code</v-btn>
-        <v-btn flat id="back" to="/login">Back</v-btn>
-      </v-card-actions>
-    </v-card>
+    <div v-if="showCodeEnter && !showPasswordEntry">
+      <v-card :value="true" type="info" class="mb-2">
+        <v-card-text>
+          <p class="body-1 mb-0">An email has been sent to you with a reset code.</p>
+        </v-card-text>
+      </v-card>
+
+      <v-card >
+        <v-card-text>
+          <v-form>
+            <v-text-field
+            name="short-token"
+            label="Reset Code"
+            mask="######"
+            v-model="shortToken"
+            type="number"
+          ></v-text-field>
+          </v-form>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn id="submitCode" :disabled="shortToken.length != 6" @click.prevent="setCode()" color="primary">Input Code</v-btn>
+          <v-btn flat id="back" to="/login">Back</v-btn>
+        </v-card-actions>
+      </v-card>
+    </div>
 
     <v-card v-if="token || showPasswordEntry">
       <v-card-text>
@@ -68,7 +76,6 @@ import router from '@/router'
 import {mapActions} from 'vuex'
 import zxcvbn from 'zxcvbn'
 
-import queries from '@/api'
 import feathersClient from '@/api/feathers-client'
 import authClient from '@/api/auth-client'
 
