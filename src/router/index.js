@@ -86,6 +86,15 @@ const router = new Router({
       name: 'Discover',
       component: Discover,
       props: true
+    },
+    {
+      path: '/reset/:token?',
+      name: 'Reset',
+      component: Reset,
+      meta: {
+        doesNotNeedLogin: true
+      },
+      props: true
     }
   ]
 })
