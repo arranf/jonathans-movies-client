@@ -77,9 +77,7 @@ export default {
         .catch(error => { console.error(error); this.setSnackbar('Unable to complete sign up.') })
     },
     checkPasswordStrength () {
-      console.log('Check strenght')
       let result = zxcvbn(this.password)
-      console.log(result)
       this.passwordStrength = result.score
     }
   },
