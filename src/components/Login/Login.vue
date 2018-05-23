@@ -22,13 +22,18 @@
       <v-card-text>
         <v-form>
           <v-text-field prepend-icon="inbox" name="email" label="Email" v-model="email" type="text"></v-text-field>
-          <v-text-field prepend-icon="lock" name="password" label="Password" v-model="password" id="password" type="password"></v-text-field>
+          <v-text-field prepend-icon="lock" name="password" label="Password" v-model="password" id="password"
+            :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
+            :append-icon-cb="() => (hidePassword = !hidePassword)"
+            :type="hidePassword ? 'password' : 'text'">
+          </v-text-field>
+          <router-link class="d-flex caption" to="/reset">Forgotten your password?</router-link>
         </v-form>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn id="submit" :disabled="isDisabled" @click.prevent="tryLogin()" color="primary">Login</v-btn>
-        <v-btn id="back" @click.prevent="swapLoginType()">Back</v-btn>
+        <v-btn flat id="back" @click.prevent="swapLoginType()">Back</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -43,6 +48,7 @@ export default {
   name: 'Login',
   data () {
     return {
+      hidePassword: true,
       password: '',
       email: '',
       isInternalLogin: false
@@ -100,5 +106,10 @@ export default {
     background-color: #3b5998 !important;
     border-color: #3b5998 !important;
     color: #ffffff;
+  }
+
+  .btn-block {
+    display: block;
+    width: 100%;
   }
 </style>

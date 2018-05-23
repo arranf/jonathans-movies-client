@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import Results from '@/components/Results/Results'
 import SelectedOptions from './Nominated/SelectedOptions'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
@@ -37,8 +37,13 @@ export default {
       this.showingFilm = Boolean(newFilmId)
     }
   },
+  methods: {
+    ...mapActions('users-online', {getOnlineUsers: 'find'})
+  },
   created () {
     this.showingFilm = Boolean(this.filmId)
+    this.getOnlineUsers()
+      .then((results) => console.log(results))
   }
 }
 </script>

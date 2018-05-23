@@ -17,6 +17,7 @@
   "dependencies": {
     "@feathersjs/client": "^3.5.0",
     "connect-history-api-fallback": "^1.3.0",
+    "feathers-authentication-management": "^2.0.0",
     "feathers-vuex": "^1.3.1",
     "humanize-duration": "^3.10.1",
     "lazysizes": "^4.0.2",
@@ -29,7 +30,8 @@
     "vue-router": "^3.0.1",
     "vuelidate": "^0.6.1",
     "vuetify": "^1.0.18",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
