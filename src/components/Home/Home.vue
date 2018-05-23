@@ -43,7 +43,6 @@ export default {
   created () {
     this.showingFilm = Boolean(this.filmId)
     this.getOnlineUsers()
-      .then((results) => console.log(results))
   }
 }
 </script>
