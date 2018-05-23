@@ -10,12 +10,10 @@
         :append-icon-cb="() => (hidePassword = !hidePassword)"
         :type="hidePassword ? 'password' : 'text'">
           <v-progress-linear
-            v-show="password"
             slot="progress"
             :value="progress"
             :color="color"
             height="4"
-            label="Strength"
           ></v-progress-linear>
       </v-text-field>
 
@@ -88,10 +86,16 @@ export default {
       return !(this.password && this.email && regex.test(this.email))
     },
     color () {
+      if (!this.password) {
+        return 'grey'
+      }
       const colors = ['red', 'orange', 'amber', 'light-green', 'green']
       return colors[this.passwordStrength]
     },
     progress () {
+      if (!this.password) {
+        return 0
+      }
       if (this.passwordStrength === 0) {
         return 3
       }
