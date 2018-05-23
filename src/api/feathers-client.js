@@ -29,18 +29,19 @@ if (process.env.BRANCH && process.env.BRANCH === 'develop' && process.env.STAGIN
   }
 }
 
-let feathersClient = feathers()
+let app = feathers()
   .configure(feathers.socketio(socket))
   .configure(feathers.authentication({storage: window.localStorage}))
 
-feathersClient.service('/users')
-feathersClient.service('/poll')
-feathersClient.service('/option')
-feathersClient.service('/vote')
-feathersClient.service('/films')
-feathersClient.service('/time')
+app.service('/users')
+app.service('/poll')
+app.service('/option')
+app.service('/vote')
+app.service('/films')
+app.service('/time')
+app.service('/users-online')
 
-feathersClient.service('/poll')
+app.service('/poll')
   .on('transition', data => {
     Notification.requestPermission(function (status) {
       console.log('Notification permission status:', status)
@@ -56,4 +57,6 @@ function displayNotification () {
   }
 }
 
-export default feathersClient
+app.on('connection', () => console.log('Connection'))
+
+export default app

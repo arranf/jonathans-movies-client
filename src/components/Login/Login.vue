@@ -107,4 +107,9 @@ export default {
     border-color: #3b5998 !important;
     color: #ffffff;
   }
+
+  .btn-block {
+    display: block;
+    width: 100%;
+  }
 </style>
