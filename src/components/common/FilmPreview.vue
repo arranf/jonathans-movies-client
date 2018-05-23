@@ -77,6 +77,8 @@ export default {
 </script>
 
 <style>
+/* TODO MAKE THESE RIGHT */
+
 /* iPhone 4 */
 .movie-poster {
   width: 11rem;
