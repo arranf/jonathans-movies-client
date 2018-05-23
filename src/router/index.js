@@ -11,6 +11,7 @@ const Create = () => import('@/components/Create/Create')
 const FilmList = () => import('@/components/Nominate/FilmList')
 const Add = () => import('@/components/Add/AddMovie')
 const Discover = () => import('@/components/Discover/Discover')
+const Reset = () => import('@/components/Reset/Reset')
 
 Vue.use(Router)
 
@@ -22,6 +23,9 @@ const router = new Router({
       path: '/',
       name: 'Login',
       component: Login,
+      meta: {
+        doesNotNeedLogin: true
+      },
       beforeEnter: (to, from, next) => {
         if (store.state.auth.user) {
           next('/home')
@@ -32,6 +36,7 @@ const router = new Router({
             })
             .then(payload => {
               return feathersClient.service('users').get(payload.userId)
+                .then(() => initStore())
             })
             .then(() => {
               next('/home')
@@ -52,7 +57,10 @@ const router = new Router({
     {
       path: '/signup',
       name: 'SignUp',
-      component: SignUp
+      component: SignUp,
+      meta: {
+        doesNotNeedLogin: true
+      }
     },
     {
       path: '/create',
@@ -83,39 +91,47 @@ const router = new Router({
 })
 
 function initStore () {
-  store.dispatch('time/start')
-  return queries.getCurrentPoll()
-    .then(response => {
-      if (response.total > 0) {
-        const pollId = response.data[0]._id
-        return queries.getOptionsForMostRecentPoll(pollId)
-      }
-    })
-    .catch(error => console.error(error))
+  if (!store.state.time.hasStarted) {
+    store.dispatch('time/start')
+    return queries.getCurrentPoll()
+      .then(response => {
+        if (response.total > 0) {
+          const pollId = response.data[0]._id
+          return queries.getOptionsForMostRecentPoll(pollId)
+        }
+      })
+      .catch(error => console.error('Error initiating store', error))
+  } else {
+    return Promise.resolve()
+  }
 }
 
 router.beforeEach((to, from, next) => {
   const user = store.state.auth.user
+  const requiresAuth = !to.matched.some(record => record.meta.doesNotNeedLogin)
 
-  if (user == null && to.path !== '/' && to.path !== '/signup') {
-    // TODO Refactor into generic method
+  // Missing user and requires login
+  if (!user && requiresAuth) {
     store.dispatch('auth/authenticate')
-      .then(response => {
-        return feathersClient.passport.verifyJWT(response.accessToken)
-      })
-      .then(payload => {
-        return feathersClient.service('users').get(payload.userId)
-      })
-      .then(() => initStore())
+      .then(response => feathersClient.passport.verifyJWT(response.accessToken))
+      .then(payload =>
+        feathersClient.service('users').get(payload.userId)
+          .then(() => initStore())
+      )
       .then(() => {
-        next()
+        console.log('Authed')
+        directToNext(to, from, next, user)
       })
       .catch(function (error) {
+        console.error(`Error authenticating before entering ${to.path}, directing to /`, error)
         next('/')
-        console.error('Error authenticating in router beforeEnter', error)
       })
+  } else {
+    directToNext(to, from, next, user)
   }
+})
 
+function directToNext (to, from, next, user) {
   if (to.matched.some(record => record.meta.admin) && (!user || !user.isAdmin)) {
     initStore()
       .then(() => next(false))
@@ -123,6 +139,6 @@ router.beforeEach((to, from, next) => {
     initStore()
       .then(() => next())
   }
-})
+}
 
 export default router
