@@ -12,6 +12,7 @@ const FilmList = () => import('@/components/Nominate/FilmList')
 const Add = () => import('@/components/Add/AddMovie')
 const Discover = () => import('@/components/Discover/Discover')
 const Reset = () => import('@/components/Reset/Reset')
+const Verify = () => import('@/components/Verify/Verify')
 
 Vue.use(Router)
 
@@ -91,6 +92,15 @@ const router = new Router({
       path: '/reset/:token?',
       name: 'Reset',
       component: Reset,
+      meta: {
+        doesNotNeedLogin: true
+      },
+      props: true
+    },
+    {
+      path: '/verify/:token',
+      name: 'Verify',
+      component: Verify,
       meta: {
         doesNotNeedLogin: true
       },

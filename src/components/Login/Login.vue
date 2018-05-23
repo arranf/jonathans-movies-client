@@ -22,7 +22,7 @@
       <v-card-text>
         <v-form>
           <v-text-field prepend-icon="inbox" name="email" label="Email" v-model="email" type="text"></v-text-field>
-          <v-text-field prepend-icon="lock" name="password" label="Password" v-model="password" id="password"
+          <v-text-field ref="password" prepend-icon="lock" name="password" label="Password" v-model="password" id="password"
             :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
             :append-icon-cb="() => (hidePassword = !hidePassword)"
             :type="hidePassword ? 'password' : 'text'">
@@ -96,6 +96,17 @@ export default {
       // W3 Email regex: http://emailregex.com/
       const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
       return !(this.password && this.email && regex.test(this.email))
+    }
+  },
+  mounted () {
+    if (this.$route.query.email) {
+      this.email = this.$route.query.email
+      this.isInternalLogin = true
+
+      // hack
+      setTimeout(() => {
+        this.$refs.password.focus()
+      }, 500)
     }
   }
 }
