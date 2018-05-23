@@ -88,8 +88,7 @@ const queries = {
       query: {
         discover: true
       }})
-  },
-  getUserFromResetToken: (token) => store.dispatch('users/find', {query: {resetToken: token}})
+  }
 }
 
 export default queries

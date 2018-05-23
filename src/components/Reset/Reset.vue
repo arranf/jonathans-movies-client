@@ -69,6 +69,7 @@ import {mapActions} from 'vuex'
 import zxcvbn from 'zxcvbn'
 
 import queries from '@/api'
+import feathersClient from '@/api/feathers-client'
 import authClient from '@/api/auth-client'
 
 export default {
@@ -124,15 +125,22 @@ export default {
         promise = authClient.resetPwdShort(this.shortToken, {email: this.email}, this.password)
       }
       promise
-        .then(() => this.showConfirm())
+        .then((user) => { this.showConfirm(user) })
         .catch((e) => this.setSnackbar(e))
     },
-    showConfirm () {
+    showConfirm (user) {
       this.setSnackbar('Password Reset')
-      if (this.email && this.password) {
-        this.authenticate(this.email)
+      if (user.email && this.password) {
+        this.authenticate({
+          strategy: 'local',
+          email: user.email,
+          password: this.password
+        })
+          .then(token => feathersClient.passport.verifyJWT(token.accessToken))
+          .then(() => {
+            router.push('home')
+          })
       }
-      router.push('/home')
     }
   },
   computed: {
@@ -150,11 +158,6 @@ export default {
         return 3
       }
       return Math.min(100, this.passwordStrength * 25)
-    }
-  },
-  created () {
-    if (this.token) {
-      this.email = queries.getUserFromResetToken(this.token)
     }
   }
 }
