@@ -15,7 +15,7 @@
               <v-slider v-model="floorRating" thumb-label min="0" max="10" step="0.5" ticks></v-slider>
             </v-card-text>
             <v-card-actions>
-              <v-spacer />
+              <v-spacer id="hide" />
               <v-btn flat @click.prevent="requery()" type="submit" class="md-accent md-raised">Submit</v-btn>
               <v-btn flat @click.prevent="reset()" type="reset">Reset</v-btn>
               <v-btn flat @click.prevent="showFilters = false">Close</v-btn>
@@ -187,3 +187,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+/* hide the space in modal on small screens */
+@media (max-width:350px)  { 
+  #hide {
+    display: none;
+  }
+}
+</style>
