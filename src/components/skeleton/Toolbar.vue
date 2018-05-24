@@ -60,7 +60,7 @@ export default {
   },
   watch: {
     searchInput (newInput, oldInput) {
-      if (newInput.trim()) {
+      if (newInput && newInput.trim()) {
         this.getMovies(newInput)
       } else {
         // This hides the empty element if the input is blank otherwise it appears an option
