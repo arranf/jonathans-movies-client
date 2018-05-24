@@ -1,11 +1,13 @@
 <template>
   <div @click="showModal()" class="h-100" v-if="film" >
-    <img v-if="film.poster_path" class="img-fluid lazyload" :src="getFilmPoster" :srcset="getFilmLQPosterSrcSet" :data-srcset="getFilmPosterSrcSet" :data-sizes="getFilmPosterSizes" :alt="film.name + ' image'">
+    <img v-if="film.poster_path" class="img-fluid lazyload" 
+      :src="getFilmPoster" :data-srcset="getFilmPosterSrcSet" :alt="film.name + ' image'">
     <div v-if="!film.poster_path" class="h-90" :style="{backgroundColor: getColor()}"></div>
     <h4 class="text-center">
       {{film.name}}
     </h4>
   </div>
+  <!--TODO HANDLE OPTIONS WITHOUT FILMS -->
 </template>
 
 <script>
@@ -30,26 +32,17 @@ export default {
       }
       return null
     },
-    getFilmPosterSizes: function () {
-      return utils.tmdbPosterSizes
-    },
     getFilmPosterSrcSet: function () {
       if (this.film && this.film.poster_path) {
         return utils.getTmdbPosterSrcSet(this.film.poster_path)
       }
       return ''
     },
-    getFilmLQPosterSrcSet: function () {
-      if (this.film && this.film.poster_path) {
-        return utils.getTmdbLQPosterSrcSet(this.film.poster_path)
-      }
-      return ''
-    },
     getFilmPoster: function () {
-      if (this.film && this.film.poster_path) {
-        return utils.getLQPosterImage(this.film.poster_path)
+      if (this.film && this.film.svg_base64encoded) {
+        return `data:image/svg+xml;base64,${this.film.svg_base64encoded}`
       }
-      return ''
+      return this.film.poster_path
     },
     getImdbLink: function () {
       if (this.film && this.film.imdb_id) {
@@ -76,7 +69,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
 /* TODO MAKE THESE RIGHT */
 
 /* iPhone 4 */
@@ -153,15 +147,4 @@ export default {
     height: 32.5rem;
   }
 }
-
-.blur-up {
-		-webkit-filter: blur(5px);
-		filter: blur(5px);
-		transition: filter 400ms, -webkit-filter 400ms;
-	}
-
-	.blur-up.lazyloaded {
-		-webkit-filter: blur(0);
-		filter: blur(0);
-	}
 </style>
