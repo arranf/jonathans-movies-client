@@ -32,7 +32,6 @@
           </template>
         </v-list> 
         <v-progress-linear v-show="busy" :indeterminate="true" />
-        <span class="text-center" v-if="reachedEnd">Wow, you reached the end of the list! Impressive stuff buddy.</span> 
       </div>  
 
       <v-btn right bottom color="accent" fab fixed @click="showFilters = true">
@@ -43,7 +42,6 @@
 
 <script>
 import FilmListItem from './FilmListItem'
-import infiniteScroll from 'vue-infinite-scroll'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 import debounce from 'lodash/debounce'
 import constants from '@/constants'
@@ -68,9 +66,6 @@ export default {
   },
   props: {
     filmId: String
-  },
-  directives: {
-    infiniteScroll
   },
   components: {
     FilmListItem,
@@ -119,25 +114,30 @@ export default {
       this.clearFilms()
       this.getFilms()
     },
-    fetchNextPage: function () {
-      const offset = this.limit * this.page
-      if (offset >= this.total) {
-        this.reachedEnd = true
-        return
-      }
-      this.busy = true
-      this.page++
-      this.getFilms()
-    },
-    getFilms: debounce(function () {
-      this.queryFilms(this.query)
+    getFilms: function () {
+      let query = this.query
+      return this.queryFilms(query)
         .then(response => { this.total = response.total; this.busy = false })
         .catch(error => {
           console.error(error)
           this.busy = false
           this.setSnackbar('No films can be displayed')
         })
-    }, 500, {leading: false})
+    },
+    tryFetchNextPage: function () {
+      const offset = this.limit * this.page
+      if (offset >= this.total) {
+        this.reachedEnd = true
+        return
+      }
+      this.busy = true
+      return this.fetchNextPage()
+    },
+    fetchNextPage: debounce(function () {
+      console.log('Calling next page on scroll')
+      this.page++
+      return this.getFilms()
+    }, 800, {leading: true})
   },
   beforeDestroy () {
     document.removeEventListener('scroll', this.listener)
@@ -145,9 +145,15 @@ export default {
   created () {
     // $route watcher will not be called when componenet loaded
     this.showingFilm = Boolean(this.filmId)
+    let nextPage = this.tryFetchNextPage
+    this.listener = function (event) {
+      if (getDocHeight() === getScrollXY()[1] + window.innerHeight) {
+        nextPage()
+      }
+    }
     this.clearFilms()
     this.getFilms()
-
+      .then(() => document.addEventListener('scroll', this.listener))
     // Scroll listener
     // https://jsfiddle.net/W75mP/
     function getScrollXY () {
@@ -178,27 +184,6 @@ export default {
         D.body.clientHeight, D.documentElement.clientHeight
       )
     }
-    let nextPage = this.fetchNextPage
-    this.listener = function (event) {
-      if (getDocHeight() === getScrollXY()[1] + window.innerHeight) {
-        nextPage()
-      }
-    }
-    document.addEventListener('scroll', this.listener)
   }
 }
 </script>
-
-
-<style lang="scss" scoped>
-  .md-fab {
-    position: fixed !important;
-    z-index: 3;
-  }
-
-  .md-label {
-    font-size: 16px;
-    line-height: 20px;
-    color: rgba(0,0,0,0.54);
-  }
-</style>
