@@ -1,6 +1,7 @@
 <template>
   <v-select id="autocomplete" 
     @input="fillBox" 
+    browser-autocomplete="off"
     autocomplete
     item-text="name"
     item-value="name"
@@ -24,7 +25,12 @@
           <v-list-tile-sub-title v-html="getYear(data.item.release_date)"></v-list-tile-sub-title>
         </v-list-tile-content>
       </div>
-      </template>
+    </template>
+    <v-progress-linear
+      indeterminate
+      slot="progress"
+      height="4"
+      ></v-progress-linear>
   </v-select>
 </template>
 
@@ -68,12 +74,17 @@ export default {
         }
       })
     },
-    submit: function () {
-      if (this.searchQuery.trim() !== '') {
-        let chosenFilm = {name: this.searchQuery, film_id: null}
-        this.$emit('fill', chosenFilm)
-      }
-    },
+    // addNonPredictedFilm: function () {
+    //   // TODO: Make this component handle movies that aren't searchable films (i.e. Someone brings a movie to Jonathans)
+    //   // Trigger Code on the component: @keyup.native.enter="addNonPredictedFilm"
+    //   const searchQuery = this.searchQuery.trim()
+    //   if (searchQuery !== '') {
+    //     const newFilm = {name: searchQuery, _id: null}
+    //     this.selected.push(newFilm)
+    //     this.searchQuery = ''
+    //     this.fillBox()
+    //   }
+    // },
     fillBox: function (event) {
       const reducedOptions = this.selected.map(f => {
         if (f) {
