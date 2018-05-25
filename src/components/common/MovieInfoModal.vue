@@ -1,6 +1,9 @@
 <template>
 <v-layout row justify-center>
   <v-dialog  v-model="show" fullscreen transition="dialog-bottom-transition" :overlay="false">
+    <!-- TODO: Make this use SQIP rather than pausing showing until loaded -->
+    <v-progress-circular v-show="!shouldDisplay" :size="50" indeterminate color="primary"></v-progress-circular>
+
     <v-card v-if="film" v-show="shouldDisplay" v-images-loaded="imageRendered"  >
       <v-card-media height="200px" v-if="backdropImage" :src="backdropImage" :alt="`${film.name} Backdrop`" />
       <v-card-title primary-title>
@@ -37,10 +40,6 @@
           </v-layout>
         </v-container>
       </v-card-text>
-<!-- 
-      <v-card-text class="d-inline-block" v-if="film.imdb_rating || film.rotten_tomatoes_rating">
-        
-      </v-card-text> -->
 
       <v-slide-y-transition>
         <v-card-text v-if="showOverview">
@@ -88,17 +87,21 @@ export default {
     imagesLoaded
   },
   methods: {
-    ...mapActions('films', {fetch: 'get'}),
+    ...mapActions('films', {fetchFilm: 'get'}),
     ...mapActions('snackbar', {setSnackbar: 'setText'}),
     modalOpened: function () {
       this.showOverview = false
-      this.film = this.get(this.filmId)
+      // Use internal getter
+      this.film = this.getFilm(this.filmId)
+
+      // Someone has hit the page fresh
       if (!this.film) {
-        this.fetch(this.filmId)
+        // Fetch from API
+        this.fetchFilm(this.filmId)
           .then(film => {
             this.film = film
           })
-          .catch(error => { console.error(error); this.$emit('update:show', false) })
+          .catch(error => { console.error(error); this.setSnackbar('Sorry! Couldn\'t find that film.'); this.$emit('update:show', false) })
       }
     },
     closeModal: function () {
@@ -124,13 +127,15 @@ export default {
   computed: {
     ...mapGetters('option', ['hasNominationsRemaining', 'isOptionForCurrentPoll', 'nominationsRemaining']),
     ...mapGetters('poll', ['isCurrentPollInNomination']),
-    ...mapGetters('films', ['get']),
+    ...mapGetters('films', {getFilm: 'get'}),
+    // TODO Make this a one liner
     backdropImage: function () {
       if (this.film && this.film.backdrop_path) {
         return utils.getTmdbBackdropImage(this.film.backdrop_path)
       }
       return ''
     },
+    // TODO Make utils
     getImdbLink: function () {
       if (this.film && this.film.imdb_id) { return `https://www.imdb.com/title/${this.film.imdb_id}` }
     },
@@ -184,7 +189,7 @@ export default {
   transition-property: opacity,margin-top;
 }
 
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-enter, .fade-leave-to {
   opacity: 0;
 }
 </style>
