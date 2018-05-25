@@ -1,7 +1,7 @@
 <template>
    <div>
       <div v-if="allFilms"> 
-        <!-- TODO Move this out and make it emit update events and a filter event -->
+        <!-- TODO: Move this out and make it emit update events and a filter event -->
         <v-dialog v-model="showFilters">
           <v-card>
             <v-card-title class="headline">Filter Movies</v-card-title>

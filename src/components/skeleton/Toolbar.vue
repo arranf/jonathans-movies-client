@@ -78,7 +78,7 @@ export default {
           this.options = response.data
         } else {
           // This statement exists to make the no data text work as empty arrays fail to show it
-          // TODO remove this when upgrading to vuetify 1.1
+          // TODO: remove this when upgrading to vuetify 1.1
           this.options = [{name: ''}]
         }
         this.loading = false

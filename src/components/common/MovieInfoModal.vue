@@ -128,14 +128,14 @@ export default {
     ...mapGetters('option', ['hasNominationsRemaining', 'isOptionForCurrentPoll', 'nominationsRemaining']),
     ...mapGetters('poll', ['isCurrentPollInNomination']),
     ...mapGetters('films', {getFilm: 'get'}),
-    // TODO Make this a one liner
+    // TODO: Make this a one liner
     backdropImage: function () {
       if (this.film && this.film.backdrop_path) {
         return utils.getTmdbBackdropImage(this.film.backdrop_path)
       }
       return ''
     },
-    // TODO Make utils
+    // TODO: Make utils
     getImdbLink: function () {
       if (this.film && this.film.imdb_id) { return `https://www.imdb.com/title/${this.film.imdb_id}` }
     },

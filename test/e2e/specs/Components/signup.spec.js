@@ -11,8 +11,8 @@ module.exports = {
       .click('#back')
       .assert.urlEquals(devServer + '/')
       .end()
-  },
-  // TODO Find a way to make this work with the server running
+  }
+  // TODO: Find a way to make this work with the server running
   // 'snackbar': function (browser) {
   //   const devServer = browser.globals.devServerURL
 

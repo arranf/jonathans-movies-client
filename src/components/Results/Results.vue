@@ -1,7 +1,7 @@
 <template>
-<!-- TODO Checkout this CSS -->
+<!-- TODO: Check over this CSS -->
 <div class="d-flex flex-column align-items-center justify-items-center" style="width: 100%">
-  <!-- TODO Refactor to Use a Simpler Getter -->
+  <!-- TODO: Refactor to Use a Simpler Getter -->
   <div v-if="getMostRecentPoll && winningOptions.length > 0" style="width: 100%">
     <h1 class="md-headline text-center">Results</h1>
     <bar-chart style="padding-top: 3em" :data="results" :colors="backgroundColors"/>

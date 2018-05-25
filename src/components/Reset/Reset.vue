@@ -118,7 +118,7 @@ export default {
       if (this.shortToken.length === 6) {
         this.showPasswordEntry = true
       }
-      // TODO some unlikely error handling
+      // TODO: some unlikely error handling
     },
     checkPasswordStrength () {
       let result = zxcvbn(this.password)

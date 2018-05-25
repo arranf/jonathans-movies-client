@@ -1,6 +1,7 @@
 <template>
   <div class="mb-3">
     <h2 class="display-2 mt-4 pb-3">Create a Poll</h2>
+    <!-- TODO: v-form? -->
     <form autocomplete="off" class="">
       <!-- Prevent auto-complete -->
       <input autocomplete="false" name="hidden" type="text" style="display:none;">
