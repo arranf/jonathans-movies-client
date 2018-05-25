@@ -3,12 +3,12 @@
     <transition>
       <div v-if="showSearch" class="empty-state-container">
         <v-icon size="100px" class="mb-2">library_add</v-icon>
-        <h1 class="display-1 mb-1">Add Movies</h1>
-        <p class="empty-state-description">Search to find movies to add to your online collection</p>
+        <h1 class="display-1 mb-1">Add Films</h1>
+        <p class="empty-state-description">Search to find films to add to your online collection</p>
         <v-select
             solo
-            @input="selectMovie" 
-            label="Find a Movie"
+            @input="selectFilm" 
+            label="Find a Film"
             autocomplete
             :loading="loading"
             return-object
@@ -17,7 +17,7 @@
             :search-input.sync="searchQuery"
             item-value="title"
             item-text="title"
-            no-data-text="No Movie Found"
+            no-data-text="No Film Found"
             v-model="selectedFilm"
           >
             <template slot="item" slot-scope="data">
@@ -31,13 +31,13 @@
           </v-select>
       </div>
 
-      <v-card v-if="!showSearch && movie">
-            <v-card-media v-if="movie.backdrop_path" height="200px" :src="getBackdropImage" :alt="`${movie.title} Backdrop`" />
+      <v-card v-if="!showSearch && film">
+            <v-card-media v-if="film.backdrop_path" height="200px" :src="getBackdropImage" :alt="`${film.title} Backdrop`" />
 
             <v-card-title>
-              <h2 class="md-title">{{movie.name}} <small>{{getYear(movie.release_date)}}</small></h2>
-              <div v-if="movie.tagline" class="md-subhead">
-                <span>{{movie.tagline}}</span>
+              <h2 class="md-title">{{film.name}} <small>{{getYear(film.release_date)}}</small></h2>
+              <div v-if="film.tagline" class="md-subhead">
+                <span>{{film.tagline}}</span>
               </div>
             </v-card-title>
 
@@ -62,7 +62,7 @@ import {mapActions} from 'vuex'
 import utils from '@/utils'
 
 export default {
-  name: 'AddMovie',
+  name: 'AddFilm',
   data () {
     return {
       showSearch: true,
@@ -70,14 +70,14 @@ export default {
       selectedFilm: null,
       searchQuery: null,
       suggestions: [],
-      movie: null,
+      film: null,
       loading: false
     }
   },
   methods: {
     ...mapActions('films', ['create', 'find']),
     ...mapActions('snackbar', {setSnackbarText: 'setText'}),
-    getMovies: function (searchTerm) {
+    getFilms: function (searchTerm) {
       if (searchTerm.trim()) {
         this.loading = true
         tmdbApi.searchForMovie(searchTerm)
@@ -91,8 +91,8 @@ export default {
           })
       }
     },
-    selectMovie () {
-      let movie =
+    selectFilm () {
+      let film =
       {
         tmdb_id: this.selectedFilm.id,
         name: this.selectedFilm.title,
@@ -103,35 +103,36 @@ export default {
         genres: this.selectedFilm.genre_ids.map(id => constants.genres.find(g => g.id === id).name)
       }
 
-      this.selectedFilm = movie.name
-      Promise.all([tmdbApi.getMovieData(movie.tmdb_id), this.find({query: {tmdb_id: movie.tmdb_id}})])
+      this.selectedFilm = film.name
+      Promise.all([tmdbApi.getMovieData(film.tmdb_id), this.find({query: {tmdb_id: film.tmdb_id}})])
         .then((responses) => {
           const tmdbResponse = responses[0]
           const apiResponse = responses[1]
-          movie.backdrop_path = tmdbResponse.backdrop_path
-          movie.poster_path = tmdbResponse.poster_path
-          movie.budget = tmdbResponse.budget
-          movie.imdb_id = tmdbResponse.imdb_id
-          movie.tagline = tmdbResponse.tagline
-          movie.runtime = tmdbResponse.runtime
+          film.backdrop_path = tmdbResponse.backdrop_path
+          film.poster_path = tmdbResponse.poster_path
+          film.budget = tmdbResponse.budget
+          film.imdb_id = tmdbResponse.imdb_id
+          film.tagline = tmdbResponse.tagline
+          film.runtime = tmdbResponse.runtime
           this.searchQuery = ''
           this.suggestions = []
-          this.movie = movie
+          this.film = film
           this.isDuplicate = apiResponse.total > 0
           this.showSearch = false
         })
-        .catch(e => { console.error(e); this.setSnackbarText('Error fetching movie information') })
+        .catch(e => { console.error(e); this.setSnackbarText('Error fetching film information') })
     },
     addFilm () {
       if (!this.isDuplicate) {
-        this.create(this.movie)
+        const { Film } = this.$FeathersVuex
+        new Film(this.film).create()
           .then(() => {
-            this.setSnackbarText(`Successfully added ${this.movie.name}`)
+            this.setSnackbarText(`Successfully added ${this.film.name}`)
             this.selectedFilm = ''
-            this.movie = null
+            this.film = null
             this.showSearch = true
           })
-          .catch(e => { console.error(e); this.setSnackbarText('Error adding movie') })
+          .catch(e => { console.error(e); this.setSnackbarText('Error adding film') })
       }
     },
     getYear (releaseDate) {
@@ -145,21 +146,21 @@ export default {
   },
   watch: {
     searchQuery (val) {
-      val && val.trim() && this.getMovies(this.searchQuery)
+      val && val.trim() && this.getFilms(this.searchQuery)
     }
   },
   computed: {
     getBackdropImage () {
-      if (this.movie) {
-        return utils.getTmdbBackdropImage(this.movie.backdrop_path)
+      if (this.film) {
+        return utils.getTmdbBackdropImage(this.film.backdrop_path)
       }
       return ''
     },
     truncatedOverview () {
-      if (!(this.movie.overview.length > 350)) {
-        return this.movie.overview
+      if (!(this.film.overview.length > 350)) {
+        return this.film.overview
       }
-      return this.movie.overview.substring(0, 350) + (this.movie.overview.length > 350 ? '...' : '')
+      return this.film.overview.substring(0, 350) + (this.film.overview.length > 350 ? '...' : '')
     }
   }
 }
