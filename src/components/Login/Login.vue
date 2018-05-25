@@ -6,11 +6,11 @@
     <div id="loginOptions" v-if="!isInternalLogin">
       <!-- divs here keep the buttons aligned -->
       <div>       
-        <v-btn id="facebook" class="btn-facebook btn-block md-raised" @click.prevent="facebookLogin()"><span class="text-white">Log In with Facebook</span>
+        <v-btn block id="facebook" class="btn-facebook" @click.prevent="facebookLogin()"><span class="text-white">Log In with Facebook</span>
         </v-btn>
       </div>
       <div>
-          <v-btn id="login" @click.prevent="swapLoginType()" class="btn-block md-raised md-accent">Log In</v-btn>
+          <v-btn block id="login" @click.prevent="swapLoginType()" >Log In</v-btn>
       </div>
       <div class="pt-1">
         <a id="signup" href="#" @click.prevent="toSignUp()" >Not got an account? Sign up</a>
@@ -117,10 +117,5 @@ export default {
     background-color: #3b5998 !important;
     border-color: #3b5998 !important;
     color: #ffffff;
-  }
-
-  .btn-block {
-    display: block;
-    width: 100%;
   }
 </style>
