@@ -7,7 +7,7 @@
       {{film.name}}
     </h4>
   </div>
-  <!--TODO HANDLE OPTIONS WITHOUT FILMS -->
+  <!--TODO: HANDLE OPTIONS WITHOUT FILMS -->
 </template>
 
 <script>
