@@ -18,9 +18,6 @@ const mutations = {
       state.text = payload.text
       state.isPersistent = payload.isPersistent
     }
-  },
-  setNotPersistent (state) {
-    state.isPersistent = false
   }
 }
 

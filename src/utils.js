@@ -47,17 +47,6 @@ const functions = {
     }
     return array
   },
-  getHighestVotedOptions: function (arr) {
-    const maxVote = arr.reduce((acc, value) => {
-      return (acc > value.totalVotes ? acc : value.totalVotes)
-    }, 0)
-    return arr.reduce((acc, value) => {
-      if (value.totalVotes === maxVote) {
-        acc.push(value)
-      }
-      return acc
-    }, [])
-  },
   getTmdbBackdropImage: function (slug) {
     return `https://image.tmdb.org/t/p/w1280${slug}`
   },
@@ -67,13 +56,6 @@ const functions = {
   getTmdbPosterSrcSet: function (slug) {
     return `https://image.tmdb.org/t/p/w154${slug} 154w,https://image.tmdb.org/t/p/w185${slug} 185w,https://image.tmdb.org/t/p/w342${slug} 342w,https://image.tmdb.org/t/p/w500${slug} 500w`
   },
-  getTmdbLQPosterSrcSet: function (slug) {
-    return `https://s3.eu-west-2.amazonaws.com/images.jonathansmovies.com/w154${slug} 154w,https://s3.eu-west-2.amazonaws.com/images.jonathansmovies.com/w185${slug} 185w,https://s3.eu-west-2.amazonaws.com/images.jonathansmovies.com/w342${slug} 342w,https://s3.eu-west-2.amazonaws.com/images.jonathansmovies.com/w500${slug} 500w`
-  },
-  getLQPosterImage: function (slug) {
-    return `https://s3.eu-west-2.amazonaws.com/images.jonathansmovies.com/w342${slug}`
-  },
-  tmdbPosterSizes: '(min-width: 1080px) 333px, (min-width: 1024px) 280px, (min-width: 768px) 233px, 124px',
   getYearFromTmdbReleaseDate: function (releaseDate) {
     if (!releaseDate) {
       return ''
