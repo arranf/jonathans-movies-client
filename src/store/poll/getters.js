@@ -16,16 +16,6 @@ export default {
       .sort((a, b) => a.endDateTime > b.endDateTime ? -1 : 1)
       .find(p => p.endDateTime < currentDateTime)
   },
-  getPollFinishingUpTo: (state, getters, rootState, rootGetters) => withinMinutes => {
-    let currentDateTime = rootState.time.now
-    if (currentDateTime) {
-      let polls = Object.values(state.keyedById)
-      return polls
-        // If a.eDT < b.eDT, a comes before b (orders first finishing first)
-        .sort((a, b) => a.endDateTime < b.endDateTime ? -1 : 1)
-        .find(p => p.startDateTime <= currentDateTime && (p.endDateTime + (60 * 100 * withinMinutes)) > currentDateTime)
-    }
-  },
   remainingTimeWordsForCurrentPoll (state, getters) {
     if (getters.getActivePoll) {
       return 'Poll closes in ' + utils.humanizeTimeToNowPrecise(getters.getActivePoll.endDateTime)
@@ -37,12 +27,6 @@ export default {
       return 'Nominations close in ' + utils.humanizeTimeToNowPrecise(getters.getActivePoll.pollTransitionDateTime)
     }
     return 'No Current Poll'
-  },
-  howLongAgoMostRecentPoll: (state, getters) => {
-    if (getters.getMostRecentPoll) {
-      return 'Last poll was ' + utils.humanizeTimeToNowImprecise(getters.getMostRecentPoll.endDateTime) + ' ago'
-    }
-    return ''
   },
   isCurrentPollInNomination (state, getters, rootState, rootGetters) {
     let activePoll = getters.getActivePoll

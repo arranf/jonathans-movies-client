@@ -32,7 +32,6 @@ export default {
     ...mapState('auth', ['user']),
     ...mapGetters('films', {getFilm: 'get'}),
     ...mapGetters('vote', {remainingVotes: 'votesRemaining', votes: 'list'}),
-    ...mapGetters('option', {getOption: 'get', getOptionsForCurrentPoll: 'getOptionsForCurrentPoll'}),
     ...mapGetters('poll', ['getActivePoll', 'isCurrentPollInNomination']),
     voteButtonText: function () {
       if (this.isVoted(this.option._id)) {

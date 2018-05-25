@@ -49,6 +49,8 @@ export default {
       return option && option.name ? option.name : 'Unknown'
     }
     const data = options.reduce((acc, option) => { acc.push({votes: option.totalVotes, name: getName(option.option_id)}); return acc }, [])
+
+    // Sort high to low
     return data.sort((a, b) => {
       if (a.totalVotes < b.totalVotes) {
         return -1

@@ -78,7 +78,6 @@ export default {
   },
   computed: {
     ...mapGetters('films', {allFilms: 'list'}),
-    ...mapGetters('poll', ['getActivePoll']),
     totalGenres: () => constants.genres,
     query: function () {
       let query = {query: {
