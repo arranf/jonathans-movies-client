@@ -8,11 +8,6 @@ import usersOnlineGetters from './users-online/getters'
 import voteGetters from './vote/getters'
 import optionGetters from './option/getters'
 import pollGetters from './poll/getters'
-import filmsGetters from './films/getters'
-
-import optionActions from './option/actions'
-import filmActions from './films/actions'
-import filmMutations from './films/mutations'
 
 import time from '@/store/time'
 import snackbar from '@/store/snackbar'
@@ -22,10 +17,10 @@ const { service, auth } = feathersVuex(feathersClient, { idField: '_id' })
 
 let plugins = [
   service('vote', {getters: voteGetters}),
-  service('option', {getters: optionGetters, actions: optionActions}),
+  service('option', {getters: optionGetters}),
   service('poll', {getters: pollGetters}),
   service('users'),
-  service('films', {getters: filmsGetters, actions: filmActions, mutations: filmMutations}),
+  service('films'),
   service('users-online', {getters: usersOnlineGetters}),
   auth({userService: 'users'})
 ]
