@@ -40,8 +40,8 @@
 import { validationMixin } from 'vuelidate'
 import { required, requiredIf, between, minLength } from 'vuelidate/lib/validators'
 import MovieSuggest from './MovieSuggest'
-import {mapActions} from 'vuex'
 import router from '@/router'
+
 export default {
   name: 'Create',
   components: {
@@ -59,7 +59,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions('poll', {createPoll: 'create'}),
     toHome: function () {
       router.push('/home')
     },
@@ -78,7 +77,9 @@ export default {
         numberOfNominations = parseInt(this.nominations)
         endDateTime += nominationLengthSeconds
       }
-      this.createPoll({
+      const { Poll } = this.$FeathersVuex
+
+      new Poll({
         numberOfVotes: parseInt(this.votes),
         startDateTime: currentTime,
         endDateTime: endDateTime,
@@ -87,7 +88,7 @@ export default {
         ),
         pollTransitionDateTime: pollTransitionDateTime,
         numberOfNominations: numberOfNominations
-      })
+      }).create()
       this.toHome()
     }
   },
