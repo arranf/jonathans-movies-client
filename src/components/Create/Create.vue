@@ -142,6 +142,7 @@ export default {
       !options.minLength && errors.push('You must have at least two options if there are no nominations')
     }
   },
+  // TODO: Make sure server side validation matches
   validations () {
     return {
       minutes: {
