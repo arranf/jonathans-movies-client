@@ -103,7 +103,7 @@ export default {
       this.email = this.$route.query.email
       this.isInternalLogin = true
 
-      // hack
+      // hack to wait for child component to render
       setTimeout(() => {
         this.$refs.password.focus()
       }, 500)
