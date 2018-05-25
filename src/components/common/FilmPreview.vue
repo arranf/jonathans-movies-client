@@ -14,7 +14,7 @@
 // eslint-disable-next-line
 import lazySizes from 'lazysizes'
 import utils from '@/utils'
-import {mapState, mapGetters} from 'vuex'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'FilmPreview',
@@ -23,7 +23,6 @@ export default {
     modalPageName: {required: true, type: String}
   },
   computed: {
-    ...mapState('option', {waitingForOptionFind: 'isFindPending'}),
     ...mapGetters('films', {getFilm: 'get'}),
     getFilmPosterSrcSet: function () {
       if (this.film.poster_path) {
