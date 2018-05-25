@@ -97,7 +97,7 @@ export default {
         tmdb_id: this.selectedFilm.id,
         name: this.selectedFilm.title,
         last_watched: null,
-        score: this.selectedFilm.vote_average,
+        tmdb_rating: this.selectedFilm.vote_average,
         overview: this.selectedFilm.overview,
         release_date: this.selectedFilm.release_date,
         genres: this.selectedFilm.genre_ids.map(id => constants.genres.find(g => g.id === id).name)
