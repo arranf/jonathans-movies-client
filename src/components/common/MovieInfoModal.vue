@@ -119,7 +119,9 @@ export default {
               this.setSnackbar(`Nominated. You have ${this.nominationsRemaining} nomination${this.nominationsRemaining > 1 ? 's' : ''}  left`)
             }
           })
-          .catch(error => console.error(error))
+          .catch(e => { console.error(e); this.setSnackbar(e.message ? e.message : e) })
+      } else {
+        this.setSnackbar('Error adding nomination.')
       }
     },
     imageRendered: function () { this.shouldDisplay = true }
@@ -156,10 +158,8 @@ export default {
         this.isCurrentPollInNomination
     },
     nominatable () {
-      // user has left to spend
-      return this.hasNominationsRemaining &&
-        // isn't already nominated
-        !this.isOptionForCurrentPoll(this.film._id)
+      // user has left to spend and isn't already nominated
+      return this.hasNominationsRemaining && !this.isOptionForCurrentPoll(this.film._id)
     }
   },
   created () {
