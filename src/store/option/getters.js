@@ -13,7 +13,7 @@ export default {
     const activePoll = rootGetters['poll/getActivePoll']
     const user = rootState.auth.user
     if (activePoll && user && activePoll._id && user._id) {
-      return getters.getOptionsForPollByUser(activePoll._id, user._id)
+      return getters.getOptionsForPollByUser(activePoll, user._id)
     }
   },
   nominationsRemaining: (state, getters, rootState, rootGetters) => {
