@@ -52,7 +52,7 @@ export default {
     checkUnique: function () {
       authClient.checkUnique({email: this.email})
         .then(() => { this.emailErrors = [] })
-        .catch(e => { console.log(e); this.emailErrors = ['This email address is already in use.'] })
+        .catch(e => { console.error(e); this.emailErrors = ['This email address is already in use.'] })
     },
     trySignUp: function () {
       const password = this.password

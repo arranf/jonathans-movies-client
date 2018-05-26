@@ -109,7 +109,7 @@ export default {
         })
         // one source of error is a not-verified user
         .catch((e) => {
-          console.log(e)
+          console.error(e)
           // Show error
           authClient.resendVerifySignup(user)
         })

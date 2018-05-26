@@ -50,7 +50,7 @@ export default {
       .then(() => queries.getVotesForMostRecentPoll(this.getMostRecentPoll))
       .then(response => { this.backgroundColors = utils.getUniqueColors(this.getMostRecentPoll.options.length, '500') })
       .then(a => { this.emptyStateAllowed = true })
-      .catch(error => console.log(error))
+      .catch(error => console.error(error))
   }
 }
 </script>
