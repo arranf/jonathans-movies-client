@@ -49,7 +49,7 @@
 
        <v-card-actions>
          <v-spacer></v-spacer>
-        <v-btn flat color="primary" @click.prevent="addNomination()" v-if="nominatable">
+        <v-btn flat color="primary" @click.prevent="addNomination()" v-if="inNominations" :disabled="!nominatable">
           {{nominateButtonText}}
         </v-btn>
         <v-btn flat @click="showOverview = !showOverview">
@@ -150,12 +150,14 @@ export default {
       }
       return 'Nominate'
     },
-    nominatable () {
+    inNominations () {
       // Set to show nominations
       return this.showNominate &&
-        this.isCurrentPollInNomination &&
-        // user has a nomination to spend on it
-        this.hasNominationsRemaining &&
+        this.isCurrentPollInNomination
+    },
+    nominatable () {
+      // user has left to spend
+      return this.hasNominationsRemaining &&
         // isn't already nominated
         !this.isOptionForCurrentPoll(this.film._id)
     }
