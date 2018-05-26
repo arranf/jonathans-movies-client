@@ -1,20 +1,28 @@
 export default {
-  getOptionsForPollByUser: (state, getters) => (poll, userId) => {
-    return poll.options.filter(p => p.added_by_user_id === userId)
+  getOptionsForPoll: (state, getters) => poll => {
+    const options = getters.find({query: {
+      $limit: 100,
+      poll_id: poll._id
+    }}).data
+    return options
+  },
+  getOptionsForPollByUser: (state, getters, rootState, rootGetters) => (poll, userId) => {
+    return getters.getOptionsForPoll(poll).filter(p => p.added_by_user_id === userId)
   },
   getOptionsForCurrentPoll: (state, getters, rootState, rootGetters) => {
     const activePoll = rootGetters['poll/getActivePoll']
     if (activePoll) {
-      return activePoll.options
+      return getters.getOptionsForPoll(activePoll)
     }
     return []
   },
   getUserNominations: (state, getters, rootState, rootGetters) => {
     const activePoll = rootGetters['poll/getActivePoll']
     const user = rootState.auth.user
-    if (activePoll && user && activePoll._id && user._id) {
+    if (activePoll && user && user._id) {
       return getters.getOptionsForPollByUser(activePoll, user._id)
     }
+    return []
   },
   nominationsRemaining: (state, getters, rootState, rootGetters) => {
     const activePoll = rootGetters['poll/getActivePoll']
@@ -30,6 +38,6 @@ export default {
   isOptionForCurrentPoll: (state, getters, rootState, rootGetters) => filmId => {
     const activePoll = rootGetters['poll/getActivePoll']
     if (!activePoll || !filmId) { return false }
-    return activePoll.options.some(o => o.film_id === filmId)
+    return getters.getOptionsForPoll(activePoll).some(o => o.film_id === filmId)
   }
 }
