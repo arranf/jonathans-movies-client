@@ -116,7 +116,7 @@ function initStore () {
       .then(response => {
         if (response.total > 0) {
           const pollId = response.data[0]._id
-          return queries.getOptionsForMostRecentPoll(pollId)
+          return queries.getOptionsForPoll(pollId)
         }
       })
       .catch(error => console.error('Error initiating store', error))

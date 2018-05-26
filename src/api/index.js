@@ -14,7 +14,7 @@ const queries = {
         poll_id: poll._id
       }})
   },
-  getOptionsForMostRecentPoll: function (pollId) {
+  getOptionsForPoll: function (pollId) {
     return store.dispatch('option/find', {pageinate: false,
       query: {
         $limit: 100,

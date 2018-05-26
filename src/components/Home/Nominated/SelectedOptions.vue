@@ -50,7 +50,7 @@ export default {
     }
   },
   created () {
-    queries.getOptionsForMostRecentPoll(this.getActivePoll._id)
+    queries.getOptionsForPoll(this.getActivePoll._id)
       .then(() => queries.getVotesForCurrentPoll())
       .then(() => { this.loaded = true })
       .catch(error => console.error(error))
