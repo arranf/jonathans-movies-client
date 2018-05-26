@@ -1,24 +1,13 @@
 export default {
-  getOptionsForPoll: (state, getters) => (pollId) => {
-    const options = getters.find({query: {
-      $limit: 100,
-      poll_id: pollId
-    }}).data
-    return options
-  },
-  getOptionsForPollByUser: (state, getters) => (pollId, userId) => {
-    const options = getters.find({query: {
-      $limit: 50,
-      poll_id: pollId,
-      added_by_user_id: userId
-    }}).data
-    return options
+  getOptionsForPollByUser: (state, getters) => (poll, userId) => {
+    return poll.options.filter(p => p.added_by_user_id === userId)
   },
   getOptionsForCurrentPoll: (state, getters, rootState, rootGetters) => {
     const activePoll = rootGetters['poll/getActivePoll']
     if (activePoll) {
-      return getters.getOptionsForPoll(activePoll._id)
+      return activePoll.options
     }
+    return []
   },
   getUserNominations: (state, getters, rootState, rootGetters) => {
     const activePoll = rootGetters['poll/getActivePoll']
@@ -41,6 +30,6 @@ export default {
   isOptionForCurrentPoll: (state, getters, rootState, rootGetters) => filmId => {
     const activePoll = rootGetters['poll/getActivePoll']
     if (!activePoll || !filmId) { return false }
-    return getters.list.some(o => o.film_id === filmId && o.poll_id === activePoll._id)
+    return activePoll.options.some(o => o.film_id === filmId)
   }
 }

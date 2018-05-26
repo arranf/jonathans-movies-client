@@ -28,7 +28,7 @@ export default {
     }
     return 'No Current Poll'
   },
-  isCurrentPollInNomination (state, getters, rootState, rootGetters) {
+  isCurrentPollInNomination (state, getters, rootState) {
     let activePoll = getters.getActivePoll
     if (activePoll) {
       let currentDateTime = rootState.time.now
@@ -55,7 +55,7 @@ export default {
     }
     return 0
   },
-  isCurrentPollInVoting (state, getters, rootState, rootGetters) {
+  isCurrentPollInVoting (state, getters, rootState) {
     let activePoll = getters.getActivePoll
     if (activePoll) {
       let currentDateTime = rootState.time.now
