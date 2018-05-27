@@ -154,9 +154,11 @@ function directToNext (to, from, next, user) {
   if (to.matched.some(record => record.meta.admin) && (!user || !user.isAdmin)) {
     initStore()
       .then(() => next(false))
+      .catch(e => console.error(e))
   } else {
     initStore()
       .then(() => next())
+      .catch(e => console.error(e))
   }
 }
 
