@@ -151,15 +151,10 @@ router.beforeEach((to, from, next) => {
 })
 
 function directToNext (to, from, next, user) {
-  if (to.matched.some(record => record.meta.admin) && (!user || !user.isAdmin)) {
-    initStore()
-      .then(() => next(false))
-      .catch(e => console.error(e))
-  } else {
-    initStore()
-      .then(() => next())
-      .catch(e => console.error(e))
-  }
+  const notAllowed = to.matched.some(record => record.meta.admin) && (!user || !user.isAdmin)
+  initStore()
+    .then(() => { console.log('Initiated store'); next(notAllowed) })
+    .catch(e => console.error(e))
 }
 
 export default router
