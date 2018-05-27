@@ -1,4 +1,5 @@
 import store from '@/store'
+import feathersClient from './feathers-client'
 
 const queries = {
   getCurrentPoll: function () {
@@ -88,6 +89,10 @@ const queries = {
       query: {
         discover: true
       }})
+  },
+  getRecommendations: function () {
+    let user = store.state.auth.user
+    return feathersClient.service('/recommendations').get(user._id)
   }
 }
 

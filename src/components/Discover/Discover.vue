@@ -1,19 +1,32 @@
 <template>
   <div>
     <movie-info-modal close-route="/discover" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
+    <h2 class="text-center">Discover a Movie</h2>
     
     <div v-infinite-scroll="refresh" :infinite-scroll-disabled="busy" :infinite-scroll-immediate-check="true" infinite-scroll-distance="40">
-      <h2 class="text-center">Discover a Movie</h2>
-        <v-container v-if="suggestions && suggestions.length" grid-list-md text-xs-center>
-          <v-layout row wrap>
-            <v-flex xs6 md3 lg2 :key="film._id+index" v-for="(film, index) in suggestions">
-              <film-preview :film="film" modal-page-name="Discover"></film-preview>
-            </v-flex>
-            <v-flex xs12>
-              <v-progress-linear color="secondary" v-if="busy" indeterminate />
-            </v-flex>
-          </v-layout>
-        </v-container>
+        <div v-if="recommendations && recommendations.length">
+            <h3 class="mt-4 text-center">Recommended For You</h3>
+            <v-container fluid grid-list-xs>
+            <v-layout row wrap>
+              <v-flex xs6 md3 lg2 :key="film._id+index" v-for="(film, index) in recommendations">
+                <film-preview :film="film" modal-page-name="Discover"></film-preview>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </div>
+        <div v-if="suggestions && suggestions.length">
+          <h3 class="mt-4 text-center">Popular and Highly Rated Movies</h3>
+          <v-container  grid-list-md text-xs-center>
+            <v-layout row wrap>
+              <v-flex xs6 md3 lg2 :key="film._id+index" v-for="(film, index) in suggestions">
+                <film-preview :film="film" modal-page-name="Discover"></film-preview>
+              </v-flex>
+              <v-flex xs12>
+                <v-progress-linear color="secondary" v-if="busy" indeterminate />
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </div>
         <div v-else class="text-center"> 
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </div>
@@ -34,6 +47,7 @@ export default {
     return {
       showingFilm: false,
       suggestions: [],
+      recommendations: [],
       busy: false
     }
   },
@@ -63,12 +77,24 @@ export default {
           this.setSnackbar('Something went wrong. Try again.')
           this.busy = false
         })
+    },
+    getRecommendations () {
+      console.log('Recommendations')
+      this.busy = true
+      queries.getRecommendations()
+        .then(response => { this.recommendations = response.data; this.busy = false })
+        .catch(e => {
+          console.error(e)
+          this.setSnackbar('Something went wrong. Try again.')
+          this.busy = false
+        })
     }
   },
   created () {
     // route watcher won't be called on initial load
     this.showingFilm = Boolean(this.filmId)
-    this.refresh()
+    this.getRecommendations()
+      .then(() => this.refresh())
   }
 }
 </script>
