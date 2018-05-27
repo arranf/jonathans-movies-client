@@ -139,7 +139,7 @@ router.beforeEach((to, from, next) => {
           .then(() => initStore())
       )
       .then(() => {
-        console.log('Authed')
+        console.log(user ? 'Authed' : 'Not Authed')
         directToNext(to, from, next, user)
       })
       .catch(function (error) {
@@ -152,7 +152,7 @@ router.beforeEach((to, from, next) => {
 })
 
 function directToNext (to, from, next, user) {
-  const notAllowed = to.matched.some(record => record.meta.admin) && (!user || !user.isAdmin)
+  const notAllowed = !(to.matched.some(record => record.meta.admin) && (!user || !user.isAdmin))
   initStore()
     .then(() => { next(notAllowed) })
     // NO CATCH HERE: beforeEach handles catching
