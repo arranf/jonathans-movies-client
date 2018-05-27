@@ -3399,8 +3399,8 @@ feathers-query-filters@^2.1.2:
     feathers-commons "^0.8.0"
 
 feathers-vuex@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/feathers-vuex/-/feathers-vuex-1.4.0.tgz#2cb70ec4c2b8464c794de469e7d91e978634760d"
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/feathers-vuex/-/feathers-vuex-1.4.2.tgz#ffdec9316d644611a694a50edef56514588b5e5d"
   dependencies:
     debug "^3.1.0"
     fast-copy "^1.2.0"
