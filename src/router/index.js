@@ -121,6 +121,7 @@ function initStore () {
       })
       .catch(error => console.error('Error initiating store', error))
   } else {
+    console.log('Initiated store')
     return Promise.resolve()
   }
 }
@@ -153,7 +154,7 @@ router.beforeEach((to, from, next) => {
 function directToNext (to, from, next, user) {
   const notAllowed = to.matched.some(record => record.meta.admin) && (!user || !user.isAdmin)
   initStore()
-    .then(() => { console.log('Initiated store'); next(notAllowed) })
+    .then(() => { next(notAllowed) })
     // NO CATCH HERE: beforeEach handles catching
 }
 
