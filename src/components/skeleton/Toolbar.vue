@@ -67,13 +67,14 @@ export default {
         // This hides the empty element if the input is blank otherwise it appears an option
         this.options = []
       }
+    },
+    user (newUser, oldUser) {
+      console.log('User watch')
+      if (!this.listeningToUsersOnline && newUser && newUser.isAdmin) {
+        this.getOnlineUsers()
+        this.listeningToUsersOnline = true
+      }
     }
-    // user (newUser, oldUser) {
-    //   if (!this.listeningToUsersOnline && newUser && newUser.isAdmin) {
-    //     this.getOnlineUsers()
-    //     this.listeningToUsersOnline = true
-    //   }
-    // }
   },
   methods: {
     ...mapActions('users-online', {getOnlineUsers: 'find'}),
