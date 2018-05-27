@@ -127,6 +127,7 @@ export default {
     logoutAndRedirect: function () {
       this.logout()
         .then(() => this.$router.push({path: '/'}))
+        .catch(e => console.error(e))
     }
   }
 }

@@ -44,20 +44,8 @@ app.service('/recommendations')
 
 app.service('/poll')
   .on('transition', data => {
-    Notification.requestPermission(function (status) {
-      console.log('Notification permission status:', status)
-      displayNotification()
-    })
-
-    store.dispatch('snackbar/setText', {text: `Voting has begun! You have 3 votes.`, isPersistent: true})
+    const numberOfVotes = store.getters['vote/votesRemaining']
+    store.dispatch('snackbar/setText', {text: `Voting has begun! You have ${numberOfVotes} votes.`, isPersistent: true})
   })
-
-function displayNotification () {
-  if (Notification.permission === 'granted') {
-    new Notification('Voting has begun!') // eslint-disable-line no-new
-  }
-}
-
-app.on('connection', () => console.log('Connection'))
 
 export default app

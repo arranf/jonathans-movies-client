@@ -119,6 +119,7 @@ function initStore () {
           return queries.getOptionsForPoll(pollId)
         }
       })
+      .then(() => console.log('Initiated store'))
       .catch(error => console.error('Error initiating store', error))
   } else {
     return Promise.resolve()
@@ -138,7 +139,7 @@ router.beforeEach((to, from, next) => {
           .then(() => initStore())
       )
       .then(() => {
-        console.log('Authed')
+        console.log(user ? 'Authed' : 'Not Authed')
         directToNext(to, from, next, user)
       })
       .catch(function (error) {
@@ -151,13 +152,10 @@ router.beforeEach((to, from, next) => {
 })
 
 function directToNext (to, from, next, user) {
-  if (to.matched.some(record => record.meta.admin) && (!user || !user.isAdmin)) {
-    initStore()
-      .then(() => next(false))
-  } else {
-    initStore()
-      .then(() => next())
-  }
+  const allowed = !(to.matched.some(record => record.meta.admin) && (!user || !user.isAdmin))
+  initStore()
+    .then(() => { next(allowed) })
+    // NO CATCH HERE: beforeEach handles catching
 }
 
 export default router

@@ -89,6 +89,7 @@ export default {
       }
       this.logout()
         .then(window.location = url)
+        .catch((e) => console.error(e))
     }
   },
   computed: {
