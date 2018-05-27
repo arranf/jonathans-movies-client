@@ -119,9 +119,9 @@ function initStore () {
           return queries.getOptionsForPoll(pollId)
         }
       })
+      .then(() => console.log('Initiated store'))
       .catch(error => console.error('Error initiating store', error))
   } else {
-    console.log('Initiated store')
     return Promise.resolve()
   }
 }
