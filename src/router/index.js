@@ -152,9 +152,9 @@ router.beforeEach((to, from, next) => {
 })
 
 function directToNext (to, from, next, user) {
-  const notAllowed = !(to.matched.some(record => record.meta.admin) && (!user || !user.isAdmin))
+  const allowed = !(to.matched.some(record => record.meta.admin) && (!user || !user.isAdmin))
   initStore()
-    .then(() => { next(notAllowed) })
+    .then(() => { next(allowed) })
     // NO CATCH HERE: beforeEach handles catching
 }
 
