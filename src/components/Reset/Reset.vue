@@ -133,7 +133,7 @@ export default {
       }
       promise
         .then((user) => { this.showConfirm(user) })
-        .catch((e) => this.setSnackbar(e))
+        .catch((e) => { console.error(e); this.setSnackbar(e) })
     },
     showConfirm (user) {
       this.setSnackbar('Password Reset')
@@ -147,6 +147,7 @@ export default {
           .then(() => {
             router.push('home')
           })
+          .catch(e => console.error(e))
       }
     }
   },

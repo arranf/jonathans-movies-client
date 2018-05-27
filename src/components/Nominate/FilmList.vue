@@ -153,6 +153,8 @@ export default {
     this.clearFilms()
     this.getFilms()
       .then(() => document.addEventListener('scroll', this.listener))
+      // TODO: Add retry
+      .catch((e) => console.error(e))
     // Scroll listener
     // https://jsfiddle.net/W75mP/
     function getScrollXY () {

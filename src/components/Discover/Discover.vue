@@ -79,7 +79,6 @@ export default {
         })
     },
     getRecommendations: function () {
-      console.log('Recommendations')
       this.busy = true
       return queries.getRecommendations()
         .then(response => { this.recommendations = response.data; this.busy = false })
@@ -95,6 +94,7 @@ export default {
     this.showingFilm = Boolean(this.filmId)
     this.getRecommendations()
       .then(() => this.refresh())
+      .catch((e) => console.error(e))
   }
 }
 </script>
