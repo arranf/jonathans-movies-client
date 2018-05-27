@@ -154,7 +154,7 @@ function directToNext (to, from, next, user) {
   const notAllowed = to.matched.some(record => record.meta.admin) && (!user || !user.isAdmin)
   initStore()
     .then(() => { console.log('Initiated store'); next(notAllowed) })
-    .catch(e => console.error(e))
+    // NO CATCH HERE: beforeEach handles catching
 }
 
 export default router
