@@ -46,7 +46,7 @@
 <script>
 import queries from '@/api'
 import utils from '@/utils'
-import {mapGetters, mapState} from 'vuex'
+import {mapGetters, mapState, mapActions} from 'vuex'
 
 export default {
   name: 'Toolbar',
@@ -55,7 +55,8 @@ export default {
       selectedFilm: null,
       options: [],
       loading: false,
-      searchInput: null
+      searchInput: null,
+      listeningToUsersOnline: false
     }
   },
   watch: {
@@ -66,9 +67,16 @@ export default {
         // This hides the empty element if the input is blank otherwise it appears an option
         this.options = []
       }
+    },
+    user (newUser, oldUser) {
+      if (!this.listeningToUsersOnline && newUser && newUser.isAdmin) {
+        this.getOnlineUsers()
+        this.listeningToUsersOnline = true
+      }
     }
   },
   methods: {
+    ...mapActions('users-online', {getOnlineUsers: 'find'}),
     getMovies (searchTerm) {
       this.loading = true
       queries.getFilmSuggestions(searchTerm).then(response => {
