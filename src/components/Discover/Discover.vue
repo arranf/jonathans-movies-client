@@ -78,10 +78,10 @@ export default {
           this.busy = false
         })
     },
-    getRecommendations () {
+    getRecommendations: function () {
       console.log('Recommendations')
       this.busy = true
-      queries.getRecommendations()
+      return queries.getRecommendations()
         .then(response => { this.recommendations = response.data; this.busy = false })
         .catch(e => {
           console.error(e)
