@@ -7,6 +7,8 @@ import App from '@/components/skeleton/AppContainer'
 import router from './router'
 import store from './store/'
 import '@/api/feathers-client'
+import Raven from 'raven-js'
+import RavenVue from 'raven-js/plugins/vue'
 
 import Vuetify from 'vuetify'
 Vue.use(Vuetify)
@@ -15,9 +17,17 @@ require('vuetify/dist/vuetify.min.css')
 // Import custom CSS
 require('@/assets/styles/main.scss')
 
-Vue.config.productionTip = false
-Vue.config.devtools = process.env.NODE_ENV !== 'production'
-Vue.config.performance = process.env.NODE_ENV !== 'production'
+const isProduction = process.env.NODE_ENV === 'production'
+Vue.config.productionTip = isProduction
+Vue.config.devtools = isProduction
+Vue.config.performance = isProduction
+
+if (isProduction) {
+  Raven
+    .config('https://5e5d7f63477a49289a3e7556f761afb7@sentry.io/221248')
+    .addPlugin(RavenVue, Vue)
+    .install()
+}
 
 /* eslint-disable no-new */
 new Vue({
