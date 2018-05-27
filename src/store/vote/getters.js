@@ -18,14 +18,14 @@ export default {
     return null
   },
   /**
-   * Produces an object {option_id: id, votes: []}
+   * Produces an an array [{option_id: id, votes: []}]
    */
-  getVotesByOption: (state, getters, rootState, rootGetters) => pollId => {
-    const optionsForPoll = rootGetters['option/getOptionsForPoll'](pollId)
-    const votes = Object.values(state.keyedById).filter(v => v.poll_id === pollId)
+  getVotesByOption: (state, getters) => poll => {
+    const votes = Object.values(state.keyedById).filter(v => v.poll_id === poll._id)
     const groupedVotes = groupBy(votes, 'option_id')
     let votesByOption = loMap(groupedVotes, (value, key) => ({option_id: key, votes: value}))
-    optionsForPoll.forEach(option => {
+    // If votesByOption does not contain an option add it with 0 votes
+    poll.options.forEach(option => {
       if (!votesByOption.find(gv => gv.option_id === option._id)) {
         votesByOption.push({option_id: option._id, votes: []})
       }
@@ -33,52 +33,30 @@ export default {
     return votesByOption
   },
   /**
-   * Produces an array of objects [{option_id: id, votes: count}]
+   * Produces an array of objects [{option_id: id, totalVotes: count}]
    */
-  getVoteCountsByOption: (state, getters, rootState, rootGetters) => pollId => {
-    return getters.getVotesByOption(pollId)
+  getVoteCountsByOption: (state, getters) => poll => {
+    return getters.getVotesByOption(poll)
       .map(gv => ({option_id: gv.option_id, totalVotes: gv.votes.length}))
   },
   /**
    * Produces an array [{name: 'Kill Bill', votes: 12}]
    */
-  getGraphData: (state, getters, rootState, rootGetters) => pollId => {
-    const options = getters.getVoteCountsByOption(pollId)
+  getGraphData: (state, getters) => poll => {
+    const voteCountsByOption = getters.getVoteCountsByOption(poll)
+
     function getName (id) {
-      const option = rootGetters['option/get'](id)
+      const option = poll.options.find(o => o._id === id)
       return option && option.name ? option.name : 'Unknown'
     }
-    const data = options.reduce((acc, option) => { acc.push({votes: option.totalVotes, name: getName(option.option_id)}); return acc }, [])
+    const data = voteCountsByOption.reduce((acc, option) => { acc.push({votes: option.totalVotes, name: getName(option.option_id)}); return acc }, [])
 
     // Sort high to low
-    return data.sort((a, b) => {
-      if (a.totalVotes < b.totalVotes) {
-        return -1
-      } else if (a.totalVotes > b.totalVotes) {
-        return 1
-      }
-      return 0
-    })
+    return data.sort((a, b) => a.totalVotes - b.totalVotes)
   },
-  getHighestVotedOptionsForPoll: (state, getters, rootState, rootGetters) => pollId => {
-    const voteCountByOption = getters.getVoteCountsByOption(pollId)
-    const maxVote = voteCountByOption.reduce((acc, value) => {
-      return (acc >= value.totalVotes ? acc : value.totalVotes)
-    }, 0)
-    if (maxVote === 0) {
-      return []
-    }
-    return voteCountByOption.reduce((acc, value) => {
-      if (value.totalVotes === maxVote) {
-        const option = rootGetters['option/get'](value.option_id)
-        if (option) {
-          acc.push(option.name)
-        } else {
-          acc.push('Unknown')
-        }
-      }
-      return acc
-    }, [])
+  areVotesForPoll: (state, getters) => poll => {
+    const voteCountByOption = getters.getVoteCountsByOption(poll)
+    return voteCountByOption.some(o => o.totalVotes > 0)
   },
   getNumberOfUniqueVoters: (state, getters) => pollId => {
     const voterIds = Object.values(state.keyedById).filter(v => v.poll_id === pollId).map(v => v.user_id)

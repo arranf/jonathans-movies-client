@@ -17,9 +17,19 @@ Vue.use(FeathersVuex)
 Vue.use(Vuex)
 
 let plugins = [
+  service('poll', {
+    getters: pollGetters,
+    instanceDefaults: {
+      options: 'Option'
+    }
+  }),
+  service('option', {
+    getters: optionGetters,
+    instanceDefaults: {
+      film: 'Film'
+    }
+  }),
   service('vote', {getters: voteGetters}),
-  service('option', {getters: optionGetters}),
-  service('poll', {getters: pollGetters}),
   service('users'),
   service('films'),
   service('users-online', {getters: usersOnlineGetters}),

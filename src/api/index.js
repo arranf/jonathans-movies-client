@@ -4,17 +4,17 @@ const queries = {
   getCurrentPoll: function () {
     return store.dispatch('poll/find', {query: {
       $sort: {endDateTime: -1},
-      $limit: 100
+      $limit: 20
     }})
   },
-  getVotesForMostRecentPoll: function (pollId) {
+  getVotesForMostRecentPoll: function (poll) {
     return store.dispatch('vote/find', {pageinate: false,
       query: {
-        $limit: 100,
-        poll_id: pollId
+        $limit: 1000,
+        poll_id: poll._id
       }})
   },
-  getOptionsForMostRecentPoll: function (pollId) {
+  getOptionsForPoll: function (pollId) {
     return store.dispatch('option/find', {pageinate: false,
       query: {
         $limit: 100,

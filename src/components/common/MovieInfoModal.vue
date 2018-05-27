@@ -49,7 +49,7 @@
 
        <v-card-actions>
          <v-spacer></v-spacer>
-        <v-btn flat color="primary" @click.prevent="addNomination()" v-if="nominatable">
+        <v-btn flat color="primary" @click.prevent="addNomination()" v-if="inNominations" :disabled="!nominatable">
           {{nominateButtonText}}
         </v-btn>
         <v-btn flat @click="showOverview = !showOverview">
@@ -119,7 +119,9 @@ export default {
               this.setSnackbar(`Nominated. You have ${this.nominationsRemaining} nomination${this.nominationsRemaining > 1 ? 's' : ''}  left`)
             }
           })
-          .catch(error => console.error(error))
+          .catch(e => { console.error(e); this.setSnackbar(e.message ? e.message : e) })
+      } else {
+        this.setSnackbar('Error adding nomination.')
       }
     },
     imageRendered: function () { this.shouldDisplay = true }
@@ -150,14 +152,14 @@ export default {
       }
       return 'Nominate'
     },
-    nominatable () {
+    inNominations () {
       // Set to show nominations
       return this.showNominate &&
-        this.isCurrentPollInNomination &&
-        // user has a nomination to spend on it
-        this.hasNominationsRemaining &&
-        // isn't already nominated
-        !this.isOptionForCurrentPoll(this.film._id)
+        this.isCurrentPollInNomination
+    },
+    nominatable () {
+      // user has left to spend and isn't already nominated
+      return this.hasNominationsRemaining && !this.isOptionForCurrentPoll(this.film._id)
     }
   },
   created () {

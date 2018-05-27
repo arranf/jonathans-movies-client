@@ -7,7 +7,7 @@ let socket
 // Change Netlify staging env variable to 1 if the staging server is setup, else develop will use production API
 if (process.env.BRANCH && process.env.BRANCH === 'develop' && process.env.STAGING === '1') {
   try {
-    socket = io('http://staging-api.jonathansmovies.com', {'transports': ['websocket']})
+    socket = io('https://staging-api.jonathansmovies.com', {'transports': ['websocket']})
   } catch (e) {
     console.error(e)
     console.error('Unable to create socket to staging server')
