@@ -110,6 +110,11 @@ export default {
         // one source of error is a not-verified user
         .catch((e) => {
           console.error(e)
+          if (e.message.includes('User is not verified')) {
+            this.setSnackbar('Check your email to verify your email address before resetting your password.')
+          } else {
+            this.setSnackbar('Something went wrong. Please try again.')
+          }
           // Show error
           authClient.resendVerifySignup(user)
         })
