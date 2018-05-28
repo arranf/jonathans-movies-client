@@ -34,7 +34,7 @@ export default {
       if (this.film.poster_svg_base64encoded) {
         return `data:image/svg+xml;base64,${this.film.poster_svg_base64encoded}`
       }
-      return this.film.poster_path
+      return utils.getTmdbPosterImage(this.film.poster_path)
     }
   },
   methods: {
