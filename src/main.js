@@ -18,9 +18,9 @@ require('vuetify/dist/vuetify.min.css')
 require('@/assets/styles/main.scss')
 
 const isProduction = process.env.NODE_ENV === 'production'
-Vue.config.productionTip = isProduction
-Vue.config.devtools = isProduction
-Vue.config.performance = isProduction
+Vue.config.productionTip = !isProduction
+Vue.config.devtools = !isProduction
+Vue.config.performance = !isProduction
 
 if (isProduction) {
   Raven

@@ -4,8 +4,7 @@ import store from '@/store' // used for transition notification
 
 let socket
 
-// Change Netlify staging env variable to 1 if the staging server is setup, else develop will use production API
-if (process.env.BRANCH && process.env.BRANCH === 'develop' && process.env.STAGING === '1') {
+if (process.env.BRANCH && process.env.BRANCH === 'develop') {
   try {
     socket = io('https://staging-api.jonathansmovies.com', {'transports': ['websocket']})
   } catch (e) {
