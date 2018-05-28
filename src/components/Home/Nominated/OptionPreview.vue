@@ -1,7 +1,7 @@
 <template>
   <v-card>
-    <div class="card__media" alt="Gladiator Backdrop" style="height: 200px;">
-        <img v-if="film.poster_path" class="img-fluid lazyload" :src="backdropImage" :data-srcset="getBackDropSrcSet" :alt="film.name + ' image'">
+    <div v-if="option && film && film.backdrop_path" class="card__media" style="height: 200px;">
+        <img class="img-fluid lazyload" :src="backdropImage" :data-srcset="getBackDropSrcSet" :alt="option.name + ' image'">
         <div class="card__media__content"></div>
       </div>
     <v-card-title primary-title>
@@ -66,10 +66,10 @@ export default {
       return ''
     },
     film () {
-      if (this.option.film_id) {
+      if (!this.option.film && this.option.film_id) {
         return this.getFilm(this.option.film_id)
       }
-      return null
+      return this.option.film
     }
   },
   methods: {

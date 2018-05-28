@@ -2,7 +2,7 @@
 <v-layout row justify-center>
   <v-dialog  v-model="show" fullscreen transition="dialog-bottom-transition" :overlay="false">
     <v-card v-if="film"  >
-      <div class="card__media" alt="Gladiator Backdrop" style="height: 200px;">
+      <div class="card__media" style="height: 200px;">
         <img v-if="film.poster_path" class="img-fluid lazyload" :src="backdropImage" :data-srcset="getBackDropSrcSet" :alt="film.name + ' image'">
         <div class="card__media__content"></div>
       </div>
