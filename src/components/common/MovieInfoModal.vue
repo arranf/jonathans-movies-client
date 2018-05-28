@@ -1,11 +1,11 @@
 <template>
 <v-layout row justify-center>
   <v-dialog  v-model="show" fullscreen transition="dialog-bottom-transition" :overlay="false">
-    <!-- TODO: Make this use SQIP rather than pausing showing until loaded -->
-    <v-progress-circular v-show="!shouldDisplay" :size="50" indeterminate color="primary"></v-progress-circular>
-
-    <v-card v-if="film" v-show="shouldDisplay" v-images-loaded="imageRendered"  >
-      <v-card-media height="200px" v-if="backdropImage" :src="backdropImage" :alt="`${film.name} Backdrop`" />
+    <v-card v-if="film"  >
+      <div class="card__media" alt="Gladiator Backdrop" style="height: 200px;">
+        <img v-if="film.poster_path" class="img-fluid lazyload" :src="backdropImage" :data-srcset="getBackDropSrcSet" :alt="film.name + ' image'">
+        <div class="card__media__content"></div>
+      </div>
       <v-card-title primary-title>
         <div>
           <h1 class="headline mb-0">{{film.name}} <small>({{getFilmYear}})</small></h1>
@@ -66,7 +66,9 @@
 import queries from '@/api'
 import utils from '@/utils'
 import {mapGetters, mapActions} from 'vuex'
-import imagesLoaded from 'vue-images-loaded'
+
+// eslint-disable-next-line
+import lazySizes from 'lazysizes'
 
 export default {
   name: 'MovieInfoModal',
@@ -82,9 +84,6 @@ export default {
       film: {},
       showOverview: false
     }
-  },
-  directives: {
-    imagesLoaded
   },
   methods: {
     ...mapActions('films', {fetchFilm: 'get'}),
@@ -123,17 +122,21 @@ export default {
       } else {
         this.setSnackbar('Error adding nomination.')
       }
-    },
-    imageRendered: function () { this.shouldDisplay = true }
+    }
   },
   computed: {
     ...mapGetters('option', ['hasNominationsRemaining', 'isOptionForCurrentPoll', 'nominationsRemaining']),
     ...mapGetters('poll', ['isCurrentPollInNomination']),
     ...mapGetters('films', {getFilm: 'get'}),
-    // TODO: Make this a one liner
     backdropImage: function () {
-      if (this.film && this.film.backdrop_path) {
-        return utils.getTmdbBackdropImage(this.film.backdrop_path)
+      if (this.film && this.film.backdrop_svg_base64encoded) {
+        return `data:image/svg+xml;base64,${this.film.backdrop_svg_base64encoded}`
+      }
+      return utils.getTmdbBackdropImage(this.film.backdrop_path)
+    },
+    getBackDropSrcSet: function () {
+      if (this.film.backdrop_path) {
+        return utils.getTmdbBackdropSrcSet(this.film.backdrop_path)
       }
       return ''
     },
@@ -193,5 +196,14 @@ export default {
 
 .fade-enter, .fade-leave-to {
   opacity: 0;
+}
+
+.lazyload,
+.lazyloading {
+	opacity: 0;
+}
+.lazyloaded {
+	opacity: 1;
+	transition: opacity 300ms;
 }
 </style>

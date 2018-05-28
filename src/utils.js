@@ -50,6 +50,9 @@ const functions = {
   getTmdbBackdropImage: function (slug) {
     return `https://image.tmdb.org/t/p/w1280${slug}`
   },
+  getTmdbBackdropSrcSet: function (slug) {
+    return `https://image.tmdb.org/t/p/w780${slug} 780w,https://image.tmdb.org/t/p/w1280${slug} 1280w`
+  },
   getTmdbPosterImage: function (slug) {
     return `https://image.tmdb.org/t/p/w342/${slug}`
   },

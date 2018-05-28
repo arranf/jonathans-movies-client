@@ -7,7 +7,7 @@
     </div>
 
       <!-- nominations empty state -->
-    <div v-if="isCurrentPollInNomination && currentPollOptions.length === 0" class="empty-state-container">
+    <div v-if="loaded && isCurrentPollInNomination && currentPollOptions.length === 0" class="empty-state-container">
       <v-icon size="100px" class="mb-2">playlist_add</v-icon>
       <h1 class="display-1 mb-1">Nominate a Movie</h1>
       <p class="empty-state-description">{{`You\'ve got ${nominationsRemaining} nomination${nominationsRemaining > 1 ? 's' : ''} left. Use ${nominationsRemaining > 1 ? 'them' : 'it'} wisely!`}}</p>
@@ -15,13 +15,13 @@
     </div>
 
     <!-- voting empty state -->
-    <div v-if="!isCurrentPollInNomination && currentPollOptions.length === 0" class="empty-state-container">
+    <div v-if="loaded && !isCurrentPollInNomination && currentPollOptions.length === 0" class="empty-state-container">
       <v-icon size="100px" class="mb-2">alert_circle</v-icon>
       <h1 class="display-1 mb-1">Oops</h1>
       <p class="empty-state-description">Looks like no movies were nominated. That's awkward.</p>
     </div>
 
-    <div class="d-flex flex-column" v-if="getOptionsForCurrentPoll && currentPollOptions && currentPollOptions.length > 0" >
+    <div class="d-flex flex-column" v-if="loaded && getOptionsForCurrentPoll && currentPollOptions && currentPollOptions.length > 0" >
       <option-preview v-for="option in currentPollOptions" :key="option._id" :option="option" class="mb-3"></option-preview>
     </div>
   </div>

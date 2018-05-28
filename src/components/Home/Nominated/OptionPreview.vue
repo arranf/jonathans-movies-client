@@ -1,7 +1,9 @@
 <template>
   <v-card>
-    <v-card-media v-if="film" :src="getFilmBackdrop" height="200px" >
-    </v-card-media>
+    <div class="card__media" alt="Gladiator Backdrop" style="height: 200px;">
+        <img v-if="film.poster_path" class="img-fluid lazyload" :src="backdropImage" :data-srcset="getBackDropSrcSet" :alt="film.name + ' image'">
+        <div class="card__media__content"></div>
+      </div>
     <v-card-title primary-title>
       <div>
         <h3 class="headline mb-0">{{option.name}}</h3>
@@ -51,15 +53,15 @@ export default {
       }
       return null
     },
-    getFilmPoster: function () {
-      if (this.film && this.film.poster_path) {
-        return utils.getTmdbPosterImage(this.film.poster_path)
+    backdropImage: function () {
+      if (this.film && this.film.backdrop_svg_base64encoded) {
+        return `data:image/svg+xml;base64,${this.film.backdrop_svg_base64encoded}`
       }
-      return ''
+      return utils.getTmdbBackdropImage(this.film.backdrop_path)
     },
-    getFilmBackdrop: function () {
-      if (this.film && this.film.backdrop_path) {
-        return utils.getTmdbBackdropImage(this.film.backdrop_path)
+    getBackDropSrcSet: function () {
+      if (this.film.backdrop_path) {
+        return utils.getTmdbBackdropSrcSet(this.film.backdrop_path)
       }
       return ''
     },
