@@ -52,14 +52,14 @@ export default {
     const data = voteCountsByOption.reduce((acc, option) => { acc.push({votes: option.totalVotes, name: getName(option.option_id)}); return acc }, [])
 
     // Sort high to low
-    return data.sort((a, b) => a.totalVotes - b.totalVotes)
+    return data.sort((a, b) => b.votes - a.votes)
   },
   areVotesForPoll: (state, getters) => poll => {
     const voteCountByOption = getters.getVoteCountsByOption(poll)
     return voteCountByOption.some(o => o.totalVotes > 0)
   },
   getNumberOfUniqueVoters: (state, getters) => pollId => {
-    const voterIds = Object.values(state.keyedById).filter(v => v.poll_id === pollId).map(v => v.user_id)
+    const voterIds = Object.values(state.keyedById).filter(v => v.poll_id === pollId).map(v => v.user_id || v.hashed_user_id)
     return new Set(voterIds).size
   }
 }

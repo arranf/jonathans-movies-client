@@ -75,7 +75,7 @@ export default {
   color: white;
   margin-right: 15px;
   position: relative;
-  z-index: 0;
+  z-index: 1;
 }
 
 .bar::before{
