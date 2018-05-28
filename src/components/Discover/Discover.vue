@@ -81,7 +81,7 @@ export default {
     getRecommendations: function () {
       this.busy = true
       return queries.getRecommendations()
-        .then(response => { this.recommendations = response.data; this.busy = false })
+        .then(response => { this.recommendations = response; this.busy = false })
         .catch(e => {
           console.error(e)
           this.setSnackbar('Something went wrong. Try again.')
