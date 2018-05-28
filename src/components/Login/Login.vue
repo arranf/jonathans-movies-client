@@ -80,7 +80,7 @@ export default {
     },
     facebookLogin: function () {
       let url
-      if (process.env.BRANCH === 'develop' && process.env.STAGING === '1') {
+      if (process.env.BRANCH === 'develop') {
         url = 'https://staging-api.jonathansmovies.com/auth/facebook'
       } else if (process.env.NODE_ENV === 'production') {
         url = 'https://api.jonathansmovies.com/auth/facebook'
