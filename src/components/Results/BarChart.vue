@@ -61,7 +61,7 @@ export default {
   display: inline-block;
   width: 90%;
 
-  z-index: 4;
+  z-index: 1;
 
   /* Handle text overflow */
   white-space: nowrap;
@@ -75,7 +75,7 @@ export default {
   color: white;
   margin-right: 15px;
   position: relative;
-  z-index: 4;
+  z-index: 0;
 }
 
 .bar::before{
@@ -86,7 +86,7 @@ export default {
   height: 3em;
   top: 0;
   background: #BDBDBD;
-  z-index: 2;
+  z-index: 0;
 }
 
 .bar::after{
@@ -100,7 +100,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 3;
+  z-index: 0;
   max-width: var(--width);
 }
 
