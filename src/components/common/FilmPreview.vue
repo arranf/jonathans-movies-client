@@ -31,8 +31,8 @@ export default {
       return ''
     },
     getFilmPoster: function () {
-      if (this.film.svg_base64encoded) {
-        return `data:image/svg+xml;base64,${this.film.svg_base64encoded}`
+      if (this.film.poster_svg_base64encoded) {
+        return `data:image/svg+xml;base64,${this.film.poster_svg_base64encoded}`
       }
       return this.film.poster_path
     }
