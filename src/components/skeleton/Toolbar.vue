@@ -69,7 +69,6 @@ export default {
       }
     },
     user (newUser, oldUser) {
-      console.log('User watch')
       if (!this.listeningToUsersOnline && newUser && newUser.isAdmin) {
         this.getOnlineUsers()
         this.listeningToUsersOnline = true
