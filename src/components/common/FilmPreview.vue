@@ -6,8 +6,8 @@
     <h4 class="text-center">
       {{film.name}}
     </h4>
+    <p class="text-center mt-1 text-smaller" v-if="reasons">Suggested because of your interest in {{this.reasons.reduce((prev, curr, i, arr) => prev + curr + ((i===arr.length-2) ? ' and ' : ', '))}}</p>
   </div>
-  <!--TODO: HANDLE OPTIONS WITHOUT FILMS -->
 </template>
 
 <script>
@@ -20,7 +20,9 @@ export default {
   name: 'FilmPreview',
   props: {
     film: {required: true, type: Object},
-    modalPageName: {required: true, type: String}
+    modalPageName: {required: true, type: String},
+    reasons: {type: Array},
+    score: {type: Number}
   },
   computed: {
     ...mapGetters('films', {getFilm: 'get'}),
@@ -55,3 +57,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.text-smaller {
+  font-size: 90% !important;
+}
+</style>

@@ -8,8 +8,8 @@
             <h3 class="mt-4 text-center">Recommended For You</h3>
             <v-container fluid grid-list-xs>
             <v-layout row wrap>
-              <v-flex xs6 md3 lg2 :key="film._id+index" v-for="(film, index) in recommendations">
-                <film-preview :film="film" modal-page-name="Discover"></film-preview>
+              <v-flex xs6 md3 lg2 :key="recommendation.film._id+index" v-for="(recommendation, index) in recommendations">
+                <film-preview :film="recommendation.film" :reasons="recommendation.reasons" modal-page-name="Discover"></film-preview>
               </v-flex>
             </v-layout>
           </v-container>
