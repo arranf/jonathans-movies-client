@@ -40,8 +40,6 @@ const functions = {
 
     while (count > array.length) {
       array = array.concat(JSON.parse(JSON.stringify(constants.colors[colorRange])))
-      console.log(array)
-      console.log(count)
     }
     shuffle(array)
     if (count < array.length) {
