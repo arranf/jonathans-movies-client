@@ -39,7 +39,7 @@ const functions = {
     let array = JSON.parse(JSON.stringify(constants.colors[colorRange]))
 
     while (count > array.length) {
-      array.concat(JSON.parse(JSON.stringify(constants.colors[colorRange])))
+      array = array.concat(JSON.parse(JSON.stringify(constants.colors[colorRange])))
       console.log(array)
       console.log(count)
     }
