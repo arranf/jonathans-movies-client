@@ -6,7 +6,9 @@
     <h4 class="text-center">
       {{film.name}}
     </h4>
-    <p class="text-center mt-1 text-smaller" v-if="reasons">Suggested because of your interest in {{this.reasons.reduce((prev, curr, i, arr) => prev + curr + ((i===arr.length-2) ? ' and ' : ', '))}}</p>
+    <p class="text-center mt-1 text-smaller" v-if="reasons">
+      Suggested because of your interest in {{reasonsSentence}}
+    </p>
   </div>
 </template>
 
@@ -37,6 +39,14 @@ export default {
         return `data:image/svg+xml;base64,${this.film.poster_svg_base64encoded}`
       }
       return utils.getTmdbPosterImage(this.film.poster_path)
+    },
+    reasonsSentence: function () {
+      const arr = this.reasons
+      if (arr.length === 1) {
+        return arr[0]
+      }
+      // https://github.com/shinnn/array-to-sentence/blob/master/index.js
+      return arr.slice(0, -1).join(', ') + ' and ' + arr[arr.length - 1]
     }
   },
   methods: {
