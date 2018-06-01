@@ -1,7 +1,7 @@
 <template>
   <div>
     <movie-info-modal close-route="/discover" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
-    <h2 class="text-center">Discover a Movie</h2>
+    <!-- <h2 class="text-center">Discover a Movie</h2> -->
     <transition name="slide">
       <v-btn v-if="showUp > 1"
             fixed
@@ -18,7 +18,7 @@
     <div v-infinite-scroll="refresh" :infinite-scroll-disabled="busy" :infinite-scroll-immediate-check="true" infinite-scroll-distance="40">
        
         <div v-if="recommendations && recommendations.length">
-            <h3 class="mt-4 text-center">Recommended For You</h3>
+            <h3 class="separator">Recommended For You</h3>
             <v-container fluid grid-list-xs>
             <v-layout row wrap>
               <v-flex xs6 sm4 md3 lg2 :key="recommendation.film._id+index" v-for="(recommendation, index) in recommendations">
@@ -28,7 +28,7 @@
           </v-container>
         </div>
         <div v-if="suggestions && suggestions.length">
-          <h3 class="mt-4 text-center">Popular and Highly Rated Movies</h3>
+          <h3 class="separator mt-4">Popular and Highly Rated Movies</h3>
           <v-container  grid-list-md text-xs-center>
             <v-layout row wrap>
               <v-flex xs6 md3 lg2 :key="film._id+index" v-for="(film, index) in suggestions">
@@ -118,6 +118,16 @@ export default {
 </script>
 
 <style scoped>
+.separator {
+  text-align: left;
+  /* font-size: 140%; */
+  border-bottom: #1A237E 2px solid;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  font-size: 130%;
+  color: #111;
+}
+
 .slide-enter { transform: translateY(100%) }
 .slide-enter-to { transform: translateY(0) }
 
@@ -125,5 +135,5 @@ export default {
 .slide-leave-to { transform: translateY(-100%) }
 
 .slide-enter-active,
-.slide-leave-active { transition: all 200ms ease-in }
+.slide-leave-active { transition: all 300ms ease-in }
 </style>
