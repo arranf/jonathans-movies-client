@@ -2,8 +2,21 @@
   <div>
     <movie-info-modal close-route="/discover" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
     <h2 class="text-center">Discover a Movie</h2>
-    
+    <transition name="slide">
+      <v-btn v-if="showUp > 1"
+            fixed
+            fab
+            bottom
+            right
+            color="secondary"
+            @click="scroll"
+          >
+        <v-icon>expand_less</v-icon>
+      </v-btn>
+    </transition>
+
     <div v-infinite-scroll="refresh" :infinite-scroll-disabled="busy" :infinite-scroll-immediate-check="true" infinite-scroll-distance="40">
+       
         <div v-if="recommendations && recommendations.length">
             <h3 class="mt-4 text-center">Recommended For You</h3>
             <v-container fluid grid-list-xs>
@@ -48,7 +61,8 @@ export default {
       showingFilm: false,
       suggestions: [],
       recommendations: [],
-      busy: false
+      busy: false,
+      showUp: 0
     }
   },
   directives: {
@@ -69,6 +83,7 @@ export default {
   methods: {
     ...mapActions('snackbar', {setSnackbar: 'setText'}),
     refresh: function () {
+      this.showUp++
       this.busy = true
       queries.discoverMovies()
         .then(discoveredFilms => { this.suggestions = this.suggestions.concat(discoveredFilms); this.busy = false })
@@ -87,6 +102,9 @@ export default {
           this.setSnackbar('Something went wrong. Try again.')
           this.busy = false
         })
+    },
+    scroll () {
+      window.scrollTo(0, 0)
     }
   },
   created () {
@@ -99,20 +117,13 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.scroll {
-  display: flex;
-  flex-direction: row;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  flex-wrap: nowrap;
-  -webkit-overflow-scrolling: touch;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
+<style scoped>
+.slide-enter { transform: translateY(100%) }
+.slide-enter-to { transform: translateY(0) }
 
-.scroll-item {
-  flex: 0 0 auto;
-}
+.slide-leave { transform: translateY(0) }
+.slide-leave-to { transform: translateY(-100%) }
+
+.slide-enter-active,
+.slide-leave-active { transition: all 200ms ease-in }
 </style>
