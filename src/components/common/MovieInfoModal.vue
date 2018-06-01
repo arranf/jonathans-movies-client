@@ -3,7 +3,7 @@
   <v-dialog  v-model="show" fullscreen transition="dialog-bottom-transition" :overlay="false">
     <v-card v-if="film"  >
       <div class="card__media" style="height: 200px;">
-        <img v-if="film.poster_path" class="img-fluid lazyload" :src="backdropImage" :data-srcset="getBackDropSrcSet" :alt="film.name + ' image'">
+        <img ref="image" v-if="film.backdrop_path" class="img-fluid" :src="backdropImage" :data-src="getRealBackDropImage" :alt="film.name + ' image'">
         <div class="card__media__content"></div>
       </div>
       <v-card-title primary-title>
@@ -68,7 +68,7 @@ import utils from '@/utils'
 import {mapGetters, mapActions} from 'vuex'
 
 // eslint-disable-next-line
-import lazySizes from 'lazysizes'
+// import lazySizes from 'lazysizes'
 
 export default {
   name: 'MovieInfoModal',
@@ -99,6 +99,9 @@ export default {
         this.fetchFilm(this.filmId)
           .then(film => {
             this.film = film
+            setTimeout(() => {
+              this.loadFullImage()
+            }, 500)
           })
           .catch(error => { console.error(error); this.setSnackbar('Sorry! Couldn\'t find that film.'); this.$emit('update:show', false) })
       }
@@ -122,6 +125,11 @@ export default {
       } else {
         this.setSnackbar('Error adding nomination.')
       }
+    },
+    loadFullImage: function () {
+      // TODO: Use background image for all of this
+      const image = this.$refs.image
+      image.src = image.dataset.src
     }
   },
   computed: {
@@ -134,11 +142,8 @@ export default {
       }
       return utils.getTmdbBackdropImage(this.film.backdrop_path)
     },
-    getBackDropSrcSet: function () {
-      if (this.film.backdrop_path) {
-        return utils.getTmdbBackdropSrcSet(this.film.backdrop_path)
-      }
-      return ''
+    getRealBackDropImage: function () {
+      return utils.getTmdbBackdropImage(this.film.backdrop_path)
     },
     // TODO: Make utils
     getImdbLink: function () {
