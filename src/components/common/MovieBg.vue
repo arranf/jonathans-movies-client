@@ -1,6 +1,6 @@
 <template>
-  <div class="card__media" style="height: 200px;">
-    <img class="image-fluid" :width="width" :srcset="srcSet" :src="src" :alt="altText" :style="style">
+  <div class="card__media" :style="{'height': `${height}px` }">
+    <img class="image-fluid" :srcset="srcSet" :src="src" :alt="altText" :style="style">
     <div class="card__media__content"></div>
   </div>
 </template>
@@ -11,7 +11,7 @@ import utils from '@/utils'
 export default {
   name: 'MovieBG',
   props: {
-    width: {
+    height: {
       type: Number,
       default: 200
     },
