@@ -32,8 +32,7 @@
       </div>
 
       <v-card v-if="!showSearch && film">
-            <v-card-media v-if="film.backdrop_path" height="200px" :src="getBackdropImage" :alt="`${film.title} Backdrop`" />
-
+            <movie-bg v-if="film.backdrop_path" :film="film" :height="200" />
             <v-card-title>
               <h2 class="md-title">{{film.name}} <small>{{getYear(film.release_date)}}</small></h2>
               <div v-if="film.tagline" class="md-subhead">
@@ -61,8 +60,13 @@ import constants from '@/constants'
 import {mapActions} from 'vuex'
 import utils from '@/utils'
 
+import MovieBg from '@/components/common/MovieBg'
+
 export default {
   name: 'AddFilm',
+  components: {
+    MovieBg
+  },
   data () {
     return {
       showSearch: true,
