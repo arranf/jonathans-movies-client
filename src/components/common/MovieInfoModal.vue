@@ -2,10 +2,7 @@
 <v-layout row justify-center>
   <v-dialog  v-model="show" fullscreen transition="dialog-bottom-transition" :overlay="false">
     <v-card v-if="film"  >
-      <div class="card__media" style="height: 200px;">
-        <img ref="image" v-if="film.backdrop_path" class="img-fluid" :src="backdropImage" :data-src="getRealBackDropImage" :alt="film.name + ' image'">
-        <div class="card__media__content"></div>
-      </div>
+      <movie-bg :height="200" :film="film" />
       <v-card-title primary-title>
         <div>
           <h1 class="headline mb-0">{{film.name}} <small>({{getFilmYear}})</small></h1>
@@ -66,12 +63,13 @@
 import queries from '@/api'
 import utils from '@/utils'
 import {mapGetters, mapActions} from 'vuex'
-
-// eslint-disable-next-line
-// import lazySizes from 'lazysizes'
+import MovieBg from './MovieBg'
 
 export default {
   name: 'MovieInfoModal',
+  components: {
+    MovieBg
+  },
   props: {
     filmId: {type: String},
     showNominate: {default: true, type: Boolean},
@@ -99,9 +97,6 @@ export default {
         this.fetchFilm(this.filmId)
           .then(film => {
             this.film = film
-            setTimeout(() => {
-              this.loadFullImage()
-            }, 500)
           })
           .catch(error => { console.error(error); this.setSnackbar('Sorry! Couldn\'t find that film.'); this.$emit('update:show', false) })
       }
@@ -125,26 +120,12 @@ export default {
       } else {
         this.setSnackbar('Error adding nomination.')
       }
-    },
-    loadFullImage: function () {
-      // TODO: Use background image for all of this
-      const image = this.$refs.image
-      image.src = image.dataset.src
     }
   },
   computed: {
     ...mapGetters('option', ['hasNominationsRemaining', 'isOptionForCurrentPoll', 'nominationsRemaining']),
     ...mapGetters('poll', ['isCurrentPollInNomination']),
     ...mapGetters('films', {getFilm: 'get'}),
-    backdropImage: function () {
-      if (this.film && this.film.backdrop_svg_base64encoded) {
-        return `data:image/svg+xml;base64,${this.film.backdrop_svg_base64encoded}`
-      }
-      return utils.getTmdbBackdropImage(this.film.backdrop_path)
-    },
-    getRealBackDropImage: function () {
-      return utils.getTmdbBackdropImage(this.film.backdrop_path)
-    },
     // TODO: Make utils
     getImdbLink: function () {
       if (this.film && this.film.imdb_id) { return `https://www.imdb.com/title/${this.film.imdb_id}` }
@@ -201,14 +182,5 @@ export default {
 
 .fade-enter, .fade-leave-to {
   opacity: 0;
-}
-
-.lazyload,
-.lazyloading {
-	opacity: 0;
-}
-.lazyloaded {
-	opacity: 1;
-	transition: opacity 300ms;
 }
 </style>
