@@ -6,8 +6,8 @@
     <h4 class="text-center">
       {{film.name}}
     </h4>
-    <p class="text-center mt-1 text-smaller" v-if="reasons">
-      Suggested because of your interest in {{reasonsSentence}}
+    <p class="text-center ml-1 mr-1 mt-1 text-smaller" v-if="reasons">
+      Because you liked {{reasonsSentence}}
     </p>
   </div>
 </template>

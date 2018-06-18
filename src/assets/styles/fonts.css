@@ -1,0 +1,133 @@
+@font-face {
+    font-family: 'icons';
+    src:  url('../fonts/icons.eot?oxiwdv');
+    src:  url('../fonts/icons.eot?oxiwdv#iefix') format('embedded-opentype'),
+      url('../fonts/icons.ttf?oxiwdv') format('truetype'),
+      url('../fonts/icons.woff?oxiwdv') format('woff'),
+      url('../fonts/icons.svg?oxiwdv#icons') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  .material-icons  {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icons' !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+     /* Enable Ligatures ================ */
+    letter-spacing: 0;
+    -webkit-font-feature-settings: "liga";
+    -moz-font-feature-settings: "liga=1";
+    -moz-font-feature-settings: "liga";
+    -ms-font-feature-settings: "liga" 1;
+    font-feature-settings: "liga";
+    -webkit-font-variant-ligatures: discretionary-ligatures;
+    font-variant-ligatures: discretionary-ligatures;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  
+.visibility:before {
+    content: "\e90e";
+  }
+  .visibility_off:before {
+    content: "\e90f";
+  }
+  .lock_outline:before {
+    content: "\e904";
+  }
+  .inbox:before {
+    content: "\e905";
+  }
+  .close:before {
+    content: "\e906";
+  }
+  .indeterminate_check_box:before {
+    content: "\e907";
+  }
+  .check_box_outline_blank:before {
+    content: "\e908";
+  }
+  .check_box:before {
+    content: "\e909";
+  }
+  .format_list_numbered:before {
+    content: "\e90a";
+  }
+  .format_list_bulleted:before {
+    content: "\e90b";
+  }
+  .timelapse:before {
+    content: "\e90c";
+  }
+  .arrow_drop_down:before {
+    content: "\e90d";
+  }
+  /* .menu:before {
+    content: "\e903";
+  } */
+  .more_vert:before {
+    content: "\e900";
+  }
+  .more_horiz:before {
+    content: "\e901";
+  }
+  .person:before {
+    content: "\e902";
+  }
+  .add_box:before {
+    content: "\e146";
+  }
+  .collections_bookmark:before {
+    content: "\e431";
+  }
+  .mode_edit:before {
+    content: "\e254";
+  }
+  .error_outline:before {
+    content: "\e001";
+  }
+  .exit_to_app:before {
+    content: "\e879";
+  }
+  .expand_less:before {
+    content: "\e5ce";
+  }
+  .filter_list:before {
+    content: "\e152";
+  }
+  .home:before {
+    content: "\e88a";
+  }
+  .keyboard_arrow_down:before {
+    content: "\e313";
+  }
+  .keyboard_arrow_up:before {
+    content: "\e316";
+  }
+  .local_play:before {
+    content: "\e553";
+  }
+  .movie_creation:before {
+    content: "\e404";
+  }
+  .movie_filter:before {
+    content: "\e43a";
+  }
+  .pie_chart:before {
+    content: "\e6c4";
+  }
+  .playlist_add:before {
+    content: "\e03b";
+  }
+  .search:before {
+    content: "\e8b6";
+  }
+  

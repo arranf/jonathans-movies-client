@@ -55,7 +55,7 @@
     <!-- add to library -->
     <v-list-tile v-if="user && user.isAdmin" to="/add">
       <v-list-tile-action>
-          <v-icon>library_add</v-icon>
+          <v-icon>playlist_add</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>Add to Collection</v-list-tile-title>
@@ -82,9 +82,9 @@
       </v-list-tile>
     </v-list>
   </v-toolbar>
-  <v-divider v-if="getActivePoll"></v-divider>
+  <v-divider v-if="getActivePoll && user"></v-divider>
 
-  <v-list v-if="getActivePoll">
+  <v-list v-if="getActivePoll && user">
     <v-list-tile v-if="isCurrentPollInNomination">
         <v-list-tile-content>
           <v-list-tile-title>{{remainingNominations}} Nomination{{remainingNominations > 1 ? 's' : ''}} Left</v-list-tile-title>
@@ -102,7 +102,6 @@
         </v-list-tile-content>
     </v-list-tile>
     <v-list-tile v-else-if="isCurrentPollInVoting">
-      
         <v-list-tile-content>
           <v-list-tile-title>{{remainingTimeWordsForCurrentPoll}}</v-list-tile-title>
         </v-list-tile-content>
