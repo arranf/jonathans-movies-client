@@ -10,8 +10,30 @@ import '@/api/feathers-client'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
 
-import Vuetify from 'vuetify'
-Vue.use(Vuetify)
+import {
+  Vuetify, // required
+  VApp, // required
+  VGrid,
+  VNavigationDrawer,
+  VToolbar,
+  transitions
+} from 'vuetify'
+
+import { Ripple } from 'vuetify/es5/directives'
+
+Vue.use(Vuetify, {
+  components: {
+    VApp,
+    VGrid,
+    VNavigationDrawer,
+    VToolbar,
+    transitions
+  },
+  directives: {
+    Ripple
+  }
+})
+
 require('vuetify/dist/vuetify.min.css')
 
 // Import custom CSS

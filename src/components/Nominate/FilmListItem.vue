@@ -8,12 +8,16 @@
 </template>
 
 <script>
+import * as VList from 'vuetify/es5/components/VList'
 import queries from '@/api'
 import utils from '@/utils'
 import {mapGetters} from 'vuex'
 
 export default {
   name: 'FilmListItem',
+  components: {
+    ...VList
+  },
   props: {
     film: {type: Object}
   },

@@ -30,15 +30,23 @@
       indeterminate
       slot="progress"
       height="4"
-      ></v-progress-linear>
-  </v-select>
+    />
+    </v-select>
 </template>
 
 <script>
+import {VSelect, VProgressLinear} from 'vuetify'
+import * as VList from 'vuetify/es5/components/VList'
+
 import queries from '@/api'
 import utils from '@/utils'
 
 export default {
+  components: {
+    ...VList,
+    VSelect,
+    VProgressLinear
+  },
   data () {
     return {
       suggestions: [],

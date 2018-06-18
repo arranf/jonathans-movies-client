@@ -72,6 +72,9 @@
 </template>
 
 <script>
+import {VBtn, VForm, VTextField} from 'vuetify'
+import * as VCard from 'vuetify/es5/components/VCard'
+
 import router from '@/router'
 import {mapActions} from 'vuex'
 import zxcvbn from 'zxcvbn'
@@ -81,6 +84,12 @@ import authClient from '@/api/auth-client'
 
 export default {
   name: 'Reset',
+  components: {
+    ...VCard,
+    VBtn,
+    VForm,
+    VTextField
+  },
   data () {
     return {
       email: '',

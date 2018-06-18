@@ -111,10 +111,19 @@
 </template>
 
 <script>
+
+import {VDivider, VIcon} from 'vuetify'
+import * as VList from 'vuetify/es5/components/VList'
+
 import {mapGetters, mapState, mapActions} from 'vuex'
 
 export default {
   name: 'DrawerList',
+  components: {
+    ...VList,
+    VDivider,
+    VIcon
+  },
   computed: {
     ...mapGetters('poll', ['getActivePoll', 'remainingTimeWordsForCurrentPoll', 'isCurrentPollInNomination', 'isCurrentPollInVoting', 'remainingTimeInNominationWordsForCurrentPoll']),
     ...mapState('auth', ['user']),

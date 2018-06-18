@@ -35,12 +35,16 @@
             <movie-bg v-if="film.backdrop_path" :film="film" :height="200" />
             <v-card-title>
               <h2 class="md-title">{{film.name}} <small>{{getYear(film.release_date)}}</small></h2>
-              <div v-if="film.tagline" class="md-subhead">
-                <span>{{film.tagline}}</span>
-              </div>
             </v-card-title>
 
-            <v-card-text>
+
+            <v-card-text style="padding-top: 0px">
+              <div v-if="film.tagline">
+                <h4 style="font-weight: 600">{{film.tagline}}</h4>
+              </div>
+            </v-card-text>
+
+            <v-card-text style="padding-top: 0px">
               {{truncatedOverview}}
             </v-card-text>
 
@@ -55,6 +59,10 @@
 
 
 <script>
+import * as VCard from 'vuetify/es5/components/VCard'
+import * as VList from 'vuetify/es5/components/VList'
+import {VIcon, VSelect, VBtn} from 'vuetify'
+
 import tmdbApi from '@/api/tmdb'
 import constants from '@/constants'
 import {mapActions} from 'vuex'
@@ -65,6 +73,11 @@ import MovieBg from '@/components/common/MovieBg'
 export default {
   name: 'AddFilm',
   components: {
+    ...VList,
+    ...VCard,
+    VIcon,
+    VSelect,
+    VBtn,
     MovieBg
   },
   data () {

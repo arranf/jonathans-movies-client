@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import {VProgressCircular, VIcon, VBtn} from 'vuetify'
 import OptionPreview from './OptionPreview'
 import queries from '@/api'
 import {mapGetters} from 'vuex'
@@ -35,7 +36,10 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'SelectedOptions',
   components: {
-    OptionPreview
+    OptionPreview,
+    VProgressCircular,
+    VIcon,
+    VBtn
   },
   data () {
     return {
