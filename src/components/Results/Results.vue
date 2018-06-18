@@ -7,8 +7,7 @@
     <bar-chart style="padding-top: 3em" :data="results" :colors="backgroundColors"/>
   </div>
   <div v-else-if="emptyStateAllowed" class="empty-state-container">
-    <span style="font-size: 100px" class="icon-error_outline mb-2"></span>
-
+    <v-icon size="100px" class="mb-2">error_outline</v-icon>
     <h1 class="display-1 mb-1">No Results</h1>
     <p class="empty-state-description">There needs to be at least one vote for there to be a winner!</p>
   </div>

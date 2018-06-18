@@ -11,11 +11,11 @@
   </v-toolbar>
   <v-divider></v-divider>
 
-  <v-list style="color: rgba(0,0,0,.54);">
+  <v-list>
     <!-- home -->
     <v-list-tile v-if="user" to="/home">
       <v-list-tile-action>
-          <span class="icon-home"></span>
+          <v-icon>home</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>Home</v-list-tile-title>
@@ -25,7 +25,7 @@
     <!-- create poll -->
     <v-list-tile v-if="user && user.isAdmin && !getActivePoll" to="/create">
       <v-list-tile-action>
-          <span class="icon-mode_edit"></span>
+          <v-icon>create</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>Create Poll</v-list-tile-title>
@@ -35,7 +35,7 @@
     <!--  discover-->
     <v-list-tile v-if="user" to="/discover">
       <v-list-tile-action>
-          <span class="icon-search"></span>
+          <v-icon>search</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>Discover</v-list-tile-title>
@@ -45,7 +45,7 @@
     <!-- all movies -->
     <v-list-tile v-if="user" to="/movies">
       <v-list-tile-action>
-          <span class="icon-movie_creation"></span>
+          <v-icon>movie</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>All Movies</v-list-tile-title>
@@ -55,7 +55,7 @@
     <!-- add to library -->
     <v-list-tile v-if="user && user.isAdmin" to="/add">
       <v-list-tile-action>
-          <span class="icon-playlist_add"></span>
+          <v-icon>playlist_add</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>Add to Collection</v-list-tile-title>
@@ -65,7 +65,7 @@
     <!-- logout -->
     <v-list-tile v-if="user" @click="logoutAndRedirect">
       <v-list-tile-action>
-          <span class="icon-exit_to_app"></span>
+          <v-icon>exit_to_app</v-icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>Logout</v-list-tile-title>

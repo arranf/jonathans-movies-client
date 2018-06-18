@@ -70,9 +70,9 @@
   .arrow_drop_down:before {
     content: "\e90d";
   }
-  .menu:before {
+  /* .menu:before {
     content: "\e903";
-  }
+  } */
   .more_vert:before {
     content: "\e900";
   }

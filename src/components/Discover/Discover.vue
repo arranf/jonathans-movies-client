@@ -11,7 +11,7 @@
             color="secondary"
             @click="scroll"
           >
-        <span class="icon-expand_less"></span>
+        <v-icon>expand_less</v-icon>
       </v-btn>
     </transition>
 

@@ -2,8 +2,7 @@
   <div>
     <transition>
       <div v-if="showSearch" class="empty-state-container">
-
-        <span style="font-size: 100px; color: rgba(0,0,0,.54);" class="icon-playlist_add mb-2"></span>
+        <v-icon size="100px" class="mb-2">playlist_add</v-icon>
         <h1 class="display-1 mb-1">Add Films</h1>
         <p class="empty-state-description">Search to find films to add to your online collection</p>
         <v-select

@@ -8,7 +8,7 @@
 
       <!-- nominations empty state -->
     <div v-if="loaded && isCurrentPollInNomination && currentPollOptions.length === 0" class="empty-state-container">
-      <span style="font-size: 100px; color: rgba(0,0,0,.54);" class="icon-playlist_add mb-2"></span>
+      <v-icon size="100px" class="mb-2">playlist_add</v-icon>
       <h1 class="display-1 mb-1">Nominate a Movie</h1>
       <p class="empty-state-description">{{`You\'ve got ${nominationsRemaining} nomination${nominationsRemaining > 1 ? 's' : ''} left. Use ${nominationsRemaining > 1 ? 'them' : 'it'} wisely!`}}</p>
       <v-btn color="primary" @click="$router.push('/discover')">Nominate a movie</v-btn>
@@ -16,8 +16,7 @@
 
     <!-- voting empty state -->
     <div v-if="loaded && !isCurrentPollInNomination && currentPollOptions.length === 0" class="empty-state-container">
-
-        <span style="font-size: 100px; color: rgba(0,0,0,.54);" class="icon-error_outline mb-2"></span>
+      <v-icon size="100px" class="mb-2">alert_circle</v-icon>
       <h1 class="display-1 mb-1">Oops</h1>
       <p class="empty-state-description">Looks like no movies were nominated. That's awkward.</p>
     </div>
