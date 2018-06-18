@@ -1,0 +1,87 @@
+@font-face {
+    font-family: 'icons';
+    src:  url('../fonts/icons.eot?h1ono6');
+    src:  url('../fonts/icons.eot?h1ono6#iefix') format('embedded-opentype'),
+      url('../fonts/icons.ttf?h1ono6') format('truetype'),
+      url('../fonts/icons.woff?h1ono6') format('woff'),
+      url('../fonts/icons.svg?h1ono6#icons') format('svg');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  [class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icons' !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    
+    /* Match v-icon ======= */
+    font-size: 24px; 
+    color: inherit;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .icon-more_vert:before {
+    content: "\e900";
+  }
+  .icon-more_horiz:before {
+    content: "\e901";
+  }
+  .icon-person:before {
+    content: "\e902";
+  }
+  .icon-add_box:before {
+    content: "\e146";
+  }
+  .icon-collections_bookmark:before {
+    content: "\e431";
+  }
+  .icon-mode_edit:before {
+    content: "\e254";
+  }
+  .icon-error_outline:before {
+    content: "\e001";
+  }
+  .icon-exit_to_app:before {
+    content: "\e879";
+  }
+  .icon-expand_less:before {
+    content: "\e5ce";
+  }
+  .icon-filter_list:before {
+    content: "\e152";
+  }
+  .icon-home:before {
+    content: "\e88a";
+  }
+  .icon-keyboard_arrow_down:before {
+    content: "\e313";
+  }
+  .icon-keyboard_arrow_up:before {
+    content: "\e316";
+  }
+  .icon-local_play:before {
+    content: "\e553";
+  }
+  .icon-movie_creation:before {
+    content: "\e404";
+  }
+  .icon-movie_filter:before {
+    content: "\e43a";
+  }
+  .icon-pie_chart:before {
+    content: "\e6c4";
+  }
+  .icon-playlist_add:before {
+    content: "\e03b";
+  }
+  .icon-search:before {
+    content: "\e8b6";
+  }
+  

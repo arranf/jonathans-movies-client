@@ -35,7 +35,8 @@
       </div>  
 
       <v-btn right bottom color="accent" fab fixed @click="showFilters = true">
-        <v-icon>filter_list</v-icon>
+        
+        <span class="icon-filter_list"></span>
       </v-btn>
    </div>
 </template>

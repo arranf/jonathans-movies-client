@@ -27,13 +27,13 @@
           :class="{'mr-3': (isCurrentPollInVoting || isCurrentPollInNomination), 'mr-4': !(isCurrentPollInVoting || isCurrentPollInNomination)}" style="margin-left: 8px;"
         >
           <span slot="badge">{{getUsersCount}}</span>
-          <v-icon color="grey lighten-3">person</v-icon>
+          <span class="icon-person" ></span>
         </v-badge>
         <span>Users Online</span>
       </v-tooltip>
     <v-menu v-if="user && user.isAdmin && (isCurrentPollInVoting || isCurrentPollInNomination)" :nudge-width="50">  
       <v-btn icon slot="activator">
-        <v-icon>more_vert</v-icon>
+        <span class="icon-more_vert"></span>
       </v-btn>
         <v-list>
           <v-list-tile v-if="isCurrentPollInNomination" @click.prevent="stopNominations()"><v-list-tile-title>End Nomination Phase</v-list-tile-title></v-list-tile>

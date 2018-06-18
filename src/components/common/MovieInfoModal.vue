@@ -1,6 +1,6 @@
 <template>
 <v-layout row justify-center>
-  <v-dialog  v-model="show" fullscreen transition="dialog-bottom-transition" :overlay="false">
+  <v-dialog v-model="show" fullscreen transition="dialog-bottom-transition" :overlay="false">
     <v-card v-if="film"  >
       <movie-bg :height="200" :film="film" />
       <v-card-title primary-title>
@@ -50,7 +50,7 @@
           {{nominateButtonText}}
         </v-btn>
         <v-btn flat @click="showOverview = !showOverview">
-          <v-icon>{{!showOverview ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</v-icon> Read Plot
+          <span :class="{'icon-keyboard_arrow_down': !showOverview, 'icon-keyboard_arrow_up': showOverview}"></span> Read Plot
         </v-btn>
         <v-btn flat @click="closeModal()">Close</v-btn>
         </v-card-actions>
