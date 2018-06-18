@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import {VIcon} from 'vuetify'
+
 import BarChart from './BarChart'
 import {mapGetters, mapState} from 'vuex'
 import utils from '@/utils'
@@ -23,7 +25,8 @@ import queries from '@/api'
 export default {
   name: 'Results',
   components: {
-    BarChart
+    BarChart,
+    VIcon
   },
   data () {
     return {

@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import {VBtn, VIcon, VProgressCircular, VProgressLinear} from 'vuetify'
 import FilmPreview from '@/components/common/FilmPreview'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
 import queries from '@/api'
@@ -69,6 +70,10 @@ export default {
     infiniteScroll
   },
   components: {
+    VBtn,
+    VIcon,
+    VProgressCircular,
+    VProgressLinear,
     FilmPreview,
     MovieInfoModal
   },

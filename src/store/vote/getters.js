@@ -13,7 +13,7 @@ export default {
   votesRemaining: (state, getters, rootState, rootGetters) => {
     let activePoll = rootGetters['poll/getActivePoll']
     const userVotes = getters.userVotes
-    if (activePoll && userVotes && userVotes.total) {
+    if (activePoll && userVotes && userVotes.total != null) {
       return activePoll.numberOfVotes - userVotes.total
     }
     return null

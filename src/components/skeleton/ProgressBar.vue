@@ -3,12 +3,16 @@
 </template>
 
 <script>
+import {VProgressLinear} from 'vuetify'
 import {mapGetters} from 'vuex'
 
 const dangerMark = 80
 
 export default {
   name: 'ProgressBar',
+  components: {
+    VProgressLinear
+  },
   computed: {
     ...mapGetters('poll', ['getActivePoll', 'percentageOfCurrentPhaseComplete']),
     color () {
