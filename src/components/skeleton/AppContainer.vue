@@ -20,6 +20,7 @@
 </template>
 
 <script>
+
 import DrawerList from '@/components/skeleton/DrawerList'
 import Toolbar from '@/components/skeleton/Toolbar'
 import ProgressBar from '@/components/skeleton/ProgressBar'

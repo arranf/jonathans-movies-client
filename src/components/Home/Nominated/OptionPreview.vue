@@ -1,9 +1,10 @@
 <template>
   <v-card>
+    <!-- TODO: Replace with MovieBG (?) -->
     <div v-if="option && film && film.backdrop_path" class="card__media" style="height: 200px;">
         <img class="img-fluid lazyload" :src="backdropImage" :data-srcset="getBackDropSrcSet" :alt="option.name + ' image'">
         <div class="card__media__content"></div>
-      </div>
+    </div>
     <v-card-title primary-title>
       <div>
         <h3 class="headline mb-0">{{option.name}}</h3>
@@ -20,6 +21,8 @@
 </template>
 
 <script>
+import * as VCard from 'vuetify/es5/components/VCard'
+import {VBtn} from 'vuetify'
 import constants from '@/constants'
 import utils from '@/utils'
 import {mapActions, mapGetters, mapState} from 'vuex'
@@ -29,6 +32,10 @@ export default {
   props: {
     option: {type: Object, required: true},
     showInfo: {type: Boolean, default: true}
+  },
+  components: {
+    ...VCard,
+    VBtn
   },
   computed: {
     ...mapState('auth', ['user']),

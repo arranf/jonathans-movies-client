@@ -8,10 +8,16 @@ import { mapState } from 'vuex';
 </template>
 
 <script>
+import {VBtn, VSnackbar} from 'vuetify'
+
 import {mapState} from 'vuex'
 
 export default {
   name: 'Snackbar',
+  components: {
+    VBtn,
+    VSnackbar
+  },
   data () {
     return {
       show: false,

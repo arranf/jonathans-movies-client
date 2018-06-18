@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import {VProgressCircular} from 'vuetify'
 import feathersClient from '@/api/feathers-client'
 import authClient from '@/api/auth-client'
 import {mapActions} from 'vuex'
@@ -12,6 +13,9 @@ import router from '@/router'
 
 export default {
   name: 'Verify',
+  components: {
+    VProgressCircular
+  },
   data () {
     return {}
   },

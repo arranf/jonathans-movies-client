@@ -41,6 +41,10 @@
 </template>
 
 <script>
+import {VProgressLinear, VIcon, VBtn, VList, VDivider, VSlider, VSelect, VDialog, VSubheader} from 'vuetify'
+// import * as  from 'vuetify/es5/components/VList'
+import * as VCard from 'vuetify/es5/components/VCard'
+
 import FilmListItem from './FilmListItem'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 import debounce from 'lodash/debounce'
@@ -49,6 +53,20 @@ import MovieInfoModal from '@/components/common/MovieInfoModal'
 
 export default {
   name: 'FilmList',
+  components: {
+    ...VCard,
+    VList,
+    VSubheader,
+    VSelect,
+    VSlider,
+    VDialog,
+    VProgressLinear,
+    VIcon,
+    VBtn,
+    VDivider,
+    FilmListItem,
+    MovieInfoModal
+  },
   data: function () {
     return {
       showingFilm: false,
@@ -66,10 +84,6 @@ export default {
   },
   props: {
     filmId: String
-  },
-  components: {
-    FilmListItem,
-    MovieInfoModal
   },
   watch: {
     'filmId' (newFilmId, oldFilmId) {
