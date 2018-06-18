@@ -34,7 +34,7 @@ Vue.use(Vuetify, {
   }
 })
 
-require('vuetify/dist/vuetify.min.css')
+require('vuetify/src/stylus/app.styl')
 
 // Import custom CSS
 require('@/assets/styles/main.scss')
