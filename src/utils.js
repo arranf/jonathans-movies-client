@@ -51,12 +51,21 @@ const functions = {
     return `https://image.tmdb.org/t/p/w1280${slug}`
   },
   getTmdbBackdropSrcSet: function (slug) {
+    if (!slug) {
+      throw Error('Slug not valid')
+    }
     return `https://image.tmdb.org/t/p/w780${slug} 780w,https://image.tmdb.org/t/p/w1280${slug} 1280w`
   },
   getTmdbPosterImage: function (slug) {
+    if (!slug) {
+      throw Error('Slug not valid')
+    }
     return `https://image.tmdb.org/t/p/w342/${slug}`
   },
   getTmdbPosterSrcSet: function (slug) {
+    if (!slug) {
+      throw Error('Slug not valid')
+    }
     return `https://image.tmdb.org/t/p/w154${slug} 154w,https://image.tmdb.org/t/p/w185${slug} 185w,https://image.tmdb.org/t/p/w342${slug} 342w,https://image.tmdb.org/t/p/w500${slug} 500w`
   },
   getYearFromTmdbReleaseDate: function (releaseDate) {
