@@ -1,6 +1,6 @@
 <template>
   <v-toolbar app dark color="primary">
-    <v-toolbar-side-icon @click="$emit('toggleNavigation')" v-if="user"></v-toolbar-side-icon>
+    <span class="icon-menu" @click="$emit('toggleNavigation')" v-if="user"></span>
     <v-toolbar-title v-if="!showMovieSearch" class="white--text">Jonathan's Movies</v-toolbar-title>
     <v-select v-if="showMovieSearch"
       solo
