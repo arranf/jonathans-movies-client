@@ -151,15 +151,15 @@ export default {
         .catch((e) => { console.error(e); this.setSnackbar(e.message) })
     },
     showConfirm (user) {
-      this.setSnackbar('Password Reset')
-      if (user.email && this.password) {
+      this.setSnackbar('Password reset! 🙌')
+      if (user && user.email && this.password) {
         this.authenticate({
           strategy: 'local',
           email: user.email,
           password: this.password
         })
-          .then(token => feathersClient.passport.verifyJWT(token.accessToken))
-          .then(() => router.push('home'))
+          .then(token => { feathersClient.passport.verifyJWT(token.accessToken) })
+          .then(() => { router.push('/home') })
           .catch(e => console.error(e))
       }
     }
