@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <div>
-      <h1 class="display-2">Sign Up</h1>
+      <h1 class="display-2 mb-4">Sign Up</h1>
     </div>
     <form id="internalLoginForm" class="d-flex flex-column align-items-center justify-content-center w-100">
       <v-text-field prepend-icon="inbox" name="email" label="Email" @change="checkUnique" :error-messages="emailErrors" v-model="email" type="text"></v-text-field>
@@ -18,13 +18,15 @@
       </v-text-field>
 
       
-      <v-btn id="submit" :disabled="isDisabled" @click.prevent="trySignUp()" color="primary">Signup</v-btn>
+      <v-btn id="submit" :disabled="isDisabled || !emailIsUnique" @click.prevent="trySignUp()" color="primary">Signup</v-btn>
       <v-btn id="back" flat @click.prevent="toHome()">Back</v-btn>
     </form>
   </div>
 </template>
 
 <script>
+import {VBtn, VTextField, VProgressLinear} from 'vuetify'
+
 import feathersClient from '@/api/feathers-client'
 import authClient from '@/api/auth-client'
 import {mapActions} from 'vuex'
@@ -39,8 +41,14 @@ export default {
       password: '',
       email: '',
       emailErrors: [],
-      passwordStrength: 0
+      passwordStrength: 0,
+      emailIsUnique: true
     }
+  },
+  components: {
+    VBtn,
+    VTextField,
+    VProgressLinear
   },
   methods: {
     ...mapActions('users', {signUp: 'create'}),
@@ -51,8 +59,8 @@ export default {
     },
     checkUnique: function () {
       authClient.checkUnique({email: this.email})
-        .then(() => { this.emailErrors = [] })
-        .catch(e => { console.error(e); this.emailErrors = ['This email address is already in use.'] })
+        .then(() => { this.emailErrors = []; this.emailIsUnique = true; })
+        .catch(e => { console.error(e); this.emailErrors = ['This email address is already in use.']; this.emailIsUnique = false; })
     },
     trySignUp: function () {
       const password = this.password
@@ -72,7 +80,14 @@ export default {
           return feathersClient.passport.verifyJWT(token.accessToken)
         })
         .then(() => router.push('home'))
-        .catch(error => { console.error(error); this.setSnackbar('Unable to complete sign up.') })
+        .catch(error => { 
+          console.error(error); 
+          let message = 'Unable to complete sign up.';
+          if (error.hasOwnProperty('errors')){
+            Object.values(error.errors).forEach((e) => message += ' ' + e);
+          }
+          this.setSnackbar(message);
+        })
     },
     checkPasswordStrength () {
       let result = zxcvbn(this.password)
