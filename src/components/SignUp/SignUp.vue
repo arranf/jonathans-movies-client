@@ -59,8 +59,8 @@ export default {
     },
     checkUnique: function () {
       authClient.checkUnique({email: this.email})
-        .then(() => { this.emailErrors = []; this.emailIsUnique = true; })
-        .catch(e => { console.error(e); this.emailErrors = ['This email address is already in use.']; this.emailIsUnique = false; })
+        .then(() => { this.emailErrors = []; this.emailIsUnique = true })
+        .catch(e => { console.error(e); this.emailErrors = ['This email address is already in use.']; this.emailIsUnique = false })
     },
     trySignUp: function () {
       const password = this.password
@@ -80,13 +80,13 @@ export default {
           return feathersClient.passport.verifyJWT(token.accessToken)
         })
         .then(() => router.push('home'))
-        .catch(error => { 
-          console.error(error); 
-          let message = 'Unable to complete sign up.';
-          if (error.hasOwnProperty('errors')){
-            Object.values(error.errors).forEach((e) => message += ' ' + e);
+        .catch(error => {
+          console.error(error)
+          let message = 'Unable to complete sign up.'
+          if (error.hasOwnProperty('message')) {
+            message += error.message
           }
-          this.setSnackbar(message);
+          this.setSnackbar(message)
         })
     },
     checkPasswordStrength () {
