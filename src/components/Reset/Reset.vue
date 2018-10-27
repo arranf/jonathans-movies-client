@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import {VBtn, VForm, VTextField} from 'vuetify'
+import {VBtn, VForm, VTextField, VProgressLinear} from 'vuetify'
 import * as VCard from 'vuetify/es5/components/VCard'
 
 import router from '@/router'
@@ -88,7 +88,8 @@ export default {
     ...VCard,
     VBtn,
     VForm,
-    VTextField
+    VTextField,
+    VProgressLinear
   },
   data () {
     return {
@@ -147,7 +148,7 @@ export default {
       }
       promise
         .then((user) => { this.showConfirm(user) })
-        .catch((e) => { console.error(e); this.setSnackbar(e) })
+        .catch((e) => { console.error(e); this.setSnackbar(e.message) })
     },
     showConfirm (user) {
       this.setSnackbar('Password Reset')
@@ -158,9 +159,7 @@ export default {
           password: this.password
         })
           .then(token => feathersClient.passport.verifyJWT(token.accessToken))
-          .then(() => {
-            router.push('home')
-          })
+          .then(() => router.push('home'))
           .catch(e => console.error(e))
       }
     }
