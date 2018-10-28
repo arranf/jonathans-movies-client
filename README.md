@@ -17,11 +17,11 @@ yarn run build --report
 ```
 
 ## Technologies
-This project is built using [Vue](https://vuejs.org) ([Vuex](https://vuex.vuejs.org) and [Vue-Router](https://router.vuejs.org/en/)) as well as [Feathers](feathersjs.com) ([Feathers-Vuex](https://github.com/feathersjs/feathers-vuex)).
+This project is built using [Vue](https://vuejs.org) ([Vuex](https://vuex.vuejs.org) and [Vue-Router](https://router.vuejs.org/en/)) as well as [Feathers](feathersjs.com) and ([Feathers-Vuex](https://github.com/feathersjs/feathers-vuex)).
 
-We also use [Bootstrap 4](https://getbootstrap.com/docs/4.0/getting-started/introduction/) and [FontAwesome](https://fontawesome.io/).
+We also use [Vuetify](https://vuetifyjs.com/en/getting-started/quick-start) and [FontAwesome](https://fontawesome.io/).
 
-The frontend for this website is hosted on [Netlify])(https://netlify.com).
+The frontend for this website is hosted on [Netlify](https://netlify.com).
 
 ## Developing
 You are free to use any IDE but Visual Studio Code is recommended.
@@ -44,14 +44,4 @@ ext install sass-indented
 
 [Vuex](https://vuex.vuejs.org)
 
-[VeeValidate Form Validation](http://vee-validate.logaretm.com/)
-
-[VueAwesomeSwiper](https://github.com/surmon-china/vue-awesome-swiper/vue)
-
-#### Vuex Resources
-
 [Vuex Feather](https://github.com/feathersjs/feathers-vuex)
-
-[Vuex Feather Example](https://github.com/feathersjs/feathers-chat-vuex)
-
-### Others
