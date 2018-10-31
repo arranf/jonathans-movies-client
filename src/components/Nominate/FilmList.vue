@@ -160,7 +160,10 @@ export default {
     this.showingFilm = Boolean(this.filmId)
     let nextPage = this.tryFetchNextPage
     this.listener = function (event) {
-      if (getDocHeight() === (getScrollXY()[1] + window.innerHeight)) {
+      const docHeight = getDocHeight()
+      const scrollXY = getScrollXY()
+      console.log(`Docheight ${docHeight}, scrollXY ${scrollXY}, window innerheight ${window.innerHeight}`)
+      if (docHeight === (scrollXY[1] + window.innerHeight)) {
         console.log('Fetching next page of movies')
         nextPage()
       }
