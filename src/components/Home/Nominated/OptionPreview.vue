@@ -64,7 +64,10 @@ export default {
       if (this.film && this.film.backdrop_svg_base64encoded) {
         return `data:image/svg+xml;base64,${this.film.backdrop_svg_base64encoded}`
       }
-      return utils.getTmdbBackdropImage(this.film.backdrop_path)
+      if (this.film && this.film.backdrop_path) {
+        return utils.getTmdbBackdropImage(this.film.backdrop_path)
+      }
+      return '';
     },
     getBackDropSrcSet: function () {
       if (this.film.backdrop_path) {

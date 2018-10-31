@@ -13,7 +13,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn id="submit" :disabled="isDisabled" @click.prevent="requestReset()" color="primary">Request Reset</v-btn>
-        <v-btn flat id="back" to="/login">Back</v-btn>
+        <v-btn flat id="back" to="/">Back</v-btn>
       </v-card-actions>
     </v-card>
 
@@ -39,7 +39,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn id="submitCode" :disabled="shortToken.length != 6" @click.prevent="setCode()" color="primary">Input Code</v-btn>
-          <v-btn flat id="back" to="/login">Back</v-btn>
+          <v-btn flat id="back" to="/">Back</v-btn>
         </v-card-actions>
       </v-card>
     </div>
@@ -65,14 +65,14 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn id="submit" :disabled="!password" @click.prevent="resetPassword()" color="primary">Change Password</v-btn>
-        <v-btn flat id="back" to="/login">Back</v-btn>
+        <v-btn flat id="back" to="/">Back</v-btn>
       </v-card-actions>
     </v-card>
   </div>
 </template>
 
 <script>
-import {VBtn, VForm, VTextField} from 'vuetify'
+import {VBtn, VForm, VTextField, VProgressLinear} from 'vuetify'
 import * as VCard from 'vuetify/es5/components/VCard'
 
 import router from '@/router'
@@ -88,7 +88,8 @@ export default {
     ...VCard,
     VBtn,
     VForm,
-    VTextField
+    VTextField,
+    VProgressLinear
   },
   data () {
     return {
@@ -116,9 +117,9 @@ export default {
           // Show short token input
           this.showCodeEnter = true
         })
-        // one source of error is a not-verified user
         .catch((e) => {
           console.error(e)
+          // one potential source of error is a not-verified user
           if (e.message.includes('User is not verified')) {
             this.setSnackbar('Check your email to verify your email address before resetting your password.')
           } else {
@@ -135,7 +136,7 @@ export default {
       // TODO: some unlikely error handling
     },
     checkPasswordStrength () {
-      let result = zxcvbn(this.password)
+      const result = zxcvbn(this.password)
       this.passwordStrength = result.score
     },
     resetPassword () {
@@ -147,20 +148,18 @@ export default {
       }
       promise
         .then((user) => { this.showConfirm(user) })
-        .catch((e) => { console.error(e); this.setSnackbar(e) })
+        .catch((e) => { console.error(e); this.setSnackbar(e.message) })
     },
     showConfirm (user) {
-      this.setSnackbar('Password Reset')
-      if (user.email && this.password) {
+      this.setSnackbar('Password reset! 🙌')
+      if (user && user.email && this.password) {
         this.authenticate({
           strategy: 'local',
           email: user.email,
           password: this.password
         })
-          .then(token => feathersClient.passport.verifyJWT(token.accessToken))
-          .then(() => {
-            router.push('home')
-          })
+          .then(token => { feathersClient.passport.verifyJWT(token.accessToken) })
+          .then(() => { router.push('/home') })
           .catch(e => console.error(e))
       }
     }
