@@ -160,7 +160,8 @@ export default {
     this.showingFilm = Boolean(this.filmId)
     let nextPage = this.tryFetchNextPage
     this.listener = function (event) {
-      if (getDocHeight() === (getScrollXY()[1] + window.innerHeight + 64)) {
+      if (getDocHeight() === (getScrollXY()[1] + window.innerHeight)) {
+        console.log('Fetching next page of movies')
         nextPage()
       }
     }
@@ -172,23 +173,11 @@ export default {
 
     // Scroll listener
     // https://jsfiddle.net/W75mP/
+    // https://github.com/nuxt/nuxt.js/issues/2512
     function getScrollXY () {
-      let scrOfX = 0
-      let scrOfY = 0
-      if (typeof (window.pageYOffset) === 'number') {
-        // Netscape compliant
-        scrOfY = window.pageYOffset
-        scrOfX = window.pageXOffset
-      } else if (document.body && (document.body.scrollLeft || document.body.scrollTop)) {
-        // DOM compliant
-        scrOfY = document.body.scrollTop
-        scrOfX = document.body.scrollLeft
-      } else if (document.documentElement && (document.documentElement.scrollLeft || document.documentElement.scrollTop)) {
-        // IE6 standards compliant mode
-        scrOfY = document.documentElement.scrollTop
-        scrOfX = document.documentElement.scrollLeft
-      }
-      return [ scrOfX, scrOfY ]
+      const scrollTop = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop)
+      const scrollLeft = Math.max(window.pageXOffset, document.body.scrollLeft, document.documentElement.scrollLeft)
+      return [ scrollLeft, scrollTop ]
     }
 
     // taken from http://james.padolsey.com/javascript/get-document-height-cross-browser/
