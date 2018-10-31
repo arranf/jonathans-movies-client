@@ -34,7 +34,7 @@
         <v-progress-linear v-show="busy" :indeterminate="true" />
       </div>  
 
-      <v-btn right bottom color="accent" fab fixed @click="showFilters = true">
+      <v-btn class="big-bottom" right color="accent" fab fixed @click="showFilters = true">
         <v-icon>filter_list</v-icon>
       </v-btn>
    </div>
@@ -209,5 +209,8 @@ export default {
   #hide {
     display: none;
   }
+}
+.big-bottom {
+  bottom: 64px;
 }
 </style>

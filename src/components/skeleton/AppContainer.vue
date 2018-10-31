@@ -9,11 +9,14 @@
       <progress-bar  />
       <v-container fluid fill-height>
           <v-layout align-center justify-center>
-        <v-flex xs12 sm8 md8>
-            <router-view />
+        <v-flex xs12 sm8 md8>          
+            <router-view />            
         </v-flex>
+        
           </v-layout>
+          
       </v-container>
+      <bottom-nav/>
     </v-content>
     <snackbar />
   </v-app>
@@ -25,6 +28,7 @@ import DrawerList from '@/components/skeleton/DrawerList'
 import Toolbar from '@/components/skeleton/Toolbar'
 import ProgressBar from '@/components/skeleton/ProgressBar'
 import Snackbar from '@/components/skeleton/Snackbar'
+import BottomNav from '@/components/skeleton/BottomNav'
 
 export default {
   name: 'app',
@@ -35,7 +39,8 @@ export default {
     DrawerList,
     Toolbar,
     ProgressBar,
-    Snackbar
+    Snackbar,
+    BottomNav
   }
 }
 </script>
