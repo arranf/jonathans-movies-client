@@ -160,7 +160,7 @@ export default {
     this.showingFilm = Boolean(this.filmId)
     let nextPage = this.tryFetchNextPage
     this.listener = function (event) {
-      if (getDocHeight() === getScrollXY()[1] + window.innerHeight) {
+      if (getDocHeight() === (getScrollXY()[1] + window.innerHeight + 64)) {
         nextPage()
       }
     }
@@ -169,6 +169,7 @@ export default {
       .then(() => document.addEventListener('scroll', this.listener))
       // TODO: Add retry
       .catch((e) => console.error(e))
+
     // Scroll listener
     // https://jsfiddle.net/W75mP/
     function getScrollXY () {
