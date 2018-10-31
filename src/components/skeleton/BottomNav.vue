@@ -1,9 +1,8 @@
 <template>
     <v-bottom-nav
-      :active.sync="bottomNav"
       :value="true"
       fixed
-      app="true"
+      :app="true"
     >
       <v-btn
       color="primary"
@@ -40,6 +39,7 @@
 <script>
 import {VIcon, VBtn, VBottomNav} from 'vuetify'
 export default {
+  Name: 'Bottom Nav',
   components: {
     VIcon,
     VBtn,
