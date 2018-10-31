@@ -3,7 +3,7 @@
       :active.sync="bottomNav"
       :value="true"
       fixed
-      color="transparent"
+      app="true"
     >
       <v-btn
       color="primary"
