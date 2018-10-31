@@ -38,10 +38,9 @@
 </template>
 
 <script>
-import {VDivider, VIcon, VBtn, VBottomNav} from 'vuetify'
+import {VIcon, VBtn, VBottomNav} from 'vuetify'
 export default {
   components: {
-    VDivider,
     VIcon,
     VBtn,
     VBottomNav
