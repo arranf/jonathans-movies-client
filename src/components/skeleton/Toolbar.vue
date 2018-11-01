@@ -19,18 +19,6 @@
       return-object
       ></v-select>
       <v-spacer v-else></v-spacer>
-      <v-tooltip bottom>
-        <v-badge 
-          slot="activator" 
-          v-if="user && user.isAdmin && (isCurrentPollInVoting || isCurrentPollInNomination) && !showMovieSearch"
-          color="red" 
-          :class="{'mr-3': (isCurrentPollInVoting || isCurrentPollInNomination), 'mr-4': !(isCurrentPollInVoting || isCurrentPollInNomination)}" style="margin-left: 8px;"
-        >
-          <span slot="badge">{{getUsersCount}}</span>
-          <v-icon color="grey lighten-3">person</v-icon>
-        </v-badge>
-        <span>Users Online</span>
-      </v-tooltip>
     <v-menu v-if="user && user.isAdmin && (isCurrentPollInVoting || isCurrentPollInNomination)" :nudge-width="50">  
       <v-btn icon slot="activator">
         <v-icon>more_vert</v-icon>
@@ -49,7 +37,7 @@ import * as VList from 'vuetify/es5/components/VList'
 
 import queries from '@/api'
 import utils from '@/utils'
-import {mapGetters, mapState, mapActions} from 'vuex'
+import {mapGetters, mapState} from 'vuex'
 
 export default {
   name: 'Toolbar',
@@ -67,8 +55,7 @@ export default {
       selectedFilm: null,
       options: [],
       loading: false,
-      searchInput: null,
-      listeningToUsersOnline: false
+      searchInput: null
     }
   },
   watch: {
@@ -79,16 +66,9 @@ export default {
         // This hides the empty element if the input is blank otherwise it appears an option
         this.options = []
       }
-    },
-    user (newUser, oldUser) {
-      if (!this.listeningToUsersOnline && newUser && newUser.isAdmin) {
-        this.getOnlineUsers()
-        this.listeningToUsersOnline = true
-      }
     }
   },
   methods: {
-    ...mapActions('users-online', {getOnlineUsers: 'find'}),
     getMovies (searchTerm) {
       this.loading = true
       queries.getFilmSuggestions(searchTerm).then(response => {
@@ -125,7 +105,6 @@ export default {
   computed: {
     ...mapState('auth', ['user']),
     ...mapGetters('poll', ['isCurrentPollInNomination', 'isCurrentPollInVoting']),
-    ...mapGetters('users-online', ['getUsersCount']),
     showMovieSearch () {
       return this.$route.name === 'Movies' || this.$route.name === 'Discover'
     }
