@@ -42,13 +42,13 @@
 
 <script>
 import {VProgressLinear, VIcon, VBtn, VList, VDivider, VSlider, VSelect, VDialog, VSubheader} from 'vuetify'
-// import * as  from 'vuetify/es5/components/VList'
 import * as VCard from 'vuetify/es5/components/VCard'
 
 import FilmListItem from './FilmListItem'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 import debounce from 'lodash/debounce'
 import constants from '@/constants'
+import scrollListener from '@/scroll-listener'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
 
 export default {
@@ -158,40 +158,16 @@ export default {
   created () {
     // $route watcher will not be called when componenet loaded
     this.showingFilm = Boolean(this.filmId)
+
+    // Setup listener
     let nextPage = this.tryFetchNextPage
-    this.listener = function (event) {
-      const docHeight = getDocHeight()
-      const scrollXY = getScrollXY()
-      // console.log(`Docheight ${docHeight}, scrollXY ${scrollXY}, window innerheight ${window.innerHeight}`)
-      // <= prevents iOS overscroll bugs: https://stackoverflow.com/questions/11172917/jquery-detect-bottom-of-page-on-mobile-safari-ios
-      if (docHeight <= (scrollXY[1] + window.innerHeight)) {
-        nextPage()
-      }
-    }
+    this.listener = scrollListener(nextPage)
+
     this.clearFilms()
     this.getFilms()
       .then(() => document.addEventListener('scroll', this.listener))
       // TODO: Add retry
       .catch((e) => console.error(e))
-
-    // Scroll listener
-    // https://jsfiddle.net/W75mP/
-    // https://github.com/nuxt/nuxt.js/issues/2512
-    function getScrollXY () {
-      const scrollTop = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop)
-      const scrollLeft = Math.max(window.pageXOffset, document.body.scrollLeft, document.documentElement.scrollLeft)
-      return [ scrollLeft, scrollTop ]
-    }
-
-    // taken from http://james.padolsey.com/javascript/get-document-height-cross-browser/
-    function getDocHeight () {
-      var D = document
-      return Math.max(
-        D.body.scrollHeight, D.documentElement.scrollHeight,
-        D.body.offsetHeight, D.documentElement.offsetHeight,
-        D.body.clientHeight, D.documentElement.clientHeight
-      )
-    }
   }
 }
 </script>
