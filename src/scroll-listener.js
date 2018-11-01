@@ -26,4 +26,4 @@ function getDocHeight () {
   )
 }
 
-export default listenerSetup;
+export default listenerSetup
