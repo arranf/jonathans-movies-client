@@ -162,9 +162,9 @@ export default {
     this.listener = function (event) {
       const docHeight = getDocHeight()
       const scrollXY = getScrollXY()
-      console.log(`Docheight ${docHeight}, scrollXY ${scrollXY}, window innerheight ${window.innerHeight}`)
-      if (docHeight === (scrollXY[1] + window.innerHeight)) {
-        console.log('Fetching next page of movies')
+      // console.log(`Docheight ${docHeight}, scrollXY ${scrollXY}, window innerheight ${window.innerHeight}`)
+      // <= prevents iOS overscroll bugs: https://stackoverflow.com/questions/11172917/jquery-detect-bottom-of-page-on-mobile-safari-ios
+      if (docHeight <= (scrollXY[1] + window.innerHeight)) {
         nextPage()
       }
     }
