@@ -3,7 +3,6 @@
 </template>
 
 <script>
-// import { VProgressLinear } from 'vuetify'
 import { mapGetters } from 'vuex'
 
 const dangerMark = 80

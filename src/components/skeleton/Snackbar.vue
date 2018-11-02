@@ -8,8 +8,6 @@ import { mapState } from 'vuex';
 </template>
 
 <script>
-// import { VBtn, VSnackbar } from 'vuetify'
-
 import { mapState } from 'vuex'
 
 export default {

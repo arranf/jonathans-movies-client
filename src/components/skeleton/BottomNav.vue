@@ -37,7 +37,6 @@
 </template>
 
 <script>
-// import { VIcon, VBtn, VBottomNav } from 'vuetify'
 export default {
   Name: 'Bottom Nav'
 }

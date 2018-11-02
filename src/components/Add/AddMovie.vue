@@ -9,7 +9,6 @@
             solo
             @input="selectFilm"
             label="Find a Film"
-            autocomplete
             :loading="loading"
             return-object
             clearable
@@ -57,10 +56,6 @@
 </template>
 
 <script>
-// import * as VCard from 'vuetify/es5/components/VCard'
-// import * as VList from 'vuetify/es5/components/VList'
-// import {VIcon, VSelect, VBtn} from 'vuetify'
-
 import tmdbApi from '@/api/tmdb'
 import constants from '@/constants'
 import { mapActions } from 'vuex'
@@ -71,11 +66,6 @@ import MovieBg from '@/components/common/MovieBg'
 export default {
   name: 'AddFilm',
   components: {
-    // ...VList,
-    // ...VCard,
-    // VIcon,
-    // VSelect,
-    // VBtn,
     MovieBg
   },
   data () {

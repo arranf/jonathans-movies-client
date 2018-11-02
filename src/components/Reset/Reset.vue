@@ -72,9 +72,6 @@
 </template>
 
 <script>
-// import {VBtn, VForm, VTextField, VProgressLinear} from 'vuetify'
-// import * as VCard from 'vuetify/es5/components/VCard'
-
 import router from '@/router'
 import { mapActions } from 'vuex'
 import zxcvbn from 'zxcvbn'
@@ -84,13 +81,6 @@ import authClient from '@/api/auth-client'
 
 export default {
   name: 'Reset',
-  // components: {
-  //   ...VCard,
-  //   VBtn,
-  //   VForm,
-  //   VTextField,
-  //   VProgressLinear
-  // },
   data () {
     return {
       email: '',

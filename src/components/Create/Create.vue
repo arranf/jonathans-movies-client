@@ -37,8 +37,6 @@
 </template>
 
 <script>
-// import { VSwitch, VTextField, VBtn } from 'vuetify'
-
 import { validationMixin } from 'vuelidate'
 import {
   required,
@@ -53,9 +51,6 @@ export default {
   name: 'Create',
   components: {
     MovieSuggest
-    // VSwitch,
-    // VTextField,
-    // VBtn
   },
   mixins: [validationMixin],
   data () {

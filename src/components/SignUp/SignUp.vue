@@ -24,8 +24,6 @@
 </template>
 
 <script>
-// import { VBtn, VTextField, VProgressLinear } from 'vuetify'
-
 import feathersClient from '@/api/feathers-client'
 import authClient from '@/api/auth-client'
 import { mapActions } from 'vuex'
@@ -44,11 +42,6 @@ export default {
       emailIsUnique: true
     }
   },
-  // components: {
-  //   VBtn,
-  //   VTextField,
-  //   VProgressLinear
-  // },
   methods: {
     ...mapActions('users', { signUp: 'create' }),
     ...mapActions('auth', ['authenticate']),

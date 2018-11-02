@@ -60,9 +60,6 @@
 </template>
 
 <script>
-// import {VDialog, VBtn, VIcon} from 'vuetify'
-// import * as VCard from 'vuetify/es5/components/VCard'
-
 import queries from '@/api'
 import utils from '@/utils'
 import { mapGetters, mapActions } from 'vuex'
@@ -72,11 +69,6 @@ export default {
   name: 'MovieInfoModal',
   components: {
     MovieBg
-    // ,
-    // VDialog,
-    // VBtn,
-    // VIcon,
-    // ...VCard
   },
   props: {
     filmId: { type: String },

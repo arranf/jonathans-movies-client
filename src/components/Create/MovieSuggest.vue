@@ -35,18 +35,10 @@
 </template>
 
 <script>
-// import {VSelect, VProgressLinear} from 'vuetify'
-// import * as VList from 'vuetify/es5/components/VList'
-
 import queries from '@/api'
 import utils from '@/utils'
 
 export default {
-  // components: {
-  //   ...VList,
-  //   VSelect,
-  //   VProgressLinear
-  // },
   data () {
     return {
       suggestions: [],
