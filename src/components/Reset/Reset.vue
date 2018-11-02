@@ -3,7 +3,7 @@
     <div class="mb-3">
       <h1 class="display-2">Reset Password</h1>
     </div>
-    
+
     <v-card v-if="!token && !showCodeEnter && !showPasswordEntry">
       <v-card-text>
         <v-form>
@@ -76,7 +76,7 @@
 // import * as VCard from 'vuetify/es5/components/VCard'
 
 import router from '@/router'
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 import zxcvbn from 'zxcvbn'
 
 import feathersClient from '@/api/feathers-client'
@@ -108,20 +108,23 @@ export default {
     }
   },
   methods: {
-    ...mapActions('snackbar', {setSnackbar: 'setText'}),
+    ...mapActions('snackbar', { setSnackbar: 'setText' }),
     ...mapActions('auth', ['authenticate', 'logout']),
     requestReset () {
-      const user = {email: this.email}
-      authClient.sendResetPwd(user)
-        .then((result) => {
+      const user = { email: this.email }
+      authClient
+        .sendResetPwd(user)
+        .then(result => {
           // Show short token input
           this.showCodeEnter = true
         })
-        .catch((e) => {
+        .catch(e => {
           console.error(e)
           // one potential source of error is a not-verified user
           if (e.message.includes('User is not verified')) {
-            this.setSnackbar('Check your email to verify your email address before resetting your password.')
+            this.setSnackbar(
+              'Check your email to verify your email address before resetting your password.'
+            )
           } else {
             this.setSnackbar('Something went wrong. Please try again.')
           }
@@ -144,11 +147,20 @@ export default {
       if (this.token) {
         promise = authClient.resetPwdLong(this.token, this.password)
       } else {
-        promise = authClient.resetPwdShort(this.shortToken, {email: this.email}, this.password)
+        promise = authClient.resetPwdShort(
+          this.shortToken,
+          { email: this.email },
+          this.password
+        )
       }
       promise
-        .then((user) => { this.showConfirm(user) })
-        .catch((e) => { console.error(e); this.setSnackbar(e.message) })
+        .then(user => {
+          this.showConfirm(user)
+        })
+        .catch(e => {
+          console.error(e)
+          this.setSnackbar(e.message)
+        })
     },
     showConfirm (user) {
       this.setSnackbar('Password reset! 🙌')
@@ -158,8 +170,12 @@ export default {
           email: user.email,
           password: this.password
         })
-          .then(token => { feathersClient.passport.verifyJWT(token.accessToken) })
-          .then(() => { router.push('/home') })
+          .then(token => {
+            feathersClient.passport.verifyJWT(token.accessToken)
+          })
+          .then(() => {
+            router.push('/home')
+          })
           .catch(e => console.error(e))
       }
     }

@@ -11,7 +11,7 @@
 // import * as VList from 'vuetify/es5/components/VList'
 import queries from '@/api'
 import utils from '@/utils'
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'FilmListItem',
@@ -19,14 +19,15 @@ export default {
   //   ...VList
   // },
   props: {
-    film: {type: Object}
+    film: { type: Object }
   },
   methods: {
     showModal: function () {
-      this.$router.push({name: 'Movies', params: { filmId: this.film._id }})
+      this.$router.push({ name: 'Movies', params: { filmId: this.film._id } })
     },
     addNomination: function () {
-      queries.addNomination(this.film)
+      queries
+        .addNomination(this.film)
         .then(() => {
           this.hideModal()
           if (!this.hasNominationsRemaining) {

@@ -30,11 +30,20 @@ export default {
         'background-image': this.backgroundImage
       }
     },
-    altText: function () { return `${this.film.name} Background` },
-    backgroundImage: function () { return `url(data:image/svg+xml;base64,${this.film.backdrop_svg_base64encoded})` },
-    src: function () { return utils.getTmdbBackdropImage(this.film.backdrop_path) },
-    srcSet: function () { return utils.getTmdbBackdropSrcSet(this.film.backdrop_path) }
+    altText: function () {
+      return `${this.film.name} Background`
+    },
+    backgroundImage: function () {
+      return `url(data:image/svg+xml;base64,${
+        this.film.backdrop_svg_base64encoded
+      })`
+    },
+    src: function () {
+      return utils.getTmdbBackdropImage(this.film.backdrop_path)
+    },
+    srcSet: function () {
+      return utils.getTmdbBackdropSrcSet(this.film.backdrop_path)
+    }
   }
 }
 </script>
-

@@ -8,16 +8,12 @@ import { mapState } from 'vuex';
 </template>
 
 <script>
-import {VBtn, VSnackbar} from 'vuetify'
+// import { VBtn, VSnackbar } from 'vuetify'
 
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'Snackbar',
-  components: {
-    VBtn,
-    VSnackbar
-  },
   data () {
     return {
       show: false,
@@ -29,15 +25,18 @@ export default {
     ...mapState('snackbar', ['isPersistent'])
   },
   created () {
-    this.$store.watch(state => state.snackbar.text, () => {
-      const msg = this.$store.state.snackbar.text
-      if (msg !== '') {
-        this.show = true
-        this.message = this.$store.state.snackbar.text
-        this.duration = this.isPersistent ? 60000 : 6000 // 60s or 6s
-        this.$store.commit('snackbar/setSnack', '')
+    this.$store.watch(
+      state => state.snackbar.text,
+      () => {
+        const msg = this.$store.state.snackbar.text
+        if (msg !== '') {
+          this.show = true
+          this.message = this.$store.state.snackbar.text
+          this.duration = this.isPersistent ? 60000 : 6000 // 60s or 6s
+          this.$store.commit('snackbar/setSnack', '')
+        }
       }
-    })
+    )
   }
 }
 </script>

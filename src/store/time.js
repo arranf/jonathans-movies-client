@@ -19,10 +19,7 @@ const actions = {
         setInterval(() => {
           commit('incrementCounter')
           if (state.counter === 0) {
-            dispatch('setInitialTime')
-              .then(() =>
-                commit('incrementCounter')
-              )
+            dispatch('setInitialTime').then(() => commit('incrementCounter'))
           } else {
             commit('updateTime')
           }
@@ -30,11 +27,15 @@ const actions = {
       })
     }
   },
-  setInitialTime ({commit, state}) {
+  setInitialTime ({ commit, state }) {
     return new Promise((resolve, reject) => {
       const timeService = client.service('time')
-      timeService.find()
-        .then(response => { commit('setTime', response); resolve() })
+      timeService
+        .find()
+        .then(response => {
+          commit('setTime', response)
+          resolve()
+        })
         .catch(error => reject(error))
     })
   }
@@ -51,7 +52,7 @@ const mutations = {
     state.now = timeResponse.time
   },
   incrementCounter (state) {
-    if (state.counter === (maxCount - 1)) {
+    if (state.counter === maxCount - 1) {
       state.counter = 0
     } else {
       state.counter++

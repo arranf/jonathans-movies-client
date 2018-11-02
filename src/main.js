@@ -7,7 +7,7 @@ import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
 
 import './plugins/vuetify'
-import "./registerServiceWorker";
+import './registerServiceWorker'
 
 // Import custom CSS
 require('@/assets/styles/main.scss')
@@ -18,8 +18,7 @@ Vue.config.devtools = !isProduction
 Vue.config.performance = !isProduction
 
 if (isProduction) {
-  Raven
-    .config('https://5e5d7f63477a49289a3e7556f761afb7@sentry.io/221248')
+  Raven.config('https://5e5d7f63477a49289a3e7556f761afb7@sentry.io/221248')
     .addPlugin(RavenVue, Vue)
     .install()
 }
@@ -28,4 +27,4 @@ new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount("#app");
+}).$mount('#app')

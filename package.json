@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@feathersjs/client": "^3.7.5",
+    "@vue/eslint-config-standard": "^4.0.0",
     "feathers-authentication-management": "^2.0.1",
     "feathers-vuex": "^1.6.2",
     "humanize-duration": "^3.15.3",
@@ -30,16 +31,18 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.1.0",
     "@vue/cli-plugin-e2e-nightwatch": "^3.1.0",
-    "@vue/cli-plugin-eslint": "^3.1.0",
+    "@vue/cli-plugin-eslint": "^3.1.3",
     "@vue/cli-plugin-pwa": "^3.1.0",
     "@vue/cli-plugin-unit-jest": "^3.1.0",
     "@vue/cli-service": "^3.1.0",
     "@vue/eslint-config-prettier": "^4.0.0",
+    "@vue/eslint-config-standard": "^4.0.0",
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
     "eslint": "^5.8.0",
+    "eslint-plugin-html": "^4.0.6",
     "eslint-plugin-vue": "^5.0.0-0",
     "lint-staged": "^7.2.2",
     "node-sass": "^4.9.0",
@@ -57,7 +60,7 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "@vue/prettier"
+      "@vue/standard"
     ],
     "rules": {},
     "parserOptions": {

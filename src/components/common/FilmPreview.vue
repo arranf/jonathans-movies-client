@@ -1,6 +1,6 @@
 <template>
   <div @click="showModal()" class="h-100" v-if="film" >
-    <img v-if="film.poster_path" class="img-fluid lazyload" 
+    <img v-if="film.poster_path" class="img-fluid lazyload"
       :src="getFilmPoster" :data-srcset="getFilmPosterSrcSet" :alt="film.name + ' image'">
    <img v-else class="img-fluid" :src="getFallbackPoster()" />
     <h4 class="text-center">
@@ -16,18 +16,18 @@
 // eslint-disable-next-line
 import lazySizes from 'lazysizes'
 import utils from '@/utils'
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'FilmPreview',
   props: {
-    film: {required: true, type: Object},
-    modalPageName: {required: true, type: String},
-    reasons: {type: Array},
-    score: {type: Number}
+    film: { required: true, type: Object },
+    modalPageName: { required: true, type: String },
+    reasons: { type: Array },
+    score: { type: Number }
   },
   computed: {
-    ...mapGetters('films', {getFilm: 'get'}),
+    ...mapGetters('films', { getFilm: 'get' }),
     getFilmPosterSrcSet: function () {
       if (this.film.poster_path) {
         return utils.getTmdbPosterSrcSet(this.film.poster_path)
@@ -36,7 +36,9 @@ export default {
     },
     getFilmPoster: function () {
       if (this.film.poster_svg_base64encoded) {
-        return `data:image/svg+xml;base64,${this.film.poster_svg_base64encoded}`
+        return `data:image/svg+xml;base64,${
+          this.film.poster_svg_base64encoded
+        }`
       }
       return utils.getTmdbPosterImage(this.film.poster_path)
     },
@@ -52,7 +54,10 @@ export default {
   methods: {
     showModal: function () {
       if (this.film) {
-        this.$router.push({name: this.modalPageName, params: { filmId: this.film._id }})
+        this.$router.push({
+          name: this.modalPageName,
+          params: { filmId: this.film._id }
+        })
       }
     },
     getFallbackPoster: function () {

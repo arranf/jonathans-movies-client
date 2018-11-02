@@ -31,19 +31,25 @@ const router = new Router({
         if (store.state.auth.user) {
           next('/home')
         } else {
-          store.dispatch('auth/authenticate')
+          store
+            .dispatch('auth/authenticate')
             .then(response => {
               return feathersClient.passport.verifyJWT(response.accessToken)
             })
             .then(payload => {
-              return feathersClient.service('users').get(payload.userId)
+              return feathersClient
+                .service('users')
+                .get(payload.userId)
                 .then(() => initStore())
             })
             .then(() => {
               next('/home')
             })
             .catch(function (error) {
-              console.error('Error authenticating in login router beforeEnter', error)
+              console.error(
+                'Error authenticating in login router beforeEnter',
+                error
+              )
             })
         }
         next()
@@ -112,7 +118,8 @@ const router = new Router({
 function initStore () {
   if (!store.state.time.hasStarted) {
     store.dispatch('time/start')
-    return queries.getCurrentPoll()
+    return queries
+      .getCurrentPoll()
       .then(response => {
         if (response.total > 0) {
           const pollId = response.data[0]._id
@@ -132,10 +139,13 @@ router.beforeEach((to, from, next) => {
 
   // Missing user and requires login
   if (!user && requiresAuth) {
-    store.dispatch('auth/authenticate')
+    store
+      .dispatch('auth/authenticate')
       .then(response => feathersClient.passport.verifyJWT(response.accessToken))
       .then(payload =>
-        feathersClient.service('users').get(payload.userId)
+        feathersClient
+          .service('users')
+          .get(payload.userId)
           .then(() => initStore())
       )
       .then(() => {
@@ -143,7 +153,10 @@ router.beforeEach((to, from, next) => {
         directToNext(to, from, next, user)
       })
       .catch(function (error) {
-        console.error(`Error authenticating before entering ${to.path}, directing to /`, error)
+        console.error(
+          `Error authenticating before entering ${to.path}, directing to /`,
+          error
+        )
         next('/')
       })
   } else {
@@ -152,10 +165,14 @@ router.beforeEach((to, from, next) => {
 })
 
 function directToNext (to, from, next, user) {
-  const allowed = !(to.matched.some(record => record.meta.admin) && (!user || !user.isAdmin))
-  initStore()
-    .then(() => { next(allowed) })
-    // NO CATCH HERE: beforeEach handles catching
+  const allowed = !(
+    to.matched.some(record => record.meta.admin) &&
+    (!user || !user.isAdmin)
+  )
+  initStore().then(() => {
+    next(allowed)
+  })
+  // NO CATCH HERE: beforeEach handles catching
 }
 
 export default router

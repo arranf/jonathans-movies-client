@@ -28,18 +28,18 @@
 </template>
 
 <script>
-import {VProgressCircular, VIcon, VBtn} from 'vuetify'
+// import { VProgressCircular, VIcon, VBtn } from 'vuetify'
 import OptionPreview from './OptionPreview'
 import queries from '@/api'
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'SelectedOptions',
   components: {
-    OptionPreview,
-    VProgressCircular,
-    VIcon,
-    VBtn
+    OptionPreview
+    // VProgressCircular,
+    // VIcon,
+    // VBtn
   },
   data () {
     return {
@@ -47,16 +47,23 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('option', ['getOptionsForCurrentPoll', 'nominationsRemaining']),
+    ...mapGetters('option', [
+      'getOptionsForCurrentPoll',
+      'nominationsRemaining'
+    ]),
     ...mapGetters('poll', ['getActivePoll', 'isCurrentPollInNomination']),
     currentPollOptions: function () {
+      // eslint-disable-next-line
       return this.getOptionsForCurrentPoll.reverse()
     }
   },
   created () {
-    queries.getOptionsForPoll(this.getActivePoll._id)
+    queries
+      .getOptionsForPoll(this.getActivePoll._id)
       .then(() => queries.getVotesForCurrentPoll())
-      .then(() => { this.loaded = true })
+      .then(() => {
+        this.loaded = true
+      })
       .catch(error => console.error(error))
   }
 }

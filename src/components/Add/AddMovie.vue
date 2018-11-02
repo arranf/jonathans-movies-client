@@ -5,9 +5,9 @@
         <v-icon size="100px" class="mb-2">playlist_add</v-icon>
         <h1 class="display-1 mb-1">Add Films</h1>
         <p class="empty-state-description">Search to find films to add to your online collection</p>
-        <v-select
+        <v-autocomplete
             solo
-            @input="selectFilm" 
+            @input="selectFilm"
             label="Find a Film"
             autocomplete
             :loading="loading"
@@ -28,7 +28,7 @@
                 </v-list-tile-content>
               </div>
             </template>
-          </v-select>
+          </v-autocomplete>
       </div>
 
       <v-card v-if="!showSearch && film">
@@ -36,7 +36,6 @@
             <v-card-title>
               <h2 class="md-title">{{film.name}} <small>{{getYear(film.release_date)}}</small></h2>
             </v-card-title>
-
 
             <v-card-text style="padding-top: 0px">
               <div v-if="film.tagline">
@@ -57,7 +56,6 @@
   </div>
 </template>
 
-
 <script>
 // import * as VCard from 'vuetify/es5/components/VCard'
 // import * as VList from 'vuetify/es5/components/VList'
@@ -65,7 +63,7 @@
 
 import tmdbApi from '@/api/tmdb'
 import constants from '@/constants'
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 import utils from '@/utils'
 
 import MovieBg from '@/components/common/MovieBg'
@@ -93,36 +91,39 @@ export default {
   },
   methods: {
     ...mapActions('films', ['create', 'find']),
-    ...mapActions('snackbar', {setSnackbarText: 'setText'}),
+    ...mapActions('snackbar', { setSnackbarText: 'setText' }),
     getFilms: function (searchTerm) {
       if (searchTerm.trim()) {
         this.loading = true
-        tmdbApi.searchForMovie(searchTerm)
-          .then(response => {
-            if (response) {
-              this.suggestions = response.results.slice(0, 5)
-            } else {
-              this.suggestions = [{'title': ''}]
-            }
-            this.loading = false
-          })
+        tmdbApi.searchForMovie(searchTerm).then(response => {
+          if (response) {
+            this.suggestions = response.results.slice(0, 5)
+          } else {
+            this.suggestions = [{ title: '' }]
+          }
+          this.loading = false
+        })
       }
     },
     selectFilm () {
-      let film =
-      {
+      let film = {
         tmdb_id: this.selectedFilm.id,
         name: this.selectedFilm.title,
         last_watched: null,
         tmdb_rating: this.selectedFilm.vote_average,
         overview: this.selectedFilm.overview,
         release_date: this.selectedFilm.release_date,
-        genres: this.selectedFilm.genre_ids.map(id => constants.genres.find(g => g.id === id).name)
+        genres: this.selectedFilm.genre_ids.map(
+          id => constants.genres.find(g => g.id === id).name
+        )
       }
 
       this.selectedFilm = film.name
-      Promise.all([tmdbApi.getMovieData(film.tmdb_id), this.find({query: {tmdb_id: film.tmdb_id}})])
-        .then((responses) => {
+      Promise.all([
+        tmdbApi.getMovieData(film.tmdb_id),
+        this.find({ query: { tmdb_id: film.tmdb_id } })
+      ])
+        .then(responses => {
           const tmdbResponse = responses[0]
           const apiResponse = responses[1]
           film.backdrop_path = tmdbResponse.backdrop_path
@@ -137,19 +138,26 @@ export default {
           this.isDuplicate = apiResponse.total > 0
           this.showSearch = false
         })
-        .catch(e => { console.error(e); this.setSnackbarText('Error fetching film information') })
+        .catch(e => {
+          console.error(e)
+          this.setSnackbarText('Error fetching film information')
+        })
     },
     addFilm () {
       if (!this.isDuplicate) {
         const { Film } = this.$FeathersVuex
-        new Film(this.film).create()
+        new Film(this.film)
+          .create()
           .then(() => {
             this.setSnackbarText(`Successfully added ${this.film.name}`)
             this.selectedFilm = ''
             this.film = null
             this.showSearch = true
           })
-          .catch(e => { console.error(e); this.setSnackbarText('Error adding film') })
+          .catch(e => {
+            console.error(e)
+            this.setSnackbarText('Error adding film')
+          })
       }
     },
     getYear (releaseDate) {
@@ -177,7 +185,10 @@ export default {
       if (!(this.film.overview.length > 350)) {
         return this.film.overview
       }
-      return this.film.overview.substring(0, 350) + (this.film.overview.length > 350 ? '...' : '')
+      return (
+        this.film.overview.substring(0, 350) +
+        (this.film.overview.length > 350 ? '...' : '')
+      )
     }
   }
 }

@@ -2,7 +2,7 @@
 // http://nightwatchjs.org/guide#usage
 
 module.exports = {
-  'login': function (browser) {
+  login: function (browser) {
     // automatically uses dev Server port from /config.index.js
     // default: http://localhost:8080
     // see nightwatch.conf.js
@@ -37,7 +37,7 @@ module.exports = {
       .assert.urlEquals(devServer + '/signup')
       .end()
   },
-  'facebookLogin': function (browser) {
+  facebookLogin: function (browser) {
     const devServer = browser.globals.devServerURL
 
     browser

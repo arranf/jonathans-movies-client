@@ -17,15 +17,19 @@ exports.assertion = function (selector) {
   }
   this.command = function (cb) {
     var self = this
-    return this.api.execute(function (selector) {
-      var element = document.querySelector(selector)
-      if (!element.hasAttribute('disabled')) {
-        return false
-      } else {
-        return element.getAttribute('disabled')
+    return this.api.execute(
+      function (selector) {
+        var element = document.querySelector(selector)
+        if (!element.hasAttribute('disabled')) {
+          return false
+        } else {
+          return element.getAttribute('disabled')
+        }
+      },
+      [selector],
+      function (res) {
+        cb.call(self, res)
       }
-    }, [selector], function (res) {
-      cb.call(self, res)
-    })
+    )
   }
 }

@@ -15,18 +15,18 @@
 </template>
 
 <script>
-import {VIcon} from 'vuetify'
+// import { VIcon } from 'vuetify'
 
 import BarChart from './BarChart'
-import {mapGetters, mapState} from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 import utils from '@/utils'
 import queries from '@/api'
 
 export default {
   name: 'Results',
   components: {
-    BarChart,
-    VIcon
+    BarChart
+    // VIcon
   },
   data () {
     return {
@@ -49,10 +49,18 @@ export default {
     }
   },
   mounted () {
-    queries.getCurrentPoll()
+    queries
+      .getCurrentPoll()
       .then(() => queries.getVotesForMostRecentPoll(this.getMostRecentPoll))
-      .then(response => { this.backgroundColors = utils.getUniqueColors(this.getMostRecentPoll.options.length, '500') })
-      .then(a => { this.emptyStateAllowed = true })
+      .then(response => {
+        this.backgroundColors = utils.getUniqueColors(
+          this.getMostRecentPoll.options.length,
+          '500'
+        )
+      })
+      .then(a => {
+        this.emptyStateAllowed = true
+      })
       .catch(error => console.error(error))
   }
 }

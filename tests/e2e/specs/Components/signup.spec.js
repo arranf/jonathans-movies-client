@@ -2,7 +2,7 @@
 // http://nightwatchjs.org/guide#usage
 
 module.exports = {
-  'back': function (browser) {
+  back: function (browser) {
     const devServer = browser.globals.devServerURL
 
     browser

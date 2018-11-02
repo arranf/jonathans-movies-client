@@ -2,13 +2,12 @@
   <v-toolbar app dark color="primary">
     <v-toolbar-side-icon @click="$emit('toggleNavigation')" v-if="user"></v-toolbar-side-icon>
     <v-toolbar-title v-if="!showMovieSearch" class="white--text">Jonathan's Movies</v-toolbar-title>
-    <v-select v-if="showMovieSearch"
+    <v-autocomplete v-if="showMovieSearch"
       solo
       light
       dense
       v-model="selectedFilm"
       :items="options"
-      autocomplete
       label="Search"
       :loading="loading"
       :search-input.sync="searchInput"
@@ -17,9 +16,9 @@
       item-value="name"
       no-data-text="No Movie Found"
       return-object
-      ></v-select>
+      ></v-autocomplete>
       <v-spacer v-else></v-spacer>
-    <v-menu v-if="user && user.isAdmin && (isCurrentPollInVoting || isCurrentPollInNomination)" :nudge-width="50">  
+    <v-menu v-if="user && user.isAdmin && (isCurrentPollInVoting || isCurrentPollInNomination)" :nudge-width="50">
       <v-btn icon slot="activator">
         <v-icon>more_vert</v-icon>
       </v-btn>
@@ -37,7 +36,7 @@
 
 import queries from '@/api'
 import utils from '@/utils'
-import {mapGetters, mapState} from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'Toolbar',
@@ -71,19 +70,21 @@ export default {
   methods: {
     getMovies (searchTerm) {
       this.loading = true
-      queries.getFilmSuggestions(searchTerm).then(response => {
-        if (searchTerm.trim() === '') {
-          this.options = []
-        } else if (response && response.data && response.data.length) {
-          this.options = response.data
-        } else {
-          // This statement exists to make the no data text work as empty arrays fail to show it
-          // TODO: remove this when upgrading to vuetify 1.1
-          this.options = [{name: ''}]
-        }
-        this.loading = false
-      })
-        .catch((e) => console.error(e))
+      queries
+        .getFilmSuggestions(searchTerm)
+        .then(response => {
+          if (searchTerm.trim() === '') {
+            this.options = []
+          } else if (response && response.data && response.data.length) {
+            this.options = response.data
+          } else {
+            // This statement exists to make the no data text work as empty arrays fail to show it
+            // TODO: remove this when upgrading to vuetify 1.1
+            this.options = [{ name: '' }]
+          }
+          this.loading = false
+        })
+        .catch(e => console.error(e))
     },
     getYear: function (releaseDate) {
       return `(${utils.getYearFromTmdbReleaseDate(releaseDate)})`
@@ -93,7 +94,7 @@ export default {
       this.searchQuery = ''
       this.options = []
       this.selectedFilm = null
-      this.$router.push({name: this.$route.name, params: { filmId: id }})
+      this.$router.push({ name: this.$route.name, params: { filmId: id } })
     },
     stopPoll () {
       queries.stopPoll()
@@ -104,7 +105,10 @@ export default {
   },
   computed: {
     ...mapState('auth', ['user']),
-    ...mapGetters('poll', ['isCurrentPollInNomination', 'isCurrentPollInVoting']),
+    ...mapGetters('poll', [
+      'isCurrentPollInNomination',
+      'isCurrentPollInVoting'
+    ]),
     showMovieSearch () {
       return this.$route.name === 'Movies' || this.$route.name === 'Discover'
     }

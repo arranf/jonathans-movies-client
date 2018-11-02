@@ -3,7 +3,7 @@
       <movie-info-modal :show.sync="showingFilm" close-route="/home" :filmId="filmId" :show-nominate="false" />
       <div>
         <selected-options v-if="getActivePoll" />
-        <results v-else></results> 
+        <results v-else></results>
       </div>
   </div>
 </template>
@@ -33,7 +33,7 @@ export default {
     ...mapGetters('poll', ['getActivePoll'])
   },
   watch: {
-    'filmId' (newFilmId, oldFilmId) {
+    filmId (newFilmId, oldFilmId) {
       this.showingFilm = Boolean(newFilmId)
     }
   },

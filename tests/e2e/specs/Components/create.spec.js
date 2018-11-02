@@ -4,7 +4,7 @@
 let login = require('../../common/login')
 
 module.exports = {
-  'normalFlow': function (browser) {
+  normalFlow: function (browser) {
     // automatically uses dev Server port from /config.index.js
     // default: http://localhost:8080
     // see nightwatch.conf.js
@@ -44,7 +44,7 @@ module.exports = {
       .assert.isNotDisabled('#start-poll')
       .end()
   },
-  'back': function (browser) {
+  back: function (browser) {
     const devServer = browser.globals.devServerURL
     login(browser)
     browser

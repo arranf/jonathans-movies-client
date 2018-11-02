@@ -17,7 +17,6 @@
           ></v-progress-linear>
       </v-text-field>
 
-      
       <v-btn id="submit" :disabled="isDisabled || !emailIsUnique" @click.prevent="trySignUp()" color="primary">Signup</v-btn>
       <v-btn id="back" flat @click.prevent="toHome()">Back</v-btn>
     </form>
@@ -25,11 +24,11 @@
 </template>
 
 <script>
-import {VBtn, VTextField, VProgressLinear} from 'vuetify'
+// import { VBtn, VTextField, VProgressLinear } from 'vuetify'
 
 import feathersClient from '@/api/feathers-client'
 import authClient from '@/api/auth-client'
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 import router from '@/router'
 import zxcvbn from 'zxcvbn'
 
@@ -45,22 +44,30 @@ export default {
       emailIsUnique: true
     }
   },
-  components: {
-    VBtn,
-    VTextField,
-    VProgressLinear
-  },
+  // components: {
+  //   VBtn,
+  //   VTextField,
+  //   VProgressLinear
+  // },
   methods: {
-    ...mapActions('users', {signUp: 'create'}),
+    ...mapActions('users', { signUp: 'create' }),
     ...mapActions('auth', ['authenticate']),
-    ...mapActions('snackbar', {setSnackbar: 'setText'}),
+    ...mapActions('snackbar', { setSnackbar: 'setText' }),
     toHome: function () {
       router.push('/home')
     },
     checkUnique: function () {
-      authClient.checkUnique({email: this.email})
-        .then(() => { this.emailErrors = []; this.emailIsUnique = true })
-        .catch(e => { console.error(e); this.emailErrors = ['This email address is already in use.']; this.emailIsUnique = false })
+      authClient
+        .checkUnique({ email: this.email })
+        .then(() => {
+          this.emailErrors = []
+          this.emailIsUnique = true
+        })
+        .catch(e => {
+          console.error(e)
+          this.emailErrors = ['This email address is already in use.']
+          this.emailIsUnique = false
+        })
     },
     trySignUp: function () {
       const password = this.password
@@ -70,11 +77,13 @@ export default {
         email: email,
         password: password
       })
-        .then(() => this.authenticate({
-          strategy: 'local',
-          email: email,
-          password: password
-        }))
+        .then(() =>
+          this.authenticate({
+            strategy: 'local',
+            email: email,
+            password: password
+          })
+        )
         .then(token => {
           console.log('Authenticated!', token)
           return feathersClient.passport.verifyJWT(token.accessToken)

@@ -25,13 +25,13 @@
 // import {VBtn} from 'vuetify'
 import constants from '@/constants'
 import utils from '@/utils'
-import {mapActions, mapGetters, mapState} from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'OptionPreview',
   props: {
-    option: {type: Object, required: true},
-    showInfo: {type: Boolean, default: true}
+    option: { type: Object, required: true },
+    showInfo: { type: Boolean, default: true }
   },
   // components: {
   //   ...VCard,
@@ -39,8 +39,8 @@ export default {
   // },
   computed: {
     ...mapState('auth', ['user']),
-    ...mapGetters('films', {getFilm: 'get'}),
-    ...mapGetters('vote', {remainingVotes: 'votesRemaining', votes: 'list'}),
+    ...mapGetters('films', { getFilm: 'get' }),
+    ...mapGetters('vote', { remainingVotes: 'votesRemaining', votes: 'list' }),
     ...mapGetters('poll', ['getActivePoll', 'isCurrentPollInNomination']),
     voteButtonText: function () {
       if (this.isVoted(this.option._id)) {
@@ -62,7 +62,9 @@ export default {
     },
     backdropImage: function () {
       if (this.film && this.film.backdrop_svg_base64encoded) {
-        return `data:image/svg+xml;base64,${this.film.backdrop_svg_base64encoded}`
+        return `data:image/svg+xml;base64,${
+          this.film.backdrop_svg_base64encoded
+        }`
       }
       if (this.film && this.film.backdrop_path) {
         return utils.getTmdbBackdropImage(this.film.backdrop_path)
@@ -83,9 +85,9 @@ export default {
     }
   },
   methods: {
-    ...mapActions('films', {fetchFilm: 'get'}),
-    ...mapActions('vote', {addVote: 'create', removeVote: 'remove'}),
-    ...mapActions('snackbar', {setSnackbar: 'setText'}),
+    ...mapActions('films', { fetchFilm: 'get' }),
+    ...mapActions('vote', { addVote: 'create', removeVote: 'remove' }),
+    ...mapActions('snackbar', { setSnackbar: 'setText' }),
     vote: function () {
       if (this.option == null) {
         this.setSnackbar('Error submitting vote.')
@@ -93,30 +95,43 @@ export default {
       }
       let optionId = this.option._id
       if (this.isVoted(optionId)) {
-        const vote = this.votes.find(v => v.user_id === this.user._id && v.option_id === optionId)
+        const vote = this.votes.find(
+          v => v.user_id === this.user._id && v.option_id === optionId
+        )
         this.removeVote(vote._id)
           .then(console.log('Vote removed from ', this.option.name))
           .catch(error => console.error(error))
       } else {
         if (this.remainingVotes <= 0) {
-          this.setSnackbar('Unable to vote. You don\'t have any votes left')
+          this.setSnackbar("Unable to vote. You don't have any votes left")
           return
         }
-        this.addVote({poll_id: this.getActivePoll._id, option_id: optionId})
+        this.addVote({ poll_id: this.getActivePoll._id, option_id: optionId })
           .then(console.log('Vote added for ', this.option.name))
-          .then(this.setSnackbar(`Voted! You have ${this.remainingVotes - 1} vote${this.remainingVotes > 1 ? 's' : ''} remaining`))
-          .catch(error => { console.error(error); this.setSnackbar('Error submitting vote.') })
+          .then(
+            this.setSnackbar(
+              `Voted! You have ${this.remainingVotes - 1} vote${
+                this.remainingVotes > 1 ? 's' : ''
+              } remaining`
+            )
+          )
+          .catch(error => {
+            console.error(error)
+            this.setSnackbar('Error submitting vote.')
+          })
       }
     },
     isVoted: function () {
-      return this.votes.some(v => v && v.user_id === this.user._id && v.option_id === this.option._id)
+      return this.votes.some(
+        v => v && v.user_id === this.user._id && v.option_id === this.option._id
+      )
     },
     getColor: function () {
       return utils.selectRandom(constants.colors['800'])
     },
     showModal: function () {
       if (this.film && this.showInfo) {
-        this.$router.push({name: 'Home', params: { filmId: this.film._id }})
+        this.$router.push({ name: 'Home', params: { filmId: this.film._id } })
       }
     }
   },

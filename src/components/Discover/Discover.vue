@@ -10,13 +10,14 @@
             right
             color="secondary"
             @click="scroll"
+            class="big-bottom"
           >
         <v-icon>expand_less</v-icon>
       </v-btn>
     </transition>
 
     <div v-infinite-scroll="refresh" :infinite-scroll-disabled="busy" :infinite-scroll-immediate-check="true" infinite-scroll-distance="40">
-       
+
         <div v-if="recommendations && recommendations.length">
             <h3 class="separator">Recommended For You</h3>
             <v-container fluid grid-list-xs>
@@ -40,7 +41,7 @@
             </v-layout>
           </v-container>
         </div>
-        <div v-else class="text-center"> 
+        <div v-else class="text-center">
           <v-progress-circular indeterminate color="primary"></v-progress-circular>
         </div>
     </div>
@@ -48,7 +49,7 @@
 </template>
 
 <script>
-import {VBtn, VIcon, VProgressCircular, VProgressLinear} from 'vuetify'
+// import { VBtn, VIcon, VProgressCircular, VProgressLinear } from 'vuetify'
 import FilmPreview from '@/components/common/FilmPreview'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
 import queries from '@/api'
@@ -70,10 +71,10 @@ export default {
     infiniteScroll
   },
   components: {
-    VBtn,
-    VIcon,
-    VProgressCircular,
-    VProgressLinear,
+    // VBtn,
+    // VIcon,
+    // VProgressCircular,
+    // VProgressLinear,
     FilmPreview,
     MovieInfoModal
   },
@@ -81,17 +82,21 @@ export default {
     filmId: String
   },
   watch: {
-    'filmId' (to, from) {
+    filmId (to, from) {
       this.showingFilm = Boolean(this.filmId)
     }
   },
   methods: {
-    ...mapActions('snackbar', {setSnackbar: 'setText'}),
+    ...mapActions('snackbar', { setSnackbar: 'setText' }),
     refresh: function () {
       this.showUp++
       this.busy = true
-      queries.discoverMovies()
-        .then(discoveredFilms => { this.suggestions = this.suggestions.concat(discoveredFilms); this.busy = false })
+      queries
+        .discoverMovies()
+        .then(discoveredFilms => {
+          this.suggestions = this.suggestions.concat(discoveredFilms)
+          this.busy = false
+        })
         .catch(e => {
           console.error(e)
           this.setSnackbar('Something went wrong. Try again.')
@@ -100,8 +105,12 @@ export default {
     },
     getRecommendations: function () {
       this.busy = true
-      return queries.getRecommendations()
-        .then(response => { this.recommendations = response; this.busy = false })
+      return queries
+        .getRecommendations()
+        .then(response => {
+          this.recommendations = response
+          this.busy = false
+        })
         .catch(e => {
           console.error(e)
           this.setSnackbar('Something went wrong. Try again.')
@@ -117,7 +126,7 @@ export default {
     this.showingFilm = Boolean(this.filmId)
     this.getRecommendations()
       .then(() => this.refresh())
-      .catch((e) => console.error(e))
+      .catch(e => console.error(e))
   }
 }
 </script>
@@ -126,19 +135,33 @@ export default {
 .separator {
   text-align: left;
   /* font-size: 140%; */
-  border-bottom: #1A237E 2px solid;
+  border-bottom: #1a237e 2px solid;
   margin-bottom: 0.5em;
   font-weight: 600;
   font-size: 130%;
   color: #111;
 }
 
-.slide-enter { transform: translateY(100%) }
-.slide-enter-to { transform: translateY(0) }
+.slide-enter {
+  transform: translateY(100%);
+}
+.slide-enter-to {
+  transform: translateY(0);
+}
 
-.slide-leave { transform: translateY(0) }
-.slide-leave-to { transform: translateY(-100%) }
+.slide-leave {
+  transform: translateY(0);
+}
+.slide-leave-to {
+  transform: translateY(-100%);
+}
 
 .slide-enter-active,
-.slide-leave-active { transition: all 300ms ease-in }
+.slide-leave-active {
+  transition: all 300ms ease-in;
+}
+
+.big-bottom {
+  bottom: 64px;
+}
 </style>

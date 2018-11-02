@@ -65,7 +65,7 @@
 
 import queries from '@/api'
 import utils from '@/utils'
-import {mapGetters, mapActions} from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import MovieBg from './MovieBg'
 
 export default {
@@ -79,10 +79,10 @@ export default {
     // ...VCard
   },
   props: {
-    filmId: {type: String},
-    showNominate: {default: true, type: Boolean},
-    show: {type: Boolean},
-    closeRoute: {type: String, required: true}
+    filmId: { type: String },
+    showNominate: { default: true, type: Boolean },
+    show: { type: Boolean },
+    closeRoute: { type: String, required: true }
   },
   data () {
     return {
@@ -92,8 +92,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions('films', {fetchFilm: 'get'}),
-    ...mapActions('snackbar', {setSnackbar: 'setText'}),
+    ...mapActions('films', { fetchFilm: 'get' }),
+    ...mapActions('snackbar', { setSnackbar: 'setText' }),
     modalOpened: function () {
       this.showOverview = false
       // Use internal getter
@@ -106,7 +106,11 @@ export default {
           .then(film => {
             this.film = film
           })
-          .catch(error => { console.error(error); this.setSnackbar('Sorry! Couldn\'t find that film.'); this.$emit('update:show', false) })
+          .catch(error => {
+            console.error(error)
+            this.setSnackbar("Sorry! Couldn't find that film.")
+            this.$emit('update:show', false)
+          })
       }
     },
     closeModal: function () {
@@ -114,29 +118,47 @@ export default {
       this.$router.replace(this.closeRoute)
     },
     addNomination: function () {
-      if (this.showNominate && this.hasNominationsRemaining && !this.isOptionForCurrentPoll(this.film_id)) {
-        queries.addNomination(this.film)
+      if (
+        this.showNominate &&
+        this.hasNominationsRemaining &&
+        !this.isOptionForCurrentPoll(this.film_id)
+      ) {
+        queries
+          .addNomination(this.film)
           .then(() => {
             this.$emit('update:show', false)
             if (!this.hasNominationsRemaining) {
               this.$router.push('/')
             } else {
-              this.setSnackbar(`Nominated. You have ${this.nominationsRemaining} nomination${this.nominationsRemaining > 1 ? 's' : ''}  left`)
+              this.setSnackbar(
+                `Nominated. You have ${this.nominationsRemaining} nomination${
+                  this.nominationsRemaining > 1 ? 's' : ''
+                }  left`
+              )
             }
           })
-          .catch(e => { console.error(e); this.setSnackbar(e.message ? e.message : e) })
+          .catch(e => {
+            console.error(e)
+            this.setSnackbar(e.message ? e.message : e)
+          })
       } else {
         this.setSnackbar('Error adding nomination.')
       }
     }
   },
   computed: {
-    ...mapGetters('option', ['hasNominationsRemaining', 'isOptionForCurrentPoll', 'nominationsRemaining']),
+    ...mapGetters('option', [
+      'hasNominationsRemaining',
+      'isOptionForCurrentPoll',
+      'nominationsRemaining'
+    ]),
     ...mapGetters('poll', ['isCurrentPollInNomination']),
-    ...mapGetters('films', {getFilm: 'get'}),
+    ...mapGetters('films', { getFilm: 'get' }),
     // TODO: Make utils
     getImdbLink: function () {
-      if (this.film && this.film.imdb_id) { return `https://www.imdb.com/title/${this.film.imdb_id}` }
+      if (this.film && this.film.imdb_id) {
+        return `https://www.imdb.com/title/${this.film.imdb_id}`
+      }
     },
     getFilmYear: function () {
       if (this.film && this.film.release_date) {
@@ -151,12 +173,14 @@ export default {
     },
     inNominations () {
       // Set to show nominations
-      return this.showNominate &&
-        this.isCurrentPollInNomination
+      return this.showNominate && this.isCurrentPollInNomination
     },
     nominatable () {
       // user has left to spend and isn't already nominated
-      return this.hasNominationsRemaining && !this.isOptionForCurrentPoll(this.film._id)
+      return (
+        this.hasNominationsRemaining &&
+        !this.isOptionForCurrentPoll(this.film._id)
+      )
     }
   },
   created () {
@@ -176,19 +200,21 @@ export default {
 
 <style scoped>
 #imdb {
-  fill: #FDD835;
+  fill: #fdd835;
   height: 2.5em;
   width: 2.5em;
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: .4s cubic-bezier(.4,0,.2,1);
-  transform: translate3D(0,0,0);
-  will-change: opacity,margin-top;
-  transition-property: opacity,margin-top;
+.fade-enter-active,
+.fade-leave-active {
+  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translate3D(0, 0, 0);
+  will-change: opacity, margin-top;
+  transition-property: opacity, margin-top;
 }
 
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>

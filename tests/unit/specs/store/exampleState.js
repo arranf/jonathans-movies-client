@@ -1,1 +1,1297 @@
-export default {'time': {'now': 1527291603816, 'hasStarted': true, 'counter': 4}, 'snackbar': {'text': '', 'isPersistent': false}, 'poll': {'ids': ['5b0892a47ed2e65d86dd8f91', '5b0872b0b8681b25bf6b934f', '5b05a3936d3e5a6c2e5ef5a8', '5b05a32a6d3e5a6c2e5ef5a7', '5b05a2376d3e5a6c2e5ef5a0', '5b03ddd2cc07571ef7dba8ff', '5b03dbddcc07571ef7dba8f8', '5b03dbb9cc07571ef7dba8f6', '5b03526d1a8266181259ff45', '5b0351471a8266181259ff42', '5b03504c1a8266181259ff40', '5b034fd51a8266181259ff3f', '5b034ab91a8266181259ff3d', '5b0347861a8266181259ff3b', '5b0308191a8266181259ff39', '5b0304151a8266181259ff37', '5b0304141a8266181259ff36', '5b02fd2a1a8266181259ff30', '5b02faec1a8266181259ff2b', '5b02e4581a8266181259ff2a'], 'keyedById': {'5b0892a47ed2e65d86dd8f91': {'options': [{'film': {'_id': '59d621d1baabc4174c9d532a', 'name': 'The Matrix', 'overview': 'Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.', 'release_date': '1999-03-30', 'genres': ['Action', 'Science Fiction'], 'poster_path': '/hEpWvX6Bp79eLxY1kX5ZZJcme5U.jpg', 'backdrop_path': '/7u3pxc0K1wx32IleAkLv78MKgrw.jpg', 'tmdb_rating': 8, 'imdb_rating': 8.7, 'rotten_tomatoes_rating': 87, 'tagline': 'Welcome to the Real World.', 'runtime': 136, 'imdb_id': 'tt0133093', 'svg_base64encoded': 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDAgNzUwIj48ZmlsdGVyIGlkPSJjIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI1NSIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjNDk1NzVjIiBkPSJNMCAwaDQ5OHY3NTBIMHoiLz48ZyBmaWx0ZXI9J3VybCgjYyknIGZpbGwtb3BhY2l0eT0nLjUnPjxlbGxpcHNlIGZpbGw9IiNhZWMwY2YiIGZpbGwtb3BhY2l0eT0iLjUiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoNi44ODA3IC0xNDUuOTA0ODIgNDk0LjU2NzY0IDIzLjMyMzIyIDMwNi44IDEzNi42KSIvPjxlbGxpcHNlIGZpbGwtb3BhY2l0eT0iLjUiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJyb3RhdGUoMTY2LjUgMTM3LjMgMzYyLjQpIHNjYWxlKDE3OS42MDc0OCA0NzQuOTAyKSIvPjxwYXRoIGZpbGw9IiNkNGU1ZGUiIGZpbGwtb3BhY2l0eT0iLjUiIGQ9Ik00MDUuNyAxNDUuOUwzOTAuOCA0OTIgMzQ5IDI2NS43IDI3MC44IDE5NHoiLz48cGF0aCBmaWxsLW9wYWNpdHk9Ii41IiBkPSJNMjgyLjcgMjQxLjdsLTIwOCAzNjAuNEwzOTcgNjYwLjZ6Ii8+PGVsbGlwc2UgZmlsbD0iI2Q4ZGJkMyIgZmlsbC1vcGFjaXR5PSIuNSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgtMTAxLjYgODMuNSAxMDAuOSkgc2NhbGUoNTkuNjY5NzMgMjMyLjI0Nzk3KSIvPjxlbGxpcHNlIGZpbGw9IiMwYzExMGIiIGZpbGwtb3BhY2l0eT0iLjUiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMjczLjg5MzIyIDc2LjU3ODU5IC0yMC4yNjk3MiA3Mi40OTcyNyAxMTIuMiA3NDguNSkiLz48cGF0aCBmaWxsPSIjOGRiMmI4IiBmaWxsLW9wYWNpdHk9Ii41IiBkPSJNMzgyLjMgNTcyLjhsLTU1LjYtMjAyLjIgODUgMTM3Ljd6Ii8+PHBhdGggZmlsbD0iI2UwZDBjNSIgZmlsbC1vcGFjaXR5PSIuNSIgZD0iTTQ2MC4zIDI4Ny42bC0yMy41LTMxLjEgMTA2LjctMjcuMy03My40IDE1MHoiLz48cGF0aCBmaWxsPSIjMDkwZDBiIiBmaWxsLW9wYWNpdHk9Ii41IiBkPSJNMTMwLjQgMjY4bDkzLjctNTguNS0zMi4yLTM1LjJ6Ii8+PGVsbGlwc2UgZmlsbD0iIzQwNWRhMSIgZmlsbC1vcGFjaXR5PSIuNSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCguMjAwODYgLTI3Ljk1NDIgMjM5LjE0Mzk3IDEuNzE4MyAyMDQuNSA5NC42KSIvPjwvZz48L3N2Zz4=', 'recommendations': [{'id': '59d621d1baabc4174c9d5266', 'score': 0.9506842768047069}, {'id': '59d621d1baabc4174c9d534f', 'score': 0.7421856589536464}, {'id': '59d621d1baabc4174c9d5253', 'score': 0.7379854082488033}, {'id': '59d621d1baabc4174c9d53b1', 'score': 0.7165556722886302}, {'id': '59d621d1baabc4174c9d53de', 'score': 0.7158366479180817}, {'id': '59d621d1baabc4174c9d52cc', 'score': 0.7104511504532722}, {'id': '59d621d1baabc4174c9d5239', 'score': 0.655224592405305}, {'id': '59d621d1baabc4174c9d5383', 'score': 0.6517902661424035}, {'id': '59d621d1baabc4174c9d53d1', 'score': 0.649046800698237}]}, '_id': '5b0892a47ed2e65d86dd8f92', 'name': 'The Matrix', 'film_id': '59d621d1baabc4174c9d532a', 'poll_id': '5b0892a47ed2e65d86dd8f91', 'createdAt': '2018-05-25T22:48:04.314Z', 'updatedAt': '2018-05-25T22:48:04.314Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, {'film': {'_id': '59d621d1baabc4174c9d51ed', 'name': 'American Wedding', 'overview': "With high school a distant memory, Jim and Michelle are getting married -- and in a hurry, since Jim's grandmother is sick and wants to see him walk down the aisle -- prompting Stifler to throw the ultimate bachelor party. And Jim's dad is reliable as ever, doling out advice no one wants to hear.", 'release_date': '2003-08-01', 'genres': ['Comedy', 'Romance'], 'poster_path': '/lcLuBjI3Hr12mGFKJvdMeZdf3AN.jpg', 'backdrop_path': '/5CDIezS2xJtcSXPL24Z2dIeUOp0.jpg', 'tmdb_rating': 6, 'imdb_rating': 6.3, 'rotten_tomatoes_rating': 54, 'tagline': 'Forever hold your piece.', 'runtime': 103, 'imdb_id': 'tt0328828', 'svg_base64encoded': 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDAgNzUwIj48ZmlsdGVyIGlkPSJiIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxMiIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjNzI1OTQ3IiBkPSJNMCAwaDQ5OHY3NTBIMHoiLz48ZyBmaWx0ZXI9InVybCgjYikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEuNSAxLjUpIHNjYWxlKDIuOTI5NjkpIiBmaWxsLW9wYWNpdHk9Ii41Ij48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0icm90YXRlKC0xMS42IDExNjguMiAyNi44KSBzY2FsZSgzNi4wMDM0MiA2MC42Mjg2OCkiLz48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDE4Ljk4Mjk4IC03Ny4yODQ4NCAyNC4yNDk1MSA1Ljk1NjI1IDE4LjEgMzcpIi8+PGVsbGlwc2UgY3g9IjE2OSIgY3k9IjE2MiIgcng9IjEwNyIgcnk9IjEwNyIvPjxlbGxpcHNlIGZpbGw9IiNmZmYiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMTI1LjcyOTAzIDY0LjAxMDgzIC0xMC41NzQ3NCAyMC43NzA3MyAxNDQuNyA1LjYpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmYmYzNyIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCg0My42OTA2NiAtMTguMDk3MjYgMTMuNDY1NzQgMzIuNTA5MTggNzUuOCAxODQpIi8+PGVsbGlwc2Ugcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgyOC43MTk4MyAyNy45MTgxMiAtMTEwLjEwNzE5IDExMy4yNjkwOSAxMjcgMjMwLjIpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmZiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgtMTkuOCA2NTcuNiAxMTQuOCkgc2NhbGUoMzYuNzQwMTIgNjMuNjMwNzgpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmZiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtNDkuMzQxNTIgLTUwLjMxNzQ4IDE2LjMyOTUyIC0xNi4wMTI4IDE1MC4yIDYuOCkiLz48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0icm90YXRlKDE0MS4yIDEyLjMgNC4zKSBzY2FsZSg1NC4wOTE4NCAyMy40MDY2OSkiLz48ZWxsaXBzZSBmaWxsPSIjYzk2ZDQ4IiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDIxLjEwODA4IC0yMy42NTAxMyAyNC4zMDQ0NyAyMS42OTIwOSA0NS4xIDQ4LjEpIi8+PC9nPjwvc3ZnPg==', 'recommendations': [{'id': '59d621d1baabc4174c9d52c2', 'score': 0.9985474450910079}, {'id': '59d621d1baabc4174c9d522a', 'score': 0.9984621330194661}, {'id': '59d621d1baabc4174c9d51ec', 'score': 0.9983964766121615}, {'id': '59d621d1baabc4174c9d5243', 'score': 0.9972365281763945}, {'id': '59d621d1baabc4174c9d51d3', 'score': 0.9972093041987072}, {'id': '59d621d1baabc4174c9d51d4', 'score': 0.9964623429352079}, {'id': '59d621d1baabc4174c9d5418', 'score': 0.9963642086153753}, {'id': '59d621d1baabc4174c9d5408', 'score': 0.9952622643776048}, {'id': '59d621d1baabc4174c9d52c0', 'score': 0.9949850191481875}]}, '_id': '5b0892b27ed2e65d86dd8f93', 'name': 'American Wedding', 'poll_id': '5b0892a47ed2e65d86dd8f91', 'film_id': '59d621d1baabc4174c9d51ed', 'createdAt': '2018-05-25T22:48:18.582Z', 'updatedAt': '2018-05-25T22:48:18.582Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}], '_id': '5b0892a47ed2e65d86dd8f91', 'numberOfVotes': 2, 'startDateTime': 1527288484289, 'endDateTime': 1527288796628, 'pollTransitionDateTime': 1527288784289, 'numberOfNominations': 2, 'createdAt': '2018-05-25T22:48:04.293Z', 'updatedAt': '2018-05-25T22:53:16.798Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b0872b0b8681b25bf6b934f': {'options': [], '_id': '5b0872b0b8681b25bf6b934f', 'numberOfVotes': 2, 'startDateTime': 1527280304062, 'endDateTime': 1527280784062, 'pollTransitionDateTime': 1527280604062, 'numberOfNominations': 1, 'createdAt': '2018-05-25T20:31:44.093Z', 'updatedAt': '2018-05-25T20:31:44.093Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b05a3936d3e5a6c2e5ef5a8': {'options': [], '_id': '5b05a3936d3e5a6c2e5ef5a8', 'numberOfVotes': 2, 'startDateTime': 1527096211974, 'endDateTime': 1527096570545, 'pollTransitionDateTime': 1527096511974, 'numberOfNominations': 1, 'createdAt': '2018-05-23T17:23:31.998Z', 'updatedAt': '2018-05-23T17:29:30.794Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b05a32a6d3e5a6c2e5ef5a7': {'options': [], '_id': '5b05a32a6d3e5a6c2e5ef5a7', 'numberOfVotes': 2, 'startDateTime': 1527096106297, 'endDateTime': 1527096163389, 'pollTransitionDateTime': 1527096406297, 'numberOfNominations': 1, 'createdAt': '2018-05-23T17:21:46.324Z', 'updatedAt': '2018-05-23T17:22:43.508Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b05a2376d3e5a6c2e5ef5a0': {'options': [{'film': null, '_id': '5b05a2a16d3e5a6c2e5ef5a1', 'name': 'Thor: Ragnarok', 'poll_id': '5b05a2376d3e5a6c2e5ef5a0', 'film_id': '5afc38b5c47f281d032e7372', 'createdAt': '2018-05-23T17:19:29.443Z', 'updatedAt': '2018-05-23T17:19:29.443Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}], '_id': '5b05a2376d3e5a6c2e5ef5a0', 'numberOfVotes': 2, 'startDateTime': 1527095863017, 'endDateTime': 1527096067015, 'pollTransitionDateTime': 1527095973903, 'numberOfNominations': 1, 'createdAt': '2018-05-23T17:17:43.060Z', 'updatedAt': '2018-05-23T17:21:07.194Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b03ddd2cc07571ef7dba8ff': {'options': [{'film': null, '_id': '5b03ddd8cc07571ef7dba900', 'name': 'Live Free or Die Hard', 'poll_id': '5b03ddd2cc07571ef7dba8ff', 'film_id': '59d621d1baabc4174c9d5312', 'createdAt': '2018-05-22T09:07:36.520Z', 'updatedAt': '2018-05-22T09:07:36.520Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, {'film': null, '_id': '5b03dddccc07571ef7dba901', 'name': 'The Lord of the Rings: The Fellowship of the Ring', 'poll_id': '5b03ddd2cc07571ef7dba8ff', 'film_id': '59d621d1baabc4174c9d5317', 'createdAt': '2018-05-22T09:07:40.737Z', 'updatedAt': '2018-05-22T09:07:40.737Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}], '_id': '5b03ddd2cc07571ef7dba8ff', 'numberOfVotes': 2, 'startDateTime': 1526980050523, 'endDateTime': 1526980243860, 'pollTransitionDateTime': 1526980063860, 'numberOfNominations': 2, 'createdAt': '2018-05-22T09:07:30.524Z', 'updatedAt': '2018-05-22T09:07:44.100Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b03dbddcc07571ef7dba8f8': {'options': [{'film': null, '_id': '5b03dbe4cc07571ef7dba8f9', 'name': 'Harry Potter and the Goblet of Fire', 'poll_id': '5b03dbddcc07571ef7dba8f8', 'film_id': '59d621d1baabc4174c9d52b0', 'createdAt': '2018-05-22T08:59:16.995Z', 'updatedAt': '2018-05-22T08:59:16.995Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, {'film': null, '_id': '5b03dbe8cc07571ef7dba8fa', 'name': 'Gandhi', 'poll_id': '5b03dbddcc07571ef7dba8f8', 'film_id': '59d621d1baabc4174c9d5291', 'createdAt': '2018-05-22T08:59:20.366Z', 'updatedAt': '2018-05-22T08:59:20.366Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, {'film': null, '_id': '5b03dbebcc07571ef7dba8fb', 'name': 'Grand Prix', 'poll_id': '5b03dbddcc07571ef7dba8f8', 'film_id': '59d621d1baabc4174c9d52a0', 'createdAt': '2018-05-22T08:59:23.028Z', 'updatedAt': '2018-05-22T08:59:23.028Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}], '_id': '5b03dbddcc07571ef7dba8f8', 'numberOfVotes': 4, 'startDateTime': 1526979549956, 'endDateTime': 1526980029956, 'pollTransitionDateTime': 1526979849956, 'numberOfNominations': 3, 'createdAt': '2018-05-22T08:59:09.956Z', 'updatedAt': '2018-05-22T08:59:09.956Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b03dbb9cc07571ef7dba8f6': {'options': [{'film': null, '_id': '5b03dbbdcc07571ef7dba8f7', 'name': 'Return of the Jedi', 'poll_id': '5b03dbb9cc07571ef7dba8f6', 'film_id': '59d621d1baabc4174c9d53c4', 'createdAt': '2018-05-22T08:58:37.106Z', 'updatedAt': '2018-05-22T08:58:37.106Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}], '_id': '5b03dbb9cc07571ef7dba8f6', 'numberOfVotes': 2, 'startDateTime': 1526979513734, 'endDateTime': 1526979535881, 'pollTransitionDateTime': 1526979813734, 'numberOfNominations': 1, 'createdAt': '2018-05-22T08:58:33.735Z', 'updatedAt': '2018-05-22T08:58:56.049Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b03526d1a8266181259ff45': {'options': [{'film': null, '_id': '5b0352721a8266181259ff46', 'name': 'The Prestige', 'poll_id': '5b03526d1a8266181259ff45', 'film_id': '59d621d1baabc4174c9d5366', 'createdAt': '2018-05-21T23:12:50.979Z', 'updatedAt': '2018-05-21T23:12:50.979Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}], '_id': '5b03526d1a8266181259ff45', 'numberOfVotes': 2, 'startDateTime': 1526944365197, 'endDateTime': 1526944554578, 'pollTransitionDateTime': 1526944374578, 'numberOfNominations': 1, 'createdAt': '2018-05-21T23:12:45.204Z', 'updatedAt': '2018-05-21T23:12:54.919Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b0351471a8266181259ff42': {'options': [{'film': null, '_id': '5b03514e1a8266181259ff43', 'name': 'Up', 'poll_id': '5b0351471a8266181259ff42', 'film_id': '59d621d1baabc4174c9d5407', 'createdAt': '2018-05-21T23:07:58.938Z', 'updatedAt': '2018-05-21T23:07:58.938Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}], '_id': '5b0351471a8266181259ff42', 'numberOfVotes': 2, 'startDateTime': 1526944071225, 'endDateTime': 1526944352178, 'pollTransitionDateTime': 1526944172178, 'numberOfNominations': 1, 'createdAt': '2018-05-21T23:07:51.226Z', 'updatedAt': '2018-05-21T23:09:32.344Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b03504c1a8266181259ff40': {'options': [{'film': null, '_id': '5b03506f1a8266181259ff41', 'name': 'The Hunger Games', 'poll_id': '5b03504c1a8266181259ff40', 'film_id': '59d621d1baabc4174c9d52c7', 'createdAt': '2018-05-21T23:04:15.843Z', 'updatedAt': '2018-05-21T23:04:15.843Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}], '_id': '5b03504c1a8266181259ff40', 'numberOfVotes': 2, 'startDateTime': 1526943820381, 'endDateTime': 1526944042013, 'pollTransitionDateTime': 1526943862013, 'numberOfNominations': 1, 'createdAt': '2018-05-21T23:03:40.381Z', 'updatedAt': '2018-05-21T23:04:22.353Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b034fd51a8266181259ff3f': {'options': [], '_id': '5b034fd51a8266181259ff3f', 'numberOfVotes': 2, 'startDateTime': 1526943701727, 'endDateTime': 1526943790414, 'pollTransitionDateTime': 1526943787636, 'numberOfNominations': 1, 'createdAt': '2018-05-21T23:01:41.728Z', 'updatedAt': '2018-05-21T23:03:10.653Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b034ab91a8266181259ff3d': {'options': [{'film': null, '_id': '5b034ae41a8266181259ff3e', 'name': 'Sing Street', 'poll_id': '5b034ab91a8266181259ff3d', 'film_id': '59d621d1baabc4174c9d53a6', 'createdAt': '2018-05-21T22:40:36.005Z', 'updatedAt': '2018-05-21T22:40:36.005Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}], '_id': '5b034ab91a8266181259ff3d', 'numberOfVotes': 2, 'startDateTime': 1526942393808, 'endDateTime': 1526942873808, 'pollTransitionDateTime': 1526942693808, 'numberOfNominations': 1, 'createdAt': '2018-05-21T22:39:53.809Z', 'updatedAt': '2018-05-21T22:39:53.809Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b0347861a8266181259ff3b': {'options': [{'film': null, '_id': '5b03478b1a8266181259ff3c', 'name': 'The Shawshank Redemption', 'poll_id': '5b0347861a8266181259ff3b', 'film_id': '59d621d1baabc4174c9d539f', 'createdAt': '2018-05-21T22:26:19.183Z', 'updatedAt': '2018-05-21T22:26:19.183Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}], '_id': '5b0347861a8266181259ff3b', 'numberOfVotes': 2, 'startDateTime': 1526941574588, 'endDateTime': 1526942054588, 'pollTransitionDateTime': 1526941874588, 'numberOfNominations': 1, 'createdAt': '2018-05-21T22:26:14.591Z', 'updatedAt': '2018-05-21T22:26:14.591Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b0308191a8266181259ff39': {'options': [{'film': null, '_id': '5b03081d1a8266181259ff3a', 'name': 'Skyfall', 'poll_id': '5b0308191a8266181259ff39', 'film_id': '59d621d1baabc4174c9d53a8', 'createdAt': '2018-05-21T17:55:41.197Z', 'updatedAt': '2018-05-21T17:55:41.197Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}], '_id': '5b0308191a8266181259ff39', 'numberOfVotes': 2, 'startDateTime': 1526925337788, 'endDateTime': 1526925817788, 'pollTransitionDateTime': 1526925637788, 'numberOfNominations': 1, 'createdAt': '2018-05-21T17:55:37.789Z', 'updatedAt': '2018-05-21T17:55:37.789Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b0304151a8266181259ff37': {'options': [], '_id': '5b0304151a8266181259ff37', 'numberOfVotes': 2, 'startDateTime': 1526924309895, 'endDateTime': 1526924789895, 'pollTransitionDateTime': 1526924609895, 'numberOfNominations': 1, 'createdAt': '2018-05-21T17:38:29.896Z', 'updatedAt': '2018-05-21T17:38:29.896Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b0304141a8266181259ff36': {'options': [{'film': null, '_id': '5b03041f1a8266181259ff38', 'name': 'Elf', 'poll_id': '5b0304141a8266181259ff36', 'film_id': '59d621d1baabc4174c9d5268', 'createdAt': '2018-05-21T17:38:39.888Z', 'updatedAt': '2018-05-21T17:38:39.888Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}], '_id': '5b0304141a8266181259ff36', 'numberOfVotes': 2, 'startDateTime': 1526924308105, 'endDateTime': 1526924788105, 'pollTransitionDateTime': 1526924608105, 'numberOfNominations': 1, 'createdAt': '2018-05-21T17:38:28.107Z', 'updatedAt': '2018-05-21T17:38:28.107Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b02fd2a1a8266181259ff30': {'options': [{'film': null, '_id': '5b02fd351a8266181259ff31', 'name': 'The Hobbit: The Battle of the Five Armies', 'poll_id': '5b02fd2a1a8266181259ff30', 'film_id': '59d621d1baabc4174c9d52b9', 'createdAt': '2018-05-21T17:09:09.527Z', 'updatedAt': '2018-05-21T17:09:09.527Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}], '_id': '5b02fd2a1a8266181259ff30', 'numberOfVotes': 2, 'startDateTime': 1526922538688, 'endDateTime': 1526923013932, 'pollTransitionDateTime': 1526922713932, 'numberOfNominations': 1, 'createdAt': '2018-05-21T17:08:58.690Z', 'updatedAt': '2018-05-21T17:11:54.197Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b02faec1a8266181259ff2b': {'options': [{'film': null, '_id': '5b02faf21a8266181259ff2c', 'name': 'Deadpool', 'poll_id': '5b02faec1a8266181259ff2b', 'film_id': '59d621d1baabc4174c9d5251', 'createdAt': '2018-05-21T16:59:30.088Z', 'updatedAt': '2018-05-21T16:59:30.088Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}], '_id': '5b02faec1a8266181259ff2b', 'numberOfVotes': 2, 'startDateTime': 1526921964381, 'endDateTime': 1526922444381, 'pollTransitionDateTime': 1526922264381, 'numberOfNominations': 1, 'createdAt': '2018-05-21T16:59:24.383Z', 'updatedAt': '2018-05-21T16:59:24.383Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b02e4581a8266181259ff2a': {'options': [], '_id': '5b02e4581a8266181259ff2a', 'numberOfVotes': 2, 'startDateTime': 1526916184897, 'endDateTime': 1526916320254, 'pollTransitionDateTime': 1526916187851, 'numberOfNominations': 1, 'createdAt': '2018-05-21T15:23:04.902Z', 'updatedAt': '2018-05-21T15:25:20.403Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}}, 'copiesById': {}, 'currentId': null, 'copy': null, 'idField': '_id', 'servicePath': 'poll', 'autoRemove': false, 'enableEvents': true, 'addOnUpsert': false, 'skipRequestIfExists': false, 'preferUpdate': false, 'replaceItems': false, 'isFindPending': false, 'isGetPending': false, 'isCreatePending': false, 'isUpdatePending': false, 'isPatchPending': false, 'isRemovePending': false, 'errorOnFind': null, 'errorOnGet': null, 'errorOnCreate': null, 'errorOnUpdate': null, 'errorOnPatch': null, 'errorOnRemove': null, 'modelName': 'Poll', 'pagination': {'default': {'limit': 20, 'skip': 0, 'total': 228, 'ids': ['5b0892a47ed2e65d86dd8f91', '5b0872b0b8681b25bf6b934f', '5b05a3936d3e5a6c2e5ef5a8', '5b05a32a6d3e5a6c2e5ef5a7', '5b05a2376d3e5a6c2e5ef5a0', '5b03ddd2cc07571ef7dba8ff', '5b03dbddcc07571ef7dba8f8', '5b03dbb9cc07571ef7dba8f6', '5b03526d1a8266181259ff45', '5b0351471a8266181259ff42', '5b03504c1a8266181259ff40', '5b034fd51a8266181259ff3f', '5b034ab91a8266181259ff3d', '5b0347861a8266181259ff3b', '5b0308191a8266181259ff39', '5b0304151a8266181259ff37', '5b0304141a8266181259ff36', '5b02fd2a1a8266181259ff30', '5b02faec1a8266181259ff2b', '5b02e4581a8266181259ff2a'], 'query': {'$sort': {'endDateTime': -1}, '$limit': 20}}}}, 'option': {'ids': ['5b0892a47ed2e65d86dd8f92', '5b0892b27ed2e65d86dd8f93', '5b05a2a16d3e5a6c2e5ef5a1', '5b03ddd8cc07571ef7dba900', '5b03dddccc07571ef7dba901', '5b03dbe4cc07571ef7dba8f9', '5b03dbe8cc07571ef7dba8fa', '5b03dbebcc07571ef7dba8fb', '5b03dbbdcc07571ef7dba8f7', '5b0352721a8266181259ff46', '5b03514e1a8266181259ff43', '5b03506f1a8266181259ff41', '5b034ae41a8266181259ff3e', '5b03478b1a8266181259ff3c', '5b03081d1a8266181259ff3a', '5b03041f1a8266181259ff38', '5b02fd351a8266181259ff31', '5b02faf21a8266181259ff2c'], 'keyedById': {'5b0892a47ed2e65d86dd8f92': {'film': {'_id': '59d621d1baabc4174c9d532a', 'name': 'The Matrix', 'overview': 'Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.', 'release_date': '1999-03-30', 'genres': ['Action', 'Science Fiction'], 'poster_path': '/hEpWvX6Bp79eLxY1kX5ZZJcme5U.jpg', 'backdrop_path': '/7u3pxc0K1wx32IleAkLv78MKgrw.jpg', 'tmdb_rating': 8, 'imdb_rating': 8.7, 'rotten_tomatoes_rating': 87, 'tagline': 'Welcome to the Real World.', 'runtime': 136, 'imdb_id': 'tt0133093', 'svg_base64encoded': 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDAgNzUwIj48ZmlsdGVyIGlkPSJjIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI1NSIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjNDk1NzVjIiBkPSJNMCAwaDQ5OHY3NTBIMHoiLz48ZyBmaWx0ZXI9J3VybCgjYyknIGZpbGwtb3BhY2l0eT0nLjUnPjxlbGxpcHNlIGZpbGw9IiNhZWMwY2YiIGZpbGwtb3BhY2l0eT0iLjUiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoNi44ODA3IC0xNDUuOTA0ODIgNDk0LjU2NzY0IDIzLjMyMzIyIDMwNi44IDEzNi42KSIvPjxlbGxpcHNlIGZpbGwtb3BhY2l0eT0iLjUiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJyb3RhdGUoMTY2LjUgMTM3LjMgMzYyLjQpIHNjYWxlKDE3OS42MDc0OCA0NzQuOTAyKSIvPjxwYXRoIGZpbGw9IiNkNGU1ZGUiIGZpbGwtb3BhY2l0eT0iLjUiIGQ9Ik00MDUuNyAxNDUuOUwzOTAuOCA0OTIgMzQ5IDI2NS43IDI3MC44IDE5NHoiLz48cGF0aCBmaWxsLW9wYWNpdHk9Ii41IiBkPSJNMjgyLjcgMjQxLjdsLTIwOCAzNjAuNEwzOTcgNjYwLjZ6Ii8+PGVsbGlwc2UgZmlsbD0iI2Q4ZGJkMyIgZmlsbC1vcGFjaXR5PSIuNSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgtMTAxLjYgODMuNSAxMDAuOSkgc2NhbGUoNTkuNjY5NzMgMjMyLjI0Nzk3KSIvPjxlbGxpcHNlIGZpbGw9IiMwYzExMGIiIGZpbGwtb3BhY2l0eT0iLjUiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMjczLjg5MzIyIDc2LjU3ODU5IC0yMC4yNjk3MiA3Mi40OTcyNyAxMTIuMiA3NDguNSkiLz48cGF0aCBmaWxsPSIjOGRiMmI4IiBmaWxsLW9wYWNpdHk9Ii41IiBkPSJNMzgyLjMgNTcyLjhsLTU1LjYtMjAyLjIgODUgMTM3Ljd6Ii8+PHBhdGggZmlsbD0iI2UwZDBjNSIgZmlsbC1vcGFjaXR5PSIuNSIgZD0iTTQ2MC4zIDI4Ny42bC0yMy41LTMxLjEgMTA2LjctMjcuMy03My40IDE1MHoiLz48cGF0aCBmaWxsPSIjMDkwZDBiIiBmaWxsLW9wYWNpdHk9Ii41IiBkPSJNMTMwLjQgMjY4bDkzLjctNTguNS0zMi4yLTM1LjJ6Ii8+PGVsbGlwc2UgZmlsbD0iIzQwNWRhMSIgZmlsbC1vcGFjaXR5PSIuNSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCguMjAwODYgLTI3Ljk1NDIgMjM5LjE0Mzk3IDEuNzE4MyAyMDQuNSA5NC42KSIvPjwvZz48L3N2Zz4=', 'recommendations': [{'id': '59d621d1baabc4174c9d5266', 'score': 0.9506842768047069}, {'id': '59d621d1baabc4174c9d534f', 'score': 0.7421856589536464}, {'id': '59d621d1baabc4174c9d5253', 'score': 0.7379854082488033}, {'id': '59d621d1baabc4174c9d53b1', 'score': 0.7165556722886302}, {'id': '59d621d1baabc4174c9d53de', 'score': 0.7158366479180817}, {'id': '59d621d1baabc4174c9d52cc', 'score': 0.7104511504532722}, {'id': '59d621d1baabc4174c9d5239', 'score': 0.655224592405305}, {'id': '59d621d1baabc4174c9d5383', 'score': 0.6517902661424035}, {'id': '59d621d1baabc4174c9d53d1', 'score': 0.649046800698237}]}, '_id': '5b0892a47ed2e65d86dd8f92', 'name': 'The Matrix', 'film_id': '59d621d1baabc4174c9d532a', 'poll_id': '5b0892a47ed2e65d86dd8f91', 'createdAt': '2018-05-25T22:48:04.314Z', 'updatedAt': '2018-05-25T22:48:04.314Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b0892b27ed2e65d86dd8f93': {'film': {'_id': '59d621d1baabc4174c9d51ed', 'name': 'American Wedding', 'overview': "With high school a distant memory, Jim and Michelle are getting married -- and in a hurry, since Jim's grandmother is sick and wants to see him walk down the aisle -- prompting Stifler to throw the ultimate bachelor party. And Jim's dad is reliable as ever, doling out advice no one wants to hear.", 'release_date': '2003-08-01', 'genres': ['Comedy', 'Romance'], 'poster_path': '/lcLuBjI3Hr12mGFKJvdMeZdf3AN.jpg', 'backdrop_path': '/5CDIezS2xJtcSXPL24Z2dIeUOp0.jpg', 'tmdb_rating': 6, 'imdb_rating': 6.3, 'rotten_tomatoes_rating': 54, 'tagline': 'Forever hold your piece.', 'runtime': 103, 'imdb_id': 'tt0328828', 'svg_base64encoded': 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDAgNzUwIj48ZmlsdGVyIGlkPSJiIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxMiIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjNzI1OTQ3IiBkPSJNMCAwaDQ5OHY3NTBIMHoiLz48ZyBmaWx0ZXI9InVybCgjYikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEuNSAxLjUpIHNjYWxlKDIuOTI5NjkpIiBmaWxsLW9wYWNpdHk9Ii41Ij48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0icm90YXRlKC0xMS42IDExNjguMiAyNi44KSBzY2FsZSgzNi4wMDM0MiA2MC42Mjg2OCkiLz48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDE4Ljk4Mjk4IC03Ny4yODQ4NCAyNC4yNDk1MSA1Ljk1NjI1IDE4LjEgMzcpIi8+PGVsbGlwc2UgY3g9IjE2OSIgY3k9IjE2MiIgcng9IjEwNyIgcnk9IjEwNyIvPjxlbGxpcHNlIGZpbGw9IiNmZmYiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMTI1LjcyOTAzIDY0LjAxMDgzIC0xMC41NzQ3NCAyMC43NzA3MyAxNDQuNyA1LjYpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmYmYzNyIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCg0My42OTA2NiAtMTguMDk3MjYgMTMuNDY1NzQgMzIuNTA5MTggNzUuOCAxODQpIi8+PGVsbGlwc2Ugcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgyOC43MTk4MyAyNy45MTgxMiAtMTEwLjEwNzE5IDExMy4yNjkwOSAxMjcgMjMwLjIpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmZiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgtMTkuOCA2NTcuNiAxMTQuOCkgc2NhbGUoMzYuNzQwMTIgNjMuNjMwNzgpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmZiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtNDkuMzQxNTIgLTUwLjMxNzQ4IDE2LjMyOTUyIC0xNi4wMTI4IDE1MC4yIDYuOCkiLz48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0icm90YXRlKDE0MS4yIDEyLjMgNC4zKSBzY2FsZSg1NC4wOTE4NCAyMy40MDY2OSkiLz48ZWxsaXBzZSBmaWxsPSIjYzk2ZDQ4IiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDIxLjEwODA4IC0yMy42NTAxMyAyNC4zMDQ0NyAyMS42OTIwOSA0NS4xIDQ4LjEpIi8+PC9nPjwvc3ZnPg==', 'recommendations': [{'id': '59d621d1baabc4174c9d52c2', 'score': 0.9985474450910079}, {'id': '59d621d1baabc4174c9d522a', 'score': 0.9984621330194661}, {'id': '59d621d1baabc4174c9d51ec', 'score': 0.9983964766121615}, {'id': '59d621d1baabc4174c9d5243', 'score': 0.9972365281763945}, {'id': '59d621d1baabc4174c9d51d3', 'score': 0.9972093041987072}, {'id': '59d621d1baabc4174c9d51d4', 'score': 0.9964623429352079}, {'id': '59d621d1baabc4174c9d5418', 'score': 0.9963642086153753}, {'id': '59d621d1baabc4174c9d5408', 'score': 0.9952622643776048}, {'id': '59d621d1baabc4174c9d52c0', 'score': 0.9949850191481875}]}, '_id': '5b0892b27ed2e65d86dd8f93', 'name': 'American Wedding', 'poll_id': '5b0892a47ed2e65d86dd8f91', 'film_id': '59d621d1baabc4174c9d51ed', 'createdAt': '2018-05-25T22:48:18.582Z', 'updatedAt': '2018-05-25T22:48:18.582Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b05a2a16d3e5a6c2e5ef5a1': {'film': null, '_id': '5b05a2a16d3e5a6c2e5ef5a1', 'name': 'Thor: Ragnarok', 'poll_id': '5b05a2376d3e5a6c2e5ef5a0', 'film_id': '5afc38b5c47f281d032e7372', 'createdAt': '2018-05-23T17:19:29.443Z', 'updatedAt': '2018-05-23T17:19:29.443Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b03ddd8cc07571ef7dba900': {'film': null, '_id': '5b03ddd8cc07571ef7dba900', 'name': 'Live Free or Die Hard', 'poll_id': '5b03ddd2cc07571ef7dba8ff', 'film_id': '59d621d1baabc4174c9d5312', 'createdAt': '2018-05-22T09:07:36.520Z', 'updatedAt': '2018-05-22T09:07:36.520Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b03dddccc07571ef7dba901': {'film': null, '_id': '5b03dddccc07571ef7dba901', 'name': 'The Lord of the Rings: The Fellowship of the Ring', 'poll_id': '5b03ddd2cc07571ef7dba8ff', 'film_id': '59d621d1baabc4174c9d5317', 'createdAt': '2018-05-22T09:07:40.737Z', 'updatedAt': '2018-05-22T09:07:40.737Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b03dbe4cc07571ef7dba8f9': {'film': null, '_id': '5b03dbe4cc07571ef7dba8f9', 'name': 'Harry Potter and the Goblet of Fire', 'poll_id': '5b03dbddcc07571ef7dba8f8', 'film_id': '59d621d1baabc4174c9d52b0', 'createdAt': '2018-05-22T08:59:16.995Z', 'updatedAt': '2018-05-22T08:59:16.995Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b03dbe8cc07571ef7dba8fa': {'film': null, '_id': '5b03dbe8cc07571ef7dba8fa', 'name': 'Gandhi', 'poll_id': '5b03dbddcc07571ef7dba8f8', 'film_id': '59d621d1baabc4174c9d5291', 'createdAt': '2018-05-22T08:59:20.366Z', 'updatedAt': '2018-05-22T08:59:20.366Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b03dbebcc07571ef7dba8fb': {'film': null, '_id': '5b03dbebcc07571ef7dba8fb', 'name': 'Grand Prix', 'poll_id': '5b03dbddcc07571ef7dba8f8', 'film_id': '59d621d1baabc4174c9d52a0', 'createdAt': '2018-05-22T08:59:23.028Z', 'updatedAt': '2018-05-22T08:59:23.028Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b03dbbdcc07571ef7dba8f7': {'film': null, '_id': '5b03dbbdcc07571ef7dba8f7', 'name': 'Return of the Jedi', 'poll_id': '5b03dbb9cc07571ef7dba8f6', 'film_id': '59d621d1baabc4174c9d53c4', 'createdAt': '2018-05-22T08:58:37.106Z', 'updatedAt': '2018-05-22T08:58:37.106Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b0352721a8266181259ff46': {'film': null, '_id': '5b0352721a8266181259ff46', 'name': 'The Prestige', 'poll_id': '5b03526d1a8266181259ff45', 'film_id': '59d621d1baabc4174c9d5366', 'createdAt': '2018-05-21T23:12:50.979Z', 'updatedAt': '2018-05-21T23:12:50.979Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b03514e1a8266181259ff43': {'film': null, '_id': '5b03514e1a8266181259ff43', 'name': 'Up', 'poll_id': '5b0351471a8266181259ff42', 'film_id': '59d621d1baabc4174c9d5407', 'createdAt': '2018-05-21T23:07:58.938Z', 'updatedAt': '2018-05-21T23:07:58.938Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b03506f1a8266181259ff41': {'film': null, '_id': '5b03506f1a8266181259ff41', 'name': 'The Hunger Games', 'poll_id': '5b03504c1a8266181259ff40', 'film_id': '59d621d1baabc4174c9d52c7', 'createdAt': '2018-05-21T23:04:15.843Z', 'updatedAt': '2018-05-21T23:04:15.843Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b034ae41a8266181259ff3e': {'film': null, '_id': '5b034ae41a8266181259ff3e', 'name': 'Sing Street', 'poll_id': '5b034ab91a8266181259ff3d', 'film_id': '59d621d1baabc4174c9d53a6', 'createdAt': '2018-05-21T22:40:36.005Z', 'updatedAt': '2018-05-21T22:40:36.005Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b03478b1a8266181259ff3c': {'film': null, '_id': '5b03478b1a8266181259ff3c', 'name': 'The Shawshank Redemption', 'poll_id': '5b0347861a8266181259ff3b', 'film_id': '59d621d1baabc4174c9d539f', 'createdAt': '2018-05-21T22:26:19.183Z', 'updatedAt': '2018-05-21T22:26:19.183Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b03081d1a8266181259ff3a': {'film': null, '_id': '5b03081d1a8266181259ff3a', 'name': 'Skyfall', 'poll_id': '5b0308191a8266181259ff39', 'film_id': '59d621d1baabc4174c9d53a8', 'createdAt': '2018-05-21T17:55:41.197Z', 'updatedAt': '2018-05-21T17:55:41.197Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b03041f1a8266181259ff38': {'film': null, '_id': '5b03041f1a8266181259ff38', 'name': 'Elf', 'poll_id': '5b0304141a8266181259ff36', 'film_id': '59d621d1baabc4174c9d5268', 'createdAt': '2018-05-21T17:38:39.888Z', 'updatedAt': '2018-05-21T17:38:39.888Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b02fd351a8266181259ff31': {'film': null, '_id': '5b02fd351a8266181259ff31', 'name': 'The Hobbit: The Battle of the Five Armies', 'poll_id': '5b02fd2a1a8266181259ff30', 'film_id': '59d621d1baabc4174c9d52b9', 'createdAt': '2018-05-21T17:09:09.527Z', 'updatedAt': '2018-05-21T17:09:09.527Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}, '5b02faf21a8266181259ff2c': {'film': null, '_id': '5b02faf21a8266181259ff2c', 'name': 'Deadpool', 'poll_id': '5b02faec1a8266181259ff2b', 'film_id': '59d621d1baabc4174c9d5251', 'createdAt': '2018-05-21T16:59:30.088Z', 'updatedAt': '2018-05-21T16:59:30.088Z', 'added_by_user_id': '59cba12cf67f7507c5812182'}}, 'copiesById': {}, 'currentId': null, 'copy': null, 'idField': '_id', 'servicePath': 'option', 'autoRemove': false, 'enableEvents': true, 'addOnUpsert': false, 'skipRequestIfExists': false, 'preferUpdate': false, 'replaceItems': false, 'isFindPending': false, 'isGetPending': false, 'isCreatePending': false, 'isUpdatePending': false, 'isPatchPending': false, 'isRemovePending': false, 'errorOnFind': null, 'errorOnGet': null, 'errorOnCreate': null, 'errorOnUpdate': null, 'errorOnPatch': null, 'errorOnRemove': null, 'modelName': 'Option', 'pagination': {'default': {'limit': 50, 'skip': 0, 'total': 2, 'ids': ['5b0892a47ed2e65d86dd8f92', '5b0892b27ed2e65d86dd8f93'], 'query': {'$limit': 100, 'poll_id': '5b0892a47ed2e65d86dd8f91'}}}}, 'vote': {'ids': ['5b0893d57ed2e65d86dd8f94'], 'keyedById': {'5b0893d57ed2e65d86dd8f94': {'_id': '5b0893d57ed2e65d86dd8f94', 'poll_id': '5b0892a47ed2e65d86dd8f91', 'option_id': '5b0892b27ed2e65d86dd8f93', 'createdAt': '2018-05-25T22:53:09.314Z', 'updatedAt': '2018-05-25T22:53:09.314Z', 'user_id': '59cba12cf67f7507c5812182'}}, 'copiesById': {}, 'currentId': null, 'copy': null, 'idField': '_id', 'servicePath': 'vote', 'autoRemove': false, 'enableEvents': true, 'addOnUpsert': false, 'skipRequestIfExists': false, 'preferUpdate': false, 'replaceItems': false, 'isFindPending': false, 'isGetPending': false, 'isCreatePending': false, 'isUpdatePending': false, 'isPatchPending': false, 'isRemovePending': false, 'errorOnFind': null, 'errorOnGet': null, 'errorOnCreate': null, 'errorOnUpdate': null, 'errorOnPatch': null, 'errorOnRemove': null, 'modelName': 'Vote', 'pagination': {'default': {'limit': 50, 'skip': 0, 'total': 1, 'ids': ['5b0893d57ed2e65d86dd8f94'], 'query': {'$limit': 1000, 'poll_id': '5b0892a47ed2e65d86dd8f91'}}}}, 'users': {'ids': ['59cba12cf67f7507c5812182'], 'keyedById': {'59cba12cf67f7507c5812182': {'_id': '59cba12cf67f7507c5812182', 'createdAt': '2017-09-27T13:01:32.926Z', 'updatedAt': '2018-05-25T18:53:44.218Z', 'name': 'Arran France', 'isAdmin': true, 'isVerified': true, 'resetExpires': 1527097062721, 'resetToken': '$2a$12$.qTWsoq683MROq8yuxuYrOYQXPHRtq2doDN4uiBk.mE6GH.DFfpfi', 'resetShortToken': '$2a$12$Xo3pCfAN3nZr3WYJ1/sDseq.T1BL9WKhx9vcLST9xPpRXRi.WUvUK', 'recommendations': [{'film_id': '5afc389d8ad4811c9e3f6e2e', 'score': 1}, {'film_id': '5afc3854b4ff521bf875d133', 'score': 1}, {'film_id': '59d621d1baabc4174c9d5318', 'score': 0.9964870896802609}, {'film_id': '59d621d1baabc4174c9d5220', 'score': 0.9955700540752838}, {'film_id': '59d621d1baabc4174c9d5319', 'score': 0.9952351324257153}, {'film_id': '59d621d1baabc4174c9d52dd', 'score': 0.993732405162964}, {'film_id': '59d621d1baabc4174c9d5406', 'score': 0.9900029519035902}, {'film_id': '59d621d1baabc4174c9d51dd', 'score': 0.9892062736236272}, {'film_id': '59d621d1baabc4174c9d535e', 'score': 0.9858566672850966}, {'film_id': '59d621d1baabc4174c9d529d', 'score': 0.9823823758160395}, {'film_id': '59d621d1baabc4174c9d5259', 'score': 0.9773144373646975}, {'film_id': '59d621d1baabc4174c9d53d6', 'score': 0.9596036020392011}, {'film_id': '59d621d1baabc4174c9d535c', 'score': 0.957171347210952}, {'film_id': '59d621d1baabc4174c9d528d', 'score': 0.9561550331799495}, {'film_id': '59d621d1baabc4174c9d53e1', 'score': 0.9553060036621115}, {'film_id': '59d621d1baabc4174c9d530e', 'score': 0.9541489737727336}, {'film_id': '59d621d1baabc4174c9d5258', 'score': 0.9478830520990948}, {'film_id': '59d621d1baabc4174c9d51e7', 'score': 0.9434018393931562}, {'film_id': '59d621d1baabc4174c9d52f2', 'score': 0.9413708314632007}, {'film_id': '59d621d1baabc4174c9d53e2', 'score': 0.9413473579431747}, {'film_id': '59d621d1baabc4174c9d53c8', 'score': 0.9390843989466653}, {'film_id': '59d621d1baabc4174c9d53b3', 'score': 0.9321928499014733}, {'film_id': '59d621d1baabc4174c9d51e8', 'score': 0.9255485291095598}, {'film_id': '59d621d1baabc4174c9d525d', 'score': 0.892952646302214}, {'film_id': '59d621d1baabc4174c9d5425', 'score': 0.8896765311755259}, {'film_id': '59d621d1baabc4174c9d53c5', 'score': 0.86322786178564}, {'film_id': '59d621d1baabc4174c9d5298', 'score': 0.8537962654764879}, {'film_id': '59d621d1baabc4174c9d5273', 'score': 0.837749893045995}, {'film_id': '59d621d1baabc4174c9d541a', 'score': 0.8303189564012748}, {'film_id': '59d621d1baabc4174c9d51fc', 'score': 0.7991251801768625}, {'film_id': '59d621d1baabc4174c9d5236', 'score': 0.7975023181976739}, {'film_id': '59d621d1baabc4174c9d530c', 'score': 0.7926459431534106}, {'film_id': '59d621d1baabc4174c9d520e', 'score': 0.7923711238280242}, {'film_id': '59d621d1baabc4174c9d5390', 'score': 0.7896497307382808}, {'film_id': '59d621d1baabc4174c9d53ad', 'score': 0.7793342354375181}, {'film_id': '59d621d1baabc4174c9d52a5', 'score': 0.7685125088672672}, {'film_id': '59d621d1baabc4174c9d52a3', 'score': 0.766401621755836}, {'film_id': '59d621d1baabc4174c9d5241', 'score': 0.763791485701323}, {'film_id': '59d621d1baabc4174c9d527a', 'score': 0.7306409239831569}, {'film_id': '59d621d1baabc4174c9d52b6', 'score': 0.6839087082730235}, {'film_id': '59d621d1baabc4174c9d5248', 'score': 0.6787135330289696}, {'film_id': '5a50fd074951a73478e331e2', 'score': 0.6787135330289696}, {'film_id': '59d621d1baabc4174c9d52f7', 'score': 0.6775039077461911}, {'film_id': '59d621d1baabc4174c9d52c1', 'score': 0.6721445512031438}, {'film_id': '59d621d1baabc4174c9d52e9', 'score': 0.6559547532810514}]}}, 'copiesById': {}, 'currentId': '59cba12cf67f7507c5812182', 'copy': {'_id': '59cba12cf67f7507c5812182', 'createdAt': '2017-09-27T13:01:32.926Z', 'updatedAt': '2018-05-25T18:53:44.218Z', 'name': 'Arran France', 'isAdmin': true, 'isVerified': true, 'resetExpires': 1527097062721, 'resetToken': '$2a$12$.qTWsoq683MROq8yuxuYrOYQXPHRtq2doDN4uiBk.mE6GH.DFfpfi', 'resetShortToken': '$2a$12$Xo3pCfAN3nZr3WYJ1/sDseq.T1BL9WKhx9vcLST9xPpRXRi.WUvUK', 'recommendations': [{'film_id': '5afc389d8ad4811c9e3f6e2e', 'score': 1}, {'film_id': '5afc3854b4ff521bf875d133', 'score': 1}, {'film_id': '59d621d1baabc4174c9d5318', 'score': 0.9964870896802609}, {'film_id': '59d621d1baabc4174c9d5220', 'score': 0.9955700540752838}, {'film_id': '59d621d1baabc4174c9d5319', 'score': 0.9952351324257153}, {'film_id': '59d621d1baabc4174c9d52dd', 'score': 0.993732405162964}, {'film_id': '59d621d1baabc4174c9d5406', 'score': 0.9900029519035902}, {'film_id': '59d621d1baabc4174c9d51dd', 'score': 0.9892062736236272}, {'film_id': '59d621d1baabc4174c9d535e', 'score': 0.9858566672850966}, {'film_id': '59d621d1baabc4174c9d529d', 'score': 0.9823823758160395}, {'film_id': '59d621d1baabc4174c9d5259', 'score': 0.9773144373646975}, {'film_id': '59d621d1baabc4174c9d53d6', 'score': 0.9596036020392011}, {'film_id': '59d621d1baabc4174c9d535c', 'score': 0.957171347210952}, {'film_id': '59d621d1baabc4174c9d528d', 'score': 0.9561550331799495}, {'film_id': '59d621d1baabc4174c9d53e1', 'score': 0.9553060036621115}, {'film_id': '59d621d1baabc4174c9d530e', 'score': 0.9541489737727336}, {'film_id': '59d621d1baabc4174c9d5258', 'score': 0.9478830520990948}, {'film_id': '59d621d1baabc4174c9d51e7', 'score': 0.9434018393931562}, {'film_id': '59d621d1baabc4174c9d52f2', 'score': 0.9413708314632007}, {'film_id': '59d621d1baabc4174c9d53e2', 'score': 0.9413473579431747}, {'film_id': '59d621d1baabc4174c9d53c8', 'score': 0.9390843989466653}, {'film_id': '59d621d1baabc4174c9d53b3', 'score': 0.9321928499014733}, {'film_id': '59d621d1baabc4174c9d51e8', 'score': 0.9255485291095598}, {'film_id': '59d621d1baabc4174c9d525d', 'score': 0.892952646302214}, {'film_id': '59d621d1baabc4174c9d5425', 'score': 0.8896765311755259}, {'film_id': '59d621d1baabc4174c9d53c5', 'score': 0.86322786178564}, {'film_id': '59d621d1baabc4174c9d5298', 'score': 0.8537962654764879}, {'film_id': '59d621d1baabc4174c9d5273', 'score': 0.837749893045995}, {'film_id': '59d621d1baabc4174c9d541a', 'score': 0.8303189564012748}, {'film_id': '59d621d1baabc4174c9d51fc', 'score': 0.7991251801768625}, {'film_id': '59d621d1baabc4174c9d5236', 'score': 0.7975023181976739}, {'film_id': '59d621d1baabc4174c9d530c', 'score': 0.7926459431534106}, {'film_id': '59d621d1baabc4174c9d520e', 'score': 0.7923711238280242}, {'film_id': '59d621d1baabc4174c9d5390', 'score': 0.7896497307382808}, {'film_id': '59d621d1baabc4174c9d53ad', 'score': 0.7793342354375181}, {'film_id': '59d621d1baabc4174c9d52a5', 'score': 0.7685125088672672}, {'film_id': '59d621d1baabc4174c9d52a3', 'score': 0.766401621755836}, {'film_id': '59d621d1baabc4174c9d5241', 'score': 0.763791485701323}, {'film_id': '59d621d1baabc4174c9d527a', 'score': 0.7306409239831569}, {'film_id': '59d621d1baabc4174c9d52b6', 'score': 0.6839087082730235}, {'film_id': '59d621d1baabc4174c9d5248', 'score': 0.6787135330289696}, {'film_id': '5a50fd074951a73478e331e2', 'score': 0.6787135330289696}, {'film_id': '59d621d1baabc4174c9d52f7', 'score': 0.6775039077461911}, {'film_id': '59d621d1baabc4174c9d52c1', 'score': 0.6721445512031438}, {'film_id': '59d621d1baabc4174c9d52e9', 'score': 0.6559547532810514}]}, 'idField': '_id', 'servicePath': 'users', 'autoRemove': false, 'enableEvents': true, 'addOnUpsert': false, 'skipRequestIfExists': false, 'preferUpdate': false, 'replaceItems': false, 'isFindPending': false, 'isGetPending': false, 'isCreatePending': false, 'isUpdatePending': false, 'isPatchPending': false, 'isRemovePending': false, 'errorOnFind': null, 'errorOnGet': null, 'errorOnCreate': null, 'errorOnUpdate': null, 'errorOnPatch': null, 'errorOnRemove': null, 'modelName': 'User'}, 'films': {'ids': [], 'keyedById': {}, 'copiesById': {}, 'currentId': null, 'copy': null, 'idField': '_id', 'servicePath': 'films', 'autoRemove': false, 'enableEvents': true, 'addOnUpsert': false, 'skipRequestIfExists': false, 'preferUpdate': false, 'replaceItems': false, 'isFindPending': false, 'isGetPending': false, 'isCreatePending': false, 'isUpdatePending': false, 'isPatchPending': false, 'isRemovePending': false, 'errorOnFind': null, 'errorOnGet': null, 'errorOnCreate': null, 'errorOnUpdate': null, 'errorOnPatch': null, 'errorOnRemove': null, 'modelName': 'Film'}, 'users-online': {'ids': ['59cba12cf67f7507c5812182'], 'keyedById': {'59cba12cf67f7507c5812182': {'_id': '59cba12cf67f7507c5812182', 'facebookId': '10212639510396007', 'createdAt': '2017-09-27T13:01:32.926Z', 'updatedAt': '2018-05-25T18:53:44.218Z', 'name': 'Arran France', 'email': 'arranf@gmail.com', 'isAdmin': true, 'facebook': {'profile': {'id': '10212639510396007', 'username': null, 'displayName': 'Arran France', 'name': {'familyName': null, 'givenName': null, 'middleName': null}, 'gender': null, 'profileUrl': null, 'emails': [{'value': 'arranf@gmail.com'}], 'photos': [{'value': 'https://lookaside.facebook.com/platform/profilepic/?asid=10212639510396007&height=50&width=50&ext=1527533624&hash=AeQ80vCmyHB9a-94'}], 'provider': 'facebook', '_raw': '{"id":"10212639510396007","name":"Arran France","picture":{"data":{"height":50,"is_silhouette":false,"url":"https:\\/\\/lookaside.facebook.com\\/platform\\/profilepic\\/?asid=10212639510396007&height=50&width=50&ext=1527533624&hash=AeQ80vCmyHB9a-94","width":50}},"email":"arranf\\u0040gmail.com"}', '_json': {'id': '10212639510396007', 'name': 'Arran France', 'picture': {'data': {'height': 50, 'is_silhouette': false, 'url': 'https://lookaside.facebook.com/platform/profilepic/?asid=10212639510396007&height=50&width=50&ext=1527533624&hash=AeQ80vCmyHB9a-94', 'width': 50}}, 'email': 'arranf@gmail.com'}}, 'accessToken': 'EAAWtBhQvttkBAJLOuAzyB4OTsmyEKkN4mafTpZB40osau6VuzK7ifeA3aK8FZBQimiOyo9DClZBey917DAEQJqlTSZCmSkm03ZA2ZB0pj2obfJOWGM2NOmhGaZBrOR80GwVtVw4zRvLdnSyRVls5v32j8UEZC1GkWewZD', 'refreshToken': null}, 'isVerified': true, 'resetExpires': 1527097062721, 'resetToken': '$2a$12$.qTWsoq683MROq8yuxuYrOYQXPHRtq2doDN4uiBk.mE6GH.DFfpfi', 'resetShortToken': '$2a$12$Xo3pCfAN3nZr3WYJ1/sDseq.T1BL9WKhx9vcLST9xPpRXRi.WUvUK', 'password': '$2a$12$8oH417gtXteZKWVoYWQ5p.wtm9v/dBkdxkAzif1oJQnKAB.0M4Q.m', 'recommendations': [{'film_id': '5afc389d8ad4811c9e3f6e2e', 'score': 1}, {'film_id': '5afc3854b4ff521bf875d133', 'score': 1}, {'film_id': '59d621d1baabc4174c9d5318', 'score': 0.9964870896802609}, {'film_id': '59d621d1baabc4174c9d5220', 'score': 0.9955700540752838}, {'film_id': '59d621d1baabc4174c9d5319', 'score': 0.9952351324257153}, {'film_id': '59d621d1baabc4174c9d52dd', 'score': 0.993732405162964}, {'film_id': '59d621d1baabc4174c9d5406', 'score': 0.9900029519035902}, {'film_id': '59d621d1baabc4174c9d51dd', 'score': 0.9892062736236272}, {'film_id': '59d621d1baabc4174c9d535e', 'score': 0.9858566672850966}, {'film_id': '59d621d1baabc4174c9d529d', 'score': 0.9823823758160395}, {'film_id': '59d621d1baabc4174c9d5259', 'score': 0.9773144373646975}, {'film_id': '59d621d1baabc4174c9d53d6', 'score': 0.9596036020392011}, {'film_id': '59d621d1baabc4174c9d535c', 'score': 0.957171347210952}, {'film_id': '59d621d1baabc4174c9d528d', 'score': 0.9561550331799495}, {'film_id': '59d621d1baabc4174c9d53e1', 'score': 0.9553060036621115}, {'film_id': '59d621d1baabc4174c9d530e', 'score': 0.9541489737727336}, {'film_id': '59d621d1baabc4174c9d5258', 'score': 0.9478830520990948}, {'film_id': '59d621d1baabc4174c9d51e7', 'score': 0.9434018393931562}, {'film_id': '59d621d1baabc4174c9d52f2', 'score': 0.9413708314632007}, {'film_id': '59d621d1baabc4174c9d53e2', 'score': 0.9413473579431747}, {'film_id': '59d621d1baabc4174c9d53c8', 'score': 0.9390843989466653}, {'film_id': '59d621d1baabc4174c9d53b3', 'score': 0.9321928499014733}, {'film_id': '59d621d1baabc4174c9d51e8', 'score': 0.9255485291095598}, {'film_id': '59d621d1baabc4174c9d525d', 'score': 0.892952646302214}, {'film_id': '59d621d1baabc4174c9d5425', 'score': 0.8896765311755259}, {'film_id': '59d621d1baabc4174c9d53c5', 'score': 0.86322786178564}, {'film_id': '59d621d1baabc4174c9d5298', 'score': 0.8537962654764879}, {'film_id': '59d621d1baabc4174c9d5273', 'score': 0.837749893045995}, {'film_id': '59d621d1baabc4174c9d541a', 'score': 0.8303189564012748}, {'film_id': '59d621d1baabc4174c9d51fc', 'score': 0.7991251801768625}, {'film_id': '59d621d1baabc4174c9d5236', 'score': 0.7975023181976739}, {'film_id': '59d621d1baabc4174c9d530c', 'score': 0.7926459431534106}, {'film_id': '59d621d1baabc4174c9d520e', 'score': 0.7923711238280242}, {'film_id': '59d621d1baabc4174c9d5390', 'score': 0.7896497307382808}, {'film_id': '59d621d1baabc4174c9d53ad', 'score': 0.7793342354375181}, {'film_id': '59d621d1baabc4174c9d52a5', 'score': 0.7685125088672672}, {'film_id': '59d621d1baabc4174c9d52a3', 'score': 0.766401621755836}, {'film_id': '59d621d1baabc4174c9d5241', 'score': 0.763791485701323}, {'film_id': '59d621d1baabc4174c9d527a', 'score': 0.7306409239831569}, {'film_id': '59d621d1baabc4174c9d52b6', 'score': 0.6839087082730235}, {'film_id': '59d621d1baabc4174c9d5248', 'score': 0.6787135330289696}, {'film_id': '5a50fd074951a73478e331e2', 'score': 0.6787135330289696}, {'film_id': '59d621d1baabc4174c9d52f7', 'score': 0.6775039077461911}, {'film_id': '59d621d1baabc4174c9d52c1', 'score': 0.6721445512031438}, {'film_id': '59d621d1baabc4174c9d52e9', 'score': 0.6559547532810514}]}}, 'copiesById': {}, 'currentId': null, 'copy': null, 'idField': '_id', 'servicePath': 'users-online', 'autoRemove': false, 'enableEvents': true, 'addOnUpsert': false, 'skipRequestIfExists': false, 'preferUpdate': false, 'replaceItems': false, 'isFindPending': false, 'isGetPending': false, 'isCreatePending': false, 'isUpdatePending': false, 'isPatchPending': false, 'isRemovePending': false, 'errorOnFind': null, 'errorOnGet': null, 'errorOnCreate': null, 'errorOnUpdate': null, 'errorOnPatch': null, 'errorOnRemove': null, 'modelName': 'UsersOnline'}, 'auth': {'accessToken': 'eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyIsInR5cGUiOiJhY2Nlc3MifQ.eyJ1c2VySWQiOiI1OWNiYTEyY2Y2N2Y3NTA3YzU4MTIxODIiLCJpYXQiOjE1MjcyOTE2MDEsImV4cCI6MTUyNzM3ODAwMSwiYXVkIjoiaHR0cHM6Ly9qb25hdGhhbnNtb3ZpZXMuY29tIiwiaXNzIjoiZmVhdGhlcnMiLCJzdWIiOiJhbm9ueW1vdXMiLCJqdGkiOiJlNTAwYWExZC02ZWE4LTRmMzUtOTI0Mi1jNTEyOGU4MDVkODgifQ.lkIjoTvr1Er2oUGPhF7NbRRu4dmqs_NK2_ZMh-1JEcQ', 'payload': {'userId': '59cba12cf67f7507c5812182', 'iat': 1527291601, 'exp': 1527378001, 'aud': 'https://jonathansmovies.com', 'iss': 'feathers', 'sub': 'anonymous', 'jti': 'e500aa1d-6ea8-4f35-9242-c5128e805d88'}, 'isAuthenticatePending': false, 'isLogoutPending': false, 'errorOnAuthenticate': null, 'errorOnLogout': null, 'user': {'_id': '59cba12cf67f7507c5812182', 'createdAt': '2017-09-27T13:01:32.926Z', 'updatedAt': '2018-05-25T18:53:44.218Z', 'name': 'Arran France', 'isAdmin': true, 'isVerified': true, 'resetExpires': 1527097062721, 'resetToken': '$2a$12$.qTWsoq683MROq8yuxuYrOYQXPHRtq2doDN4uiBk.mE6GH.DFfpfi', 'resetShortToken': '$2a$12$Xo3pCfAN3nZr3WYJ1/sDseq.T1BL9WKhx9vcLST9xPpRXRi.WUvUK', 'recommendations': [{'film_id': '5afc389d8ad4811c9e3f6e2e', 'score': 1}, {'film_id': '5afc3854b4ff521bf875d133', 'score': 1}, {'film_id': '59d621d1baabc4174c9d5318', 'score': 0.9964870896802609}, {'film_id': '59d621d1baabc4174c9d5220', 'score': 0.9955700540752838}, {'film_id': '59d621d1baabc4174c9d5319', 'score': 0.9952351324257153}, {'film_id': '59d621d1baabc4174c9d52dd', 'score': 0.993732405162964}, {'film_id': '59d621d1baabc4174c9d5406', 'score': 0.9900029519035902}, {'film_id': '59d621d1baabc4174c9d51dd', 'score': 0.9892062736236272}, {'film_id': '59d621d1baabc4174c9d535e', 'score': 0.9858566672850966}, {'film_id': '59d621d1baabc4174c9d529d', 'score': 0.9823823758160395}, {'film_id': '59d621d1baabc4174c9d5259', 'score': 0.9773144373646975}, {'film_id': '59d621d1baabc4174c9d53d6', 'score': 0.9596036020392011}, {'film_id': '59d621d1baabc4174c9d535c', 'score': 0.957171347210952}, {'film_id': '59d621d1baabc4174c9d528d', 'score': 0.9561550331799495}, {'film_id': '59d621d1baabc4174c9d53e1', 'score': 0.9553060036621115}, {'film_id': '59d621d1baabc4174c9d530e', 'score': 0.9541489737727336}, {'film_id': '59d621d1baabc4174c9d5258', 'score': 0.9478830520990948}, {'film_id': '59d621d1baabc4174c9d51e7', 'score': 0.9434018393931562}, {'film_id': '59d621d1baabc4174c9d52f2', 'score': 0.9413708314632007}, {'film_id': '59d621d1baabc4174c9d53e2', 'score': 0.9413473579431747}, {'film_id': '59d621d1baabc4174c9d53c8', 'score': 0.9390843989466653}, {'film_id': '59d621d1baabc4174c9d53b3', 'score': 0.9321928499014733}, {'film_id': '59d621d1baabc4174c9d51e8', 'score': 0.9255485291095598}, {'film_id': '59d621d1baabc4174c9d525d', 'score': 0.892952646302214}, {'film_id': '59d621d1baabc4174c9d5425', 'score': 0.8896765311755259}, {'film_id': '59d621d1baabc4174c9d53c5', 'score': 0.86322786178564}, {'film_id': '59d621d1baabc4174c9d5298', 'score': 0.8537962654764879}, {'film_id': '59d621d1baabc4174c9d5273', 'score': 0.837749893045995}, {'film_id': '59d621d1baabc4174c9d541a', 'score': 0.8303189564012748}, {'film_id': '59d621d1baabc4174c9d51fc', 'score': 0.7991251801768625}, {'film_id': '59d621d1baabc4174c9d5236', 'score': 0.7975023181976739}, {'film_id': '59d621d1baabc4174c9d530c', 'score': 0.7926459431534106}, {'film_id': '59d621d1baabc4174c9d520e', 'score': 0.7923711238280242}, {'film_id': '59d621d1baabc4174c9d5390', 'score': 0.7896497307382808}, {'film_id': '59d621d1baabc4174c9d53ad', 'score': 0.7793342354375181}, {'film_id': '59d621d1baabc4174c9d52a5', 'score': 0.7685125088672672}, {'film_id': '59d621d1baabc4174c9d52a3', 'score': 0.766401621755836}, {'film_id': '59d621d1baabc4174c9d5241', 'score': 0.763791485701323}, {'film_id': '59d621d1baabc4174c9d527a', 'score': 0.7306409239831569}, {'film_id': '59d621d1baabc4174c9d52b6', 'score': 0.6839087082730235}, {'film_id': '59d621d1baabc4174c9d5248', 'score': 0.6787135330289696}, {'film_id': '5a50fd074951a73478e331e2', 'score': 0.6787135330289696}, {'film_id': '59d621d1baabc4174c9d52f7', 'score': 0.6775039077461911}, {'film_id': '59d621d1baabc4174c9d52c1', 'score': 0.6721445512031438}, {'film_id': '59d621d1baabc4174c9d52e9', 'score': 0.6559547532810514}]}, 'userService': 'users'}}
+export default {
+  time: { now: 1527291603816, hasStarted: true, counter: 4 },
+  snackbar: { text: '', isPersistent: false },
+  poll: {
+    ids: [
+      '5b0892a47ed2e65d86dd8f91',
+      '5b0872b0b8681b25bf6b934f',
+      '5b05a3936d3e5a6c2e5ef5a8',
+      '5b05a32a6d3e5a6c2e5ef5a7',
+      '5b05a2376d3e5a6c2e5ef5a0',
+      '5b03ddd2cc07571ef7dba8ff',
+      '5b03dbddcc07571ef7dba8f8',
+      '5b03dbb9cc07571ef7dba8f6',
+      '5b03526d1a8266181259ff45',
+      '5b0351471a8266181259ff42',
+      '5b03504c1a8266181259ff40',
+      '5b034fd51a8266181259ff3f',
+      '5b034ab91a8266181259ff3d',
+      '5b0347861a8266181259ff3b',
+      '5b0308191a8266181259ff39',
+      '5b0304151a8266181259ff37',
+      '5b0304141a8266181259ff36',
+      '5b02fd2a1a8266181259ff30',
+      '5b02faec1a8266181259ff2b',
+      '5b02e4581a8266181259ff2a'
+    ],
+    keyedById: {
+      '5b0892a47ed2e65d86dd8f91': {
+        options: [
+          {
+            film: {
+              _id: '59d621d1baabc4174c9d532a',
+              name: 'The Matrix',
+              overview:
+                'Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.',
+              release_date: '1999-03-30',
+              genres: ['Action', 'Science Fiction'],
+              poster_path: '/hEpWvX6Bp79eLxY1kX5ZZJcme5U.jpg',
+              backdrop_path: '/7u3pxc0K1wx32IleAkLv78MKgrw.jpg',
+              tmdb_rating: 8,
+              imdb_rating: 8.7,
+              rotten_tomatoes_rating: 87,
+              tagline: 'Welcome to the Real World.',
+              runtime: 136,
+              imdb_id: 'tt0133093',
+              svg_base64encoded:
+                'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDAgNzUwIj48ZmlsdGVyIGlkPSJjIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI1NSIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjNDk1NzVjIiBkPSJNMCAwaDQ5OHY3NTBIMHoiLz48ZyBmaWx0ZXI9J3VybCgjYyknIGZpbGwtb3BhY2l0eT0nLjUnPjxlbGxpcHNlIGZpbGw9IiNhZWMwY2YiIGZpbGwtb3BhY2l0eT0iLjUiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoNi44ODA3IC0xNDUuOTA0ODIgNDk0LjU2NzY0IDIzLjMyMzIyIDMwNi44IDEzNi42KSIvPjxlbGxpcHNlIGZpbGwtb3BhY2l0eT0iLjUiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJyb3RhdGUoMTY2LjUgMTM3LjMgMzYyLjQpIHNjYWxlKDE3OS42MDc0OCA0NzQuOTAyKSIvPjxwYXRoIGZpbGw9IiNkNGU1ZGUiIGZpbGwtb3BhY2l0eT0iLjUiIGQ9Ik00MDUuNyAxNDUuOUwzOTAuOCA0OTIgMzQ5IDI2NS43IDI3MC44IDE5NHoiLz48cGF0aCBmaWxsLW9wYWNpdHk9Ii41IiBkPSJNMjgyLjcgMjQxLjdsLTIwOCAzNjAuNEwzOTcgNjYwLjZ6Ii8+PGVsbGlwc2UgZmlsbD0iI2Q4ZGJkMyIgZmlsbC1vcGFjaXR5PSIuNSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgtMTAxLjYgODMuNSAxMDAuOSkgc2NhbGUoNTkuNjY5NzMgMjMyLjI0Nzk3KSIvPjxlbGxpcHNlIGZpbGw9IiMwYzExMGIiIGZpbGwtb3BhY2l0eT0iLjUiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMjczLjg5MzIyIDc2LjU3ODU5IC0yMC4yNjk3MiA3Mi40OTcyNyAxMTIuMiA3NDguNSkiLz48cGF0aCBmaWxsPSIjOGRiMmI4IiBmaWxsLW9wYWNpdHk9Ii41IiBkPSJNMzgyLjMgNTcyLjhsLTU1LjYtMjAyLjIgODUgMTM3Ljd6Ii8+PHBhdGggZmlsbD0iI2UwZDBjNSIgZmlsbC1vcGFjaXR5PSIuNSIgZD0iTTQ2MC4zIDI4Ny42bC0yMy41LTMxLjEgMTA2LjctMjcuMy03My40IDE1MHoiLz48cGF0aCBmaWxsPSIjMDkwZDBiIiBmaWxsLW9wYWNpdHk9Ii41IiBkPSJNMTMwLjQgMjY4bDkzLjctNTguNS0zMi4yLTM1LjJ6Ii8+PGVsbGlwc2UgZmlsbD0iIzQwNWRhMSIgZmlsbC1vcGFjaXR5PSIuNSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCguMjAwODYgLTI3Ljk1NDIgMjM5LjE0Mzk3IDEuNzE4MyAyMDQuNSA5NC42KSIvPjwvZz48L3N2Zz4=',
+              recommendations: [
+                { id: '59d621d1baabc4174c9d5266', score: 0.9506842768047069 },
+                { id: '59d621d1baabc4174c9d534f', score: 0.7421856589536464 },
+                { id: '59d621d1baabc4174c9d5253', score: 0.7379854082488033 },
+                { id: '59d621d1baabc4174c9d53b1', score: 0.7165556722886302 },
+                { id: '59d621d1baabc4174c9d53de', score: 0.7158366479180817 },
+                { id: '59d621d1baabc4174c9d52cc', score: 0.7104511504532722 },
+                { id: '59d621d1baabc4174c9d5239', score: 0.655224592405305 },
+                { id: '59d621d1baabc4174c9d5383', score: 0.6517902661424035 },
+                { id: '59d621d1baabc4174c9d53d1', score: 0.649046800698237 }
+              ]
+            },
+            _id: '5b0892a47ed2e65d86dd8f92',
+            name: 'The Matrix',
+            film_id: '59d621d1baabc4174c9d532a',
+            poll_id: '5b0892a47ed2e65d86dd8f91',
+            createdAt: '2018-05-25T22:48:04.314Z',
+            updatedAt: '2018-05-25T22:48:04.314Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          },
+          {
+            film: {
+              _id: '59d621d1baabc4174c9d51ed',
+              name: 'American Wedding',
+              overview:
+                "With high school a distant memory, Jim and Michelle are getting married -- and in a hurry, since Jim's grandmother is sick and wants to see him walk down the aisle -- prompting Stifler to throw the ultimate bachelor party. And Jim's dad is reliable as ever, doling out advice no one wants to hear.",
+              release_date: '2003-08-01',
+              genres: ['Comedy', 'Romance'],
+              poster_path: '/lcLuBjI3Hr12mGFKJvdMeZdf3AN.jpg',
+              backdrop_path: '/5CDIezS2xJtcSXPL24Z2dIeUOp0.jpg',
+              tmdb_rating: 6,
+              imdb_rating: 6.3,
+              rotten_tomatoes_rating: 54,
+              tagline: 'Forever hold your piece.',
+              runtime: 103,
+              imdb_id: 'tt0328828',
+              svg_base64encoded:
+                'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDAgNzUwIj48ZmlsdGVyIGlkPSJiIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxMiIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjNzI1OTQ3IiBkPSJNMCAwaDQ5OHY3NTBIMHoiLz48ZyBmaWx0ZXI9InVybCgjYikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEuNSAxLjUpIHNjYWxlKDIuOTI5NjkpIiBmaWxsLW9wYWNpdHk9Ii41Ij48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0icm90YXRlKC0xMS42IDExNjguMiAyNi44KSBzY2FsZSgzNi4wMDM0MiA2MC42Mjg2OCkiLz48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDE4Ljk4Mjk4IC03Ny4yODQ4NCAyNC4yNDk1MSA1Ljk1NjI1IDE4LjEgMzcpIi8+PGVsbGlwc2UgY3g9IjE2OSIgY3k9IjE2MiIgcng9IjEwNyIgcnk9IjEwNyIvPjxlbGxpcHNlIGZpbGw9IiNmZmYiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMTI1LjcyOTAzIDY0LjAxMDgzIC0xMC41NzQ3NCAyMC43NzA3MyAxNDQuNyA1LjYpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmYmYzNyIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCg0My42OTA2NiAtMTguMDk3MjYgMTMuNDY1NzQgMzIuNTA5MTggNzUuOCAxODQpIi8+PGVsbGlwc2Ugcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgyOC43MTk4MyAyNy45MTgxMiAtMTEwLjEwNzE5IDExMy4yNjkwOSAxMjcgMjMwLjIpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmZiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgtMTkuOCA2NTcuNiAxMTQuOCkgc2NhbGUoMzYuNzQwMTIgNjMuNjMwNzgpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmZiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtNDkuMzQxNTIgLTUwLjMxNzQ4IDE2LjMyOTUyIC0xNi4wMTI4IDE1MC4yIDYuOCkiLz48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0icm90YXRlKDE0MS4yIDEyLjMgNC4zKSBzY2FsZSg1NC4wOTE4NCAyMy40MDY2OSkiLz48ZWxsaXBzZSBmaWxsPSIjYzk2ZDQ4IiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDIxLjEwODA4IC0yMy42NTAxMyAyNC4zMDQ0NyAyMS42OTIwOSA0NS4xIDQ4LjEpIi8+PC9nPjwvc3ZnPg==',
+              recommendations: [
+                { id: '59d621d1baabc4174c9d52c2', score: 0.9985474450910079 },
+                { id: '59d621d1baabc4174c9d522a', score: 0.9984621330194661 },
+                { id: '59d621d1baabc4174c9d51ec', score: 0.9983964766121615 },
+                { id: '59d621d1baabc4174c9d5243', score: 0.9972365281763945 },
+                { id: '59d621d1baabc4174c9d51d3', score: 0.9972093041987072 },
+                { id: '59d621d1baabc4174c9d51d4', score: 0.9964623429352079 },
+                { id: '59d621d1baabc4174c9d5418', score: 0.9963642086153753 },
+                { id: '59d621d1baabc4174c9d5408', score: 0.9952622643776048 },
+                { id: '59d621d1baabc4174c9d52c0', score: 0.9949850191481875 }
+              ]
+            },
+            _id: '5b0892b27ed2e65d86dd8f93',
+            name: 'American Wedding',
+            poll_id: '5b0892a47ed2e65d86dd8f91',
+            film_id: '59d621d1baabc4174c9d51ed',
+            createdAt: '2018-05-25T22:48:18.582Z',
+            updatedAt: '2018-05-25T22:48:18.582Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          }
+        ],
+        _id: '5b0892a47ed2e65d86dd8f91',
+        numberOfVotes: 2,
+        startDateTime: 1527288484289,
+        endDateTime: 1527288796628,
+        pollTransitionDateTime: 1527288784289,
+        numberOfNominations: 2,
+        createdAt: '2018-05-25T22:48:04.293Z',
+        updatedAt: '2018-05-25T22:53:16.798Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b0872b0b8681b25bf6b934f': {
+        options: [],
+        _id: '5b0872b0b8681b25bf6b934f',
+        numberOfVotes: 2,
+        startDateTime: 1527280304062,
+        endDateTime: 1527280784062,
+        pollTransitionDateTime: 1527280604062,
+        numberOfNominations: 1,
+        createdAt: '2018-05-25T20:31:44.093Z',
+        updatedAt: '2018-05-25T20:31:44.093Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b05a3936d3e5a6c2e5ef5a8': {
+        options: [],
+        _id: '5b05a3936d3e5a6c2e5ef5a8',
+        numberOfVotes: 2,
+        startDateTime: 1527096211974,
+        endDateTime: 1527096570545,
+        pollTransitionDateTime: 1527096511974,
+        numberOfNominations: 1,
+        createdAt: '2018-05-23T17:23:31.998Z',
+        updatedAt: '2018-05-23T17:29:30.794Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b05a32a6d3e5a6c2e5ef5a7': {
+        options: [],
+        _id: '5b05a32a6d3e5a6c2e5ef5a7',
+        numberOfVotes: 2,
+        startDateTime: 1527096106297,
+        endDateTime: 1527096163389,
+        pollTransitionDateTime: 1527096406297,
+        numberOfNominations: 1,
+        createdAt: '2018-05-23T17:21:46.324Z',
+        updatedAt: '2018-05-23T17:22:43.508Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b05a2376d3e5a6c2e5ef5a0': {
+        options: [
+          {
+            film: null,
+            _id: '5b05a2a16d3e5a6c2e5ef5a1',
+            name: 'Thor: Ragnarok',
+            poll_id: '5b05a2376d3e5a6c2e5ef5a0',
+            film_id: '5afc38b5c47f281d032e7372',
+            createdAt: '2018-05-23T17:19:29.443Z',
+            updatedAt: '2018-05-23T17:19:29.443Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          }
+        ],
+        _id: '5b05a2376d3e5a6c2e5ef5a0',
+        numberOfVotes: 2,
+        startDateTime: 1527095863017,
+        endDateTime: 1527096067015,
+        pollTransitionDateTime: 1527095973903,
+        numberOfNominations: 1,
+        createdAt: '2018-05-23T17:17:43.060Z',
+        updatedAt: '2018-05-23T17:21:07.194Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b03ddd2cc07571ef7dba8ff': {
+        options: [
+          {
+            film: null,
+            _id: '5b03ddd8cc07571ef7dba900',
+            name: 'Live Free or Die Hard',
+            poll_id: '5b03ddd2cc07571ef7dba8ff',
+            film_id: '59d621d1baabc4174c9d5312',
+            createdAt: '2018-05-22T09:07:36.520Z',
+            updatedAt: '2018-05-22T09:07:36.520Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          },
+          {
+            film: null,
+            _id: '5b03dddccc07571ef7dba901',
+            name: 'The Lord of the Rings: The Fellowship of the Ring',
+            poll_id: '5b03ddd2cc07571ef7dba8ff',
+            film_id: '59d621d1baabc4174c9d5317',
+            createdAt: '2018-05-22T09:07:40.737Z',
+            updatedAt: '2018-05-22T09:07:40.737Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          }
+        ],
+        _id: '5b03ddd2cc07571ef7dba8ff',
+        numberOfVotes: 2,
+        startDateTime: 1526980050523,
+        endDateTime: 1526980243860,
+        pollTransitionDateTime: 1526980063860,
+        numberOfNominations: 2,
+        createdAt: '2018-05-22T09:07:30.524Z',
+        updatedAt: '2018-05-22T09:07:44.100Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b03dbddcc07571ef7dba8f8': {
+        options: [
+          {
+            film: null,
+            _id: '5b03dbe4cc07571ef7dba8f9',
+            name: 'Harry Potter and the Goblet of Fire',
+            poll_id: '5b03dbddcc07571ef7dba8f8',
+            film_id: '59d621d1baabc4174c9d52b0',
+            createdAt: '2018-05-22T08:59:16.995Z',
+            updatedAt: '2018-05-22T08:59:16.995Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          },
+          {
+            film: null,
+            _id: '5b03dbe8cc07571ef7dba8fa',
+            name: 'Gandhi',
+            poll_id: '5b03dbddcc07571ef7dba8f8',
+            film_id: '59d621d1baabc4174c9d5291',
+            createdAt: '2018-05-22T08:59:20.366Z',
+            updatedAt: '2018-05-22T08:59:20.366Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          },
+          {
+            film: null,
+            _id: '5b03dbebcc07571ef7dba8fb',
+            name: 'Grand Prix',
+            poll_id: '5b03dbddcc07571ef7dba8f8',
+            film_id: '59d621d1baabc4174c9d52a0',
+            createdAt: '2018-05-22T08:59:23.028Z',
+            updatedAt: '2018-05-22T08:59:23.028Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          }
+        ],
+        _id: '5b03dbddcc07571ef7dba8f8',
+        numberOfVotes: 4,
+        startDateTime: 1526979549956,
+        endDateTime: 1526980029956,
+        pollTransitionDateTime: 1526979849956,
+        numberOfNominations: 3,
+        createdAt: '2018-05-22T08:59:09.956Z',
+        updatedAt: '2018-05-22T08:59:09.956Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b03dbb9cc07571ef7dba8f6': {
+        options: [
+          {
+            film: null,
+            _id: '5b03dbbdcc07571ef7dba8f7',
+            name: 'Return of the Jedi',
+            poll_id: '5b03dbb9cc07571ef7dba8f6',
+            film_id: '59d621d1baabc4174c9d53c4',
+            createdAt: '2018-05-22T08:58:37.106Z',
+            updatedAt: '2018-05-22T08:58:37.106Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          }
+        ],
+        _id: '5b03dbb9cc07571ef7dba8f6',
+        numberOfVotes: 2,
+        startDateTime: 1526979513734,
+        endDateTime: 1526979535881,
+        pollTransitionDateTime: 1526979813734,
+        numberOfNominations: 1,
+        createdAt: '2018-05-22T08:58:33.735Z',
+        updatedAt: '2018-05-22T08:58:56.049Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b03526d1a8266181259ff45': {
+        options: [
+          {
+            film: null,
+            _id: '5b0352721a8266181259ff46',
+            name: 'The Prestige',
+            poll_id: '5b03526d1a8266181259ff45',
+            film_id: '59d621d1baabc4174c9d5366',
+            createdAt: '2018-05-21T23:12:50.979Z',
+            updatedAt: '2018-05-21T23:12:50.979Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          }
+        ],
+        _id: '5b03526d1a8266181259ff45',
+        numberOfVotes: 2,
+        startDateTime: 1526944365197,
+        endDateTime: 1526944554578,
+        pollTransitionDateTime: 1526944374578,
+        numberOfNominations: 1,
+        createdAt: '2018-05-21T23:12:45.204Z',
+        updatedAt: '2018-05-21T23:12:54.919Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b0351471a8266181259ff42': {
+        options: [
+          {
+            film: null,
+            _id: '5b03514e1a8266181259ff43',
+            name: 'Up',
+            poll_id: '5b0351471a8266181259ff42',
+            film_id: '59d621d1baabc4174c9d5407',
+            createdAt: '2018-05-21T23:07:58.938Z',
+            updatedAt: '2018-05-21T23:07:58.938Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          }
+        ],
+        _id: '5b0351471a8266181259ff42',
+        numberOfVotes: 2,
+        startDateTime: 1526944071225,
+        endDateTime: 1526944352178,
+        pollTransitionDateTime: 1526944172178,
+        numberOfNominations: 1,
+        createdAt: '2018-05-21T23:07:51.226Z',
+        updatedAt: '2018-05-21T23:09:32.344Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b03504c1a8266181259ff40': {
+        options: [
+          {
+            film: null,
+            _id: '5b03506f1a8266181259ff41',
+            name: 'The Hunger Games',
+            poll_id: '5b03504c1a8266181259ff40',
+            film_id: '59d621d1baabc4174c9d52c7',
+            createdAt: '2018-05-21T23:04:15.843Z',
+            updatedAt: '2018-05-21T23:04:15.843Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          }
+        ],
+        _id: '5b03504c1a8266181259ff40',
+        numberOfVotes: 2,
+        startDateTime: 1526943820381,
+        endDateTime: 1526944042013,
+        pollTransitionDateTime: 1526943862013,
+        numberOfNominations: 1,
+        createdAt: '2018-05-21T23:03:40.381Z',
+        updatedAt: '2018-05-21T23:04:22.353Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b034fd51a8266181259ff3f': {
+        options: [],
+        _id: '5b034fd51a8266181259ff3f',
+        numberOfVotes: 2,
+        startDateTime: 1526943701727,
+        endDateTime: 1526943790414,
+        pollTransitionDateTime: 1526943787636,
+        numberOfNominations: 1,
+        createdAt: '2018-05-21T23:01:41.728Z',
+        updatedAt: '2018-05-21T23:03:10.653Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b034ab91a8266181259ff3d': {
+        options: [
+          {
+            film: null,
+            _id: '5b034ae41a8266181259ff3e',
+            name: 'Sing Street',
+            poll_id: '5b034ab91a8266181259ff3d',
+            film_id: '59d621d1baabc4174c9d53a6',
+            createdAt: '2018-05-21T22:40:36.005Z',
+            updatedAt: '2018-05-21T22:40:36.005Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          }
+        ],
+        _id: '5b034ab91a8266181259ff3d',
+        numberOfVotes: 2,
+        startDateTime: 1526942393808,
+        endDateTime: 1526942873808,
+        pollTransitionDateTime: 1526942693808,
+        numberOfNominations: 1,
+        createdAt: '2018-05-21T22:39:53.809Z',
+        updatedAt: '2018-05-21T22:39:53.809Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b0347861a8266181259ff3b': {
+        options: [
+          {
+            film: null,
+            _id: '5b03478b1a8266181259ff3c',
+            name: 'The Shawshank Redemption',
+            poll_id: '5b0347861a8266181259ff3b',
+            film_id: '59d621d1baabc4174c9d539f',
+            createdAt: '2018-05-21T22:26:19.183Z',
+            updatedAt: '2018-05-21T22:26:19.183Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          }
+        ],
+        _id: '5b0347861a8266181259ff3b',
+        numberOfVotes: 2,
+        startDateTime: 1526941574588,
+        endDateTime: 1526942054588,
+        pollTransitionDateTime: 1526941874588,
+        numberOfNominations: 1,
+        createdAt: '2018-05-21T22:26:14.591Z',
+        updatedAt: '2018-05-21T22:26:14.591Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b0308191a8266181259ff39': {
+        options: [
+          {
+            film: null,
+            _id: '5b03081d1a8266181259ff3a',
+            name: 'Skyfall',
+            poll_id: '5b0308191a8266181259ff39',
+            film_id: '59d621d1baabc4174c9d53a8',
+            createdAt: '2018-05-21T17:55:41.197Z',
+            updatedAt: '2018-05-21T17:55:41.197Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          }
+        ],
+        _id: '5b0308191a8266181259ff39',
+        numberOfVotes: 2,
+        startDateTime: 1526925337788,
+        endDateTime: 1526925817788,
+        pollTransitionDateTime: 1526925637788,
+        numberOfNominations: 1,
+        createdAt: '2018-05-21T17:55:37.789Z',
+        updatedAt: '2018-05-21T17:55:37.789Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b0304151a8266181259ff37': {
+        options: [],
+        _id: '5b0304151a8266181259ff37',
+        numberOfVotes: 2,
+        startDateTime: 1526924309895,
+        endDateTime: 1526924789895,
+        pollTransitionDateTime: 1526924609895,
+        numberOfNominations: 1,
+        createdAt: '2018-05-21T17:38:29.896Z',
+        updatedAt: '2018-05-21T17:38:29.896Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b0304141a8266181259ff36': {
+        options: [
+          {
+            film: null,
+            _id: '5b03041f1a8266181259ff38',
+            name: 'Elf',
+            poll_id: '5b0304141a8266181259ff36',
+            film_id: '59d621d1baabc4174c9d5268',
+            createdAt: '2018-05-21T17:38:39.888Z',
+            updatedAt: '2018-05-21T17:38:39.888Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          }
+        ],
+        _id: '5b0304141a8266181259ff36',
+        numberOfVotes: 2,
+        startDateTime: 1526924308105,
+        endDateTime: 1526924788105,
+        pollTransitionDateTime: 1526924608105,
+        numberOfNominations: 1,
+        createdAt: '2018-05-21T17:38:28.107Z',
+        updatedAt: '2018-05-21T17:38:28.107Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b02fd2a1a8266181259ff30': {
+        options: [
+          {
+            film: null,
+            _id: '5b02fd351a8266181259ff31',
+            name: 'The Hobbit: The Battle of the Five Armies',
+            poll_id: '5b02fd2a1a8266181259ff30',
+            film_id: '59d621d1baabc4174c9d52b9',
+            createdAt: '2018-05-21T17:09:09.527Z',
+            updatedAt: '2018-05-21T17:09:09.527Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          }
+        ],
+        _id: '5b02fd2a1a8266181259ff30',
+        numberOfVotes: 2,
+        startDateTime: 1526922538688,
+        endDateTime: 1526923013932,
+        pollTransitionDateTime: 1526922713932,
+        numberOfNominations: 1,
+        createdAt: '2018-05-21T17:08:58.690Z',
+        updatedAt: '2018-05-21T17:11:54.197Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b02faec1a8266181259ff2b': {
+        options: [
+          {
+            film: null,
+            _id: '5b02faf21a8266181259ff2c',
+            name: 'Deadpool',
+            poll_id: '5b02faec1a8266181259ff2b',
+            film_id: '59d621d1baabc4174c9d5251',
+            createdAt: '2018-05-21T16:59:30.088Z',
+            updatedAt: '2018-05-21T16:59:30.088Z',
+            added_by_user_id: '59cba12cf67f7507c5812182'
+          }
+        ],
+        _id: '5b02faec1a8266181259ff2b',
+        numberOfVotes: 2,
+        startDateTime: 1526921964381,
+        endDateTime: 1526922444381,
+        pollTransitionDateTime: 1526922264381,
+        numberOfNominations: 1,
+        createdAt: '2018-05-21T16:59:24.383Z',
+        updatedAt: '2018-05-21T16:59:24.383Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b02e4581a8266181259ff2a': {
+        options: [],
+        _id: '5b02e4581a8266181259ff2a',
+        numberOfVotes: 2,
+        startDateTime: 1526916184897,
+        endDateTime: 1526916320254,
+        pollTransitionDateTime: 1526916187851,
+        numberOfNominations: 1,
+        createdAt: '2018-05-21T15:23:04.902Z',
+        updatedAt: '2018-05-21T15:25:20.403Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      }
+    },
+    copiesById: {},
+    currentId: null,
+    copy: null,
+    idField: '_id',
+    servicePath: 'poll',
+    autoRemove: false,
+    enableEvents: true,
+    addOnUpsert: false,
+    skipRequestIfExists: false,
+    preferUpdate: false,
+    replaceItems: false,
+    isFindPending: false,
+    isGetPending: false,
+    isCreatePending: false,
+    isUpdatePending: false,
+    isPatchPending: false,
+    isRemovePending: false,
+    errorOnFind: null,
+    errorOnGet: null,
+    errorOnCreate: null,
+    errorOnUpdate: null,
+    errorOnPatch: null,
+    errorOnRemove: null,
+    modelName: 'Poll',
+    pagination: {
+      default: {
+        limit: 20,
+        skip: 0,
+        total: 228,
+        ids: [
+          '5b0892a47ed2e65d86dd8f91',
+          '5b0872b0b8681b25bf6b934f',
+          '5b05a3936d3e5a6c2e5ef5a8',
+          '5b05a32a6d3e5a6c2e5ef5a7',
+          '5b05a2376d3e5a6c2e5ef5a0',
+          '5b03ddd2cc07571ef7dba8ff',
+          '5b03dbddcc07571ef7dba8f8',
+          '5b03dbb9cc07571ef7dba8f6',
+          '5b03526d1a8266181259ff45',
+          '5b0351471a8266181259ff42',
+          '5b03504c1a8266181259ff40',
+          '5b034fd51a8266181259ff3f',
+          '5b034ab91a8266181259ff3d',
+          '5b0347861a8266181259ff3b',
+          '5b0308191a8266181259ff39',
+          '5b0304151a8266181259ff37',
+          '5b0304141a8266181259ff36',
+          '5b02fd2a1a8266181259ff30',
+          '5b02faec1a8266181259ff2b',
+          '5b02e4581a8266181259ff2a'
+        ],
+        query: { $sort: { endDateTime: -1 }, $limit: 20 }
+      }
+    }
+  },
+  option: {
+    ids: [
+      '5b0892a47ed2e65d86dd8f92',
+      '5b0892b27ed2e65d86dd8f93',
+      '5b05a2a16d3e5a6c2e5ef5a1',
+      '5b03ddd8cc07571ef7dba900',
+      '5b03dddccc07571ef7dba901',
+      '5b03dbe4cc07571ef7dba8f9',
+      '5b03dbe8cc07571ef7dba8fa',
+      '5b03dbebcc07571ef7dba8fb',
+      '5b03dbbdcc07571ef7dba8f7',
+      '5b0352721a8266181259ff46',
+      '5b03514e1a8266181259ff43',
+      '5b03506f1a8266181259ff41',
+      '5b034ae41a8266181259ff3e',
+      '5b03478b1a8266181259ff3c',
+      '5b03081d1a8266181259ff3a',
+      '5b03041f1a8266181259ff38',
+      '5b02fd351a8266181259ff31',
+      '5b02faf21a8266181259ff2c'
+    ],
+    keyedById: {
+      '5b0892a47ed2e65d86dd8f92': {
+        film: {
+          _id: '59d621d1baabc4174c9d532a',
+          name: 'The Matrix',
+          overview:
+            'Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.',
+          release_date: '1999-03-30',
+          genres: ['Action', 'Science Fiction'],
+          poster_path: '/hEpWvX6Bp79eLxY1kX5ZZJcme5U.jpg',
+          backdrop_path: '/7u3pxc0K1wx32IleAkLv78MKgrw.jpg',
+          tmdb_rating: 8,
+          imdb_rating: 8.7,
+          rotten_tomatoes_rating: 87,
+          tagline: 'Welcome to the Real World.',
+          runtime: 136,
+          imdb_id: 'tt0133093',
+          svg_base64encoded:
+            'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDAgNzUwIj48ZmlsdGVyIGlkPSJjIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSI1NSIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjNDk1NzVjIiBkPSJNMCAwaDQ5OHY3NTBIMHoiLz48ZyBmaWx0ZXI9J3VybCgjYyknIGZpbGwtb3BhY2l0eT0nLjUnPjxlbGxpcHNlIGZpbGw9IiNhZWMwY2YiIGZpbGwtb3BhY2l0eT0iLjUiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoNi44ODA3IC0xNDUuOTA0ODIgNDk0LjU2NzY0IDIzLjMyMzIyIDMwNi44IDEzNi42KSIvPjxlbGxpcHNlIGZpbGwtb3BhY2l0eT0iLjUiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJyb3RhdGUoMTY2LjUgMTM3LjMgMzYyLjQpIHNjYWxlKDE3OS42MDc0OCA0NzQuOTAyKSIvPjxwYXRoIGZpbGw9IiNkNGU1ZGUiIGZpbGwtb3BhY2l0eT0iLjUiIGQ9Ik00MDUuNyAxNDUuOUwzOTAuOCA0OTIgMzQ5IDI2NS43IDI3MC44IDE5NHoiLz48cGF0aCBmaWxsLW9wYWNpdHk9Ii41IiBkPSJNMjgyLjcgMjQxLjdsLTIwOCAzNjAuNEwzOTcgNjYwLjZ6Ii8+PGVsbGlwc2UgZmlsbD0iI2Q4ZGJkMyIgZmlsbC1vcGFjaXR5PSIuNSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgtMTAxLjYgODMuNSAxMDAuOSkgc2NhbGUoNTkuNjY5NzMgMjMyLjI0Nzk3KSIvPjxlbGxpcHNlIGZpbGw9IiMwYzExMGIiIGZpbGwtb3BhY2l0eT0iLjUiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMjczLjg5MzIyIDc2LjU3ODU5IC0yMC4yNjk3MiA3Mi40OTcyNyAxMTIuMiA3NDguNSkiLz48cGF0aCBmaWxsPSIjOGRiMmI4IiBmaWxsLW9wYWNpdHk9Ii41IiBkPSJNMzgyLjMgNTcyLjhsLTU1LjYtMjAyLjIgODUgMTM3Ljd6Ii8+PHBhdGggZmlsbD0iI2UwZDBjNSIgZmlsbC1vcGFjaXR5PSIuNSIgZD0iTTQ2MC4zIDI4Ny42bC0yMy41LTMxLjEgMTA2LjctMjcuMy03My40IDE1MHoiLz48cGF0aCBmaWxsPSIjMDkwZDBiIiBmaWxsLW9wYWNpdHk9Ii41IiBkPSJNMTMwLjQgMjY4bDkzLjctNTguNS0zMi4yLTM1LjJ6Ii8+PGVsbGlwc2UgZmlsbD0iIzQwNWRhMSIgZmlsbC1vcGFjaXR5PSIuNSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCguMjAwODYgLTI3Ljk1NDIgMjM5LjE0Mzk3IDEuNzE4MyAyMDQuNSA5NC42KSIvPjwvZz48L3N2Zz4=',
+          recommendations: [
+            { id: '59d621d1baabc4174c9d5266', score: 0.9506842768047069 },
+            { id: '59d621d1baabc4174c9d534f', score: 0.7421856589536464 },
+            { id: '59d621d1baabc4174c9d5253', score: 0.7379854082488033 },
+            { id: '59d621d1baabc4174c9d53b1', score: 0.7165556722886302 },
+            { id: '59d621d1baabc4174c9d53de', score: 0.7158366479180817 },
+            { id: '59d621d1baabc4174c9d52cc', score: 0.7104511504532722 },
+            { id: '59d621d1baabc4174c9d5239', score: 0.655224592405305 },
+            { id: '59d621d1baabc4174c9d5383', score: 0.6517902661424035 },
+            { id: '59d621d1baabc4174c9d53d1', score: 0.649046800698237 }
+          ]
+        },
+        _id: '5b0892a47ed2e65d86dd8f92',
+        name: 'The Matrix',
+        film_id: '59d621d1baabc4174c9d532a',
+        poll_id: '5b0892a47ed2e65d86dd8f91',
+        createdAt: '2018-05-25T22:48:04.314Z',
+        updatedAt: '2018-05-25T22:48:04.314Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b0892b27ed2e65d86dd8f93': {
+        film: {
+          _id: '59d621d1baabc4174c9d51ed',
+          name: 'American Wedding',
+          overview:
+            "With high school a distant memory, Jim and Michelle are getting married -- and in a hurry, since Jim's grandmother is sick and wants to see him walk down the aisle -- prompting Stifler to throw the ultimate bachelor party. And Jim's dad is reliable as ever, doling out advice no one wants to hear.",
+          release_date: '2003-08-01',
+          genres: ['Comedy', 'Romance'],
+          poster_path: '/lcLuBjI3Hr12mGFKJvdMeZdf3AN.jpg',
+          backdrop_path: '/5CDIezS2xJtcSXPL24Z2dIeUOp0.jpg',
+          tmdb_rating: 6,
+          imdb_rating: 6.3,
+          rotten_tomatoes_rating: 54,
+          tagline: 'Forever hold your piece.',
+          runtime: 103,
+          imdb_id: 'tt0328828',
+          svg_base64encoded:
+            'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MDAgNzUwIj48ZmlsdGVyIGlkPSJiIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxMiIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjNzI1OTQ3IiBkPSJNMCAwaDQ5OHY3NTBIMHoiLz48ZyBmaWx0ZXI9InVybCgjYikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEuNSAxLjUpIHNjYWxlKDIuOTI5NjkpIiBmaWxsLW9wYWNpdHk9Ii41Ij48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0icm90YXRlKC0xMS42IDExNjguMiAyNi44KSBzY2FsZSgzNi4wMDM0MiA2MC42Mjg2OCkiLz48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDE4Ljk4Mjk4IC03Ny4yODQ4NCAyNC4yNDk1MSA1Ljk1NjI1IDE4LjEgMzcpIi8+PGVsbGlwc2UgY3g9IjE2OSIgY3k9IjE2MiIgcng9IjEwNyIgcnk9IjEwNyIvPjxlbGxpcHNlIGZpbGw9IiNmZmYiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMTI1LjcyOTAzIDY0LjAxMDgzIC0xMC41NzQ3NCAyMC43NzA3MyAxNDQuNyA1LjYpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmYmYzNyIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCg0My42OTA2NiAtMTguMDk3MjYgMTMuNDY1NzQgMzIuNTA5MTggNzUuOCAxODQpIi8+PGVsbGlwc2Ugcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgyOC43MTk4MyAyNy45MTgxMiAtMTEwLjEwNzE5IDExMy4yNjkwOSAxMjcgMjMwLjIpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmZiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgtMTkuOCA2NTcuNiAxMTQuOCkgc2NhbGUoMzYuNzQwMTIgNjMuNjMwNzgpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmZiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtNDkuMzQxNTIgLTUwLjMxNzQ4IDE2LjMyOTUyIC0xNi4wMTI4IDE1MC4yIDYuOCkiLz48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0icm90YXRlKDE0MS4yIDEyLjMgNC4zKSBzY2FsZSg1NC4wOTE4NCAyMy40MDY2OSkiLz48ZWxsaXBzZSBmaWxsPSIjYzk2ZDQ4IiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDIxLjEwODA4IC0yMy42NTAxMyAyNC4zMDQ0NyAyMS42OTIwOSA0NS4xIDQ4LjEpIi8+PC9nPjwvc3ZnPg==',
+          recommendations: [
+            { id: '59d621d1baabc4174c9d52c2', score: 0.9985474450910079 },
+            { id: '59d621d1baabc4174c9d522a', score: 0.9984621330194661 },
+            { id: '59d621d1baabc4174c9d51ec', score: 0.9983964766121615 },
+            { id: '59d621d1baabc4174c9d5243', score: 0.9972365281763945 },
+            { id: '59d621d1baabc4174c9d51d3', score: 0.9972093041987072 },
+            { id: '59d621d1baabc4174c9d51d4', score: 0.9964623429352079 },
+            { id: '59d621d1baabc4174c9d5418', score: 0.9963642086153753 },
+            { id: '59d621d1baabc4174c9d5408', score: 0.9952622643776048 },
+            { id: '59d621d1baabc4174c9d52c0', score: 0.9949850191481875 }
+          ]
+        },
+        _id: '5b0892b27ed2e65d86dd8f93',
+        name: 'American Wedding',
+        poll_id: '5b0892a47ed2e65d86dd8f91',
+        film_id: '59d621d1baabc4174c9d51ed',
+        createdAt: '2018-05-25T22:48:18.582Z',
+        updatedAt: '2018-05-25T22:48:18.582Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b05a2a16d3e5a6c2e5ef5a1': {
+        film: null,
+        _id: '5b05a2a16d3e5a6c2e5ef5a1',
+        name: 'Thor: Ragnarok',
+        poll_id: '5b05a2376d3e5a6c2e5ef5a0',
+        film_id: '5afc38b5c47f281d032e7372',
+        createdAt: '2018-05-23T17:19:29.443Z',
+        updatedAt: '2018-05-23T17:19:29.443Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b03ddd8cc07571ef7dba900': {
+        film: null,
+        _id: '5b03ddd8cc07571ef7dba900',
+        name: 'Live Free or Die Hard',
+        poll_id: '5b03ddd2cc07571ef7dba8ff',
+        film_id: '59d621d1baabc4174c9d5312',
+        createdAt: '2018-05-22T09:07:36.520Z',
+        updatedAt: '2018-05-22T09:07:36.520Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b03dddccc07571ef7dba901': {
+        film: null,
+        _id: '5b03dddccc07571ef7dba901',
+        name: 'The Lord of the Rings: The Fellowship of the Ring',
+        poll_id: '5b03ddd2cc07571ef7dba8ff',
+        film_id: '59d621d1baabc4174c9d5317',
+        createdAt: '2018-05-22T09:07:40.737Z',
+        updatedAt: '2018-05-22T09:07:40.737Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b03dbe4cc07571ef7dba8f9': {
+        film: null,
+        _id: '5b03dbe4cc07571ef7dba8f9',
+        name: 'Harry Potter and the Goblet of Fire',
+        poll_id: '5b03dbddcc07571ef7dba8f8',
+        film_id: '59d621d1baabc4174c9d52b0',
+        createdAt: '2018-05-22T08:59:16.995Z',
+        updatedAt: '2018-05-22T08:59:16.995Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b03dbe8cc07571ef7dba8fa': {
+        film: null,
+        _id: '5b03dbe8cc07571ef7dba8fa',
+        name: 'Gandhi',
+        poll_id: '5b03dbddcc07571ef7dba8f8',
+        film_id: '59d621d1baabc4174c9d5291',
+        createdAt: '2018-05-22T08:59:20.366Z',
+        updatedAt: '2018-05-22T08:59:20.366Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b03dbebcc07571ef7dba8fb': {
+        film: null,
+        _id: '5b03dbebcc07571ef7dba8fb',
+        name: 'Grand Prix',
+        poll_id: '5b03dbddcc07571ef7dba8f8',
+        film_id: '59d621d1baabc4174c9d52a0',
+        createdAt: '2018-05-22T08:59:23.028Z',
+        updatedAt: '2018-05-22T08:59:23.028Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b03dbbdcc07571ef7dba8f7': {
+        film: null,
+        _id: '5b03dbbdcc07571ef7dba8f7',
+        name: 'Return of the Jedi',
+        poll_id: '5b03dbb9cc07571ef7dba8f6',
+        film_id: '59d621d1baabc4174c9d53c4',
+        createdAt: '2018-05-22T08:58:37.106Z',
+        updatedAt: '2018-05-22T08:58:37.106Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b0352721a8266181259ff46': {
+        film: null,
+        _id: '5b0352721a8266181259ff46',
+        name: 'The Prestige',
+        poll_id: '5b03526d1a8266181259ff45',
+        film_id: '59d621d1baabc4174c9d5366',
+        createdAt: '2018-05-21T23:12:50.979Z',
+        updatedAt: '2018-05-21T23:12:50.979Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b03514e1a8266181259ff43': {
+        film: null,
+        _id: '5b03514e1a8266181259ff43',
+        name: 'Up',
+        poll_id: '5b0351471a8266181259ff42',
+        film_id: '59d621d1baabc4174c9d5407',
+        createdAt: '2018-05-21T23:07:58.938Z',
+        updatedAt: '2018-05-21T23:07:58.938Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b03506f1a8266181259ff41': {
+        film: null,
+        _id: '5b03506f1a8266181259ff41',
+        name: 'The Hunger Games',
+        poll_id: '5b03504c1a8266181259ff40',
+        film_id: '59d621d1baabc4174c9d52c7',
+        createdAt: '2018-05-21T23:04:15.843Z',
+        updatedAt: '2018-05-21T23:04:15.843Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b034ae41a8266181259ff3e': {
+        film: null,
+        _id: '5b034ae41a8266181259ff3e',
+        name: 'Sing Street',
+        poll_id: '5b034ab91a8266181259ff3d',
+        film_id: '59d621d1baabc4174c9d53a6',
+        createdAt: '2018-05-21T22:40:36.005Z',
+        updatedAt: '2018-05-21T22:40:36.005Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b03478b1a8266181259ff3c': {
+        film: null,
+        _id: '5b03478b1a8266181259ff3c',
+        name: 'The Shawshank Redemption',
+        poll_id: '5b0347861a8266181259ff3b',
+        film_id: '59d621d1baabc4174c9d539f',
+        createdAt: '2018-05-21T22:26:19.183Z',
+        updatedAt: '2018-05-21T22:26:19.183Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b03081d1a8266181259ff3a': {
+        film: null,
+        _id: '5b03081d1a8266181259ff3a',
+        name: 'Skyfall',
+        poll_id: '5b0308191a8266181259ff39',
+        film_id: '59d621d1baabc4174c9d53a8',
+        createdAt: '2018-05-21T17:55:41.197Z',
+        updatedAt: '2018-05-21T17:55:41.197Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b03041f1a8266181259ff38': {
+        film: null,
+        _id: '5b03041f1a8266181259ff38',
+        name: 'Elf',
+        poll_id: '5b0304141a8266181259ff36',
+        film_id: '59d621d1baabc4174c9d5268',
+        createdAt: '2018-05-21T17:38:39.888Z',
+        updatedAt: '2018-05-21T17:38:39.888Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b02fd351a8266181259ff31': {
+        film: null,
+        _id: '5b02fd351a8266181259ff31',
+        name: 'The Hobbit: The Battle of the Five Armies',
+        poll_id: '5b02fd2a1a8266181259ff30',
+        film_id: '59d621d1baabc4174c9d52b9',
+        createdAt: '2018-05-21T17:09:09.527Z',
+        updatedAt: '2018-05-21T17:09:09.527Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      },
+      '5b02faf21a8266181259ff2c': {
+        film: null,
+        _id: '5b02faf21a8266181259ff2c',
+        name: 'Deadpool',
+        poll_id: '5b02faec1a8266181259ff2b',
+        film_id: '59d621d1baabc4174c9d5251',
+        createdAt: '2018-05-21T16:59:30.088Z',
+        updatedAt: '2018-05-21T16:59:30.088Z',
+        added_by_user_id: '59cba12cf67f7507c5812182'
+      }
+    },
+    copiesById: {},
+    currentId: null,
+    copy: null,
+    idField: '_id',
+    servicePath: 'option',
+    autoRemove: false,
+    enableEvents: true,
+    addOnUpsert: false,
+    skipRequestIfExists: false,
+    preferUpdate: false,
+    replaceItems: false,
+    isFindPending: false,
+    isGetPending: false,
+    isCreatePending: false,
+    isUpdatePending: false,
+    isPatchPending: false,
+    isRemovePending: false,
+    errorOnFind: null,
+    errorOnGet: null,
+    errorOnCreate: null,
+    errorOnUpdate: null,
+    errorOnPatch: null,
+    errorOnRemove: null,
+    modelName: 'Option',
+    pagination: {
+      default: {
+        limit: 50,
+        skip: 0,
+        total: 2,
+        ids: ['5b0892a47ed2e65d86dd8f92', '5b0892b27ed2e65d86dd8f93'],
+        query: { $limit: 100, poll_id: '5b0892a47ed2e65d86dd8f91' }
+      }
+    }
+  },
+  vote: {
+    ids: ['5b0893d57ed2e65d86dd8f94'],
+    keyedById: {
+      '5b0893d57ed2e65d86dd8f94': {
+        _id: '5b0893d57ed2e65d86dd8f94',
+        poll_id: '5b0892a47ed2e65d86dd8f91',
+        option_id: '5b0892b27ed2e65d86dd8f93',
+        createdAt: '2018-05-25T22:53:09.314Z',
+        updatedAt: '2018-05-25T22:53:09.314Z',
+        user_id: '59cba12cf67f7507c5812182'
+      }
+    },
+    copiesById: {},
+    currentId: null,
+    copy: null,
+    idField: '_id',
+    servicePath: 'vote',
+    autoRemove: false,
+    enableEvents: true,
+    addOnUpsert: false,
+    skipRequestIfExists: false,
+    preferUpdate: false,
+    replaceItems: false,
+    isFindPending: false,
+    isGetPending: false,
+    isCreatePending: false,
+    isUpdatePending: false,
+    isPatchPending: false,
+    isRemovePending: false,
+    errorOnFind: null,
+    errorOnGet: null,
+    errorOnCreate: null,
+    errorOnUpdate: null,
+    errorOnPatch: null,
+    errorOnRemove: null,
+    modelName: 'Vote',
+    pagination: {
+      default: {
+        limit: 50,
+        skip: 0,
+        total: 1,
+        ids: ['5b0893d57ed2e65d86dd8f94'],
+        query: { $limit: 1000, poll_id: '5b0892a47ed2e65d86dd8f91' }
+      }
+    }
+  },
+  users: {
+    ids: ['59cba12cf67f7507c5812182'],
+    keyedById: {
+      '59cba12cf67f7507c5812182': {
+        _id: '59cba12cf67f7507c5812182',
+        createdAt: '2017-09-27T13:01:32.926Z',
+        updatedAt: '2018-05-25T18:53:44.218Z',
+        name: 'Arran France',
+        isAdmin: true,
+        isVerified: true,
+        resetExpires: 1527097062721,
+        resetToken:
+          '$2a$12$.qTWsoq683MROq8yuxuYrOYQXPHRtq2doDN4uiBk.mE6GH.DFfpfi',
+        resetShortToken:
+          '$2a$12$Xo3pCfAN3nZr3WYJ1/sDseq.T1BL9WKhx9vcLST9xPpRXRi.WUvUK',
+        recommendations: [
+          { film_id: '5afc389d8ad4811c9e3f6e2e', score: 1 },
+          { film_id: '5afc3854b4ff521bf875d133', score: 1 },
+          { film_id: '59d621d1baabc4174c9d5318', score: 0.9964870896802609 },
+          { film_id: '59d621d1baabc4174c9d5220', score: 0.9955700540752838 },
+          { film_id: '59d621d1baabc4174c9d5319', score: 0.9952351324257153 },
+          { film_id: '59d621d1baabc4174c9d52dd', score: 0.993732405162964 },
+          { film_id: '59d621d1baabc4174c9d5406', score: 0.9900029519035902 },
+          { film_id: '59d621d1baabc4174c9d51dd', score: 0.9892062736236272 },
+          { film_id: '59d621d1baabc4174c9d535e', score: 0.9858566672850966 },
+          { film_id: '59d621d1baabc4174c9d529d', score: 0.9823823758160395 },
+          { film_id: '59d621d1baabc4174c9d5259', score: 0.9773144373646975 },
+          { film_id: '59d621d1baabc4174c9d53d6', score: 0.9596036020392011 },
+          { film_id: '59d621d1baabc4174c9d535c', score: 0.957171347210952 },
+          { film_id: '59d621d1baabc4174c9d528d', score: 0.9561550331799495 },
+          { film_id: '59d621d1baabc4174c9d53e1', score: 0.9553060036621115 },
+          { film_id: '59d621d1baabc4174c9d530e', score: 0.9541489737727336 },
+          { film_id: '59d621d1baabc4174c9d5258', score: 0.9478830520990948 },
+          { film_id: '59d621d1baabc4174c9d51e7', score: 0.9434018393931562 },
+          { film_id: '59d621d1baabc4174c9d52f2', score: 0.9413708314632007 },
+          { film_id: '59d621d1baabc4174c9d53e2', score: 0.9413473579431747 },
+          { film_id: '59d621d1baabc4174c9d53c8', score: 0.9390843989466653 },
+          { film_id: '59d621d1baabc4174c9d53b3', score: 0.9321928499014733 },
+          { film_id: '59d621d1baabc4174c9d51e8', score: 0.9255485291095598 },
+          { film_id: '59d621d1baabc4174c9d525d', score: 0.892952646302214 },
+          { film_id: '59d621d1baabc4174c9d5425', score: 0.8896765311755259 },
+          { film_id: '59d621d1baabc4174c9d53c5', score: 0.86322786178564 },
+          { film_id: '59d621d1baabc4174c9d5298', score: 0.8537962654764879 },
+          { film_id: '59d621d1baabc4174c9d5273', score: 0.837749893045995 },
+          { film_id: '59d621d1baabc4174c9d541a', score: 0.8303189564012748 },
+          { film_id: '59d621d1baabc4174c9d51fc', score: 0.7991251801768625 },
+          { film_id: '59d621d1baabc4174c9d5236', score: 0.7975023181976739 },
+          { film_id: '59d621d1baabc4174c9d530c', score: 0.7926459431534106 },
+          { film_id: '59d621d1baabc4174c9d520e', score: 0.7923711238280242 },
+          { film_id: '59d621d1baabc4174c9d5390', score: 0.7896497307382808 },
+          { film_id: '59d621d1baabc4174c9d53ad', score: 0.7793342354375181 },
+          { film_id: '59d621d1baabc4174c9d52a5', score: 0.7685125088672672 },
+          { film_id: '59d621d1baabc4174c9d52a3', score: 0.766401621755836 },
+          { film_id: '59d621d1baabc4174c9d5241', score: 0.763791485701323 },
+          { film_id: '59d621d1baabc4174c9d527a', score: 0.7306409239831569 },
+          { film_id: '59d621d1baabc4174c9d52b6', score: 0.6839087082730235 },
+          { film_id: '59d621d1baabc4174c9d5248', score: 0.6787135330289696 },
+          { film_id: '5a50fd074951a73478e331e2', score: 0.6787135330289696 },
+          { film_id: '59d621d1baabc4174c9d52f7', score: 0.6775039077461911 },
+          { film_id: '59d621d1baabc4174c9d52c1', score: 0.6721445512031438 },
+          { film_id: '59d621d1baabc4174c9d52e9', score: 0.6559547532810514 }
+        ]
+      }
+    },
+    copiesById: {},
+    currentId: '59cba12cf67f7507c5812182',
+    copy: {
+      _id: '59cba12cf67f7507c5812182',
+      createdAt: '2017-09-27T13:01:32.926Z',
+      updatedAt: '2018-05-25T18:53:44.218Z',
+      name: 'Arran France',
+      isAdmin: true,
+      isVerified: true,
+      resetExpires: 1527097062721,
+      resetToken:
+        '$2a$12$.qTWsoq683MROq8yuxuYrOYQXPHRtq2doDN4uiBk.mE6GH.DFfpfi',
+      resetShortToken:
+        '$2a$12$Xo3pCfAN3nZr3WYJ1/sDseq.T1BL9WKhx9vcLST9xPpRXRi.WUvUK',
+      recommendations: [
+        { film_id: '5afc389d8ad4811c9e3f6e2e', score: 1 },
+        { film_id: '5afc3854b4ff521bf875d133', score: 1 },
+        { film_id: '59d621d1baabc4174c9d5318', score: 0.9964870896802609 },
+        { film_id: '59d621d1baabc4174c9d5220', score: 0.9955700540752838 },
+        { film_id: '59d621d1baabc4174c9d5319', score: 0.9952351324257153 },
+        { film_id: '59d621d1baabc4174c9d52dd', score: 0.993732405162964 },
+        { film_id: '59d621d1baabc4174c9d5406', score: 0.9900029519035902 },
+        { film_id: '59d621d1baabc4174c9d51dd', score: 0.9892062736236272 },
+        { film_id: '59d621d1baabc4174c9d535e', score: 0.9858566672850966 },
+        { film_id: '59d621d1baabc4174c9d529d', score: 0.9823823758160395 },
+        { film_id: '59d621d1baabc4174c9d5259', score: 0.9773144373646975 },
+        { film_id: '59d621d1baabc4174c9d53d6', score: 0.9596036020392011 },
+        { film_id: '59d621d1baabc4174c9d535c', score: 0.957171347210952 },
+        { film_id: '59d621d1baabc4174c9d528d', score: 0.9561550331799495 },
+        { film_id: '59d621d1baabc4174c9d53e1', score: 0.9553060036621115 },
+        { film_id: '59d621d1baabc4174c9d530e', score: 0.9541489737727336 },
+        { film_id: '59d621d1baabc4174c9d5258', score: 0.9478830520990948 },
+        { film_id: '59d621d1baabc4174c9d51e7', score: 0.9434018393931562 },
+        { film_id: '59d621d1baabc4174c9d52f2', score: 0.9413708314632007 },
+        { film_id: '59d621d1baabc4174c9d53e2', score: 0.9413473579431747 },
+        { film_id: '59d621d1baabc4174c9d53c8', score: 0.9390843989466653 },
+        { film_id: '59d621d1baabc4174c9d53b3', score: 0.9321928499014733 },
+        { film_id: '59d621d1baabc4174c9d51e8', score: 0.9255485291095598 },
+        { film_id: '59d621d1baabc4174c9d525d', score: 0.892952646302214 },
+        { film_id: '59d621d1baabc4174c9d5425', score: 0.8896765311755259 },
+        { film_id: '59d621d1baabc4174c9d53c5', score: 0.86322786178564 },
+        { film_id: '59d621d1baabc4174c9d5298', score: 0.8537962654764879 },
+        { film_id: '59d621d1baabc4174c9d5273', score: 0.837749893045995 },
+        { film_id: '59d621d1baabc4174c9d541a', score: 0.8303189564012748 },
+        { film_id: '59d621d1baabc4174c9d51fc', score: 0.7991251801768625 },
+        { film_id: '59d621d1baabc4174c9d5236', score: 0.7975023181976739 },
+        { film_id: '59d621d1baabc4174c9d530c', score: 0.7926459431534106 },
+        { film_id: '59d621d1baabc4174c9d520e', score: 0.7923711238280242 },
+        { film_id: '59d621d1baabc4174c9d5390', score: 0.7896497307382808 },
+        { film_id: '59d621d1baabc4174c9d53ad', score: 0.7793342354375181 },
+        { film_id: '59d621d1baabc4174c9d52a5', score: 0.7685125088672672 },
+        { film_id: '59d621d1baabc4174c9d52a3', score: 0.766401621755836 },
+        { film_id: '59d621d1baabc4174c9d5241', score: 0.763791485701323 },
+        { film_id: '59d621d1baabc4174c9d527a', score: 0.7306409239831569 },
+        { film_id: '59d621d1baabc4174c9d52b6', score: 0.6839087082730235 },
+        { film_id: '59d621d1baabc4174c9d5248', score: 0.6787135330289696 },
+        { film_id: '5a50fd074951a73478e331e2', score: 0.6787135330289696 },
+        { film_id: '59d621d1baabc4174c9d52f7', score: 0.6775039077461911 },
+        { film_id: '59d621d1baabc4174c9d52c1', score: 0.6721445512031438 },
+        { film_id: '59d621d1baabc4174c9d52e9', score: 0.6559547532810514 }
+      ]
+    },
+    idField: '_id',
+    servicePath: 'users',
+    autoRemove: false,
+    enableEvents: true,
+    addOnUpsert: false,
+    skipRequestIfExists: false,
+    preferUpdate: false,
+    replaceItems: false,
+    isFindPending: false,
+    isGetPending: false,
+    isCreatePending: false,
+    isUpdatePending: false,
+    isPatchPending: false,
+    isRemovePending: false,
+    errorOnFind: null,
+    errorOnGet: null,
+    errorOnCreate: null,
+    errorOnUpdate: null,
+    errorOnPatch: null,
+    errorOnRemove: null,
+    modelName: 'User'
+  },
+  films: {
+    ids: [],
+    keyedById: {},
+    copiesById: {},
+    currentId: null,
+    copy: null,
+    idField: '_id',
+    servicePath: 'films',
+    autoRemove: false,
+    enableEvents: true,
+    addOnUpsert: false,
+    skipRequestIfExists: false,
+    preferUpdate: false,
+    replaceItems: false,
+    isFindPending: false,
+    isGetPending: false,
+    isCreatePending: false,
+    isUpdatePending: false,
+    isPatchPending: false,
+    isRemovePending: false,
+    errorOnFind: null,
+    errorOnGet: null,
+    errorOnCreate: null,
+    errorOnUpdate: null,
+    errorOnPatch: null,
+    errorOnRemove: null,
+    modelName: 'Film'
+  },
+  'users-online': {
+    ids: ['59cba12cf67f7507c5812182'],
+    keyedById: {
+      '59cba12cf67f7507c5812182': {
+        _id: '59cba12cf67f7507c5812182',
+        facebookId: '10212639510396007',
+        createdAt: '2017-09-27T13:01:32.926Z',
+        updatedAt: '2018-05-25T18:53:44.218Z',
+        name: 'Arran France',
+        email: 'arranf@gmail.com',
+        isAdmin: true,
+        facebook: {
+          profile: {
+            id: '10212639510396007',
+            username: null,
+            displayName: 'Arran France',
+            name: { familyName: null, givenName: null, middleName: null },
+            gender: null,
+            profileUrl: null,
+            emails: [{ value: 'arranf@gmail.com' }],
+            photos: [
+              {
+                value:
+                  'https://lookaside.facebook.com/platform/profilepic/?asid=10212639510396007&height=50&width=50&ext=1527533624&hash=AeQ80vCmyHB9a-94'
+              }
+            ],
+            provider: 'facebook',
+            _raw:
+              '{"id":"10212639510396007","name":"Arran France","picture":{"data":{"height":50,"is_silhouette":false,"url":"https:\\/\\/lookaside.facebook.com\\/platform\\/profilepic\\/?asid=10212639510396007&height=50&width=50&ext=1527533624&hash=AeQ80vCmyHB9a-94","width":50}},"email":"arranf\\u0040gmail.com"}',
+            _json: {
+              id: '10212639510396007',
+              name: 'Arran France',
+              picture: {
+                data: {
+                  height: 50,
+                  is_silhouette: false,
+                  url:
+                    'https://lookaside.facebook.com/platform/profilepic/?asid=10212639510396007&height=50&width=50&ext=1527533624&hash=AeQ80vCmyHB9a-94',
+                  width: 50
+                }
+              },
+              email: 'arranf@gmail.com'
+            }
+          },
+          accessToken:
+            'EAAWtBhQvttkBAJLOuAzyB4OTsmyEKkN4mafTpZB40osau6VuzK7ifeA3aK8FZBQimiOyo9DClZBey917DAEQJqlTSZCmSkm03ZA2ZB0pj2obfJOWGM2NOmhGaZBrOR80GwVtVw4zRvLdnSyRVls5v32j8UEZC1GkWewZD',
+          refreshToken: null
+        },
+        isVerified: true,
+        resetExpires: 1527097062721,
+        resetToken:
+          '$2a$12$.qTWsoq683MROq8yuxuYrOYQXPHRtq2doDN4uiBk.mE6GH.DFfpfi',
+        resetShortToken:
+          '$2a$12$Xo3pCfAN3nZr3WYJ1/sDseq.T1BL9WKhx9vcLST9xPpRXRi.WUvUK',
+        password:
+          '$2a$12$8oH417gtXteZKWVoYWQ5p.wtm9v/dBkdxkAzif1oJQnKAB.0M4Q.m',
+        recommendations: [
+          { film_id: '5afc389d8ad4811c9e3f6e2e', score: 1 },
+          { film_id: '5afc3854b4ff521bf875d133', score: 1 },
+          { film_id: '59d621d1baabc4174c9d5318', score: 0.9964870896802609 },
+          { film_id: '59d621d1baabc4174c9d5220', score: 0.9955700540752838 },
+          { film_id: '59d621d1baabc4174c9d5319', score: 0.9952351324257153 },
+          { film_id: '59d621d1baabc4174c9d52dd', score: 0.993732405162964 },
+          { film_id: '59d621d1baabc4174c9d5406', score: 0.9900029519035902 },
+          { film_id: '59d621d1baabc4174c9d51dd', score: 0.9892062736236272 },
+          { film_id: '59d621d1baabc4174c9d535e', score: 0.9858566672850966 },
+          { film_id: '59d621d1baabc4174c9d529d', score: 0.9823823758160395 },
+          { film_id: '59d621d1baabc4174c9d5259', score: 0.9773144373646975 },
+          { film_id: '59d621d1baabc4174c9d53d6', score: 0.9596036020392011 },
+          { film_id: '59d621d1baabc4174c9d535c', score: 0.957171347210952 },
+          { film_id: '59d621d1baabc4174c9d528d', score: 0.9561550331799495 },
+          { film_id: '59d621d1baabc4174c9d53e1', score: 0.9553060036621115 },
+          { film_id: '59d621d1baabc4174c9d530e', score: 0.9541489737727336 },
+          { film_id: '59d621d1baabc4174c9d5258', score: 0.9478830520990948 },
+          { film_id: '59d621d1baabc4174c9d51e7', score: 0.9434018393931562 },
+          { film_id: '59d621d1baabc4174c9d52f2', score: 0.9413708314632007 },
+          { film_id: '59d621d1baabc4174c9d53e2', score: 0.9413473579431747 },
+          { film_id: '59d621d1baabc4174c9d53c8', score: 0.9390843989466653 },
+          { film_id: '59d621d1baabc4174c9d53b3', score: 0.9321928499014733 },
+          { film_id: '59d621d1baabc4174c9d51e8', score: 0.9255485291095598 },
+          { film_id: '59d621d1baabc4174c9d525d', score: 0.892952646302214 },
+          { film_id: '59d621d1baabc4174c9d5425', score: 0.8896765311755259 },
+          { film_id: '59d621d1baabc4174c9d53c5', score: 0.86322786178564 },
+          { film_id: '59d621d1baabc4174c9d5298', score: 0.8537962654764879 },
+          { film_id: '59d621d1baabc4174c9d5273', score: 0.837749893045995 },
+          { film_id: '59d621d1baabc4174c9d541a', score: 0.8303189564012748 },
+          { film_id: '59d621d1baabc4174c9d51fc', score: 0.7991251801768625 },
+          { film_id: '59d621d1baabc4174c9d5236', score: 0.7975023181976739 },
+          { film_id: '59d621d1baabc4174c9d530c', score: 0.7926459431534106 },
+          { film_id: '59d621d1baabc4174c9d520e', score: 0.7923711238280242 },
+          { film_id: '59d621d1baabc4174c9d5390', score: 0.7896497307382808 },
+          { film_id: '59d621d1baabc4174c9d53ad', score: 0.7793342354375181 },
+          { film_id: '59d621d1baabc4174c9d52a5', score: 0.7685125088672672 },
+          { film_id: '59d621d1baabc4174c9d52a3', score: 0.766401621755836 },
+          { film_id: '59d621d1baabc4174c9d5241', score: 0.763791485701323 },
+          { film_id: '59d621d1baabc4174c9d527a', score: 0.7306409239831569 },
+          { film_id: '59d621d1baabc4174c9d52b6', score: 0.6839087082730235 },
+          { film_id: '59d621d1baabc4174c9d5248', score: 0.6787135330289696 },
+          { film_id: '5a50fd074951a73478e331e2', score: 0.6787135330289696 },
+          { film_id: '59d621d1baabc4174c9d52f7', score: 0.6775039077461911 },
+          { film_id: '59d621d1baabc4174c9d52c1', score: 0.6721445512031438 },
+          { film_id: '59d621d1baabc4174c9d52e9', score: 0.6559547532810514 }
+        ]
+      }
+    },
+    copiesById: {},
+    currentId: null,
+    copy: null,
+    idField: '_id',
+    servicePath: 'users-online',
+    autoRemove: false,
+    enableEvents: true,
+    addOnUpsert: false,
+    skipRequestIfExists: false,
+    preferUpdate: false,
+    replaceItems: false,
+    isFindPending: false,
+    isGetPending: false,
+    isCreatePending: false,
+    isUpdatePending: false,
+    isPatchPending: false,
+    isRemovePending: false,
+    errorOnFind: null,
+    errorOnGet: null,
+    errorOnCreate: null,
+    errorOnUpdate: null,
+    errorOnPatch: null,
+    errorOnRemove: null,
+    modelName: 'UsersOnline'
+  },
+  auth: {
+    accessToken:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyIsInR5cGUiOiJhY2Nlc3MifQ.eyJ1c2VySWQiOiI1OWNiYTEyY2Y2N2Y3NTA3YzU4MTIxODIiLCJpYXQiOjE1MjcyOTE2MDEsImV4cCI6MTUyNzM3ODAwMSwiYXVkIjoiaHR0cHM6Ly9qb25hdGhhbnNtb3ZpZXMuY29tIiwiaXNzIjoiZmVhdGhlcnMiLCJzdWIiOiJhbm9ueW1vdXMiLCJqdGkiOiJlNTAwYWExZC02ZWE4LTRmMzUtOTI0Mi1jNTEyOGU4MDVkODgifQ.lkIjoTvr1Er2oUGPhF7NbRRu4dmqs_NK2_ZMh-1JEcQ',
+    payload: {
+      userId: '59cba12cf67f7507c5812182',
+      iat: 1527291601,
+      exp: 1527378001,
+      aud: 'https://jonathansmovies.com',
+      iss: 'feathers',
+      sub: 'anonymous',
+      jti: 'e500aa1d-6ea8-4f35-9242-c5128e805d88'
+    },
+    isAuthenticatePending: false,
+    isLogoutPending: false,
+    errorOnAuthenticate: null,
+    errorOnLogout: null,
+    user: {
+      _id: '59cba12cf67f7507c5812182',
+      createdAt: '2017-09-27T13:01:32.926Z',
+      updatedAt: '2018-05-25T18:53:44.218Z',
+      name: 'Arran France',
+      isAdmin: true,
+      isVerified: true,
+      resetExpires: 1527097062721,
+      resetToken:
+        '$2a$12$.qTWsoq683MROq8yuxuYrOYQXPHRtq2doDN4uiBk.mE6GH.DFfpfi',
+      resetShortToken:
+        '$2a$12$Xo3pCfAN3nZr3WYJ1/sDseq.T1BL9WKhx9vcLST9xPpRXRi.WUvUK',
+      recommendations: [
+        { film_id: '5afc389d8ad4811c9e3f6e2e', score: 1 },
+        { film_id: '5afc3854b4ff521bf875d133', score: 1 },
+        { film_id: '59d621d1baabc4174c9d5318', score: 0.9964870896802609 },
+        { film_id: '59d621d1baabc4174c9d5220', score: 0.9955700540752838 },
+        { film_id: '59d621d1baabc4174c9d5319', score: 0.9952351324257153 },
+        { film_id: '59d621d1baabc4174c9d52dd', score: 0.993732405162964 },
+        { film_id: '59d621d1baabc4174c9d5406', score: 0.9900029519035902 },
+        { film_id: '59d621d1baabc4174c9d51dd', score: 0.9892062736236272 },
+        { film_id: '59d621d1baabc4174c9d535e', score: 0.9858566672850966 },
+        { film_id: '59d621d1baabc4174c9d529d', score: 0.9823823758160395 },
+        { film_id: '59d621d1baabc4174c9d5259', score: 0.9773144373646975 },
+        { film_id: '59d621d1baabc4174c9d53d6', score: 0.9596036020392011 },
+        { film_id: '59d621d1baabc4174c9d535c', score: 0.957171347210952 },
+        { film_id: '59d621d1baabc4174c9d528d', score: 0.9561550331799495 },
+        { film_id: '59d621d1baabc4174c9d53e1', score: 0.9553060036621115 },
+        { film_id: '59d621d1baabc4174c9d530e', score: 0.9541489737727336 },
+        { film_id: '59d621d1baabc4174c9d5258', score: 0.9478830520990948 },
+        { film_id: '59d621d1baabc4174c9d51e7', score: 0.9434018393931562 },
+        { film_id: '59d621d1baabc4174c9d52f2', score: 0.9413708314632007 },
+        { film_id: '59d621d1baabc4174c9d53e2', score: 0.9413473579431747 },
+        { film_id: '59d621d1baabc4174c9d53c8', score: 0.9390843989466653 },
+        { film_id: '59d621d1baabc4174c9d53b3', score: 0.9321928499014733 },
+        { film_id: '59d621d1baabc4174c9d51e8', score: 0.9255485291095598 },
+        { film_id: '59d621d1baabc4174c9d525d', score: 0.892952646302214 },
+        { film_id: '59d621d1baabc4174c9d5425', score: 0.8896765311755259 },
+        { film_id: '59d621d1baabc4174c9d53c5', score: 0.86322786178564 },
+        { film_id: '59d621d1baabc4174c9d5298', score: 0.8537962654764879 },
+        { film_id: '59d621d1baabc4174c9d5273', score: 0.837749893045995 },
+        { film_id: '59d621d1baabc4174c9d541a', score: 0.8303189564012748 },
+        { film_id: '59d621d1baabc4174c9d51fc', score: 0.7991251801768625 },
+        { film_id: '59d621d1baabc4174c9d5236', score: 0.7975023181976739 },
+        { film_id: '59d621d1baabc4174c9d530c', score: 0.7926459431534106 },
+        { film_id: '59d621d1baabc4174c9d520e', score: 0.7923711238280242 },
+        { film_id: '59d621d1baabc4174c9d5390', score: 0.7896497307382808 },
+        { film_id: '59d621d1baabc4174c9d53ad', score: 0.7793342354375181 },
+        { film_id: '59d621d1baabc4174c9d52a5', score: 0.7685125088672672 },
+        { film_id: '59d621d1baabc4174c9d52a3', score: 0.766401621755836 },
+        { film_id: '59d621d1baabc4174c9d5241', score: 0.763791485701323 },
+        { film_id: '59d621d1baabc4174c9d527a', score: 0.7306409239831569 },
+        { film_id: '59d621d1baabc4174c9d52b6', score: 0.6839087082730235 },
+        { film_id: '59d621d1baabc4174c9d5248', score: 0.6787135330289696 },
+        { film_id: '5a50fd074951a73478e331e2', score: 0.6787135330289696 },
+        { film_id: '59d621d1baabc4174c9d52f7', score: 0.6775039077461911 },
+        { film_id: '59d621d1baabc4174c9d52c1', score: 0.6721445512031438 },
+        { film_id: '59d621d1baabc4174c9d52e9', score: 0.6559547532810514 }
+      ]
+    },
+    userService: 'users'
+  }
+}
