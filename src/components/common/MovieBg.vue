@@ -1,11 +1,13 @@
 <template>
   <div v-if="film && film.backdrop_path" class="card__media" :style="{'height': `${height}px` }">
-    <img class="image-fluid" :srcset="srcSet" :src="src" :alt="altText" :style="style">
+    <img class="image-fluid lazyload" :srcset="srcSet" :src="src" :alt="altText" :style="style">
     <div class="card__media__content"></div>
   </div>
 </template>
 
 <script>
+// eslint-disable-next-line
+import lazySizes from 'lazysizes'
 import utils from '@/utils'
 
 export default {
