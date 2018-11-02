@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import {VBtn, VTooltip, VMenu, VSelect, VIcon, VBadge} from 'vuetify'
-import * as VList from 'vuetify/es5/components/VList'
+// import {VBtn, VTooltip, VMenu, VSelect, VIcon, VBadge} from 'vuetify'
+// import * as VList from 'vuetify/es5/components/VList'
 
 import queries from '@/api'
 import utils from '@/utils'
@@ -41,15 +41,15 @@ import {mapGetters, mapState} from 'vuex'
 
 export default {
   name: 'Toolbar',
-  components: {
-    ...VList,
-    VBtn,
-    VTooltip,
-    VMenu,
-    VSelect,
-    VIcon,
-    VBadge
-  },
+  // components: {
+  //   ...VList,
+  //   VBtn,
+  //   VTooltip,
+  //   VMenu,
+  //   VSelect,
+  //   VIcon,
+  //   VBadge
+  // },
   data () {
     return {
       selectedFilm: null,

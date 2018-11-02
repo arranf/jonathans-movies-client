@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import {VProgressLinear, VIcon, VBtn, VList, VDivider, VSlider, VSelect, VDialog, VSubheader} from 'vuetify'
-import * as VCard from 'vuetify/es5/components/VCard'
+// import {VProgressLinear, VIcon, VBtn, VList, VDivider, VSlider, VSelect, VDialog, VSubheader} from 'vuetify'
+// import * as VCard from 'vuetify/es5/components/VCard'
 
 import FilmListItem from './FilmListItem'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
@@ -54,16 +54,16 @@ import MovieInfoModal from '@/components/common/MovieInfoModal'
 export default {
   name: 'FilmList',
   components: {
-    ...VCard,
-    VList,
-    VSubheader,
-    VSelect,
-    VSlider,
-    VDialog,
-    VProgressLinear,
-    VIcon,
-    VBtn,
-    VDivider,
+    // ...VCard,
+    // VList,
+    // VSubheader,
+    // VSelect,
+    // VSlider,
+    // VDialog,
+    // VProgressLinear,
+    // VIcon,
+    // VBtn,
+    // VDivider,
     FilmListItem,
     MovieInfoModal
   },

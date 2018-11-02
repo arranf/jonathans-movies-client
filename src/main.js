@@ -1,7 +1,3 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-// We use runtime-only to prevent use of eval
-
 import Vue from 'vue'
 import App from '@/components/skeleton/AppContainer'
 import router from './router'
@@ -10,31 +6,8 @@ import '@/api/feathers-client'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
 
-import {
-  Vuetify, // required
-  VApp, // required
-  VGrid,
-  VNavigationDrawer,
-  VToolbar,
-  transitions
-} from 'vuetify'
-
-import { Ripple } from 'vuetify/es5/directives'
-
-Vue.use(Vuetify, {
-  components: {
-    VApp,
-    VGrid,
-    VNavigationDrawer,
-    VToolbar,
-    transitions
-  },
-  directives: {
-    Ripple
-  }
-})
-
-require('vuetify/src/stylus/app.styl')
+import './plugins/vuetify'
+import "./registerServiceWorker";
 
 // Import custom CSS
 require('@/assets/styles/main.scss')
@@ -51,10 +24,8 @@ if (isProduction) {
     .install()
 }
 
-/* eslint-disable no-new */
 new Vue({
-  el: '#app',
   router,
   store,
   render: h => h(App)
-})
+}).$mount("#app");

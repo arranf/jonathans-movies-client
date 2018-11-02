@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import {VBtn, VForm, VTextField} from 'vuetify'
-import * as VCard from 'vuetify/es5/components/VCard'
+// import {VBtn, VForm, VTextField} from 'vuetify'
+// import * as VCard from 'vuetify/es5/components/VCard'
 
 import feathersClient from '@/api/feathers-client'
 import {mapActions} from 'vuex'
@@ -49,12 +49,12 @@ import router from '@/router'
 
 export default {
   name: 'Login',
-  components: {
-    VBtn,
-    ...VCard,
-    VForm,
-    VTextField
-  },
+  // components: {
+  //   VBtn,
+  //   ...VCard,
+  //   VForm,
+  //   VTextField
+  // },
   data () {
     return {
       hidePassword: true,

@@ -59,9 +59,9 @@
 
 
 <script>
-import * as VCard from 'vuetify/es5/components/VCard'
-import * as VList from 'vuetify/es5/components/VList'
-import {VIcon, VSelect, VBtn} from 'vuetify'
+// import * as VCard from 'vuetify/es5/components/VCard'
+// import * as VList from 'vuetify/es5/components/VList'
+// import {VIcon, VSelect, VBtn} from 'vuetify'
 
 import tmdbApi from '@/api/tmdb'
 import constants from '@/constants'
@@ -73,11 +73,11 @@ import MovieBg from '@/components/common/MovieBg'
 export default {
   name: 'AddFilm',
   components: {
-    ...VList,
-    ...VCard,
-    VIcon,
-    VSelect,
-    VBtn,
+    // ...VList,
+    // ...VCard,
+    // VIcon,
+    // VSelect,
+    // VBtn,
     MovieBg
   },
   data () {

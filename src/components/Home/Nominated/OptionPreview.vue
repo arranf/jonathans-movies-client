@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import * as VCard from 'vuetify/es5/components/VCard'
-import {VBtn} from 'vuetify'
+// import * as VCard from 'vuetify/es5/components/VCard'
+// import {VBtn} from 'vuetify'
 import constants from '@/constants'
 import utils from '@/utils'
 import {mapActions, mapGetters, mapState} from 'vuex'
@@ -33,10 +33,10 @@ export default {
     option: {type: Object, required: true},
     showInfo: {type: Boolean, default: true}
   },
-  components: {
-    ...VCard,
-    VBtn
-  },
+  // components: {
+  //   ...VCard,
+  //   VBtn
+  // },
   computed: {
     ...mapState('auth', ['user']),
     ...mapGetters('films', {getFilm: 'get'}),

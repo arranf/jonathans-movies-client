@@ -60,8 +60,8 @@
 </template>
 
 <script>
-import {VDialog, VBtn, VIcon} from 'vuetify'
-import * as VCard from 'vuetify/es5/components/VCard'
+// import {VDialog, VBtn, VIcon} from 'vuetify'
+// import * as VCard from 'vuetify/es5/components/VCard'
 
 import queries from '@/api'
 import utils from '@/utils'
@@ -71,11 +71,12 @@ import MovieBg from './MovieBg'
 export default {
   name: 'MovieInfoModal',
   components: {
-    MovieBg,
-    VDialog,
-    VBtn,
-    VIcon,
-    ...VCard
+    MovieBg
+    // ,
+    // VDialog,
+    // VBtn,
+    // VIcon,
+    // ...VCard
   },
   props: {
     filmId: {type: String},
