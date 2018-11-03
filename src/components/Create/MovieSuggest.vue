@@ -1,6 +1,6 @@
 <template>
-  <v-select id="autocomplete" 
-    @input="fillBox" 
+  <v-autocomplete id="autocomplete"
+    @input="fillBox"
     browser-autocomplete="off"
     autocomplete
     item-text="name"
@@ -12,11 +12,11 @@
     no-data-text="No movie found"
     :loading="loading"
     multiple
-    cache-items 
-    :hide-selected="true" 
-    :items="suggestions" 
+    cache-items
+    :hide-selected="true"
+    :items="suggestions"
     :error-messages="errors"
-    :search-input.sync="searchQuery" 
+    :search-input.sync="searchQuery"
     v-model="selected">
     <template slot="item" slot-scope="data">
       <div v-if="suggestions.length > 0">
@@ -31,22 +31,14 @@
       slot="progress"
       height="4"
     />
-    </v-select>
+    </v-autocomplete>
 </template>
 
 <script>
-import {VSelect, VProgressLinear} from 'vuetify'
-import * as VList from 'vuetify/es5/components/VList'
-
 import queries from '@/api'
 import utils from '@/utils'
 
 export default {
-  components: {
-    ...VList,
-    VSelect,
-    VProgressLinear
-  },
   data () {
     return {
       suggestions: [],
@@ -78,7 +70,7 @@ export default {
           this.suggestions = response.data
         } else {
           // This statement exists to make the no data text work as empty arrays fail to show it
-          this.suggestions = [{name: ''}]
+          this.suggestions = [{ name: '' }]
         }
       })
     },
@@ -96,7 +88,7 @@ export default {
     fillBox: function (event) {
       const reducedOptions = this.selected.map(f => {
         if (f) {
-          return {name: f.name, film_id: f._id}
+          return { name: f.name, film_id: f._id }
         }
       })
       this.$emit('optionsChange', reducedOptions)

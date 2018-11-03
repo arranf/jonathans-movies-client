@@ -1,7 +1,7 @@
 <template>
   <div class="mb-3">
     <h2 class="display-2 mt-4 pb-3">Create a Poll</h2>
-    
+
     <!-- Doesn't need to be a v-form -->
     <form autocomplete="off" class="">
       <!-- Prevent auto-complete -->
@@ -27,7 +27,7 @@
         <v-text-field id="minutes" :error-messages="minutesErrors" prepend-icon="timelapse" label="Voting Time" hint="The number of minutes for voting" v-model="minutes" @input="$v.minutes.$touch()" type="number" pattern="[1-9]" min="1" max="10" />
         <v-text-field id="votes" :error-messages="votesErrors" prepend-icon="format_list_numbered" label="Number of Votes" hint="The number of votes each person receives" v-model="votes" @input="$v.votes.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
       </div>
-    
+
       <div class="mt-3">
         <v-btn id="start-poll" @click.prevent="startPoll()" :disabled="!canStart" color="primary">Start Poll</v-btn>
         <v-btn flat id="back" @click.prevent="toHome()">Back</v-btn>
@@ -37,20 +37,20 @@
 </template>
 
 <script>
-import {VSwitch, VTextField, VBtn} from 'vuetify'
-
 import { validationMixin } from 'vuelidate'
-import { required, requiredIf, between, minLength } from 'vuelidate/lib/validators'
+import {
+  required,
+  requiredIf,
+  between,
+  minLength
+} from 'vuelidate/lib/validators'
 import MovieSuggest from './MovieSuggest'
 import router from '@/router'
 
 export default {
   name: 'Create',
   components: {
-    MovieSuggest,
-    VSwitch,
-    VTextField,
-    VBtn
+    MovieSuggest
   },
   mixins: [validationMixin],
   data () {
@@ -77,7 +77,8 @@ export default {
       let numberOfNominations
       let endDateTime = currentTime + parseInt(this.minutes) * 60000
       if (this.haveNominations) {
-        const nominationLengthSeconds = parseInt(this.nominationsMinutes) * 60000
+        const nominationLengthSeconds =
+          parseInt(this.nominationsMinutes) * 60000
         pollTransitionDateTime = currentTime + nominationLengthSeconds
         numberOfNominations = parseInt(this.nominations)
         endDateTime += nominationLengthSeconds
@@ -88,8 +89,8 @@ export default {
         numberOfVotes: parseInt(this.votes),
         startDateTime: currentTime,
         endDateTime: endDateTime,
-        options: this.options.filter(o => o &&
-          typeof o === 'object' && o.name.trim().length > 0
+        options: this.options.filter(
+          o => o && typeof o === 'object' && o.name.trim().length > 0
         ),
         pollTransitionDateTime: pollTransitionDateTime,
         numberOfNominations: numberOfNominations
@@ -111,40 +112,68 @@ export default {
       const errors = []
       const minutes = this.$v.minutes
       if (!minutes.$dirty) return errors
-      !minutes.required && errors.push('A number of minutes for voting is required.')
-      !minutes.between && errors.push(`Voting length must be between ${minutes.$params.between.min} and ${minutes.$params.between.max}`)
+      !minutes.required &&
+        errors.push('A number of minutes for voting is required.')
+      !minutes.between &&
+        errors.push(
+          `Voting length must be between ${minutes.$params.between.min} and ${
+            minutes.$params.between.max
+          }`
+        )
       return errors
     },
     votesErrors () {
       const errors = []
       const votes = this.$v.votes
       if (!votes.$dirty) return errors
-      !votes.required && errors.push('A number of votes for voting is required.')
-      !votes.between && errors.push(`The number of votes each person receives must be between ${votes.$params.between.min} and ${votes.$params.between.max}`)
+      !votes.required &&
+        errors.push('A number of votes for voting is required.')
+      !votes.between &&
+        errors.push(
+          `The number of votes each person receives must be between ${
+            votes.$params.between.min
+          } and ${votes.$params.between.max}`
+        )
       return errors
     },
     nominationLengthErrors () {
       const errors = []
       const nominationsMinutes = this.$v.nominationsMinutes
       if (!nominationsMinutes.$dirty) return errors
-      !nominationsMinutes.required && errors.push('A number of minutes for nominations is required.')
-      !nominationsMinutes.between && errors.push(`Nomination length must be between ${nominationsMinutes.$params.between.min} and ${nominationsMinutes.$params.between.max}`)
+      !nominationsMinutes.required &&
+        errors.push('A number of minutes for nominations is required.')
+      !nominationsMinutes.between &&
+        errors.push(
+          `Nomination length must be between ${
+            nominationsMinutes.$params.between.min
+          } and ${nominationsMinutes.$params.between.max}`
+        )
       return errors
     },
     nominationsErrors () {
       const errors = []
       const nominations = this.$v.nominations
       if (!nominations.$dirty) return errors
-      !nominations.required && errors.push('A number of nominations for voting is required.')
-      !nominations.between && errors.push(`The number of nominations must be greater than ${nominations.$params.between.min} and less than or equal to the number of votes.`)
+      !nominations.required &&
+        errors.push('A number of nominations for voting is required.')
+      !nominations.between &&
+        errors.push(
+          `The number of nominations must be greater than ${
+            nominations.$params.between.min
+          } and less than or equal to the number of votes.`
+        )
       return errors
     },
     optionsErrors () {
       const errors = []
       const options = this.$v.options
       if (!options.$dirty) return errors
-      !options.required && errors.push('Options are required if there are no nominations')
-      !options.minLength && errors.push('You must have at least two options if there are no nominations')
+      !options.required &&
+        errors.push('Options are required if there are no nominations')
+      !options.minLength &&
+        errors.push(
+          'You must have at least two options if there are no nominations'
+        )
     }
   },
   // TODO: Make sure server side validation matches
@@ -182,10 +211,12 @@ export default {
 </script>
 
 <style>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .5s
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to {
-  opacity: 0
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
    <div>
-      <div v-if="allFilms"> 
+      <div v-if="allFilms">
         <!-- TODO: Move this out and make it emit update events and a filter event -->
         <v-dialog v-model="showFilters">
           <v-card>
@@ -30,9 +30,9 @@
             <film-list-item  :film="film" :key="film._id+'item'"/>
             <v-divider v-if="index + 1 < allFilms.length" :key="index"></v-divider>
           </template>
-        </v-list> 
+        </v-list>
         <v-progress-linear v-show="busy" :indeterminate="true" />
-      </div>  
+      </div>
 
       <v-btn class="big-bottom" right color="accent" fab fixed @click="showFilters = true">
         <v-icon>filter_list</v-icon>
@@ -41,11 +41,8 @@
 </template>
 
 <script>
-import {VProgressLinear, VIcon, VBtn, VList, VDivider, VSlider, VSelect, VDialog, VSubheader} from 'vuetify'
-import * as VCard from 'vuetify/es5/components/VCard'
-
 import FilmListItem from './FilmListItem'
-import {mapGetters, mapActions, mapMutations} from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 import debounce from 'lodash/debounce'
 import constants from '@/constants'
 import scrollListener from '@/scroll-listener'
@@ -54,16 +51,6 @@ import MovieInfoModal from '@/components/common/MovieInfoModal'
 export default {
   name: 'FilmList',
   components: {
-    ...VCard,
-    VList,
-    VSubheader,
-    VSelect,
-    VSlider,
-    VDialog,
-    VProgressLinear,
-    VIcon,
-    VBtn,
-    VDivider,
     FilmListItem,
     MovieInfoModal
   },
@@ -76,7 +63,7 @@ export default {
       loadedAll: false,
       busy: false,
       total: 51,
-      sort: {name: 1},
+      sort: { name: 1 },
       floorRating: 0.0,
       genres: [],
       reachedEnd: false
@@ -86,32 +73,34 @@ export default {
     filmId: String
   },
   watch: {
-    'filmId' (newFilmId, oldFilmId) {
+    filmId (newFilmId, oldFilmId) {
       this.showingFilm = Boolean(newFilmId)
     }
   },
   computed: {
-    ...mapGetters('films', {allFilms: 'list'}),
+    ...mapGetters('films', { allFilms: 'list' }),
     totalGenres: () => constants.genres,
     query: function () {
-      let query = {query: {
-        $limit: this.limit,
-        $sort: this.sort,
-        $skip: this.limit * this.page
-      }}
+      let query = {
+        query: {
+          $limit: this.limit,
+          $sort: this.sort,
+          $skip: this.limit * this.page
+        }
+      }
       if (this.genres.length > 0) {
         query.query['genres'] = this.genres
       }
       if (this.floorRating > 0) {
-        query.query['imdb_rating'] = {'$gte': this.floorRating}
+        query.query['imdb_rating'] = { $gte: this.floorRating }
       }
       return query
     }
   },
   methods: {
-    ...mapActions('films', {queryFilms: 'find'}),
-    ...mapMutations('films', {clearFilms: 'clearAll'}),
-    ...mapActions('snackbar', {setSnackbar: 'setText'}),
+    ...mapActions('films', { queryFilms: 'find' }),
+    ...mapMutations('films', { clearFilms: 'clearAll' }),
+    ...mapActions('snackbar', { setSnackbar: 'setText' }),
     reset: function () {
       this.page = 0
       this.genres = ''
@@ -130,7 +119,10 @@ export default {
     getFilms: function () {
       let query = this.query
       return this.queryFilms(query)
-        .then(response => { this.total = response.total; this.busy = false })
+        .then(response => {
+          this.total = response.total
+          this.busy = false
+        })
         .catch(error => {
           console.error(error)
           this.busy = false
@@ -146,11 +138,15 @@ export default {
       this.busy = true
       return this.fetchNextPage()
     },
-    fetchNextPage: debounce(function () {
-      console.log('Calling next page on scroll')
-      this.page++
-      return this.getFilms()
-    }, 800, {leading: true})
+    fetchNextPage: debounce(
+      function () {
+        console.log('Calling next page on scroll')
+        this.page++
+        return this.getFilms()
+      },
+      800,
+      { leading: true }
+    )
   },
   beforeDestroy () {
     document.removeEventListener('scroll', this.listener)
@@ -167,14 +163,14 @@ export default {
     this.getFilms()
       .then(() => document.addEventListener('scroll', this.listener))
       // TODO: Add retry
-      .catch((e) => console.error(e))
+      .catch(e => console.error(e))
   }
 }
 </script>
 
 <style scoped>
 /* hide the space in modal on small screens */
-@media (max-width:350px)  { 
+@media (max-width: 350px) {
   #hide {
     display: none;
   }

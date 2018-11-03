@@ -5,17 +5,13 @@
 </template>
 
 <script>
-import {VProgressCircular} from 'vuetify'
 import feathersClient from '@/api/feathers-client'
 import authClient from '@/api/auth-client'
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 import router from '@/router'
 
 export default {
   name: 'Verify',
-  components: {
-    VProgressCircular
-  },
   data () {
     return {}
   },
@@ -26,7 +22,7 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['authenticate', 'logout']),
-    ...mapActions('snackbar', {setSnackbar: 'setText'}),
+    ...mapActions('snackbar', { setSnackbar: 'setText' }),
     tryLogin: function () {
       this.authenticate({
         strategy: 'local',
@@ -40,12 +36,22 @@ export default {
         .then(() => {
           router.push('home')
         })
-        .catch(error => { console.error(`Login Error: ${error}`); this.setSnackbar('Unable to complete log in.') })
+        .catch(error => {
+          console.error(`Login Error: ${error}`)
+          this.setSnackbar('Unable to complete log in.')
+        })
     },
     verify: function () {
-      authClient.verifySignupLong(this.token)
-        .then((user) => { this.setSnackbar('You are now verified! 🎉'); router.push({name: 'Login', query: {email: user.email}}) })
-        .catch(() => { this.setSnackbar('Could not verify you. Are you already verified?'); router.push('/home') })
+      authClient
+        .verifySignupLong(this.token)
+        .then(user => {
+          this.setSnackbar('You are now verified! 🎉')
+          router.push({ name: 'Login', query: { email: user.email } })
+        })
+        .catch(() => {
+          this.setSnackbar('Could not verify you. Are you already verified?')
+          router.push('/home')
+        })
     }
   },
   mounted () {
@@ -59,14 +65,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .btn-facebook {
-    background-color: #3b5998 !important;
-    border-color: #3b5998 !important;
-    color: #ffffff;
-  }
+.btn-facebook {
+  background-color: #3b5998 !important;
+  border-color: #3b5998 !important;
+  color: #ffffff;
+}
 
-  .btn-block {
-    display: block;
-    width: 100%;
-  }
+.btn-block {
+  display: block;
+  width: 100%;
+}
 </style>

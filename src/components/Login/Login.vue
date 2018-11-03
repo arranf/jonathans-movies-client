@@ -5,7 +5,7 @@
     </div>
     <div id="loginOptions" v-if="!isInternalLogin">
       <!-- divs here keep the buttons aligned -->
-      <div>       
+      <div>
         <v-btn block id="facebook" class="btn-facebook" @click.prevent="facebookLogin()"><span class="text-white">Log In with Facebook</span>
         </v-btn>
       </div>
@@ -16,7 +16,6 @@
         <a id="signup" href="#" @click.prevent="toSignUp()" >Not got an account? Sign up</a>
       </div>
     </div>
-
 
     <v-card id="internalLoginForm" v-if="isInternalLogin">
       <v-card-text>
@@ -40,21 +39,12 @@
 </template>
 
 <script>
-import {VBtn, VForm, VTextField} from 'vuetify'
-import * as VCard from 'vuetify/es5/components/VCard'
-
 import feathersClient from '@/api/feathers-client'
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 import router from '@/router'
 
 export default {
   name: 'Login',
-  components: {
-    VBtn,
-    ...VCard,
-    VForm,
-    VTextField
-  },
   data () {
     return {
       hidePassword: true,
@@ -65,7 +55,7 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['authenticate', 'logout']),
-    ...mapActions('snackbar', {setSnackbar: 'setText'}),
+    ...mapActions('snackbar', { setSnackbar: 'setText' }),
     tryLogin: function () {
       this.authenticate({
         strategy: 'local',
@@ -79,7 +69,10 @@ export default {
         .then(() => {
           router.push('home')
         })
-        .catch(error => { console.error(`Login Error: ${error}`); this.setSnackbar('Unable to complete log in.') })
+        .catch(error => {
+          console.error(`Login Error: ${error}`)
+          this.setSnackbar('Unable to complete log in.')
+        })
     },
     toSignUp: function () {
       router.push('/signup')
@@ -97,8 +90,8 @@ export default {
         url = 'http://localhost:3030/auth/facebook'
       }
       this.logout()
-        .then(window.location = url)
-        .catch((e) => console.error(e))
+        .then((window.location = url))
+        .catch(e => console.error(e))
     }
   },
   computed: {
@@ -123,9 +116,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .btn-facebook {
-    background-color: #3b5998 !important;
-    border-color: #3b5998 !important;
-    color: #ffffff;
-  }
+.btn-facebook {
+  background-color: #3b5998 !important;
+  border-color: #3b5998 !important;
+  color: #ffffff;
+}
 </style>
