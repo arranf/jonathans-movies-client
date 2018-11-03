@@ -4,6 +4,8 @@ html { font-size: 100%; } /* This means 16px by default or is adjusted by the us
 
 body { height: 100vh; }
 
+html { overflow-x: auto !important; }
+
 .text-white {
     color: #ffffff;
 }

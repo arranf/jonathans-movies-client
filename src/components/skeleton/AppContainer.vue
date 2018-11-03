@@ -16,13 +16,14 @@
           </v-layout>
           
       </v-container>
-      <bottom-nav/>
+      <bottom-nav v-if="user"/>
     </v-content>
     <snackbar />
   </v-app>
 </template>
 
 <script>
+import {mapState} from 'vuex'
 
 import DrawerList from '@/components/skeleton/DrawerList'
 import Toolbar from '@/components/skeleton/Toolbar'
@@ -41,6 +42,9 @@ export default {
     ProgressBar,
     Snackbar,
     BottomNav
+  },
+  computed: {
+    ...mapState('auth', ['user'])
   }
 }
 </script>

@@ -67,7 +67,7 @@ export default {
       if (this.film && this.film.backdrop_path) {
         return utils.getTmdbBackdropImage(this.film.backdrop_path)
       }
-      return '';
+      return ''
     },
     getBackDropSrcSet: function () {
       if (this.film.backdrop_path) {

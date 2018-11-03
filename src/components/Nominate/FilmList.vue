@@ -42,13 +42,13 @@
 
 <script>
 import {VProgressLinear, VIcon, VBtn, VList, VDivider, VSlider, VSelect, VDialog, VSubheader} from 'vuetify'
-// import * as  from 'vuetify/es5/components/VList'
 import * as VCard from 'vuetify/es5/components/VCard'
 
 import FilmListItem from './FilmListItem'
 import {mapGetters, mapActions, mapMutations} from 'vuex'
 import debounce from 'lodash/debounce'
 import constants from '@/constants'
+import scrollListener from '@/scroll-listener'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
 
 export default {
@@ -158,47 +158,16 @@ export default {
   created () {
     // $route watcher will not be called when componenet loaded
     this.showingFilm = Boolean(this.filmId)
+
+    // Setup listener
     let nextPage = this.tryFetchNextPage
-    this.listener = function (event) {
-      if (getDocHeight() === getScrollXY()[1] + window.innerHeight) {
-        nextPage()
-      }
-    }
+    this.listener = scrollListener(nextPage)
+
     this.clearFilms()
     this.getFilms()
       .then(() => document.addEventListener('scroll', this.listener))
       // TODO: Add retry
       .catch((e) => console.error(e))
-    // Scroll listener
-    // https://jsfiddle.net/W75mP/
-    function getScrollXY () {
-      let scrOfX = 0
-      let scrOfY = 0
-      if (typeof (window.pageYOffset) === 'number') {
-        // Netscape compliant
-        scrOfY = window.pageYOffset
-        scrOfX = window.pageXOffset
-      } else if (document.body && (document.body.scrollLeft || document.body.scrollTop)) {
-        // DOM compliant
-        scrOfY = document.body.scrollTop
-        scrOfX = document.body.scrollLeft
-      } else if (document.documentElement && (document.documentElement.scrollLeft || document.documentElement.scrollTop)) {
-        // IE6 standards compliant mode
-        scrOfY = document.documentElement.scrollTop
-        scrOfX = document.documentElement.scrollLeft
-      }
-      return [ scrOfX, scrOfY ]
-    }
-
-    // taken from http://james.padolsey.com/javascript/get-document-height-cross-browser/
-    function getDocHeight () {
-      var D = document
-      return Math.max(
-        D.body.scrollHeight, D.documentElement.scrollHeight,
-        D.body.offsetHeight, D.documentElement.offsetHeight,
-        D.body.clientHeight, D.documentElement.clientHeight
-      )
-    }
   }
 }
 </script>
