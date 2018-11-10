@@ -8,13 +8,11 @@
     <v-content>
       <progress-bar  />
       <v-container fluid fill-height>
-          <v-layout align-center justify-center>
-        <v-flex xs12 sm8 md8>
+        <v-layout align-center justify-center>
+          <v-flex xs12 sm8 md8>
             <router-view />
-        </v-flex>
-
-          </v-layout>
-
+          </v-flex>
+        </v-layout>
       </v-container>
       <bottom-nav v-if="user"/>
     </v-content>
