@@ -2,41 +2,100 @@
   <div class="mb-3">
     <h2 class="display-2 mt-4 pb-3">Create a Poll</h2>
 
-    <!-- Doesn't need to be a v-form -->
-    <form autocomplete="off" class="">
-      <!-- Prevent auto-complete -->
-      <input autocomplete="false" name="hidden" type="text" style="display:none;">
+    <v-card>
+      <v-card-title class="title font-weight-regular justify-space-between">
+        <span>{{ currentTitle }}</span>
+      </v-card-title>
 
-      <movie-suggest :placeholder="movieSuggestPlaceholder" :errors="optionsErrors" @optionsChange="updateOptions"></movie-suggest>
+      <v-window v-model="step">
 
-      <v-switch id="nomination-phase" :label="switchLabel" v-model="haveNominations"/>
+        <!-- Nominations or not -->
+        <v-window-item :value="1">
+          <v-card-text>
+            <div class="caption grey--text text--darken-1 mb-2">
+              Should this poll have a nominations phase to allow other users to suggest movies?
+            </div>
 
-      <!-- Nominations -->
-      <transition name="fade">
-        <div v-if="haveNominations">
-          <h3 class="subheadingfont">Nomination Phase Options</h3>
+            <v-radio-group v-model="haveNominations" row>
+              <v-radio
+              label="Nominations"
+              :value="true"
+              ></v-radio>
+              <v-radio
+                label="No Nominations"
+                :value="false"
+              ></v-radio>
+            </v-radio-group>
+          </v-card-text>
+        </v-window-item>
 
-          <v-text-field id="nomination-length" :error-messages="nominationLengthErrors" prepend-icon="timelapse" label="Nomination Time" hint="The number of minutes for nominations" v-model="nominationsMinutes" @input="$v.nominationsMinutes.$touch()" type="number"  pattern="[1-9][0-9]*" min="1" max="60" />
-          <v-text-field id="nomination-votes" :error-messages="nominationsErrors" prepend-icon="format_list_numbered" label="Number of Nominations" hint="The number of nominations each person receives" v-model="nominations" @input="$v.nominations.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
-        </div>
-      </transition>
+        <!-- Nomination options -->
+        <v-window-item :value="2">
+          <v-card-text>
+            <v-text-field id="nomination-length" :error-messages="nominationLengthErrors" prepend-icon="timelapse" label="Nomination Length" hint="The duration of the nomination phase (in minutes)" v-model="nominationsMinutes" @input="$v.nominationsMinutes.$touch()" type="number"  pattern="[1-9][0-9]*" min="1" max="60" />
+            <v-text-field id="nomination-votes" :error-messages="nominationsErrors" prepend-icon="format_list_numbered" label="Number of Nominations Per User" hint="The number of nominations each person can make" v-model="nominations" @input="$v.nominations.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
 
-      <div>
-        <h3 class="subheadingfont">Voting Phase Options</h3>
+          </v-card-text>
+        </v-window-item>
 
-        <v-text-field id="minutes" :error-messages="minutesErrors" prepend-icon="timelapse" label="Voting Time" hint="The number of minutes for voting" v-model="minutes" @input="$v.minutes.$touch()" type="number" pattern="[1-9]" min="1" max="10" />
-        <v-text-field id="votes" :error-messages="votesErrors" prepend-icon="format_list_numbered" label="Number of Votes" hint="The number of votes each person receives" v-model="votes" @input="$v.votes.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
-      </div>
+        <!-- Add Movies -->
+        <v-window-item :value="3">
+          <v-card-text>
+            <movie-suggest :placeholder="movieSuggestPlaceholder" :errors="optionsErrors" @optionsChange="updateOptions"></movie-suggest>
+            <span v-if="haveNominations" class="caption grey--text text--darken-1">
+              Optionally pre-select some movies to add to the pool of nominations.
+            </span>
+            <span v-else class="caption grey--text text--darken-1">
+              Choose the movies to be voted on.
+            </span>
+          </v-card-text>
+        </v-window-item>
 
-      <div class="mt-3">
-        <v-btn id="start-poll" @click.prevent="startPoll()" :disabled="!canStart" color="primary">Start Poll</v-btn>
-        <v-btn flat id="back" @click.prevent="toHome()">Back</v-btn>
-      </div>
-    </form>
+        <!-- Voting Phase Options -->
+        <v-window-item :value="4">
+          <v-card-text>
+            <v-text-field id="minutes" :error-messages="minutesErrors" prepend-icon="timelapse" label="Voting Length" hint="The duration of voting (in minutes)" v-model="minutes" @input="$v.minutes.$touch()" type="number" pattern="[1-9]" min="1" max="10" />
+            <v-text-field id="votes" :error-messages="votesErrors" prepend-icon="format_list_numbered" label="Number of Votes Per User" hint="The number of votes each person receives" v-model="votes" @input="$v.votes.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
+          </v-card-text>
+        </v-window-item>
+
+        <!-- Summary -->
+        <v-window-item :value="5">
+          <v-card-text>
+            <span class="grey--text text--darken-1">Voting Length: <span class="greytext--darken-3">{{minutes}}</span> <small>m</small></span><br />
+            <span class="grey--text text--darken-1">Vote Count: <span class="text--darken-3">{{votes}}</span></span><br />
+            <span class="grey--text text--darken-1">Nomination Length: <span class="text--darken-3">{{nominationsMinutes}}</span> <small>m</small></span><br />
+            <span class="grey--text text--darken-1">Nomination Count: <span class="text--darken-3">{{nominations}}</span></span><br />
+          </v-card-text>
+        </v-window-item>
+      </v-window>
+
+      <v-divider></v-divider>
+
+      <v-card-actions>
+        <v-btn
+          :disabled="step === 1"
+          flat
+          @click="stepBack"
+        >
+          Back
+        </v-btn>
+        <v-spacer></v-spacer>
+        <v-btn
+          :disabled="!canNextStep"
+          color="primary"
+          depressed
+          @click="stepFoward"
+        >
+          {{step === 5 ? 'Start Poll': 'Next'}}
+        </v-btn>
+      </v-card-actions>
+    </v-card>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import { validationMixin } from 'vuelidate'
 import {
   required,
@@ -55,15 +114,24 @@ export default {
   mixins: [validationMixin],
   data () {
     return {
+      step: 1,
       minutes: '3',
       votes: '2',
       haveNominations: false,
       nominationsMinutes: '5',
       nominations: '1',
-      options: []
+      options: [],
+      stepMap: { 1: 'Include Nominations', 2: 'Nomination Options', 3: 'Select Movies', 4: 'Voting Options', 5: 'Confirm' }
     }
   },
   methods: {
+    ...mapActions('snackbar', { setSnackbarText: 'setText' }),
+    stepBack: function () {
+      if (this.step === 3 && !this.haveNominations) { this.step = 1 } else { this.step-- }
+    },
+    stepFoward: function () {
+      if (this.step === 1 && !this.haveNominations) { this.step = 3 } else if (this.step === 5) { this.startPoll() } else { this.step++ }
+    },
     toHome: function () {
       router.push('/home')
     },
@@ -95,15 +163,25 @@ export default {
         pollTransitionDateTime: pollTransitionDateTime,
         numberOfNominations: numberOfNominations
       }).create()
+      this.setSnackbarText('Poll started!')
       this.toHome()
     }
   },
   computed: {
+    currentTitle () {
+      return this.stepMap[this.step]
+    },
+    canNextStep: function () {
+      switch (this.step) {
+        case 2: return !this.$v.nominationGroup.$invalid
+        case 3: return !this.$v.options.$invalid
+        case 4: return !this.$v.votingGroup.$invalid
+        case 5:
+        default: return true
+      }
+    },
     canStart: function () {
       return !this.$v.$invalid
-    },
-    switchLabel: function () {
-      return this.haveNominations ? 'With Nominations' : 'No Nominations'
     },
     movieSuggestPlaceholder: function () {
       return this.haveNominations ? 'Pre-Select Movies' : 'Select Movies'
@@ -204,19 +282,10 @@ export default {
           return !this.haveNominations
         }),
         minLength: !this.haveNominations ? minLength(2) : minLength(0)
-      }
+      },
+      votingGroup: ['minutes', 'votes'],
+      nominationGroup: ['nominations', 'nominationsMinutes']
     }
   }
 }
 </script>
-
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
