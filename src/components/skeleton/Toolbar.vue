@@ -20,7 +20,7 @@
       return-object
       ></v-autocomplete>
       <v-spacer v-else></v-spacer>
-    <v-menu v-if="user && user.isAdmin && (isCurrentPollInVoting || isCurrentPollInNomination)" :nudge-width="50">
+    <v-menu v-if="user && user.isAdmin && (isCurrentPollInVoting || isCurrentPollInNomination)" :nudge-width="50" lazy>
       <v-btn icon slot="activator">
         <v-icon>more_vert</v-icon>
       </v-btn>

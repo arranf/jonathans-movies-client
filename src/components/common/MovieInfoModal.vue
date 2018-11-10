@@ -1,6 +1,6 @@
 <template>
 <v-layout row justify-center>
-  <v-dialog  v-model="show" fullscreen transition="dialog-bottom-transition" :overlay="false">
+  <v-dialog  v-model="show" lazy fullscreen transition="dialog-bottom-transition" :overlay="false">
     <v-card v-if="film"  >
       <movie-bg :height="30" :film="film" />
       <v-card-title primary-title>
