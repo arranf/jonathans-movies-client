@@ -6,13 +6,18 @@ module.exports = {
     name: 'Jonathans Movies'
   },
   configureWebpack: config => {
+    let plugins = []
+
     if (process.env.NODE_ENV === 'production') {
-      return {
-        plugins: [
-          new Critters()
-          // ,new BundleAnalyzerPlugin()
-        ]
-      }
+      plugins.push(new Critters())
+    }
+
+    if (process.env.ANALYZE) {
+      plugins.push(new BundleAnalyzerPlugin())
+    }
+
+    return {
+      plugins: plugins
     }
   }
 }
