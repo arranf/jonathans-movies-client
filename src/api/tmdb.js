@@ -60,19 +60,21 @@ function makeRequest (opts) {
   })
 }
 
+const API_KEY = 'ace0d63079205f9ef9e1054736419dd3'
+
 const functions = {
   getMovieData: movieId => {
     return makeRequest({
       method: 'GET',
       url: baseURL + 'movie/' + movieId,
-      params: { api_key: 'ace0d63079205f9ef9e1054736419dd3' }
+      params: { api_key: API_KEY }
     })
   },
   searchForMovie: movieName => {
     return makeRequest({
       method: 'GET',
       url: baseURL + 'search/movie',
-      params: { api_key: 'ace0d63079205f9ef9e1054736419dd3', query: movieName }
+      params: { api_key: API_KEY, query: movieName }
     })
   }
 }
