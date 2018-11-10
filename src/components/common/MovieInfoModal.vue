@@ -2,13 +2,13 @@
 <v-layout row justify-center>
   <v-dialog  v-model="show" fullscreen transition="dialog-bottom-transition" :overlay="false">
     <v-card v-if="film"  >
-      <movie-bg :height="200" :film="film" />
+      <movie-bg :height="30" :film="film" />
       <v-card-title primary-title>
         <div>
           <h1 class="headline mb-0">{{film.name}} <small>({{getFilmYear}})</small></h1>
           <a v-if="getImdbLink" :href="getImdbLink" target="_blank" style="float: right;">
             <svg id="imdb">
-              <use xlink:href="/static/fa-brands.svg#imdb"></use>
+              <use xlink:href="/fa-brands.svg#imdb"></use>
             </svg>
           </a>
           <h3 class="subtitle grey--text text--darken-2">{{film.tagline}}</h3>
