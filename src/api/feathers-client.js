@@ -47,8 +47,9 @@ app.service('/recommendations')
 
 app.service('/poll').on('transition', data => {
   const numberOfVotes = store.getters['vote/votesRemaining']
+  const text = numberOfVotes == null ? 'Voting has begun' : `Voting has begun! You have ${numberOfVotes} votes.`
   store.dispatch('snackbar/setText', {
-    text: `Voting has begun! You have ${numberOfVotes} votes.`,
+    text: text,
     isPersistent: true
   })
 })
