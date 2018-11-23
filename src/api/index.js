@@ -106,11 +106,14 @@ const queries = {
     }
     store.dispatch('poll/patch', [poll._id, data, {}])
   },
-  discoverMovies: function () {
+  discoverMovies: function (seenIds) {
     return store.dispatch('films/find', {
       paginate: false,
       query: {
-        discover: true
+        discover: true,
+        _id: {
+          $nin: seenIds
+        }
       }
     })
   },

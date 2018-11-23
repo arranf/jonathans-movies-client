@@ -63,7 +63,8 @@ export default {
       suggestions: [],
       recommendations: [],
       busy: false,
-      showUp: 0
+      showUp: 0,
+      seenIds: []
     }
   },
   directives: {
@@ -87,9 +88,13 @@ export default {
       this.showUp++
       this.busy = true
       queries
-        .discoverMovies()
+        .discoverMovies(this.seenIds)
         .then(discoveredFilms => {
           this.suggestions = this.suggestions.concat(discoveredFilms)
+          for (let i = 0; i < discoveredFilms.length; i++) {
+            this.seenIds.push(discoveredFilms[i]._id)
+          }
+
           this.busy = false
         })
         .catch(e => {
