@@ -7,7 +7,7 @@
       <v-text-field prepend-icon="inbox" name="email" label="Email" @change="checkUnique" :error-messages="emailErrors" v-model="email" type="text"></v-text-field>
       <v-text-field loading @input="checkPasswordStrength" prepend-icon="lock" name="password" label="Password" v-model="password" id="password"
         :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
-        :append-icon-cb="() => (hidePassword = !hidePassword)"
+        @click:append="() => (hidePassword = !hidePassword)"
         :type="hidePassword ? 'password' : 'text'">
           <v-progress-linear
             slot="progress"

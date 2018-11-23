@@ -23,7 +23,7 @@
           <v-text-field prepend-icon="inbox" name="email" label="Email" v-model="email" type="text"></v-text-field>
           <v-text-field ref="password" prepend-icon="lock" name="password" label="Password" v-model="password" id="password"
             :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
-            :append-icon-cb="() => (hidePassword = !hidePassword)"
+            @click:append="() => (hidePassword = !hidePassword)"
             :type="hidePassword ? 'password' : 'text'">
           </v-text-field>
           <router-link class="d-flex caption" to="/reset">Forgotten your password?</router-link>
@@ -70,6 +70,7 @@ export default {
           router.push('home')
         })
         .catch(error => {
+          console.error(error)
           console.error(`Login Error: ${error}`)
           this.setSnackbar('Unable to complete log in.')
         })
