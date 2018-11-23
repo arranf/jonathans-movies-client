@@ -1,23 +1,11 @@
 <template>
   <div class="text-center mt-4">
-    <div class="mb-3">
-      <h1 class="display-2">Login</h1>
-    </div>
-    <div id="loginOptions" v-if="!isInternalLogin">
-      <!-- divs here keep the buttons aligned -->
-      <div>
-        <v-btn block id="facebook" class="btn-facebook" @click.prevent="facebookLogin()"><span class="text-white">Log In with Facebook</span>
-        </v-btn>
-      </div>
-      <div>
-          <v-btn block id="login" @click.prevent="swapLoginType()" >Log In</v-btn>
-      </div>
-      <div class="pt-1">
-        <a id="signup" href="#" @click.prevent="toSignUp()" >Not got an account? Sign up</a>
-      </div>
-    </div>
 
-    <v-card id="internalLoginForm" v-if="isInternalLogin">
+    <v-card id="loginForm">
+      <div class="pa-2">
+      <v-card-title>
+        <h1 class="display-1">Login</h1>
+        </v-card-title>
       <v-card-text>
         <v-form>
           <v-text-field @input="isError = false" :error="isError" prepend-icon="inbox" name="email" label="Email" v-model="email" type="text"></v-text-field>
@@ -27,13 +15,16 @@
             :type="hidePassword ? 'password' : 'text'">
           </v-text-field>
           <router-link class="d-flex caption" to="/reset">Forgotten your password?</router-link>
+                  <v-btn id="submit" :disabled="isDisabled" @click.prevent="tryLogin()" color="primary">Login</v-btn>
         </v-form>
+                <v-btn block id="facebook" class="btn-facebook mt-2" @click.prevent="facebookLogin()"><span class="text-white">Log In with Facebook</span>
+        </v-btn>
+
       </v-card-text>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn id="submit" :disabled="isDisabled" @click.prevent="tryLogin()" color="primary">Login</v-btn>
-        <v-btn flat id="back" @click.prevent="swapLoginType()">Back</v-btn>
-      </v-card-actions>
+      </div>
+                    <div class="pa-4 grey lighten-3">
+        <a id="signup" href="#" @click.prevent="toSignUp()" >Not got an account? Sign up</a>
+      </div>
     </v-card>
   </div>
 </template>
@@ -122,5 +113,11 @@ export default {
   background-color: #3b5998 !important;
   border-color: #3b5998 !important;
   color: #ffffff;
+  max-width: 200px;
+  margin: 0 auto;
+}
+#submit {
+  width: 100%;
+  max-width: 200px;
 }
 </style>
