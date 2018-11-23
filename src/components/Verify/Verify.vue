@@ -63,16 +63,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.btn-facebook {
-  background-color: #3b5998 !important;
-  border-color: #3b5998 !important;
-  color: #ffffff;
-}
-
-.btn-block {
-  display: block;
-  width: 100%;
-}
-</style>
