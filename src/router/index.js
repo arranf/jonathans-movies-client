@@ -13,6 +13,7 @@ const Add = () => import('@/components/Add/AddMovie')
 const Discover = () => import('@/components/Discover/Discover')
 const Reset = () => import('@/components/Reset/Reset')
 const Verify = () => import('@/components/Verify/Verify')
+const Logout = () => import('@/components/Logout/Logout')
 
 Vue.use(Router)
 
@@ -111,6 +112,14 @@ const router = new Router({
         doesNotNeedLogin: true
       },
       props: true
+    },
+    {
+      path: '/logout',
+      name: 'Logout',
+      component: Logout,
+      meta: {
+        doesNotNeedLogin: true
+      }
     }
   ]
 })
