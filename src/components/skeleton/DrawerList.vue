@@ -111,30 +111,27 @@
 </template>
 
 <script>
-
-import {VDivider, VIcon} from 'vuetify'
-import * as VList from 'vuetify/es5/components/VList'
-
-import {mapGetters, mapState, mapActions} from 'vuex'
+import { mapGetters, mapState, mapActions } from 'vuex'
 
 export default {
   name: 'DrawerList',
-  components: {
-    ...VList,
-    VDivider,
-    VIcon
-  },
   computed: {
-    ...mapGetters('poll', ['getActivePoll', 'remainingTimeWordsForCurrentPoll', 'isCurrentPollInNomination', 'isCurrentPollInVoting', 'remainingTimeInNominationWordsForCurrentPoll']),
+    ...mapGetters('poll', [
+      'getActivePoll',
+      'remainingTimeWordsForCurrentPoll',
+      'isCurrentPollInNomination',
+      'isCurrentPollInVoting',
+      'remainingTimeInNominationWordsForCurrentPoll'
+    ]),
     ...mapState('auth', ['user']),
-    ...mapGetters('vote', {remainingVotes: 'votesRemaining'}),
-    ...mapGetters('option', {remainingNominations: 'nominationsRemaining'})
+    ...mapGetters('vote', { remainingVotes: 'votesRemaining' }),
+    ...mapGetters('option', { remainingNominations: 'nominationsRemaining' })
   },
   methods: {
     ...mapActions('auth', ['logout']),
     logoutAndRedirect: function () {
       this.logout()
-        .then(() => this.$router.push({path: '/'}))
+        .then(() => this.$router.push({ path: '/' }))
         .catch(e => console.error(e))
     }
   }

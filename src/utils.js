@@ -6,9 +6,15 @@ let shortHumanizer = humanizeDuration.humanizer({
   language: 'shortEn',
   languages: {
     shortEn: {
-      h: function () { return 'h' },
-      m: function () { return 'm' },
-      s: function () { return 's' }
+      h: function () {
+        return 'h'
+      },
+      m: function () {
+        return 'm'
+      },
+      s: function () {
+        return 's'
+      }
     }
   },
   units: ['h', 'm', 's'],
@@ -30,7 +36,11 @@ const functions = {
   },
   humanizeTimeToNowImprecise: function (dateTimeEpochms) {
     const time = store.getters['time/getNow']
-    return humanizeDuration(dateTimeEpochms - time, { units: ['mo', 'w', 'd', 'h', 'm'], largest: 1, round: true })
+    return humanizeDuration(dateTimeEpochms - time, {
+      units: ['mo', 'w', 'd', 'h', 'm'],
+      largest: 1,
+      round: true
+    })
   },
   selectRandom: function (array) {
     return array[Math.floor(Math.random() * array.length)]
@@ -39,7 +49,9 @@ const functions = {
     let array = JSON.parse(JSON.stringify(constants.colors[colorRange]))
 
     while (count > array.length) {
-      array = array.concat(JSON.parse(JSON.stringify(constants.colors[colorRange])))
+      array = array.concat(
+        JSON.parse(JSON.stringify(constants.colors[colorRange]))
+      )
     }
     shuffle(array)
     if (count < array.length) {

@@ -1,47 +1,39 @@
-> A Vue.js project for jonathansmovies.com
+# jonathans-movies-client-2
 
-## Build Setup
-
-``` bash
-# install dependencies
+## Project setup
+```
 yarn install
+```
 
-# serve with hot reload at localhost:8080
-yarn run dev
+### Compiles and hot-reloads for development
+```
+yarn run serve
+```
 
-# build for production with minification
+### Compiles and minifies for production
+```
 yarn run build
-
-# build for production and view the bundle analyzer report
-yarn run build --report
 ```
 
-## Technologies
-This project is built using [Vue](https://vuejs.org) ([Vuex](https://vuex.vuejs.org) and [Vue-Router](https://router.vuejs.org/en/)) as well as [Feathers](feathersjs.com) and ([Feathers-Vuex](https://github.com/feathersjs/feathers-vuex)).
-
-We also use [Vuetify](https://vuetifyjs.com/en/getting-started/quick-start) and [FontAwesome](https://fontawesome.io/).
-
-The frontend for this website is hosted on [Netlify](https://netlify.com).
-
-## Developing
-You are free to use any IDE but Visual Studio Code is recommended.
-The following extensions will be helpful `Ctrl + P`
+### Run your tests
 ```
-ext install vetur
-ext install vscode-eslint
-ext install sass-indented
+yarn run test
 ```
 
-## Resources
+### Lints and fixes files
+```
+yarn run lint
+```
 
-### Vue Resources
+### Run your end-to-end tests
+```
+yarn run test:e2e
+```
 
-[Vue Website](https://vuejs.org)
+### Run your unit tests
+```
+yarn run test:unit
+```
 
-[This Template Guide](http://vuejs-templates.github.io/webpack/) 
-
-[Vue-Router](https://router.vuejs.org/en/)
-
-[Vuex](https://vuex.vuejs.org)
-
-[Vuex Feather](https://github.com/feathersjs/feathers-vuex)
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'BarChart',
@@ -30,7 +30,13 @@ export default {
       if (option.votes === 0) {
         return '1%'
       } else {
-        return Math.round((option.votes / this.getNumberOfUniqueVoters(this.getMostRecentPoll._id)) * 100) + '%'
+        return (
+          Math.round(
+            (option.votes /
+              this.getNumberOfUniqueVoters(this.getMostRecentPoll._id)) *
+              100
+          ) + '%'
+        )
       }
     }
   }
@@ -38,14 +44,14 @@ export default {
 </script>
 
 <style>
- /* https://codepen.io/jedtrow/pen/YPrqKY */
-.graph-cont{
+/* https://codepen.io/jedtrow/pen/YPrqKY */
+.graph-cont {
   width: calc(100% - 40px);
   width: 100%;
   margin: 0 auto;
 }
 
-.bar{
+.bar {
   height: 3em;
   margin: 0 auto 10px auto;
   position: relative;
@@ -78,19 +84,19 @@ export default {
   z-index: 1;
 }
 
-.bar::before{
-  content: '';
+.bar::before {
+  content: "";
   width: 100%;
   position: absolute;
   left: 0;
   height: 3em;
   top: 0;
-  background: #BDBDBD;
+  background: #bdbdbd;
   z-index: 0;
 }
 
-.bar::after{
-  content: '';
+.bar::after {
+  content: "";
   background: var(--color);
   height: 3em;
   transition: 0.7s;
@@ -104,11 +110,11 @@ export default {
   max-width: var(--width);
 }
 
-@keyframes bar-before{
-  0%{
+@keyframes bar-before {
+  0% {
     width: 0px;
   }
-  100%{
+  100% {
     width: 100%;
   }
 }

@@ -8,9 +8,15 @@ function makeRequest (opts) {
       // We'll need to stringify if we've been given an object
       // If we have a string, this is skipped.
       if (params && typeof params === 'object') {
-        queryParameters = '?' + Object.keys(params).map(function (key) {
-          return encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
-        }).join('&')
+        queryParameters =
+          '?' +
+          Object.keys(params)
+            .map(function (key) {
+              return (
+                encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
+              )
+            })
+            .join('&')
       }
     }
     var xhr = new XMLHttpRequest()
@@ -19,11 +25,19 @@ function makeRequest (opts) {
       if (this.status >= 200 && this.status < 300) {
         resolve(JSON.parse(xhr.response))
       } else {
-        reject(new Error('unable to complete ' + opts.method + ' request for: ' + opts.url))
+        reject(
+          new Error(
+            'unable to complete ' + opts.method + ' request for: ' + opts.url
+          )
+        )
       }
     }
     xhr.onerror = function () {
-      reject(new Error('unable to complete ' + opts.method + ' request for: ' + opts.url))
+      reject(
+        new Error(
+          'unable to complete ' + opts.method + ' request for: ' + opts.url
+        )
+      )
     }
     if (opts.headers) {
       Object.keys(opts.headers).forEach(function (key) {
@@ -34,20 +48,34 @@ function makeRequest (opts) {
     // We'll need to stringify if we've been given an object
     // If we have a string, this is skipped.
     if (params && typeof params === 'object') {
-      queryParameters = Object.keys(params).map(function (key) {
-        return encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
-      }).join('&')
+      queryParameters = Object.keys(params)
+        .map(function (key) {
+          return (
+            encodeURIComponent(key) + '=' + encodeURIComponent(params[key])
+          )
+        })
+        .join('&')
     }
     xhr.send(params)
   })
 }
 
+const API_KEY = 'ace0d63079205f9ef9e1054736419dd3'
+
 const functions = {
-  getMovieData: (movieId) => {
-    return makeRequest({method: 'GET', url: baseURL + 'movie/' + movieId, params: {api_key: 'ace0d63079205f9ef9e1054736419dd3'}})
+  getMovieData: movieId => {
+    return makeRequest({
+      method: 'GET',
+      url: baseURL + 'movie/' + movieId,
+      params: { api_key: API_KEY }
+    })
   },
-  searchForMovie: (movieName) => {
-    return makeRequest({method: 'GET', url: baseURL + 'search/movie', params: { api_key: 'ace0d63079205f9ef9e1054736419dd3', query: movieName }})
+  searchForMovie: movieName => {
+    return makeRequest({
+      method: 'GET',
+      url: baseURL + 'search/movie',
+      params: { api_key: API_KEY, query: movieName }
+    })
   }
 }
 

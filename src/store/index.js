@@ -12,7 +12,9 @@ import pollGetters from './poll/getters'
 import time from '@/store/time'
 import snackbar from '@/store/snackbar'
 
-const { service, auth, FeathersVuex } = feathersVuex(feathersClient, { idField: '_id' })
+const { service, auth, FeathersVuex } = feathersVuex(feathersClient, {
+  idField: '_id'
+})
 Vue.use(FeathersVuex)
 Vue.use(Vuex)
 
@@ -29,11 +31,11 @@ let plugins = [
       film: 'Film'
     }
   }),
-  service('vote', {getters: voteGetters}),
+  service('vote', { getters: voteGetters }),
   service('users'),
   service('films'),
-  service('users-online', {getters: usersOnlineGetters}),
-  auth({userService: 'users'})
+  service('users-online', { getters: usersOnlineGetters }),
+  auth({ userService: 'users' })
 ]
 
 const store = new Vuex.Store({
@@ -41,9 +43,7 @@ const store = new Vuex.Store({
     time,
     snackbar
   },
-  plugins: [
-    ...plugins
-  ]
+  plugins: [...plugins]
 })
 
 export default store
