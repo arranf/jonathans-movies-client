@@ -21,7 +21,7 @@
             <v-flex xs6>
               <h3 class="md-subheading">Information</h3>
               <div>
-                <div v-if="film.genres"><strong>Genres</strong>: {{film.genres.join(', ')}}</div>
+                <div v-if="film.genres && film.genres.length"><strong>Genres</strong>: {{film.genres.join(', ')}}</div>
                 <div v-if="film.runtime"><strong>Runtime</strong>: {{film.runtime}} mins</div>
                 <div v-if="film.last_watched"><strong>Last Watched</strong>: {{film.last_watched}}</div>
               </div>
