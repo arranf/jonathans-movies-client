@@ -135,7 +135,6 @@ function initStore () {
           return queries.getOptionsForPoll(pollId)
         }
       })
-      .then(() => console.log('Initiated store'))
       .catch(error => console.error('Error initiating store', error))
   } else {
     return Promise.resolve()
@@ -158,7 +157,6 @@ router.beforeEach((to, from, next) => {
           .then(() => initStore())
       )
       .then(() => {
-        console.log(user ? 'Authed' : 'Not Authed')
         directToNext(to, from, next, user)
       })
       .catch(function (error) {

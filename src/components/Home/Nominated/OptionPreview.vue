@@ -93,7 +93,6 @@ export default {
           v => v.user_id === this.user._id && v.option_id === optionId
         )
         this.removeVote(vote._id)
-          .then(console.log('Vote removed from ', this.option.name))
           .catch(error => console.error(error))
       } else {
         if (this.remainingVotes <= 0) {
@@ -101,7 +100,6 @@ export default {
           return
         }
         this.addVote({ poll_id: this.getActivePoll._id, option_id: optionId })
-          .then(console.log('Vote added for ', this.option.name))
           .then(
             this.setSnackbar(
               `Voted! You have ${this.remainingVotes - 1} vote${

@@ -55,15 +55,14 @@ export default {
         password: this.password
       })
         .then(token => {
-          console.log('Authenticated!', token)
           return feathersClient.passport.verifyJWT(token.accessToken)
         })
         .then(() => {
           router.push('home')
         })
+        // eslint-disable-next-line
         .catch(error => {
           this.isError = true
-          console.error(error)
           this.setSnackbar('Unable to complete log in. Please check your username and password.')
         })
     },

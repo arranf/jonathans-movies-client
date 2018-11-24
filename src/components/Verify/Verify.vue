@@ -30,7 +30,6 @@ export default {
         password: this.password
       })
         .then(token => {
-          console.log('Authenticated!', token)
           return feathersClient.passport.verifyJWT(token.accessToken)
         })
         .then(() => {
