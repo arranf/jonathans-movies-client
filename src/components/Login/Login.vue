@@ -8,10 +8,10 @@
         </v-card-title>
       <v-card-text>
         <v-form>
-          <v-text-field prepend-icon="inbox" name="email" label="Email" v-model="email" type="text"></v-text-field>
-          <v-text-field ref="password" prepend-icon="lock" name="password" label="Password" v-model="password" id="password"
+          <v-text-field @input="isError = false" :error="isError" prepend-icon="inbox" name="email" label="Email" v-model="email" type="text"></v-text-field>
+          <v-text-field @input="isError = false" :error="isError" ref="password" prepend-icon="lock" name="password" label="Password" v-model="password" id="password"
             :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
-            :append-icon-cb="() => (hidePassword = !hidePassword)"
+            @click:append="() => (hidePassword = !hidePassword)"
             :type="hidePassword ? 'password' : 'text'">
           </v-text-field>
           <router-link class="d-flex caption" to="/reset">Forgotten your password?</router-link>
@@ -41,7 +41,8 @@ export default {
       hidePassword: true,
       password: '',
       email: '',
-      isInternalLogin: false
+      isInternalLogin: false,
+      isError: false
     }
   },
   methods: {
@@ -54,15 +55,15 @@ export default {
         password: this.password
       })
         .then(token => {
-          console.log('Authenticated!', token)
           return feathersClient.passport.verifyJWT(token.accessToken)
         })
         .then(() => {
           router.push('home')
         })
+        // eslint-disable-next-line
         .catch(error => {
-          console.error(`Login Error: ${error}`)
-          this.setSnackbar('Unable to complete log in.')
+          this.isError = true
+          this.setSnackbar('Unable to complete log in. Please check your username and password.')
         })
     },
     toSignUp: function () {

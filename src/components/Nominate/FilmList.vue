@@ -27,7 +27,7 @@
 
         <v-list>
           <template v-for="(film, index) in allFilms">
-            <film-list-item  :film="film" :key="film._id+'item'"/>
+            <film-list-item class="pt-2 pb-2" :film="film" :key="film._id+'item'"/>
             <v-divider v-if="index + 1 < allFilms.length" :key="index"></v-divider>
           </template>
         </v-list>
@@ -140,7 +140,6 @@ export default {
     },
     fetchNextPage: debounce(
       function () {
-        console.log('Calling next page on scroll')
         this.page++
         return this.getFilms()
       },

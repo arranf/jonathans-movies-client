@@ -13,6 +13,7 @@ const Add = () => import('@/components/Add/AddMovie')
 const Discover = () => import('@/components/Discover/Discover')
 const Reset = () => import('@/components/Reset/Reset')
 const Verify = () => import('@/components/Verify/Verify')
+const Logout = () => import('@/components/Logout/Logout')
 
 Vue.use(Router)
 
@@ -111,6 +112,14 @@ const router = new Router({
         doesNotNeedLogin: true
       },
       props: true
+    },
+    {
+      path: '/logout',
+      name: 'Logout',
+      component: Logout,
+      meta: {
+        doesNotNeedLogin: true
+      }
     }
   ]
 })
@@ -126,7 +135,6 @@ function initStore () {
           return queries.getOptionsForPoll(pollId)
         }
       })
-      .then(() => console.log('Initiated store'))
       .catch(error => console.error('Error initiating store', error))
   } else {
     return Promise.resolve()
@@ -149,7 +157,6 @@ router.beforeEach((to, from, next) => {
           .then(() => initStore())
       )
       .then(() => {
-        console.log(user ? 'Authed' : 'Not Authed')
         directToNext(to, from, next, user)
       })
       .catch(function (error) {

@@ -63,7 +63,7 @@
     </v-list-tile>
 
     <!-- logout -->
-    <v-list-tile v-if="user" @click="logoutAndRedirect">
+    <v-list-tile v-if="user" to="/logout">
       <v-list-tile-action>
           <v-icon>exit_to_app</v-icon>
         </v-list-tile-action>
@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import { mapGetters, mapState, mapActions } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 
 export default {
   name: 'DrawerList',
@@ -126,14 +126,6 @@ export default {
     ...mapState('auth', ['user']),
     ...mapGetters('vote', { remainingVotes: 'votesRemaining' }),
     ...mapGetters('option', { remainingNominations: 'nominationsRemaining' })
-  },
-  methods: {
-    ...mapActions('auth', ['logout']),
-    logoutAndRedirect: function () {
-      this.logout()
-        .then(() => this.$router.push({ path: '/' }))
-        .catch(e => console.error(e))
-    }
   }
 }
 </script>

@@ -3,7 +3,7 @@
     <movie-info-modal close-route="/discover" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
     <!-- <h2 class="text-center">Discover a Movie</h2> -->
     <transition name="slide">
-      <v-btn v-if="showUp > 1"
+      <v-btn v-if="seenIds.length > 24"
             fixed
             fab
             bottom
@@ -16,7 +16,7 @@
       </v-btn>
     </transition>
 
-    <div v-infinite-scroll="refresh" :infinite-scroll-disabled="busy" :infinite-scroll-immediate-check="true" infinite-scroll-distance="40">
+    <div v-infinite-scroll="refresh" infinite-scroll-disabled="disabled" :infinite-scroll-immediate-check="true" infinite-scroll-distance="40">
 
         <div v-if="recommendations && recommendations.length">
             <h3 class="separator">Recommended For You</h3>
@@ -30,11 +30,12 @@
         </div>
         <div v-if="suggestions && suggestions.length">
           <h3 class="separator mt-4">Popular and Highly Rated Movies</h3>
-          <v-container  grid-list-md text-xs-center>
+          <v-container grid-list-md text-xs-center>
             <v-layout row wrap>
               <v-flex xs6 md3 lg2 :key="film._id+index" v-for="(film, index) in suggestions">
                 <film-preview :film="film" modal-page-name="Discover"></film-preview>
               </v-flex>
+              <quote v-if="done" />
               <v-flex xs12>
                 <v-progress-linear color="secondary" v-if="busy" indeterminate />
               </v-flex>
@@ -51,6 +52,7 @@
 <script>
 import FilmPreview from '@/components/common/FilmPreview'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
+import Quote from './Quote'
 import queries from '@/api'
 import infiniteScroll from 'vue-infinite-scroll'
 import { mapActions } from 'vuex'
@@ -63,7 +65,8 @@ export default {
       suggestions: [],
       recommendations: [],
       busy: false,
-      showUp: 0
+      seenIds: [],
+      done: false
     }
   },
   directives: {
@@ -71,7 +74,8 @@ export default {
   },
   components: {
     FilmPreview,
-    MovieInfoModal
+    MovieInfoModal,
+    Quote
   },
   props: {
     filmId: String
@@ -84,12 +88,19 @@ export default {
   methods: {
     ...mapActions('snackbar', { setSnackbar: 'setText' }),
     refresh: function () {
-      this.showUp++
       this.busy = true
       queries
-        .discoverMovies()
+        .discoverMovies(this.seenIds)
         .then(discoveredFilms => {
+          // Check if we've exhausted the collection
+          if (discoveredFilms.length === 0) {
+            this.done = true
+          }
+
           this.suggestions = this.suggestions.concat(discoveredFilms)
+          for (let i = 0; i < discoveredFilms.length; i++) {
+            this.seenIds.push(discoveredFilms[i]._id)
+          }
           this.busy = false
         })
         .catch(e => {
@@ -114,6 +125,11 @@ export default {
     },
     scroll () {
       window.scrollTo(0, 0)
+    }
+  },
+  computed: {
+    disabled () {
+      return this.busy || this.done
     }
   },
   created () {

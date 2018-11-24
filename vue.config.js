@@ -3,7 +3,12 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 module.exports = {
   pwa: {
-    name: 'Jonathans Movies'
+    name: "Jonathan's Movies",
+    themeColor: '#365ED4',
+    msTileColor: '#000000',
+    appleMobileWebAppCapable: 'yes',
+    appleMobileWebAppStatusBarStyle: 'black'
+
   },
   configureWebpack: config => {
     let plugins = []

@@ -49,7 +49,7 @@
         <v-form>
           <v-text-field loading @input="checkPasswordStrength" prepend-icon="lock" name="password" label="New Password" v-model="password" id="password"
             :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
-            :append-icon-cb="() => (hidePassword = !hidePassword)"
+            @click:append="() => (hidePassword = !hidePassword)"
             :type="hidePassword ? 'password' : 'text'">
               <v-progress-linear
                 v-show="password"

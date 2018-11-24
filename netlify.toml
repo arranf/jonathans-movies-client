@@ -7,7 +7,7 @@
 
 [build]
   publish = "dist"
-  command = "npm run build"
+  command = "yarn build"
   
 [context.production.environment]
   YARN_FLAGS = "--ignore-engines"
