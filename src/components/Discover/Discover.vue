@@ -16,7 +16,7 @@
       </v-btn>
     </transition>
 
-    <div v-infinite-scroll="refresh" infinite-scroll-disabled="disabled" :infinite-scroll-immediate-check="true" infinite-scroll-distance="40">
+    <div v-infinite-scroll="refresh" infinite-scroll-disabled="disabled" :infinite-scroll-immediate-check="true" infinite-scroll-distance="60">
 
         <div v-if="recommendations && recommendations.length">
             <h3 class="separator">Recommended For You</h3>
