@@ -11,9 +11,6 @@ const actions = {
         commit('setCurrent', data)
       })
   },
-  setCurrent ({ commit, state }, payload) {
-    commit('setCurrent', payload)
-  },
   changeCurrent ({ commit, state }, payload) {
     feathersClient.service('/house').patch()
       .then((data) => {
