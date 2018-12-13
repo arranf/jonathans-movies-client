@@ -54,9 +54,9 @@ app.service('/poll').on('transition', data => {
   })
 })
 
-app.service('/house').on('patched', data => {
-  store.dispatch('house/getCurrent')
-  // data.current contains the current string for the correct house
+app.service('/collection').on('patched', data => {
+  store.commit('films/clearAll')
+  // data.current contains the current string for the correct collection
   // TODO: We should do things here like clear out films
 })
 

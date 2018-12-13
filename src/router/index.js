@@ -14,6 +14,7 @@ const Discover = () => import('@/components/Discover/Discover')
 const Reset = () => import('@/components/Reset/Reset')
 const Verify = () => import('@/components/Verify/Verify')
 const Logout = () => import('@/components/Logout/Logout')
+const SwitchCollection = () => import('@/components/Collection/SwitchCollection')
 
 Vue.use(Router)
 
@@ -120,6 +121,11 @@ const router = new Router({
       meta: {
         doesNotNeedLogin: true
       }
+    },
+    {
+      path: '/collection',
+      name: 'Collection',
+      component: SwitchCollection
     }
   ]
 })

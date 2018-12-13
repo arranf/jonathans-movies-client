@@ -116,7 +116,7 @@ export default {
       this.selectedFilm = film.name
       Promise.all([
         tmdbApi.getMovieData(film.tmdb_id),
-        this.find({ query: { tmdb_id: film.tmdb_id, ignoreHouse: true } })
+        this.find({ query: { tmdb_id: film.tmdb_id, ignoreCollectionLimits: true } })
       ])
         .then(responses => {
           const tmdbResponse = responses[0]

@@ -11,7 +11,7 @@ import pollGetters from './poll/getters'
 
 import time from '@/store/time'
 import snackbar from '@/store/snackbar'
-import house from '@/store/house'
+import collection from '@/store/collection'
 
 const { service, auth, FeathersVuex } = feathersVuex(feathersClient, {
   idField: '_id'
@@ -43,7 +43,7 @@ const store = new Vuex.Store({
   modules: {
     time,
     snackbar,
-    house
+    collection
   },
   plugins: [...plugins]
 })
