@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     ...mapActions('films', ['create', 'find']),
-    ...mapActions('house', { getCurrentHouse: 'getCurrent' }),
+    ...mapActions('collection', { getcurrentCollection: 'getCurrent' }),
     ...mapActions('snackbar', { setSnackbarText: 'setText' }),
     getFilms: function (searchTerm) {
       if (searchTerm.trim()) {
@@ -131,7 +131,7 @@ export default {
           this.suggestions = []
           this.film = film
           this.isDuplicateForOther = apiResponse.total > 0
-          this.isDuplicateForCurrent = apiResponse.total > 0 && apiResponse.data.every(a => a.owned_by.indexOf(this.currentHouse) > -1)
+          this.isDuplicateForCurrent = apiResponse.total > 0 && apiResponse.data.every(a => a.owned_by.indexOf(this.currentCollection) > -1)
           this.showSearch = false
           return apiResponse
         })
@@ -149,10 +149,10 @@ export default {
       if (this.isDuplicateForCurrent) {
 
       } else if (this.isDuplicateForOther) {
-        this.currentFilmResponse.owned_by.push(this.currentHouse)
+        this.currentFilmResponse.owned_by.push(this.currentCollection)
         this.currentFilmResponse.patch()
           .then(() => {
-            this.setSnackbarText(`Successfully added ${this.film.name} to ${this.currentHouse}'s collection`)
+            this.setSnackbarText(`Successfully added ${this.film.name} to ${this.currentCollection}'s collection`)
             this.selectedFilm = ''
             this.film = null
             this.showSearch = true
@@ -163,11 +163,11 @@ export default {
           })
       } else {
         const { Film } = this.$FeathersVuex
-        this.film.owned_by = [this.currentHouse]
+        this.film.owned_by = [this.currentCollection]
         new Film(this.film)
           .create()
           .then(() => {
-            this.setSnackbarText(`Successfully added ${this.film.name} to ${this.currentHouse}'s collection`)
+            this.setSnackbarText(`Successfully added ${this.film.name} to ${this.currentCollection}'s collection`)
             this.selectedFilm = ''
             this.film = null
             this.showSearch = true
@@ -193,7 +193,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('house', { currentHouse: 'current' }),
+    ...mapState('collection', { currentCollection: 'current' }),
     getBackdropImage () {
       if (this.film) {
         return utils.getTmdbBackdropImage(this.film.backdrop_path)
@@ -211,14 +211,14 @@ export default {
     },
     addButtonLabel () {
       if (this.isDuplicateForCurrent) {
-        return `Already in ${this.currentHouse}'s Collection`
+        return `Already in ${this.currentCollection}'s Collection`
       } else {
-        return `Add to ${this.currentHouse}'s Collection`
+        return `Add to ${this.currentCollection}'s Collection`
       }
     }
   },
   created () {
-    this.getCurrentHouse()
+    this.getcurrentCollection()
   }
 }
 </script>
