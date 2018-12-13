@@ -1,6 +1,6 @@
 <template>
-  <div v-if="film && film.backdrop_path" class="v-responsive v-image">
-    <img class="image-fluid lazyload" :srcset="srcSet" :src="src" :alt="altText" :style="style">
+  <div v-if="film && film.backdrop_path" class="v-responsive v-image flex-column">
+    <img class="image-fluid lazyload movie-bg" :data-srcset="srcSet" :srcset="srcSet" :style="style" :src="src" :alt="altText" >
     <div class="v-responsive__content"></div>
   </div>
 </template>
@@ -23,6 +23,7 @@ export default {
     }
   },
   computed: {
+    // TODO: Test if style works best on parent container on both home screen and movie modal
     style: function () {
       if (!this.film.backdrop_svg_base64encoded) {
         return {}
@@ -49,3 +50,25 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
+    .movie-bg {
+      width: auto;
+      max-height: 23em;
+      display: flex;
+      align-self: center;
+      border-radius: 2em;
+    }
+  }
+
+  @media only screen and (min-device-width: 1024px)  {
+    .movie-bg {
+      width: auto;
+      max-height: 26em;
+      display: flex;
+      align-self: center;
+      border-radius: 2em;
+    }
+  }
+</style>

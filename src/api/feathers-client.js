@@ -54,4 +54,10 @@ app.service('/poll').on('transition', data => {
   })
 })
 
+app.service('/house').on('patched', data => {
+  store.dispatch('house/getCurrent')
+  // data.current contains the current string for the correct house
+  // TODO: We should do things here like clear out films
+})
+
 export default app
