@@ -1,10 +1,12 @@
 <template>
-  <div class="">
-    <div>
-      <h1 class="display-2 mb-4">Sign Up</h1>
-    </div>
-    <form id="internalLoginForm" class="d-flex flex-column align-items-center justify-content-center w-100">
-      <v-text-field prepend-icon="inbox" name="email" label="Email" @change="checkUnique" :error-messages="emailErrors" v-model="email" type="text"></v-text-field>
+  <v-card>
+    <div class="pa-2">
+      <v-card-title>
+        <h1 class="display-1">Sign Up</h1>
+        </v-card-title>
+    <v-card-text id="internalLoginForm" >
+     <v-form>
+      <v-text-field prepend-icon="inbox" name="email" label="Email" hint="Used to reset your password if you forget it." @change="checkUnique" :error-messages="emailErrors" v-model="email" type="text"></v-text-field>
       <v-text-field loading @input="checkPasswordStrength" prepend-icon="lock" name="password" label="Password" v-model="password" id="password"
         :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
         @click:append="() => (hidePassword = !hidePassword)"
@@ -16,11 +18,15 @@
             height="4"
           ></v-progress-linear>
       </v-text-field>
-
-      <v-btn id="submit" :disabled="isDisabled || !emailIsUnique" @click.prevent="trySignUp()" color="primary">Signup</v-btn>
-      <v-btn id="back" flat @click.prevent="toHome()">Back</v-btn>
-    </form>
-  </div>
+     </v-form>
+    </v-card-text>
+      <v-card-actions>
+        <v-spacer />
+        <v-btn id="submit" :disabled="isDisabled || !emailIsUnique" @click.prevent="trySignUp()" color="primary">Signup</v-btn>
+        <v-btn id="back" flat @click.prevent="toHome()">Back</v-btn>
+      </v-card-actions>
+    </div>
+  </v-card>
 </template>
 
 <script>

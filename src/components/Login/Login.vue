@@ -3,27 +3,27 @@
 
     <v-card id="loginForm">
       <div class="pa-2">
-      <v-card-title>
-        <h1 class="display-1">Login</h1>
-        </v-card-title>
-      <v-card-text>
-        <v-form>
-          <v-text-field @input="isError = false" :error="isError" prepend-icon="inbox" name="email" label="Email" v-model="email" type="text"></v-text-field>
-          <v-text-field @input="isError = false" :error="isError" ref="password" prepend-icon="lock" name="password" label="Password" v-model="password" id="password"
-            :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
-            @click:append="() => (hidePassword = !hidePassword)"
-            :type="hidePassword ? 'password' : 'text'">
-          </v-text-field>
-          <router-link class="d-flex caption" to="/reset">Forgotten your password?</router-link>
-                  <v-btn id="submit" :disabled="isDisabled" @click.prevent="tryLogin()" color="primary">Login</v-btn>
-        </v-form>
-                <v-btn block id="facebook" class="btn-facebook mt-2" @click.prevent="facebookLogin()"><span class="text-white">Log In with Facebook</span>
-        </v-btn>
-
-      </v-card-text>
+        <v-card-title>
+          <h1 class="display-1">Login</h1>
+          </v-card-title>
+        <v-card-text>
+          <v-form>
+            <v-text-field @input="isError = false" :error="isError" prepend-icon="inbox" name="email" label="Email" v-model="email" type="text"></v-text-field>
+            <v-text-field @input="isError = false" :error="isError" ref="password" prepend-icon="lock" name="password" label="Password" v-model="password" id="password"
+              :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
+              @click:append="() => (hidePassword = !hidePassword)"
+              :type="hidePassword ? 'password' : 'text'">
+            </v-text-field>
+            <router-link class="d-flex caption" to="/reset">Forgotten your password?</router-link>
+            <v-btn id="submit" :disabled="isDisabled" @click.prevent="tryLogin()" color="primary">Login</v-btn>
+          </v-form>
+          <v-btn block id="facebook" class="btn-facebook mt-2" @click.prevent="facebookLogin()">
+            <span class="text-white">Log In with Facebook</span>
+          </v-btn>
+        </v-card-text>
       </div>
-                    <div class="pa-4 grey lighten-3">
-        <a id="signup" href="#" @click.prevent="toSignUp()" >Not got an account? Sign up</a>
+      <div class="pa-4 grey lighten-3">
+        <router-link id="signup" to="/signup">Not got an account? Sign up</router-link>
       </div>
     </v-card>
   </div>
@@ -65,9 +65,6 @@ export default {
           this.isError = true
           this.setSnackbar('Unable to complete log in. Please check your username and password.')
         })
-    },
-    toSignUp: function () {
-      router.push('/signup')
     },
     swapLoginType: function () {
       this.isInternalLogin = !this.isInternalLogin
