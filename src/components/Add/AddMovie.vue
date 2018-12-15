@@ -57,7 +57,7 @@
 
 <script>
 import { getMovieData, searchForMovie } from '@/api/tmdb'
-import constants from '@/constants'
+import { genres } from '@/constants'
 import { mapActions, mapState } from 'vuex'
 import { getYearFromTmdbReleaseDate, getTmdbBackdropImage } from '@/utils'
 
@@ -108,7 +108,7 @@ export default {
         overview: this.selectedFilm.overview,
         release_date: this.selectedFilm.release_date,
         genres: this.selectedFilm.genre_ids.map(
-          id => constants.genres.find(g => g.id === id).name
+          id => genres.find(g => g.id === id).name
         )
       }
 
