@@ -197,7 +197,7 @@ router.beforeEach((to, from, next) => {
 
 // Show loading animation
 router.afterEach((to, from) => {
-  if (to.meta && to.meta.skipLoading) {
+  if ((to.meta && to.meta.skipLoading) || (from.name === to.name)) {
     return
   }
   store.dispatch('loading/setLoading', to.name)
