@@ -1,4 +1,4 @@
-import utils from '@/utils'
+import { humanizeTimeToNowPrecise } from '@/utils'
 
 export default {
   getActivePoll (state, getters, rootState, rootGetters) {
@@ -28,7 +28,7 @@ export default {
     if (getters.getActivePoll) {
       return (
         'Poll closes in ' +
-        utils.humanizeTimeToNowPrecise(getters.getActivePoll.endDateTime)
+        humanizeTimeToNowPrecise(getters.getActivePoll.endDateTime)
       )
     }
     return 'No Current Poll'
@@ -37,7 +37,7 @@ export default {
     if (getters.getActivePoll) {
       return (
         'Nominations close in ' +
-        utils.humanizeTimeToNowPrecise(
+        humanizeTimeToNowPrecise(
           getters.getActivePoll.pollTransitionDateTime
         )
       )

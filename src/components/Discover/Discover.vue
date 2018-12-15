@@ -1,7 +1,6 @@
 <template>
   <div>
     <movie-info-modal close-route="/discover" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
-    <!-- <h2 class="text-center">Discover a Movie</h2> -->
     <transition name="slide">
       <v-btn v-if="seenIds.length > 24"
             fixed
@@ -42,9 +41,6 @@
             </v-layout>
           </v-container>
         </div>
-        <div v-else class="text-center">
-          <v-progress-circular indeterminate color="primary"></v-progress-circular>
-        </div>
     </div>
   </div>
 </template>
@@ -53,7 +49,7 @@
 import FilmPreview from '@/components/common/FilmPreview'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
 import Quote from './Quote'
-import queries from '@/api'
+import { getRecommendations as fetchRecommendations, discoverMovies } from '@/api'
 import infiniteScroll from 'vue-infinite-scroll'
 import { mapActions } from 'vuex'
 
@@ -87,10 +83,10 @@ export default {
   },
   methods: {
     ...mapActions('snackbar', { setSnackbar: 'setText' }),
+    ...mapActions('loading', ['setLoaded']),
     refresh: function () {
       this.busy = true
-      queries
-        .discoverMovies(this.seenIds)
+      return discoverMovies(this.seenIds)
         .then(discoveredFilms => {
           // Check if we've exhausted the collection
           if (discoveredFilms.length === 0) {
@@ -111,8 +107,7 @@ export default {
     },
     getRecommendations: function () {
       this.busy = true
-      return queries
-        .getRecommendations()
+      return fetchRecommendations()
         .then(response => {
           this.recommendations = response
           this.busy = false
@@ -132,12 +127,16 @@ export default {
       return this.busy || this.done
     }
   },
-  created () {
+  async created () {
     // route watcher won't be called on initial load
     this.showingFilm = Boolean(this.filmId)
-    this.getRecommendations()
-      .then(() => this.refresh())
-      .catch(e => console.error(e))
+    try {
+      await this.getRecommendations()
+      await this.refresh()
+      await this.setLoaded('Discover')
+    } catch (e) {
+      console.error(e)
+    }
   }
 }
 </script>

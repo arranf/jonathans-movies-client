@@ -1,6 +1,6 @@
 <template>
   <div>
-    <transition>
+    <transition name="fade">
       <div v-if="showSearch" class="empty-state-container">
         <v-icon size="100px" class="mb-2">playlist_add</v-icon>
         <h1 class="display-1 mb-1">Add Films</h1>
@@ -56,10 +56,10 @@
 </template>
 
 <script>
-import tmdbApi from '@/api/tmdb'
+import { getMovieData, searchForMovie } from '@/api/tmdb'
 import constants from '@/constants'
 import { mapActions, mapState } from 'vuex'
-import utils from '@/utils'
+import { getYearFromTmdbReleaseDate, getTmdbBackdropImage } from '@/utils'
 
 import MovieBg from '@/components/common/MovieBg'
 
@@ -83,12 +83,13 @@ export default {
   },
   methods: {
     ...mapActions('films', ['create', 'find']),
-    ...mapActions('collection', { getcurrentCollection: 'getCurrent' }),
+    ...mapActions('loading', ['setLoading', 'setLoaded']),
+    ...mapActions('collection', { getCurrentCollection: 'getCurrent' }),
     ...mapActions('snackbar', { setSnackbarText: 'setText' }),
     getFilms: function (searchTerm) {
       if (searchTerm.trim()) {
         this.loading = true
-        tmdbApi.searchForMovie(searchTerm).then(response => {
+        searchForMovie(searchTerm).then(response => {
           if (response) {
             this.suggestions = response.results.slice(0, 5)
           } else {
@@ -115,7 +116,7 @@ export default {
 
       this.selectedFilm = film.name
       Promise.all([
-        tmdbApi.getMovieData(film.tmdb_id),
+        getMovieData(film.tmdb_id),
         this.find({ query: { tmdb_id: film.tmdb_id, ignoreCollectionLimits: true } })
       ])
         .then(responses => {
@@ -152,7 +153,7 @@ export default {
         this.currentFilmResponse.owned_by.push(this.currentCollection)
         this.currentFilmResponse.patch()
           .then(() => {
-            this.setSnackbarText(`Successfully added ${this.film.name} to ${this.currentCollection}'s collection`)
+            this.setSnackbarText(`Added ${this.film.name} to ${this.currentCollection}'s collection`)
             this.selectedFilm = ''
             this.film = null
             this.showSearch = true
@@ -179,7 +180,7 @@ export default {
       }
     },
     getYear (releaseDate) {
-      return `(${utils.getYearFromTmdbReleaseDate(releaseDate)})`
+      return `(${getYearFromTmdbReleaseDate(releaseDate)})`
     },
     closePreview () {
       this.showSearch = true
@@ -196,7 +197,7 @@ export default {
     ...mapState('collection', { currentCollection: 'current' }),
     getBackdropImage () {
       if (this.film) {
-        return utils.getTmdbBackdropImage(this.film.backdrop_path)
+        return getTmdbBackdropImage(this.film.backdrop_path)
       }
       return ''
     },
@@ -217,8 +218,18 @@ export default {
       }
     }
   },
-  created () {
-    this.getcurrentCollection()
+  async created () {
+    await this.getCurrentCollection()
+    await this.setLoaded('Add')
   }
 }
 </script>
+
+<style>
+.fade-enter-active{
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+</style>

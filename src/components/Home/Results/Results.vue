@@ -16,9 +16,9 @@
 
 <script>
 import BarChart from './BarChart'
-import { mapGetters, mapState } from 'vuex'
-import utils from '@/utils'
-import queries from '@/api'
+import { mapGetters, mapState, mapActions } from 'vuex'
+import { getUniqueColors } from '@/utils'
+import { getCurrentPoll, getVotesForMostRecentPoll } from '@/api'
 
 export default {
   name: 'Results',
@@ -31,6 +31,9 @@ export default {
       emptyStateAllowed: false
     }
   },
+  methods: {
+    ...mapActions('loading', ['setLoading', 'setLoaded'])
+  },
   computed: {
     ...mapGetters('vote', ['getGraphData', 'areVotesForPoll']),
     ...mapGetters('poll', ['getMostRecentPoll']),
@@ -38,27 +41,24 @@ export default {
     results () {
       return this.getGraphData(this.getMostRecentPoll)
     },
-    areVotes: function () {
+    areVotes () {
       if (this.getMostRecentPoll) {
         return this.areVotesForPoll(this.getMostRecentPoll)
       }
       return false
     }
   },
-  mounted () {
-    queries
-      .getCurrentPoll()
-      .then(() => queries.getVotesForMostRecentPoll(this.getMostRecentPoll))
-      .then(response => {
-        this.backgroundColors = utils.getUniqueColors(
-          this.getMostRecentPoll.options.length,
-          '500'
-        )
-      })
-      .then(a => {
-        this.emptyStateAllowed = true
-      })
-      .catch(error => console.error(error))
+  async mounted () {
+    try {
+      await this.setLoading('Home') // this is required because 'Home' has two possible components that load data
+      await getCurrentPoll()
+      await getVotesForMostRecentPoll(this.getMostRecentPoll)
+      this.backgroundColors = getUniqueColors(this.getMostRecentPoll.options.length, '500')
+      this.emptyStateAllowed = true
+      this.setLoaded('Home')
+    } catch (error) {
+      console.error(error)
+    }
   }
 }
 </script>

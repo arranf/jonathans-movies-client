@@ -12,6 +12,7 @@ import pollGetters from './poll/getters'
 import time from '@/store/time'
 import snackbar from '@/store/snackbar'
 import collection from '@/store/collection'
+import loading from '@/store/loading'
 
 const { service, auth, FeathersVuex } = feathersVuex(feathersClient, {
   idField: '_id'
@@ -34,7 +35,13 @@ let plugins = [
   }),
   service('vote', { getters: voteGetters }),
   service('users'),
-  service('films'),
+  service('films', {
+    instanceDefaults: {
+      get imdbLink () {
+        return this.imdb_id ? `https://www.imdb.com/title/${this.imdb_id}` : ''
+      }
+    }
+  }),
   service('users-online', { getters: usersOnlineGetters }),
   auth({ userService: 'users' })
 ]
@@ -43,7 +50,8 @@ const store = new Vuex.Store({
   modules: {
     time,
     snackbar,
-    collection
+    collection,
+    loading
   },
   plugins: [...plugins]
 })

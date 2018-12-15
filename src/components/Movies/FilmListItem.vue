@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import queries from '@/api'
-import utils from '@/utils'
+import { addNomination } from '@/api'
+import { getYearFromTmdbReleaseDate } from '@/utils'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -27,8 +27,7 @@ export default {
       this.$router.push({ name: 'Movies', params: { filmId: this.film._id } })
     },
     addNomination: function () {
-      queries
-        .addNomination(this.film)
+      addNomination(this.film)
         .then(() => {
           this.hideModal()
           if (!this.hasNominationsRemaining) {
@@ -42,7 +41,7 @@ export default {
     ...mapGetters('option', ['hasNominationsRemaining']),
     getFilmYear: function () {
       if (this.film && this.film.release_date) {
-        return utils.getYearFromTmdbReleaseDate(this.film.release_date)
+        return getYearFromTmdbReleaseDate(this.film.release_date)
       }
       return ''
     },

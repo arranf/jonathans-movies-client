@@ -29,62 +29,67 @@ const shuffle = function (a) {
   }
 }
 
-const functions = {
-  humanizeTimeToNowPrecise: function (dateTimeEpochms) {
-    const time = store.getters['time/getNow']
-    return shortHumanizer(dateTimeEpochms - time)
-  },
-  humanizeTimeToNowImprecise: function (dateTimeEpochms) {
-    const time = store.getters['time/getNow']
-    return humanizeDuration(dateTimeEpochms - time, {
-      units: ['mo', 'w', 'd', 'h', 'm'],
-      largest: 1,
-      round: true
-    })
-  },
-  selectRandom: function (array) {
-    return array[Math.floor(Math.random() * array.length)]
-  },
-  getUniqueColors: function (count, colorRange = '800') {
-    let array = JSON.parse(JSON.stringify(constants.colors[colorRange]))
-
-    while (count > array.length) {
-      array = array.concat(
-        JSON.parse(JSON.stringify(constants.colors[colorRange]))
-      )
-    }
-    shuffle(array)
-    if (count < array.length) {
-      array = array.slice(0, count)
-    }
-    return array
-  },
-  getTmdbBackdropImage: function (slug) {
-    return `https://image.tmdb.org/t/p/w1280${slug}`
-  },
-  getTmdbBackdropSrcSet: function (slug) {
-    if (!slug) {
-      throw Error('Slug not valid')
-    }
-    return `https://image.tmdb.org/t/p/w780${slug} 780w,https://image.tmdb.org/t/p/w1280${slug} 1280w`
-  },
-  getTmdbPosterImage: function (slug) {
-    if (!slug) {
-      throw Error('Slug not valid')
-    }
-    return `https://image.tmdb.org/t/p/w342/${slug}`
-  },
-  getTmdbPosterSrcSet: function (slug) {
-    if (!slug) {
-      throw Error('Slug not valid')
-    }
-    return `https://image.tmdb.org/t/p/w154${slug} 154w,https://image.tmdb.org/t/p/w185${slug} 185w,https://image.tmdb.org/t/p/w342${slug} 342w,https://image.tmdb.org/t/p/w500${slug} 500w`
-  },
-  getYearFromTmdbReleaseDate: function (releaseDate) {
-    if (!releaseDate) {
-      return ''
-    }
-    return new Date(releaseDate).getFullYear()
-  }
+export const humanizeTimeToNowPrecise = (dateTimeEpochms) => {
+  const time = store.getters['time/getNow']
+  return shortHumanizer(dateTimeEpochms - time)
 }
-export default functions
+
+export const humanizeTimeToNowImprecise = (dateTimeEpochms) => {
+  const time = store.getters['time/getNow']
+  return humanizeDuration(dateTimeEpochms - time, {
+    units: ['mo', 'w', 'd', 'h', 'm'],
+    largest: 1,
+    round: true
+  })
+}
+
+export const selectRandom = (array) => {
+  return array[Math.floor(Math.random() * array.length)]
+}
+
+export const getUniqueColors = (count, colorRange = '800') => {
+  let array = JSON.parse(JSON.stringify(constants.colors[colorRange]))
+
+  while (count > array.length) {
+    array = array.concat(
+      JSON.parse(JSON.stringify(constants.colors[colorRange]))
+    )
+  }
+  shuffle(array)
+  if (count < array.length) {
+    array = array.slice(0, count)
+  }
+  return array
+}
+
+export const getTmdbBackdropImage = (slug) => {
+  return `https://image.tmdb.org/t/p/w1280${slug}`
+}
+
+export const getTmdbBackdropSrcSet = (slug) => {
+  if (!slug) {
+    throw Error('Slug not valid')
+  }
+  return `https://image.tmdb.org/t/p/w780${slug} 780w,https://image.tmdb.org/t/p/w1280${slug} 1280w`
+}
+
+export const getTmdbPosterImage = (slug) => {
+  if (!slug) {
+    throw Error('Slug not valid')
+  }
+  return `https://image.tmdb.org/t/p/w342/${slug}`
+}
+
+export const getTmdbPosterSrcSet = (slug) => {
+  if (!slug) {
+    throw Error('Slug not valid')
+  }
+  return `https://image.tmdb.org/t/p/w154${slug} 154w,https://image.tmdb.org/t/p/w185${slug} 185w,https://image.tmdb.org/t/p/w342${slug} 342w,https://image.tmdb.org/t/p/w500${slug} 500w`
+}
+
+export const getYearFromTmdbReleaseDate = (releaseDate) => {
+  if (!releaseDate) {
+    return ''
+  }
+  return new Date(releaseDate).getFullYear()
+}

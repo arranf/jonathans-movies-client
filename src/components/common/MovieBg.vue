@@ -8,7 +8,7 @@
 <script>
 // eslint-disable-next-line
 import lazySizes from 'lazysizes'
-import utils from '@/utils'
+import { getTmdbBackdropImage, getTmdbBackdropSrcSet } from '@/utils'
 
 export default {
   name: 'MovieBG',
@@ -42,10 +42,10 @@ export default {
       })`
     },
     src: function () {
-      return utils.getTmdbBackdropImage(this.film.backdrop_path)
+      return getTmdbBackdropImage(this.film.backdrop_path)
     },
     srcSet: function () {
-      return utils.getTmdbBackdropSrcSet(this.film.backdrop_path)
+      return getTmdbBackdropSrcSet(this.film.backdrop_path)
     }
   }
 }

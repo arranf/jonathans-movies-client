@@ -22,7 +22,7 @@
 
 <script>
 import constants from '@/constants'
-import utils from '@/utils'
+import { humanizeTimeToNowImprecise, getTmdbBackdropImage, getTmdbBackdropSrcSet, selectRandom } from '@/utils'
 import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default {
@@ -50,7 +50,7 @@ export default {
     },
     lastWatched: function () {
       if (this.film && this.film.lastWatched) {
-        return utils.humanizeTimeToNowImprecise(this.film.lastWatched) + ' ago'
+        return humanizeTimeToNowImprecise(this.film.lastWatched) + ' ago'
       }
       return null
     },
@@ -61,13 +61,13 @@ export default {
         }`
       }
       if (this.film && this.film.backdrop_path) {
-        return utils.getTmdbBackdropImage(this.film.backdrop_path)
+        return getTmdbBackdropImage(this.film.backdrop_path)
       }
       return ''
     },
     getBackDropSrcSet: function () {
       if (this.film.backdrop_path) {
-        return utils.getTmdbBackdropSrcSet(this.film.backdrop_path)
+        return getTmdbBackdropSrcSet(this.film.backdrop_path)
       }
       return ''
     },
@@ -119,7 +119,7 @@ export default {
       )
     },
     getColor: function () {
-      return utils.selectRandom(constants.colors['800'])
+      return selectRandom(constants.colors['800'])
     },
     showModal: function () {
       if (this.film && this.showInfo) {

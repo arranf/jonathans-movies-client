@@ -40,8 +40,8 @@
 </template>
 
 <script>
-import queries from '@/api'
-import utils from '@/utils'
+import { getFilmSuggestions } from '@/api'
+import { getYearFromTmdbReleaseDate } from '@/utils'
 
 export default {
   data () {
@@ -69,7 +69,7 @@ export default {
   methods: {
     getSuggestions: function (searchTerm) {
       this.loading = true
-      queries.getFilmSuggestions(searchTerm).then(response => {
+      getFilmSuggestions(searchTerm).then(response => {
         this.loading = false
         if (response && response.data && response.data.length) {
           this.suggestions = response.data
@@ -100,7 +100,7 @@ export default {
       this.$emit('optionsChange', reducedOptions)
     },
     getYear: function (releaseDate) {
-      return `(${utils.getYearFromTmdbReleaseDate(releaseDate)})`
+      return `(${getYearFromTmdbReleaseDate(releaseDate)})`
     }
   }
 }

@@ -1,24 +1,25 @@
 <template>
   <div class="d-flex">
-    <v-progress-circular class="align-self-center" indeterminate color="primary" />
+    <loading />
   </div>
 </template>
 
 <script>
 import feathersClient from '@/api/feathers-client'
 import authClient from '@/api/auth-client'
+import Loading from '@/components/skeleton/Loading'
 import { mapActions } from 'vuex'
 import router from '@/router'
 
 export default {
   name: 'Verify',
-  data () {
-    return {}
-  },
   props: {
     token: {
       type: String
     }
+  },
+  components: {
+    Loading
   },
   methods: {
     ...mapActions('auth', ['authenticate', 'logout']),

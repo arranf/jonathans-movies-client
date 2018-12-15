@@ -36,14 +36,10 @@ import router from '@/router'
 
 export default {
   name: 'SwitchCollection',
-  // data () {
-  //   return {
-  //     items: ['Jonathan', 'Arran'],
-  //   }
-  // },
   methods: {
     ...mapActions('snackbar', { setSnackbarText: 'setText' }),
     ...mapActions('collection', { getCurrentCollection: 'getCurrent', changeCollection: 'changeCurrent' }),
+    ...mapActions('loading', ['setLoaded']),
     save () {
       const switchingTo = this.alternativeCollection.slice(0, this.alternativeCollection.length)
       this.changeCollection()
@@ -57,8 +53,9 @@ export default {
       return this.currentCollection === 'Jonathan' ? 'Arran' : 'Jonathan'
     }
   },
-  created () {
-    this.getCurrentCollection()
+  async created () {
+    await this.getCurrentCollection()
+    await this.setLoaded('Collection')
   }
 }
 </script>

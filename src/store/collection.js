@@ -12,7 +12,6 @@ const actions = {
       })
   },
   changeCurrent ({ commit, rootGetters, dispatch }, payload) {
-    // TODO: Check there is no current poll!
     const activePoll = rootGetters['poll/getActivePoll']
     if (activePoll) {
       dispatch('snackbar/setText', {
