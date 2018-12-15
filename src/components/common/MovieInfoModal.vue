@@ -118,16 +118,18 @@ export default {
         this.hasNominationsRemaining &&
         !this.isOptionForCurrentPoll(this.film_id)
       ) {
+        // Copied to prevent a weird race condition
+        const amountRemaining = JSON.parse(JSON.stringify(this.nominationsRemaining))
         addNomination(this.film)
           .then(() => {
             this.$emit('update:show', false)
-            if (!this.hasNominationsRemaining) {
+            if (amountRemaining === 1) {
               this.$router.push('/')
             } else {
               this.setSnackbar(
-                `Nominated. You have ${this.nominationsRemaining} nomination${
-                  this.nominationsRemaining > 1 ? 's' : ''
-                }  left`
+                `Nominated. You have ${amountRemaining - 1} nomination${
+                  this.nominationsRemaining === 1 ? '' : 's'
+                } left`
               )
             }
           })

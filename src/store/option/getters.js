@@ -35,7 +35,8 @@ export default {
     const activePoll = rootGetters['poll/getActivePoll']
     const userNominations = getters.getUserNominations
     if (activePoll && userNominations) {
-      return activePoll.numberOfNominations - (userNominations.length || 0)
+      const total = activePoll.numberOfNominations - (userNominations.length || 0)
+      return total < 0 ? 0 : total
     }
     return 0
   },

@@ -103,7 +103,7 @@ export default {
           .then(
             this.setSnackbar(
               `Voted! You have ${this.remainingVotes - 1} vote${
-                this.remainingVotes > 1 ? 's' : ''
+                this.remainingVotes === 1 ? '' : 's'
               } remaining`
             )
           )
