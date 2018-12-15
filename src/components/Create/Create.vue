@@ -101,7 +101,8 @@ import {
   required,
   requiredIf,
   between,
-  minLength
+  minLength,
+  minValue
 } from 'vuelidate/lib/validators'
 import MovieSuggest from './MovieSuggest'
 import router from '@/router'
@@ -206,11 +207,9 @@ export default {
       if (!votes.$dirty) return errors
       !votes.required &&
         errors.push('A number of votes for voting is required.')
-      !votes.between &&
+      !votes.min &&
         errors.push(
-          `The number of votes each person receives must be between ${
-            votes.$params.between.min
-          } and ${votes.$params.between.max}`
+          `The number of votes each person receives must be at least ${votes.$params.min.min}`
         )
       return errors
     },
@@ -234,11 +233,9 @@ export default {
       if (!nominations.$dirty) return errors
       !nominations.required &&
         errors.push('A number of nominations for voting is required.')
-      !nominations.between &&
+      !nominations.min &&
         errors.push(
-          `The number of nominations must be greater than ${
-            nominations.$params.between.min
-          } and less than or equal to the number of votes.`
+          `The number of nominations must be at least ${nominations.$params.min.min}`
         )
       return errors
     },
@@ -263,7 +260,7 @@ export default {
       },
       votes: {
         required,
-        between: between(1, 4)
+        min: this.nominations ? minValue(this.nominations) : minValue(1)
       },
       nominationsMinutes: {
         required: requiredIf(function () {
@@ -275,7 +272,7 @@ export default {
         required: requiredIf(function () {
           return this.haveNominations
         }),
-        between: this.votes ? between(1, this.votes) : between(1, 4)
+        min: minValue(1)
       },
       options: {
         required: requiredIf(function () {
