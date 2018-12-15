@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <!-- TODO: Replace with MovieBG (?) -->
-    <div v-if="option && film && film.backdrop_path" class="card__media" style="height: 200px;">
+    <div v-if="option && film && film.backdrop_path" class="card__media">
         <img class="img-fluid lazyload" :src="backdropImage" :data-srcset="getBackDropSrcSet" :alt="option.name + ' image'">
         <div class="card__media__content"></div>
     </div>
