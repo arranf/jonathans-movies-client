@@ -1,13 +1,18 @@
 <template>
   <div class="d-flex">
-    <v-progress-circular class="align-self-center" indeterminate color="primary" />
+    <loading />
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import Loading from '@/components/skeleton/Loading'
+
 export default {
   name: 'Logout',
+  components: {
+    Loading
+  },
   methods: {
     ...mapActions('auth', ['logout']),
     ...mapActions('snackbar', { setSnackbar: 'setText' }),
