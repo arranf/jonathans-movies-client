@@ -83,6 +83,12 @@ export default {
       this.options = []
       this.selectedFilm = null
       this.$router.push({ name: this.$route.name, params: { filmId: id } })
+    },
+    stopNominations () {
+      stopNominations()
+    },
+    stopPoll () {
+      stopPoll()
     }
   },
   computed: {
