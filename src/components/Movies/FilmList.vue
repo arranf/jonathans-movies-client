@@ -31,6 +31,9 @@
             <v-divider v-if="index + 1 < allFilms.length" :key="index"></v-divider>
           </template>
         </v-list>
+        <div class="text-center">
+          <quote v-if="reachedEnd" />
+        </div>
         <v-progress-linear v-show="busy" :indeterminate="true" />
       </div>
 
@@ -47,12 +50,14 @@ import debounce from 'lodash/debounce'
 import constants from '@/constants'
 import scrollListener from '@/scroll-listener'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
+import Quote from '@/components/Discover/Quote'
 
 export default {
   name: 'FilmList',
   components: {
     FilmListItem,
-    MovieInfoModal
+    MovieInfoModal,
+    Quote
   },
   data: function () {
     return {
