@@ -34,10 +34,10 @@ const loginBeforeEnter = (to, from, next) => {
           .then(() => initStore())
       })
       .then(() => {
-        if (from) {
+        if (from && from.path !== '/') {
           next(false)
         } else {
-          next()
+          next('/home')
         }
       })
       .catch(function (error) {
