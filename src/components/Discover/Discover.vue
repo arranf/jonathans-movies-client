@@ -15,8 +15,6 @@
       </v-btn>
     </transition>
 
-    <div v-infinite-scroll="refresh" infinite-scroll-disabled="disabled" :infinite-scroll-immediate-check="true" infinite-scroll-distance="60">
-
         <div v-if="recommendations && recommendations.length">
             <h3 class="separator">Recommended For You</h3>
             <v-container fluid grid-list-xs>
@@ -42,7 +40,6 @@
           </v-container>
         </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -51,6 +48,8 @@ import MovieInfoModal from '@/components/common/MovieInfoModal'
 import Quote from './Quote'
 import { getRecommendations as fetchRecommendations, discoverMovies } from '@/api'
 import infiniteScroll from 'vue-infinite-scroll'
+
+import scrollListener from '@/scroll-listener'
 import { mapActions } from 'vuex'
 
 export default {
@@ -85,6 +84,9 @@ export default {
     ...mapActions('snackbar', { setSnackbar: 'setText' }),
     ...mapActions('loading', ['setLoaded']),
     refresh: function () {
+      if (this.done) {
+        return
+      }
       this.busy = true
       return discoverMovies(this.seenIds)
         .then(discoveredFilms => {
@@ -127,14 +129,21 @@ export default {
       return this.busy || this.done
     }
   },
+  beforeDestroy () {
+    document.removeEventListener('scroll', this.listener)
+  },
   async created () {
+    const nextPage = this.refresh
+    this.listener = scrollListener(nextPage)
     // route watcher won't be called on initial load
     this.showingFilm = Boolean(this.filmId)
     try {
       await this.getRecommendations()
       await this.refresh()
+      document.addEventListener('scroll', this.listener)
       await this.setLoaded('Discover')
     } catch (e) {
+      document.removeEventListener('scroll', this.listener)
       console.error(e)
     }
   }

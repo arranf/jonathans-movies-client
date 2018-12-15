@@ -6,7 +6,6 @@ function listenerSetup (callback) {
     // >= prevents iOS overscroll bugs: https://stackoverflow.com/questions/11172917/jquery-detect-bottom-of-page-on-mobile-safari-ios
     if (getScrollXY()[1] + window.innerHeight + MARGIN >= getDocHeight()) {
       callback()
-      console.debug('callback')
     }
   }
 }
