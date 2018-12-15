@@ -101,6 +101,7 @@ export default {
     ...mapActions('films', { queryFilms: 'find' }),
     ...mapMutations('films', { clearFilms: 'clearAll' }),
     ...mapActions('snackbar', { setSnackbar: 'setText' }),
+    ...mapActions('loading', ['setLoaded']),
     reset: function () {
       this.page = 0
       this.genres = ''
@@ -150,7 +151,7 @@ export default {
   beforeDestroy () {
     document.removeEventListener('scroll', this.listener)
   },
-  created () {
+  async created () {
     // $route watcher will not be called when componenet loaded
     this.showingFilm = Boolean(this.filmId)
 
@@ -159,10 +160,14 @@ export default {
     this.listener = scrollListener(nextPage)
 
     this.clearFilms()
-    this.getFilms()
-      .then(() => document.addEventListener('scroll', this.listener))
-      // TODO: Add retry
-      .catch(e => console.error(e))
+    try {
+      await this.getFilms()
+      document.addEventListener('scroll', this.listener)
+      await this.setLoaded('Movies')
+    } catch (e) {
+      console.error(e)
+      document.removeEventListener('scroll', this.listener)
+    }
   }
 }
 </script>

@@ -33,8 +33,9 @@
 </template>
 
 <script>
-import queries from '@/api'
-import utils from '@/utils'
+// eslint-disable-next-line no-unused-vars
+import { getFilmSuggestions, stopPoll, stopNominations } from '@/api'
+import { getYearFromTmdbReleaseDate } from '@/utils'
 import { mapGetters, mapState } from 'vuex'
 
 export default {
@@ -60,8 +61,7 @@ export default {
   methods: {
     getMovies (searchTerm) {
       this.loading = true
-      queries
-        .getFilmSuggestions(searchTerm)
+      getFilmSuggestions(searchTerm)
         .then(response => {
           if (searchTerm.trim() === '') {
             this.options = []
@@ -75,7 +75,7 @@ export default {
         .catch(e => console.error(e))
     },
     getYear: function (releaseDate) {
-      return `(${utils.getYearFromTmdbReleaseDate(releaseDate)})`
+      return `(${getYearFromTmdbReleaseDate(releaseDate)})`
     },
     navigateToMovie () {
       const id = this.selectedFilm._id
@@ -83,12 +83,6 @@ export default {
       this.options = []
       this.selectedFilm = null
       this.$router.push({ name: this.$route.name, params: { filmId: id } })
-    },
-    stopPoll () {
-      queries.stopPoll()
-    },
-    stopNominations () {
-      queries.stopNominations()
     }
   },
   computed: {

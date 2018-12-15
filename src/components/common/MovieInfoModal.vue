@@ -1,12 +1,12 @@
 <template>
 <v-layout row justify-center>
-  <v-dialog  v-model="show" lazy fullscreen transition="dialog-bottom-transition" :overlay="false">
+  <v-dialog v-model="show" lazy fullscreen transition="dialog-bottom-transition" :overlay="false">
     <v-card v-if="film"  >
       <movie-bg :height="30" :film="film" />
       <v-card-title primary-title>
         <div>
           <h1 class="headline mb-0">{{film.name}} <small>({{getFilmYear}})</small></h1>
-          <a v-if="getImdbLink" :href="getImdbLink" target="_blank" style="float: right;">
+          <a v-if="film.imdbLink" :href="film.imdbLink" target="_blank" style="float: right;">
             <svg id="imdb">
               <use xlink:href="/fa-brands.svg#imdb"></use>
             </svg>
@@ -55,20 +55,23 @@
         <v-btn flat @click="closeModal()">Close</v-btn>
         </v-card-actions>
     </v-card>
+    <loading v-else />
    </v-dialog>
   </v-layout>
 </template>
 
 <script>
-import queries from '@/api'
-import utils from '@/utils'
+import { addNomination } from '@/api'
+import { getYearFromTmdbReleaseDate } from '@/utils'
 import { mapGetters, mapActions } from 'vuex'
 import MovieBg from './MovieBg'
+import Loading from '@/components/skeleton/Loading'
 
 export default {
   name: 'MovieInfoModal',
   components: {
-    MovieBg
+    MovieBg,
+    Loading
   },
   props: {
     filmId: { type: String },
@@ -115,8 +118,7 @@ export default {
         this.hasNominationsRemaining &&
         !this.isOptionForCurrentPoll(this.film_id)
       ) {
-        queries
-          .addNomination(this.film)
+        addNomination(this.film)
           .then(() => {
             this.$emit('update:show', false)
             if (!this.hasNominationsRemaining) {
@@ -146,15 +148,9 @@ export default {
     ]),
     ...mapGetters('poll', ['isCurrentPollInNomination']),
     ...mapGetters('films', { getFilm: 'get' }),
-    // TODO: Make utils
-    getImdbLink: function () {
-      if (this.film && this.film.imdb_id) {
-        return `https://www.imdb.com/title/${this.film.imdb_id}`
-      }
-    },
     getFilmYear: function () {
       if (this.film && this.film.release_date) {
-        return utils.getYearFromTmdbReleaseDate(this.film.release_date)
+        return getYearFromTmdbReleaseDate(this.film.release_date)
       }
     },
     nominateButtonText () {

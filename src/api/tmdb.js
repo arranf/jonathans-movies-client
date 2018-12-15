@@ -1,4 +1,5 @@
-const baseURL = 'https://api.themoviedb.org/3/'
+const BASE_URL = 'https://api.themoviedb.org/3/'
+const API_KEY = 'ace0d63079205f9ef9e1054736419dd3'
 
 function makeRequest (opts) {
   return new Promise(function (resolve, reject) {
@@ -60,23 +61,18 @@ function makeRequest (opts) {
   })
 }
 
-const API_KEY = 'ace0d63079205f9ef9e1054736419dd3'
-
-const functions = {
-  getMovieData: movieId => {
-    return makeRequest({
-      method: 'GET',
-      url: baseURL + 'movie/' + movieId,
-      params: { api_key: API_KEY }
-    })
-  },
-  searchForMovie: movieName => {
-    return makeRequest({
-      method: 'GET',
-      url: baseURL + 'search/movie',
-      params: { api_key: API_KEY, query: movieName }
-    })
-  }
+export const getMovieData = (movieId) => {
+  return makeRequest({
+    method: 'GET',
+    url: BASE_URL + 'movie/' + movieId,
+    params: { api_key: API_KEY }
+  })
 }
 
-export default functions
+export const searchForMovie = (movieName) => {
+  return makeRequest({
+    method: 'GET',
+    url: BASE_URL + 'search/movie',
+    params: { api_key: API_KEY, query: movieName }
+  })
+}

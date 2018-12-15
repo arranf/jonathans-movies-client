@@ -1,6 +1,6 @@
 <template>
   <div>
-    <transition>
+    <transition name="fade">
       <div v-if="showSearch" class="empty-state-container">
         <v-icon size="100px" class="mb-2">playlist_add</v-icon>
         <h1 class="display-1 mb-1">Add Films</h1>
@@ -47,7 +47,7 @@
             </v-card-text>
 
           <v-card-actions>
-            <v-btn @click="addFilm" :disabled="isDuplicate" color="primary">{{isDuplicate ? 'Already in Collection' : 'Add'}}</v-btn>
+            <v-btn @click="addFilm" :disabled="isDuplicateForCurrent" color="primary">{{addButtonLabel}}</v-btn>
             <v-btn flat @click="closePreview" >Cancel</v-btn>
           </v-card-actions>
         </v-card>
@@ -56,10 +56,10 @@
 </template>
 
 <script>
-import tmdbApi from '@/api/tmdb'
+import { getMovieData, searchForMovie } from '@/api/tmdb'
 import constants from '@/constants'
-import { mapActions } from 'vuex'
-import utils from '@/utils'
+import { mapActions, mapState } from 'vuex'
+import { getYearFromTmdbReleaseDate, getTmdbBackdropImage } from '@/utils'
 
 import MovieBg from '@/components/common/MovieBg'
 
@@ -71,21 +71,25 @@ export default {
   data () {
     return {
       showSearch: true,
-      isDuplicate: false,
+      isDuplicateForCurrent: false,
+      isDuplicateForOther: false,
       selectedFilm: null,
       searchQuery: null,
       suggestions: [],
+      currentFilmResponse: {},
       film: null,
       loading: false
     }
   },
   methods: {
     ...mapActions('films', ['create', 'find']),
+    ...mapActions('loading', ['setLoading', 'setLoaded']),
+    ...mapActions('collection', { getCurrentCollection: 'getCurrent' }),
     ...mapActions('snackbar', { setSnackbarText: 'setText' }),
     getFilms: function (searchTerm) {
       if (searchTerm.trim()) {
         this.loading = true
-        tmdbApi.searchForMovie(searchTerm).then(response => {
+        searchForMovie(searchTerm).then(response => {
           if (response) {
             this.suggestions = response.results.slice(0, 5)
           } else {
@@ -108,10 +112,12 @@ export default {
         )
       }
 
+      this.currentFilmResponse = {}
+
       this.selectedFilm = film.name
       Promise.all([
-        tmdbApi.getMovieData(film.tmdb_id),
-        this.find({ query: { tmdb_id: film.tmdb_id } })
+        getMovieData(film.tmdb_id),
+        this.find({ query: { tmdb_id: film.tmdb_id, ignoreCollectionLimits: true } })
       ])
         .then(responses => {
           const tmdbResponse = responses[0]
@@ -125,8 +131,15 @@ export default {
           this.searchQuery = ''
           this.suggestions = []
           this.film = film
-          this.isDuplicate = apiResponse.total > 0
+          this.isDuplicateForOther = apiResponse.total > 0
+          this.isDuplicateForCurrent = apiResponse.total > 0 && apiResponse.data.every(a => a.owned_by.indexOf(this.currentCollection) > -1)
           this.showSearch = false
+          return apiResponse
+        })
+        .then(apiResponse => {
+          if (apiResponse.data.length === 1) {
+            this.currentFilmResponse = apiResponse.data[0]
+          }
         })
         .catch(e => {
           console.error(e)
@@ -134,12 +147,28 @@ export default {
         })
     },
     addFilm () {
-      if (!this.isDuplicate) {
+      if (this.isDuplicateForCurrent) {
+
+      } else if (this.isDuplicateForOther) {
+        this.currentFilmResponse.owned_by.push(this.currentCollection)
+        this.currentFilmResponse.patch()
+          .then(() => {
+            this.setSnackbarText(`Added ${this.film.name} to ${this.currentCollection}'s collection`)
+            this.selectedFilm = ''
+            this.film = null
+            this.showSearch = true
+          })
+          .catch(e => {
+            console.error(e)
+            this.setSnackbarText('Error adding film')
+          })
+      } else {
         const { Film } = this.$FeathersVuex
+        this.film.owned_by = [this.currentCollection]
         new Film(this.film)
           .create()
           .then(() => {
-            this.setSnackbarText(`Successfully added ${this.film.name}`)
+            this.setSnackbarText(`Successfully added ${this.film.name} to ${this.currentCollection}'s collection`)
             this.selectedFilm = ''
             this.film = null
             this.showSearch = true
@@ -151,7 +180,7 @@ export default {
       }
     },
     getYear (releaseDate) {
-      return `(${utils.getYearFromTmdbReleaseDate(releaseDate)})`
+      return `(${getYearFromTmdbReleaseDate(releaseDate)})`
     },
     closePreview () {
       this.showSearch = true
@@ -165,9 +194,10 @@ export default {
     }
   },
   computed: {
+    ...mapState('collection', { currentCollection: 'current' }),
     getBackdropImage () {
       if (this.film) {
-        return utils.getTmdbBackdropImage(this.film.backdrop_path)
+        return getTmdbBackdropImage(this.film.backdrop_path)
       }
       return ''
     },
@@ -179,7 +209,27 @@ export default {
         this.film.overview.substring(0, 350) +
         (this.film.overview.length > 350 ? '...' : '')
       )
+    },
+    addButtonLabel () {
+      if (this.isDuplicateForCurrent) {
+        return `Already in ${this.currentCollection}'s Collection`
+      } else {
+        return `Add to ${this.currentCollection}'s Collection`
+      }
     }
+  },
+  async created () {
+    await this.getCurrentCollection()
+    await this.setLoaded('Add')
   }
 }
 </script>
+
+<style>
+.fade-enter-active{
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+</style>

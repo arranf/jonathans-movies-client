@@ -62,6 +62,15 @@
         </v-list-tile-content>
     </v-list-tile>
 
+    <v-list-tile v-if="user && user.isAdmin" to="/collection">
+      <v-list-tile-action>
+          <v-icon>home</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>Switch Active Collection</v-list-tile-title>
+        </v-list-tile-content>
+    </v-list-tile>
+
     <!-- logout -->
     <v-list-tile v-if="user" to="/logout">
       <v-list-tile-action>

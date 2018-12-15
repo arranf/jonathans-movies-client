@@ -1,25 +1,30 @@
 <template>
   <v-autocomplete id="autocomplete"
-    @input="fillBox"
-    browser-autocomplete="off"
     autocomplete
+    @input="optionsChange"
+    browser-autocomplete="off"
+    :search-input.sync="searchQuery"
+    :loading="loading"
+    :items="suggestions"
+    return-object
     item-text="name"
     item-value="name"
-    return-object
+    multiple
+    v-model="selected"
     :placeholder="placeholder"
+    no-data-text="No movie found"
+    :hide-no-data="true"
+    :hide-selected="true"
+    :menu-props="{closeOnContentClick: true}"
+    :error-messages="errors"
     chips
     deletable-chips
-    no-data-text="No movie found"
-    :loading="loading"
-    multiple
     cache-items
-    :hide-selected="true"
-    :items="suggestions"
-    :error-messages="errors"
-    :search-input.sync="searchQuery"
-    v-model="selected">
+    :no-filter="true"
+    :autofocus="true"
+  >
     <template slot="item" slot-scope="data">
-      <div v-if="suggestions.length > 0">
+      <div>
         <v-list-tile-content>
           <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
           <v-list-tile-sub-title v-html="getYear(data.item.release_date)"></v-list-tile-sub-title>
@@ -35,8 +40,8 @@
 </template>
 
 <script>
-import queries from '@/api'
-import utils from '@/utils'
+import { getFilmSuggestions } from '@/api'
+import { getYearFromTmdbReleaseDate } from '@/utils'
 
 export default {
   data () {
@@ -57,20 +62,21 @@ export default {
         this.getSuggestions(newInput)
       } else {
         // This hides the empty element if the input is blank otherwise it appears an option
-        this.options = []
+        this.suggestions = []
       }
     }
   },
   methods: {
     getSuggestions: function (searchTerm) {
       this.loading = true
-      queries.getFilmSuggestions(searchTerm).then(response => {
+      getFilmSuggestions(searchTerm).then(response => {
         this.loading = false
         if (response && response.data && response.data.length) {
           this.suggestions = response.data
         } else {
           // This statement exists to make the no data text work as empty arrays fail to show it
-          this.suggestions = [{ name: '' }]
+          // this.suggestions = [{ name: '' }]
+          this.suggestions = []
         }
       })
     },
@@ -85,7 +91,7 @@ export default {
     //     this.fillBox()
     //   }
     // },
-    fillBox: function (event) {
+    optionsChange: function (event) {
       const reducedOptions = this.selected.map(f => {
         if (f) {
           return { name: f.name, film_id: f._id }
@@ -94,7 +100,7 @@ export default {
       this.$emit('optionsChange', reducedOptions)
     },
     getYear: function (releaseDate) {
-      return `(${utils.getYearFromTmdbReleaseDate(releaseDate)})`
+      return `(${getYearFromTmdbReleaseDate(releaseDate)})`
     }
   }
 }

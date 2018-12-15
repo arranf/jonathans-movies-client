@@ -1,9 +1,12 @@
+const MARGIN = 20
+
 function listenerSetup (callback) {
   // event is the scroll listener event
   return event => {
     // >= prevents iOS overscroll bugs: https://stackoverflow.com/questions/11172917/jquery-detect-bottom-of-page-on-mobile-safari-ios
-    if (getScrollXY()[1] + window.innerHeight >= getDocHeight()) {
+    if (getScrollXY()[1] + window.innerHeight + MARGIN >= getDocHeight()) {
       callback()
+      console.debug('callback')
     }
   }
 }
@@ -26,14 +29,13 @@ function getScrollXY () {
 }
 
 function getDocHeight () {
-  var D = document
   return Math.max(
-    D.body.scrollHeight,
-    D.documentElement.scrollHeight,
-    D.body.offsetHeight,
-    D.documentElement.offsetHeight,
-    D.body.clientHeight,
-    D.documentElement.clientHeight
+    document.body.scrollHeight,
+    document.documentElement.scrollHeight,
+    document.body.offsetHeight,
+    document.documentElement.offsetHeight,
+    document.body.clientHeight,
+    document.documentElement.clientHeight
   )
 }
 

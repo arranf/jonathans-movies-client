@@ -8,12 +8,12 @@
 
 <script>
 import quotes from './quotes'
-import utils from '@/utils'
+import { selectRandom } from '@/utils'
 
 export default {
   computed: {
     quote () {
-      return utils.selectRandom(quotes)
+      return selectRandom(quotes)
     }
   }
 }
