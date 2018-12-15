@@ -4,7 +4,7 @@ import store from '@/store' // used for transition notification
 
 let socket
 
-if (process.env.BRANCH && process.env.BRANCH === 'develop') {
+if (process.env.BRANCH && process.env.BRANCH.trim() === 'develop') {
   try {
     socket = io('https://staging-api.jonathansmovies.com', {
       transports: ['websocket']
