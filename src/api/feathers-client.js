@@ -3,7 +3,6 @@ import io from 'socket.io-client'
 import store from '@/store' // used for transition notification
 
 let socket
-console.log(JSON.stringify(process.env))
 if (process.env.BRANCH && process.env.BRANCH.trim() === 'develop') {
   try {
     socket = io('https://staging-api.jonathansmovies.com', {
