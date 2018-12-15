@@ -34,7 +34,7 @@ const loginBeforeEnter = (to, from, next) => {
           .then(() => initStore())
       })
       .then(() => {
-        if (from && from.path !== '/') {
+        if (from && from.path !== '/' && to && to.path !== '/') {
           next(false)
         } else {
           next('/home')
