@@ -1,4 +1,5 @@
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin // eslint-disable-line no-unused-vars
+const DefinePlugin = require('webpack').DefinePlugin
 // const Critters = require('critters-webpack-plugin')
 
 module.exports = {
@@ -11,7 +12,13 @@ module.exports = {
 
   },
   configureWebpack: config => {
-    let plugins = []
+    let plugins = [
+      new DefinePlugin({
+        'process.env': {
+          'BRANCH': JSON.stringify(process.env.BRANCH)
+        }
+      })
+    ]
 
     // if (process.env.NODE_ENV === 'production') {
     //   plugins.push(new Critters())
