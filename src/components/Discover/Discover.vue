@@ -49,6 +49,7 @@ import Quote from './Quote'
 import { getRecommendations as fetchRecommendations, discoverMovies } from '@/api'
 
 import scrollListener from '@/scroll-listener'
+import debounce from 'tiny-debounce'
 import { mapActions } from 'vuex'
 
 export default {
@@ -79,8 +80,8 @@ export default {
   methods: {
     ...mapActions('snackbar', { setSnackbar: 'setText' }),
     ...mapActions('loading', ['setLoaded']),
-    refresh: function () {
-      if (this.done) {
+    refresh: debounce(function () {
+      if (this.done || this.busy) {
         return
       }
       this.busy = true
@@ -102,7 +103,7 @@ export default {
           this.setSnackbar('Something went wrong. Try again.')
           this.busy = false
         })
-    },
+    }, 500),
     getRecommendations: function () {
       this.busy = true
       return fetchRecommendations()
