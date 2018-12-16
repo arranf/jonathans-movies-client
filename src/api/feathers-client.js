@@ -41,7 +41,7 @@ app.service('/option')
 app.service('/vote')
 app.service('/films')
 app.service('/time')
-app.service('/users-online')
+// app.service('/users-online')
 app.service('/recommendations')
 
 app.service('/poll').on('transition', data => {

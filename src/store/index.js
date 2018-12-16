@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 import feathersClient from '../api/feathers-client'
 import feathersVuex from 'feathers-vuex'
 
-import usersOnlineGetters from './users-online/getters'
+// import usersOnlineGetters from './users-online/getters'
 import voteGetters from './vote/getters'
 import optionGetters from './option/getters'
 import pollGetters from './poll/getters'
@@ -42,7 +42,7 @@ let plugins = [
       }
     }
   }),
-  service('users-online', { getters: usersOnlineGetters }),
+  // service('users-online', { getters: usersOnlineGetters }),
   auth({ userService: 'users' })
 ]
 
