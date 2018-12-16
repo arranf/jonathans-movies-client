@@ -18,6 +18,7 @@
             item-text="title"
             no-data-text="No Film Found"
             v-model="selectedFilm"
+            :no-filter="true"
           >
             <template slot="item" slot-scope="data">
               <div>
