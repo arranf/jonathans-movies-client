@@ -35,12 +35,14 @@ export default {
       option_id: key,
       votes: value
     }))
-    // If votesByOption does not contain an option add it with 0 votes
-    poll.options.forEach(option => {
-      if (!votesByOption.find(gv => gv.option_id === option._id)) {
-        votesByOption.push({ option_id: option._id, votes: [] })
-      }
-    })
+    if (poll.options) {
+      // If votesByOption does not contain an option add it with 0 votes
+      poll.options.forEach(option => {
+        if (!votesByOption.find(gv => gv.option_id === option._id)) {
+          votesByOption.push({ option_id: option._id, votes: [] })
+        }
+      })
+    }
     return votesByOption
   },
   /**
