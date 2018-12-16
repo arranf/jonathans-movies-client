@@ -47,7 +47,6 @@ import FilmPreview from '@/components/common/FilmPreview'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
 import Quote from './Quote'
 import { getRecommendations as fetchRecommendations, discoverMovies } from '@/api'
-import infiniteScroll from 'vue-infinite-scroll'
 
 import scrollListener from '@/scroll-listener'
 import { mapActions } from 'vuex'
@@ -63,9 +62,6 @@ export default {
       seenIds: [],
       done: false
     }
-  },
-  directives: {
-    infiniteScroll
   },
   components: {
     FilmPreview,

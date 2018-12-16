@@ -34,11 +34,8 @@ const loginBeforeEnter = (to, from, next) => {
           .then(() => initStore())
       })
       .then(() => {
-        if (from && from.path !== '/' && to && to.path !== '/') {
-          next(false)
-        } else {
-          next('/home')
-        }
+        // TODO: Find a way to make sure people can login and get sent to where they're coming from
+        next('/home')
       })
       .catch(function (error) {
         console.error(
