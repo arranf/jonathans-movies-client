@@ -33,7 +33,7 @@ export default {
     // groupedVotes = {_id1: [], _id2: []}
     const groupedVotes = groupBy(votes, 'option_id')
 
-    let votesByOption = Object.keys(groupedVotes).map(optionId => ({ optionId, votes: groupedVotes[optionId] }))
+    let votesByOption = Object.keys(groupedVotes).map(optionId => ({ option_id: optionId, votes: groupedVotes[optionId] }))
 
     if (poll.options) {
       // If votesByOption does not contain an option add it with 0 votes
