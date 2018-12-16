@@ -93,3 +93,8 @@ export const getYearFromTmdbReleaseDate = (releaseDate) => {
   }
   return new Date(releaseDate).getFullYear()
 }
+
+export const groupBy = (array, property) => {
+  // eslint-disable-next-line
+  return array.reduce((r, v, i, a, k = v[property]) => ((r[k] || (r[k] = [])).push(v), r), {})
+}

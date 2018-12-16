@@ -1,5 +1,4 @@
-import groupBy from 'lodash/groupBy'
-import loMap from 'lodash/map'
+import { groupBy } from '@/utils'
 
 export default {
   userVotes: (state, getters, rootState, rootGetters) => {
@@ -30,11 +29,12 @@ export default {
     const votes = Object.values(state.keyedById).filter(
       v => v.poll_id === poll._id
     )
+
+    // groupedVotes = {_id1: [], _id2: []}
     const groupedVotes = groupBy(votes, 'option_id')
-    let votesByOption = loMap(groupedVotes, (value, key) => ({
-      option_id: key,
-      votes: value
-    }))
+
+    let votesByOption = Object.keys(groupedVotes).map(optionId => ({ optionId, votes: groupedVotes[optionId] }))
+
     if (poll.options) {
       // If votesByOption does not contain an option add it with 0 votes
       poll.options.forEach(option => {

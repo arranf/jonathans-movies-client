@@ -46,7 +46,7 @@
 <script>
 import FilmListItem from './FilmListItem'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
-import debounce from 'lodash/debounce'
+import debounce from 'tiny-debounce'
 import constants from '@/constants'
 import scrollListener from '@/scroll-listener'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
@@ -149,8 +149,7 @@ export default {
         this.page++
         return this.getFilms()
       },
-      800,
-      { leading: true }
+      800
     )
   },
   beforeDestroy () {
