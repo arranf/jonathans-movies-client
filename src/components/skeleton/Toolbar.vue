@@ -35,7 +35,7 @@
 <script>
 import { getFilmSuggestions, stopPoll, stopNominations } from '@/api'
 import { getYearFromTmdbReleaseDate } from '@/utils'
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Toolbar',
@@ -46,6 +46,9 @@ export default {
       loading: false,
       searchInput: null
     }
+  },
+  props: {
+    user: { type: Object }
   },
   watch: {
     searchInput (newInput, oldInput) {
@@ -91,7 +94,6 @@ export default {
     }
   },
   computed: {
-    ...mapState('auth', ['user']),
     ...mapGetters('poll', [
       'isCurrentPollInNomination',
       'isCurrentPollInVoting'

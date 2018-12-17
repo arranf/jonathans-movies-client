@@ -120,10 +120,15 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'DrawerList',
+  props: {
+    user: {
+      type: Object
+    }
+  },
   computed: {
     ...mapGetters('poll', [
       'getActivePoll',
@@ -132,7 +137,6 @@ export default {
       'isCurrentPollInVoting',
       'remainingTimeInNominationWordsForCurrentPoll'
     ]),
-    ...mapState('auth', ['user']),
     ...mapGetters('vote', { remainingVotes: 'votesRemaining' }),
     ...mapGetters('option', { remainingNominations: 'nominationsRemaining' })
   }
