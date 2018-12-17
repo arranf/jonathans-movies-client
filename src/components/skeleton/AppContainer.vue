@@ -1,20 +1,20 @@
 <template>
   <v-app id="app-container">
     <v-navigation-drawer app v-model="showNavigation" temporary>
-      <drawer-list/>
+      <drawer-list :user="user"/>
     </v-navigation-drawer>
-    <toolbar @toggleNavigation="showNavigation = !showNavigation" />
+    <toolbar @toggleNavigation="showNavigation = !showNavigation" :user="user" />
 
     <v-content>
       <progress-bar />
-      <v-container fluid fill-height>
-        <v-layout align-center justify-center>
+      <div class="container fluid fill-height">
+        <div class="layout align-center justify-center">
           <div class="flex xs12 sm8 md8">
             <loading v-if="isLoading" />
             <router-view v-show="!isLoading" />
           </div>
-        </v-layout>
-      </v-container>
+        </div>
+      </div>
       <bottom-nav v-if="user"/>
     </v-content>
     <snackbar />

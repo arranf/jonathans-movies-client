@@ -17,27 +17,27 @@
 
         <div v-if="recommendations && recommendations.length">
             <h3 class="separator">Recommended For You</h3>
-            <v-container fluid grid-list-xs>
-            <v-layout row wrap>
-              <v-flex xs6 sm4 md3 lg2 :key="recommendation.film._id+index" v-for="(recommendation, index) in recommendations">
+            <div class="container fluid grid-list-xs">
+            <div class="layout row wrap">
+              <div class="flex xs6 sm4 md3 lg2" :key="recommendation.film._id+index" v-for="(recommendation, index) in recommendations">
                 <film-preview :film="recommendation.film" :reasons="recommendation.reasons" modal-page-name="Discover"></film-preview>
-              </v-flex>
-            </v-layout>
-          </v-container>
+              </div>
+            </div>
+          </div>
         </div>
         <div v-if="suggestions && suggestions.length">
           <h3 class="separator mt-4">Popular and Highly Rated Movies</h3>
-          <v-container grid-list-md text-xs-center>
-            <v-layout row wrap>
-              <v-flex xs6 md3 lg2 :key="film._id+index" v-for="(film, index) in suggestions">
+          <div class="container grid-list-md text-xs-center">
+            <div class="layout row wrap">
+              <div class="flex xs6 md3 lg2" :key="film._id+index" v-for="(film, index) in suggestions">
                 <film-preview :film="film" modal-page-name="Discover"></film-preview>
-              </v-flex>
+              </div>
               <quote v-if="done" />
-              <v-flex xs12>
+              <div class="flex xs12">
                 <progress-linear color="secondary" v-if="loading && isDelayElapsed" :indeterminate="true" />
-              </v-flex>
-            </v-layout>
-          </v-container>
+              </div>
+            </div>
+          </div>
         </div>
     </div>
 </template>
