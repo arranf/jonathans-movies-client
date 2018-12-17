@@ -70,7 +70,7 @@ export default {
       page: 0,
       limit: 50,
       loadedAll: false,
-      busy: false,
+      loading: false,
       isDelayElapsed: false,
       total: 51,
       sort: { name: 1 },
