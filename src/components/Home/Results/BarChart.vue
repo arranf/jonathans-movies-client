@@ -1,15 +1,6 @@
-<template>
-  <div class="graph-cont">
-    <template class="d-flex" v-for="(option, index) in data" >
-      <div :key="option.name+'bar'" class="bar" :id="option.name" :style="{'--width': calcPercentage(option), '--color': colors[index] }"> <span class="bar-label"><strong>{{option.name}}</strong></span> <span class="bar-count" style="float:right;">{{option.votes}}</span></div>
-    </template>
-  </div>
-</template>
-
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
+  functional: true,
   name: 'BarChart',
   props: {
     data: {
@@ -19,31 +10,29 @@ export default {
     colors: {
       type: Array,
       required: true
+    },
+    numberOfVoters: {
+      type: Number,
+      required: true
     }
   },
-  computed: {
-    ...mapGetters('vote', ['getNumberOfUniqueVoters']),
-    ...mapGetters('poll', ['getMostRecentPoll'])
-  },
-  methods: {
-    calcPercentage (option) {
-      if (option.votes === 0) {
-        return '1%'
-      } else {
-        return (
-          Math.round(
-            (option.votes /
-              this.getNumberOfUniqueVoters(this.getMostRecentPoll._id)) *
-              100
-          ) + '%'
-        )
-      }
+  render (h, { props }) {
+    const calcPercentage = (option) => {
+      return option.votes === 0 ? '1%' : `${(Math.round(option.votes / props.numberOfVoters) * 100)}%`
     }
+
+    const bars = []
+    props.data.forEach((option, index) => {
+      const label = h('span', { staticClass: 'bar-label' }, [h('strong', [option.name])])
+      const count = h('span', { staticClass: 'bar-count', style: { float: 'right' } }, [option.votes])
+      bars.push(h('div', { staticClass: 'bar', style: { '--width': calcPercentage(option), '--color': props.colors[index] } }, [label, count]))
+    })
+    return h('div', { staticClass: 'graph-cont' }, bars)
   }
 }
 </script>
 
-<style>
+<style scoped>
 /* https://codepen.io/jedtrow/pen/YPrqKY */
 .graph-cont {
   width: calc(100% - 40px);

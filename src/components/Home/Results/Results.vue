@@ -4,7 +4,7 @@
   <!-- TODO: Refactor to Use a Simpler Getter -->
   <div v-if="getMostRecentPoll && areVotes" style="width: 100%">
     <h1 class="md-headline text-center">Results</h1>
-    <bar-chart style="padding-top: 3em" :data="results" :colors="backgroundColors"/>
+    <bar-chart style="padding-top: 3em" :data="results" :numberOfVoters="getNumberOfUniqueVoters()" :colors="backgroundColors"/>
   </div>
   <div v-else-if="emptyStateAllowed" class="empty-state-container">
     <v-icon size="100px" class="mb-2">error_outline</v-icon>
@@ -16,7 +16,7 @@
 
 <script>
 import BarChart from './BarChart'
-import { mapGetters, mapState, mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import { getUniqueColors } from '@/utils'
 import { getCurrentPoll, getVotesForMostRecentPoll } from '@/api'
 
@@ -35,9 +35,8 @@ export default {
     ...mapActions('loading', ['setLoading', 'setLoaded'])
   },
   computed: {
-    ...mapGetters('vote', ['getGraphData', 'areVotesForPoll']),
+    ...mapGetters('vote', ['getGraphData', 'areVotesForPoll', 'getNumberOfUniqueVoters']),
     ...mapGetters('poll', ['getMostRecentPoll']),
-    ...mapState('vote', ['isFindPending']),
     results () {
       return this.getGraphData(this.getMostRecentPoll)
     },
