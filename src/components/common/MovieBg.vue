@@ -1,51 +1,36 @@
-<template>
-  <div v-if="film && film.backdrop_path" class="v-responsive v-image flex-column">
-    <img class="image-fluid lazyload movie-bg" :data-srcset="srcSet" :srcset="srcSet" :style="style" :src="src" :alt="altText" >
-    <div class="v-responsive__content"></div>
-  </div>
-</template>
-
 <script>
 // eslint-disable-next-line
 import lazySizes from 'lazysizes'
 import { getTmdbBackdropImage, getTmdbBackdropSrcSet } from '@/utils'
 
 export default {
+  functional: true,
   name: 'MovieBG',
   props: {
-    height: {
-      type: Number,
-      default: 200
-    },
     film: {
       type: Object,
       required: true
     }
   },
-  computed: {
-    // TODO: Test if style works best on parent container on both home screen and movie modal
-    style: function () {
-      if (!this.film.backdrop_svg_base64encoded) {
+  render (h, context) {
+    const style = function () {
+      if (!context.props.film.backdrop_svg_base64encoded) {
         return {}
       }
       return {
         'background-size': 'cover',
         'background-image': this.backgroundImage
       }
-    },
-    altText: function () {
-      return `${this.film.name} Background`
-    },
-    backgroundImage: function () {
-      return `url(data:image/svg+xml;base64,${
-        this.film.backdrop_svg_base64encoded
-      })`
-    },
-    src: function () {
-      return getTmdbBackdropImage(this.film.backdrop_path)
-    },
-    srcSet: function () {
-      return getTmdbBackdropSrcSet(this.film.backdrop_path)
+    }
+
+    if (context.props.film && context.props.film.backdrop_path) {
+      const altText = `${context.props.film.name} Background`
+      const src = getTmdbBackdropImage(context.props.film.backdrop_path)
+      const srcSet = getTmdbBackdropSrcSet(context.props.film.backdrop_path)
+      const img = h('img', { staticClass: 'image-fluid lazyload movie-bg', attrs: { 'data-srcset': srcSet, srcSet: srcSet, src, alt: altText }, style })
+      const innerDiv = h('div', { staticClass: 'responsive__content' })
+      const div = h('div', { staticClass: 'v-responsive v-image flex-column' }, [img, innerDiv])
+      return div
     }
   }
 }
