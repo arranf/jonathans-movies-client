@@ -1,5 +1,5 @@
 <template>
-<v-layout row justify-center>
+<div class="layout row justify-center">
   <v-dialog v-model="show" lazy fullscreen transition="dialog-bottom-transition" :overlay="false">
     <v-card v-if="film"  >
       <movie-bg :height="30" :film="film" />
@@ -16,26 +16,26 @@
       </v-card-title>
 
       <v-card-text>
-        <v-container grid-list-md text-xs-left>
-          <v-layout row wrap>
-            <v-flex xs6>
+        <div class="container grid-list-md text-xs-left">
+          <div class="layout row wrap">
+            <div class="flex xs6">
               <h3 class="md-subheading">Information</h3>
               <div>
                 <div v-if="film.genres && film.genres.length"><strong>Genres</strong>: {{film.genres.join(', ')}}</div>
                 <div v-if="film.runtime"><strong>Runtime</strong>: {{film.runtime}} mins</div>
                 <div v-if="film.last_watched"><strong>Last Watched</strong>: {{film.last_watched}}</div>
               </div>
-            </v-flex>
-            <v-flex xs6>
+            </div>
+            <div class="flex xs6">
               <h3 class="md-subheading">Ratings</h3>
               <div>
                 <div v-if="film.imdb_rating"><strong>IMDB</strong>: {{film.imdb_rating}}</div>
                 <div v-if="film.rotten_tomatoes_rating"><strong>Rotten Tomatoes</strong>: {{film.rotten_tomatoes_rating}}%
                 </div>
               </div>
-            </v-flex>
-          </v-layout>
-        </v-container>
+            </div>
+          </div>
+        </div>
       </v-card-text>
 
       <v-slide-y-transition>
@@ -57,7 +57,7 @@
     </v-card>
     <loading v-else />
    </v-dialog>
-  </v-layout>
+  </div>
 </template>
 
 <script>

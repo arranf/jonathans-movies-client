@@ -9,10 +9,10 @@
       <progress-bar />
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
-          <v-flex xs12 sm8 md8>
+          <div class="flex xs12 sm8 md8">
             <loading v-if="isLoading" />
             <router-view v-show="!isLoading" />
-          </v-flex>
+          </div>
         </v-layout>
       </v-container>
       <bottom-nav v-if="user"/>
