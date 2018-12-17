@@ -11,12 +11,12 @@
         :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
         @click:append="() => (hidePassword = !hidePassword)"
         :type="hidePassword ? 'password' : 'text'">
-          <v-progress-linear
+          <progress-linear
             slot="progress"
-            :value="progress"
+            :progress="progress"
             :color="color"
-            height="4"
-          ></v-progress-linear>
+            :height="4"
+          ></progress-linear>
       </v-text-field>
      </v-form>
     </v-card-text>
@@ -35,9 +35,13 @@ import authClient from '@/api/auth-client'
 import { mapActions } from 'vuex'
 import router from '@/router'
 import zxcvbn from 'zxcvbn'
+const ProgressLinear = () => import('@/components/common/ProgressLinear')
 
 export default {
   name: 'SignUp',
+  components: {
+    ProgressLinear
+  },
   data () {
     return {
       hidePassword: true,

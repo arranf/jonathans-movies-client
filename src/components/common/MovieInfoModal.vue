@@ -65,7 +65,7 @@ import { addNomination } from '@/api'
 import { getYearFromTmdbReleaseDate } from '@/utils'
 import { mapGetters, mapActions } from 'vuex'
 import MovieBg from './MovieBg'
-import Loading from '@/components/skeleton/Loading'
+import Loading from '@/components/common/Loading'
 
 export default {
   name: 'MovieInfoModal',

@@ -6,7 +6,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import Loading from '@/components/skeleton/Loading'
+import Loading from '@/components/common/Loading'
 
 export default {
   name: 'Logout',

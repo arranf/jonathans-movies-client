@@ -31,7 +31,7 @@
         </v-list-tile-content>
       </div>
     </template>
-    <v-progress-linear
+    <progress-linear
       indeterminate
       slot="progress"
       height="4"
@@ -42,8 +42,12 @@
 <script>
 import { getFilmSuggestions } from '@/api'
 import { getYearFromTmdbReleaseDate } from '@/utils'
+const ProgressLinear = () => import('@/components/common/ProgressLinear')
 
 export default {
+  components: {
+    ProgressLinear
+  },
   data () {
     return {
       suggestions: [],

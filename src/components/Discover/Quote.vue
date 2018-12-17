@@ -1,20 +1,30 @@
-<template>
-  <v-flex xs12 >
-    <hr />
-    <h4 class="mt-2 subheading">{{quote.quotation}}</h4>
-    <span class="body-2"><em>—</em> {{quote.film}} ({{quote.year}})</span>
-  </v-flex>
-</template>
-
 <script>
 import quotes from './quotes'
 import { selectRandom } from '@/utils'
 
 export default {
-  computed: {
-    quote () {
-      return selectRandom(quotes)
-    }
+  functional: true,
+  render (h, context) {
+    const quote = selectRandom(quotes)
+    const flexClasses = 'flex xs12'
+    const headingClasses = 'mt-2 subheading'
+    const spanClasses = 'body-2'
+
+    const h4 = h('h4', { staticClass: headingClasses }, quote.quotation)
+    const span = h('span',
+      { staticClass: spanClasses },
+      [
+        h('em', '-'),
+        ` ${quote.film} (${quote.year})`
+      ]
+    )
+
+    return h('div', { staticClass: flexClasses },
+      [
+        h('hr'),
+        h4,
+        span
+      ])
   }
 }
 </script>

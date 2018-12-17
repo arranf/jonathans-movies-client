@@ -12,7 +12,9 @@
 import { mapGetters } from 'vuex'
 import Results from '@/components/Home/Results/Results'
 import SelectedOptions from './Nominated/SelectedOptions'
-import MovieInfoModal from '@/components/common/MovieInfoModal'
+
+import Loading from '@/components/common/Loading'
+const MovieInfoModal = () => ({ component: import('@/components/common/MovieInfoModal'), delay: 200, loading: Loading })
 
 export default {
   name: 'Home',

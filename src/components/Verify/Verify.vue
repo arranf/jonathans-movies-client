@@ -7,7 +7,7 @@
 <script>
 import feathersClient from '@/api/feathers-client'
 import authClient from '@/api/auth-client'
-import Loading from '@/components/skeleton/Loading'
+import Loading from '@/components/common/Loading'
 import { mapActions } from 'vuex'
 import router from '@/router'
 

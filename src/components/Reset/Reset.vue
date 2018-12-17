@@ -51,14 +51,13 @@
             :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
             @click:append="() => (hidePassword = !hidePassword)"
             :type="hidePassword ? 'password' : 'text'">
-              <v-progress-linear
-                v-show="password"
+              <progress-linear
+                v-if="password"
                 slot="progress"
-                :value="progress"
+                :progress="progress"
                 :color="color"
                 height="4"
-                label="Strength"
-              ></v-progress-linear>
+              ></progress-linear>
           </v-text-field>
         </v-form>
       </v-card-text>
@@ -79,6 +78,8 @@ import zxcvbn from 'zxcvbn'
 import feathersClient from '@/api/feathers-client'
 import authClient from '@/api/auth-client'
 
+const ProgressLinear = () => import('@/components/common/ProgressLinear')
+
 export default {
   name: 'Reset',
   data () {
@@ -91,6 +92,9 @@ export default {
       password: '',
       passwordStrength: 0
     }
+  },
+  components: {
+    ProgressLinear
   },
   props: {
     token: {

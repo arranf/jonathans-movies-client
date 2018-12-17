@@ -1,5 +1,3 @@
-
-import { mapState } from 'vuex';
 <template>
   <v-snackbar v-model="show">
     {{message}}

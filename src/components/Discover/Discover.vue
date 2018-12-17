@@ -34,7 +34,7 @@
               </v-flex>
               <quote v-if="done" />
               <v-flex xs12>
-                <v-progress-linear color="secondary" v-if="busy" indeterminate />
+                <progress-linear color="secondary" v-if="loading && isDelayElapsed" :indeterminate="true" />
               </v-flex>
             </v-layout>
           </v-container>
@@ -44,22 +44,26 @@
 
 <script>
 import FilmPreview from '@/components/common/FilmPreview'
-import MovieInfoModal from '@/components/common/MovieInfoModal'
-import Quote from './Quote'
 import { getRecommendations as fetchRecommendations, discoverMovies } from '@/api'
 
 import scrollListener from '@/scroll-listener'
 import debounce from 'tiny-debounce'
 import { mapActions } from 'vuex'
+import Loading from '@/components/common/Loading'
+
+const Quote = () => import('./Quote')
+const MovieInfoModal = () => ({ component: import('@/components/common/MovieInfoModal'), delay: 200, loading: Loading })
+const ProgressLinear = () => import('@/components/common/ProgressLinear')
 
 export default {
-  name: 'Suggestions',
+  name: 'Discover',
   data () {
     return {
       showingFilm: false,
+      isDelayElapsed: false,
       suggestions: [],
       recommendations: [],
-      busy: false,
+      loading: false,
       seenIds: [],
       done: false
     }
@@ -67,7 +71,8 @@ export default {
   components: {
     FilmPreview,
     MovieInfoModal,
-    Quote
+    Quote,
+    ProgressLinear
   },
   props: {
     filmId: String
@@ -81,10 +86,14 @@ export default {
     ...mapActions('snackbar', { setSnackbar: 'setText' }),
     ...mapActions('loading', ['setLoaded']),
     refresh: debounce(function () {
-      if (this.done || this.busy) {
+      if (this.done || this.loading) {
         return
       }
-      this.busy = true
+      this.isDelayElapsed = false
+      this.loading = true
+      setTimeout(() => {
+        this.isDelayElapsed = true
+      }, 200)
       return discoverMovies(this.seenIds)
         .then(discoveredFilms => {
           // Check if we've exhausted the collection
@@ -96,34 +105,29 @@ export default {
           for (let i = 0; i < discoveredFilms.length; i++) {
             this.seenIds.push(discoveredFilms[i]._id)
           }
-          this.busy = false
+          this.loading = false
         })
         .catch(e => {
           console.error(e)
           this.setSnackbar('Something went wrong. Try again.')
-          this.busy = false
+          this.loading = false
         })
-    }, 500),
+    }, 250),
     getRecommendations: function () {
-      this.busy = true
+      this.loading = true
       return fetchRecommendations()
         .then(response => {
           this.recommendations = response
-          this.busy = false
+          this.loading = false
         })
         .catch(e => {
           console.error(e)
           this.setSnackbar('Something went wrong. Try again.')
-          this.busy = false
+          this.loading = false
         })
     },
     scroll () {
       window.scrollTo(0, 0)
-    }
-  },
-  computed: {
-    disabled () {
-      return this.busy || this.done
     }
   },
   beforeDestroy () {

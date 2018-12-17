@@ -33,7 +33,6 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
 import { getFilmSuggestions, stopPoll, stopNominations } from '@/api'
 import { getYearFromTmdbReleaseDate } from '@/utils'
 import { mapGetters, mapState } from 'vuex'

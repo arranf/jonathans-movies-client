@@ -34,7 +34,7 @@
         <div class="text-center">
           <quote v-if="reachedEnd" />
         </div>
-        <v-progress-linear v-show="busy" :indeterminate="true" />
+        <progress-linear v-if="loading && isDelayElapsed" :indeterminate="true" />
       </div>
 
       <v-btn class="big-bottom" right color="accent" fab fixed @click="showFilters = true">
@@ -49,15 +49,19 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 import debounce from 'tiny-debounce'
 import constants from '@/constants'
 import scrollListener from '@/scroll-listener'
-import MovieInfoModal from '@/components/common/MovieInfoModal'
-import Quote from '@/components/Discover/Quote'
+
+import Loading from '@/components/common/Loading'
+const MovieInfoModal = () => ({ component: import('@/components/common/MovieInfoModal'), delay: 200, loading: Loading })
+const Quote = () => import('@/components/Discover/Quote')
+const ProgressLinear = () => import('@/components/common/ProgressLinear')
 
 export default {
   name: 'FilmList',
   components: {
     FilmListItem,
     MovieInfoModal,
-    Quote
+    Quote,
+    ProgressLinear
   },
   data: function () {
     return {
@@ -67,6 +71,7 @@ export default {
       limit: 50,
       loadedAll: false,
       busy: false,
+      isDelayElapsed: false,
       total: 51,
       sort: { name: 1 },
       floorRating: 0.0,
@@ -127,11 +132,11 @@ export default {
       return this.queryFilms(query)
         .then(response => {
           this.total = response.total
-          this.busy = false
+          this.loading = false
         })
         .catch(error => {
           console.error(error)
-          this.busy = false
+          this.loading = false
           this.setSnackbar('No films can be displayed')
         })
     },
@@ -141,11 +146,15 @@ export default {
         this.reachedEnd = true
         return
       }
-      this.busy = true
+      this.loading = true
       return this.fetchNextPage()
     },
     fetchNextPage: debounce(
       function () {
+        this.isDelayElapsed = false
+        setTimeout(() => {
+          this.isDelayElapsed = true
+        }, 200)
         this.page++
         return this.getFilms()
       },

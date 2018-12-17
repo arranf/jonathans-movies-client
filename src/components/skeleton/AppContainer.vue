@@ -6,7 +6,7 @@
     <toolbar @toggleNavigation="showNavigation = !showNavigation" />
 
     <v-content>
-      <progress-bar  />
+      <progress-bar />
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
           <v-flex xs12 sm8 md8>
@@ -26,13 +26,13 @@ import { mapState, mapGetters } from 'vuex'
 
 import DrawerList from '@/components/skeleton/DrawerList'
 import Toolbar from '@/components/skeleton/Toolbar'
-import ProgressBar from '@/components/skeleton/ProgressBar'
-import Snackbar from '@/components/skeleton/Snackbar'
-import BottomNav from '@/components/skeleton/BottomNav'
-import Loading from '@/components/skeleton/Loading'
+import Loading from '@/components/common/Loading'
+const ProgressBar = () => import('@/components/skeleton/ProgressBar')
+const Snackbar = () => import('@/components/skeleton/Snackbar')
+const BottomNav = () => import('@/components/skeleton/BottomNav')
 
 export default {
-  name: 'app',
+  name: 'AppContainer',
   data: () => ({
     showNavigation: false
   }),
@@ -46,7 +46,8 @@ export default {
   },
   computed: {
     ...mapState('auth', ['user']),
-    ...mapGetters('loading', ['isLoading'])
+    ...mapGetters('loading', ['isLoading']),
+    ...mapGetters('poll', ['getActivePoll'])
   }
 }
 </script>
