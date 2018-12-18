@@ -1,4 +1,5 @@
 <script>
+// TODO Stop this being a component, just use <div class="spacer"></div>
 export default {
   functional: true,
   render (h) {
