@@ -45,7 +45,7 @@
       </v-slide-y-transition>
 
        <v-card-actions>
-         <v-spacer></v-spacer>
+         <spacer />
         <v-btn flat color="primary" @click.prevent="addNomination()" v-if="inNominations" :disabled="!nominatable">
           {{nominateButtonText}}
         </v-btn>
@@ -67,12 +67,14 @@ import { addNomination } from '@/api'
 import { mapGetters, mapActions } from 'vuex'
 import MovieBg from './MovieBg'
 import Loading from '@/components/common/Loading'
+import Spacer from '@/components/Lite/Spacer'
 
 export default {
   name: 'MovieInfoModal',
   components: {
     MovieBg,
-    Loading
+    Loading,
+    Spacer
   },
   props: {
     filmId: { type: String },

@@ -80,7 +80,7 @@
         >
           Back
         </v-btn>
-        <v-spacer></v-spacer>
+        <spacer></spacer>
         <v-btn
           :disabled="!canNextStep"
           color="primary"
@@ -105,12 +105,14 @@ import {
   minValue
 } from 'vuelidate/lib/validators'
 import MovieSuggest from './MovieSuggest'
+import Spacer from '@/components/Lite/Spacer'
 import router from '@/router'
 
 export default {
   name: 'Create',
   components: {
-    MovieSuggest
+    MovieSuggest,
+    Spacer
   },
   mixins: [validationMixin],
   data () {

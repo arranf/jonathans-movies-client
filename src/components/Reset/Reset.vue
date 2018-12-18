@@ -9,7 +9,7 @@
           <v-text-field prepend-icon="inbox" name="email" label="Email" v-model="email" type="text"></v-text-field>
       </v-card-text>
       <v-card-actions>
-        <v-spacer></v-spacer>
+        <spacer />
         <v-btn id="submit" :disabled="isDisabled" @click.prevent="requestReset()" color="primary">Request Reset</v-btn>
         <v-btn flat id="back" to="/">Back</v-btn>
       </v-card-actions>
@@ -33,7 +33,7 @@
           ></v-text-field>
         </v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <spacer />
           <v-btn id="submitCode" :disabled="shortToken.length != 6" @click.prevent="setCode()" color="primary">Input Code</v-btn>
           <v-btn flat id="back" to="/">Back</v-btn>
         </v-card-actions>
@@ -56,7 +56,7 @@
           </v-text-field>
       </v-card-text>
       <v-card-actions>
-        <v-spacer></v-spacer>
+        <spacer />
         <v-btn id="submit" :disabled="!password" @click.prevent="resetPassword()" color="primary">Change Password</v-btn>
         <v-btn flat id="back" to="/">Back</v-btn>
       </v-card-actions>
@@ -72,6 +72,7 @@ import zxcvbn from 'zxcvbn'
 import feathersClient from '@/api/feathers-client'
 import authClient from '@/api/auth-client'
 
+import Spacer from '@/components/Lite/Spacer'
 const ProgressLinear = () => import('@/components/common/ProgressLinear')
 
 export default {
@@ -88,7 +89,8 @@ export default {
     }
   },
   components: {
-    ProgressLinear
+    ProgressLinear,
+    Spacer
   },
   props: {
     token: {

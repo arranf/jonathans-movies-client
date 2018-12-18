@@ -19,7 +19,7 @@
       hide-selected
       return-object
       ></v-autocomplete>
-      <v-spacer v-else></v-spacer>
+      <spacer v-else />
     <v-menu v-if="user && user.isAdmin && (isCurrentPollInVoting || isCurrentPollInNomination)" :nudge-width="50" lazy>
       <v-btn icon slot="activator">
         <v-icon>more_vert</v-icon>
@@ -35,6 +35,7 @@
 <script>
 import { getFilmSuggestions, stopPoll, stopNominations } from '@/api'
 import { mapGetters } from 'vuex'
+import Spacer from '@/components/Lite/Spacer'
 
 export default {
   name: 'Toolbar',
@@ -45,6 +46,9 @@ export default {
       loading: false,
       searchInput: null
     }
+  },
+  components: {
+    Spacer
   },
   props: {
     user: { type: Object }

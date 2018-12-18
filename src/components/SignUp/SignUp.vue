@@ -19,7 +19,7 @@
       </v-text-field>
     </v-card-text>
       <v-card-actions>
-        <v-spacer />
+        <spacer />
         <v-btn id="submit" :disabled="isDisabled || !emailIsUnique" @click.prevent="trySignUp()" color="primary">Signup</v-btn>
         <v-btn id="back" flat @click.prevent="toHome()">Back</v-btn>
       </v-card-actions>
@@ -33,12 +33,14 @@ import authClient from '@/api/auth-client'
 import { mapActions } from 'vuex'
 import router from '@/router'
 import zxcvbn from 'zxcvbn'
+import Spacer from '@/components/Lite/Spacer'
 const ProgressLinear = () => import('@/components/common/ProgressLinear')
 
 export default {
   name: 'SignUp',
   components: {
-    ProgressLinear
+    ProgressLinear,
+    Spacer
   },
   data () {
     return {

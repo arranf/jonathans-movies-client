@@ -15,7 +15,7 @@
               <v-slider v-model="floorRating" thumb-label min="0" max="10" step="0.5" ticks></v-slider>
             </v-card-text>
             <v-card-actions>
-              <v-spacer id="hide" />
+              <spacer id="hide" />
               <v-btn flat @click.prevent="requery()" type="submit" class="md-accent md-raised">Submit</v-btn>
               <v-btn flat @click.prevent="reset()" type="reset">Reset</v-btn>
               <v-btn flat @click.prevent="showFilters = false">Close</v-btn>
@@ -31,7 +31,7 @@
             <v-divider v-if="index + 1 < allFilms.length" :key="index"></v-divider>
           </template>
         </v-list>
-        <div class="text-xs-center">
+        <div class="text-center">
           <quote v-if="reachedEnd" />
         </div>
         <progress-linear v-if="loading && isDelayElapsed" :indeterminate="true" />
@@ -49,6 +49,7 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 import debounce from 'tiny-debounce'
 import constants from '@/constants'
 import scrollListener from '@/scroll-listener'
+import Spacer from '@/components/Lite/Spacer'
 
 import Loading from '@/components/common/Loading'
 const MovieInfoModal = () => ({ component: import('@/components/common/MovieInfoModal'), delay: 200, loading: Loading })
@@ -61,7 +62,8 @@ export default {
     FilmListItem,
     MovieInfoModal,
     Quote,
-    ProgressLinear
+    ProgressLinear,
+    Spacer
   },
   data: function () {
     return {
