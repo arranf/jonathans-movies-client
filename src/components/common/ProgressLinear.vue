@@ -86,15 +86,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-// TODO: Transition should be reused
-$transition := {
-  fast-out-slow-in: cubic-bezier(0.4, 0.0, 0.2, 1),
-  linear-out-slow-in: cubic-bezier(0.0, 0.0, 0.2, 1),
-  fast-out-linear-in: cubic-bezier(0.4, 0.0, 1, 1),
-  ease-in-out: cubic-bezier(0.4, 0.0, 0.6, 1),
-  fast-in-fast-out: cubic-bezier(.25,.8,.25,1),
-  swing: cubic-bezier(.25,.8,.50,1)
-}
+@require '../../assets/styles/vuetify-lite/settings/_variables/_transition.styl'
 
 .v-progress-linear
   background: transparent
