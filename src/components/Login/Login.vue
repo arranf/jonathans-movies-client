@@ -15,7 +15,7 @@
             <router-link class="d-flex caption" to="/reset">Forgotten your password?</router-link>
             <v-btn id="submit" :disabled="isDisabled" @click.prevent="tryLogin()" color="primary">Login</v-btn>
           <v-btn block id="facebook" class="btn-facebook mt-2" @click.prevent="facebookLogin()">
-            <span class="text-white">Log In with Facebook</span>
+            <span class="white--text">Log In with Facebook</span>
           </v-btn>
         </v-card-text>
       </div>
