@@ -10,6 +10,9 @@ import './registerServiceWorker'
 // Import custom CSS
 require('@/assets/styles/main.scss')
 
+// Import our Vuetify replacement !
+require('@/assets/styles/vuetify-lite/settings/_colors.styl')
+
 const isProduction = process.env.NODE_ENV === 'production'
 Vue.config.productionTip = !isProduction
 Vue.config.devtools = !isProduction

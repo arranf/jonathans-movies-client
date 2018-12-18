@@ -9,7 +9,7 @@ import ProgressLinear from '@/components/common/ProgressLinear'
 const dangerMark = 80
 
 export default {
-  name: 'ProgressBar',
+  name: 'ToolbarProgress',
   components: {
     ProgressLinear
   },
@@ -25,10 +25,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .progress-linear {
-  margin-top: 0;
-  position: fixed;
-  z-index: 5;
+  margin-top: 0 !important;
+  position: fixed !important;
+  z-index: 5 !important;
 }
 </style>

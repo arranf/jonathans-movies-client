@@ -6,7 +6,7 @@
     <toolbar @toggleNavigation="showNavigation = !showNavigation" :user="user" />
 
     <v-content>
-      <progress-bar />
+      <toolbar-progress v-if="getActivePoll" />
       <div class="container fluid fill-height">
         <div class="layout align-center justify-center">
           <div class="flex xs12 sm8 md8">
@@ -27,7 +27,7 @@ import { mapState, mapGetters } from 'vuex'
 import DrawerList from '@/components/skeleton/DrawerList'
 import Toolbar from '@/components/skeleton/Toolbar'
 import Loading from '@/components/common/Loading'
-const ProgressBar = () => import('@/components/skeleton/ProgressBar')
+const ToolbarProgress = () => import('@/components/skeleton/ToolbarProgress')
 const Snackbar = () => import('@/components/skeleton/Snackbar')
 const BottomNav = () => import('@/components/skeleton/BottomNav')
 
@@ -39,7 +39,7 @@ export default {
   components: {
     DrawerList,
     Toolbar,
-    ProgressBar,
+    ToolbarProgress,
     Snackbar,
     BottomNav,
     Loading

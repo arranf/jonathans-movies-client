@@ -84,3 +84,105 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+// TODO: Transition should be reused
+$transition := {
+  fast-out-slow-in: cubic-bezier(0.4, 0.0, 0.2, 1),
+  linear-out-slow-in: cubic-bezier(0.0, 0.0, 0.2, 1),
+  fast-out-linear-in: cubic-bezier(0.4, 0.0, 1, 1),
+  ease-in-out: cubic-bezier(0.4, 0.0, 0.6, 1),
+  fast-in-fast-out: cubic-bezier(.25,.8,.25,1),
+  swing: cubic-bezier(.25,.8,.50,1)
+}
+
+.v-progress-linear
+  background: transparent
+  margin: 1rem 0
+  overflow: hidden
+  width: 100%
+  position: relative
+
+  &__bar
+    width: 100%
+    height: inherit
+    position: relative
+    transition: .2s $transition.ease-in-out
+    z-index: 1
+
+    &__determinate
+      height: inherit
+      transition: .2s $transition.ease-in-out
+
+    &__indeterminate
+      .long, .short
+        height: inherit
+        position: absolute
+        left: 0
+        top: 0
+        bottom: 0
+        will-change: left, right
+        width: auto
+        background-color: inherit
+
+      &--active .long
+        animation: indeterminate
+        animation-duration: 2.2s
+        animation-iteration-count: infinite
+
+      &--active .short
+        animation: indeterminate-short
+        animation-duration: 2.2s
+        animation-iteration-count: infinite
+
+  &__background
+    position: absolute
+    top: 0
+    left: 0
+    bottom: 0
+    transition: .3s ease-in
+
+  @keyframes indeterminate
+    0%
+      left: -90%
+      right: 100%
+    60%
+      left: -90%
+      right: 100%
+    100%
+      left: 100%
+      right: -35%
+
+  @keyframes indeterminate-short
+    0%
+      left: -200%
+      right: 100%
+    60%
+      left: 107%
+      right: -8%
+    100%
+      left: 107%
+      right: -8%
+
+  @keyframes query
+    0%
+      right: -90%
+      left: 100%
+    60%
+      right: -90%
+      left: 100%
+    100%
+      right: 100%
+      left: -35%
+
+  @keyframes query-short
+    0%
+      right: -200%
+      left: 100%
+    60%
+      right: 107%
+      left: -8%
+    100%
+      right: 107%
+      left: -8%
+</style>
