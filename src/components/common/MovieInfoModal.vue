@@ -50,7 +50,7 @@
           {{nominateButtonText}}
         </v-btn>
         <v-btn flat @click="showOverview = !showOverview">
-          <v-icon>{{!showOverview ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</v-icon> Read Plot
+          <icon v-once>{{!showOverview ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</icon> Read Plot
         </v-btn>
         <v-btn flat @click="closeModal()">Close</v-btn>
         </v-card-actions>
@@ -68,13 +68,15 @@ import { mapGetters, mapActions } from 'vuex'
 import MovieBg from './MovieBg'
 import Loading from '@/components/common/Loading'
 import Spacer from '@/components/Lite/Spacer'
+import Icon from '@/components/Lite/Icon'
 
 export default {
   name: 'MovieInfoModal',
   components: {
     MovieBg,
     Loading,
-    Spacer
+    Spacer,
+    Icon
   },
   props: {
     filmId: { type: String },

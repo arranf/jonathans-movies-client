@@ -7,7 +7,7 @@
     <bar-chart style="padding-top: 3em" :data="results" :numberOfVoters="getNumberOfUniqueVoters()" :colors="backgroundColors"/>
   </div>
   <div v-else-if="emptyStateAllowed" class="empty-state-container">
-    <v-icon size="100px" class="mb-2">error_outline</v-icon>
+    <icon v-once size="100px" class="mb-2">error_outline</icon>
     <h1 class="display-1 mb-1">No Results</h1>
     <p class="empty-state-description">There needs to be at least one vote for there to be a winner!</p>
   </div>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import Icon from '@/components/Lite/Icon'
 import BarChart from './BarChart'
 import { mapGetters, mapActions } from 'vuex'
 import { getUniqueColors } from '@/utils'
@@ -23,7 +24,8 @@ import { getCurrentPoll, getVotesForMostRecentPoll } from '@/api'
 export default {
   name: 'Results',
   components: {
-    BarChart
+    BarChart,
+    Icon
   },
   data () {
     return {

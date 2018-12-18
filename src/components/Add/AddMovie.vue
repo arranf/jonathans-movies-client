@@ -2,7 +2,7 @@
   <div>
     <transition name="fade">
       <div v-if="showSearch" class="empty-state-container">
-        <v-icon size="100px" class="mb-2">playlist_add</v-icon>
+        <icon v-once size="100px" class="mb-2">playlist_add</icon>
         <h1 class="display-1 mb-1">Add Films</h1>
         <p class="empty-state-description">Search to find films to add to your online collection</p>
         <v-autocomplete
@@ -63,11 +63,13 @@ import { mapActions, mapState } from 'vuex'
 import { getYearFromTmdbReleaseDate } from '@/utils'
 
 import MovieBg from '@/components/common/MovieBg'
+import Icon from '@/components/Lite/Icon'
 
 export default {
   name: 'AddFilm',
   components: {
-    MovieBg
+    MovieBg,
+    Icon
   },
   data () {
     return {

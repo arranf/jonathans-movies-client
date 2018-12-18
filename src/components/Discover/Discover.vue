@@ -11,7 +11,7 @@
             @click="scroll"
             class="big-bottom"
           >
-        <v-icon>expand_less</v-icon>
+        <icon v-once>expand_less</icon>
       </v-btn>
     </transition>
 
@@ -53,6 +53,7 @@ import scrollListener from '@/scroll-listener'
 import debounce from 'tiny-debounce'
 import { mapActions } from 'vuex'
 import Loading from '@/components/common/Loading'
+import Icon from '@/components/Lite/Icon'
 
 const Quote = () => import('./Quote')
 const MovieInfoModal = () => ({ component: import('@/components/common/MovieInfoModal'), delay: 200, loading: Loading })
@@ -75,7 +76,8 @@ export default {
     FilmPreview,
     MovieInfoModal,
     Quote,
-    ProgressLinear
+    ProgressLinear,
+    Icon
   },
   props: {
     filmId: String

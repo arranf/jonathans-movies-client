@@ -11,7 +11,7 @@
         to="/home"
       >
         <span>Home</span>
-        <v-icon>home</v-icon>
+        <icon v-once>home</icon>
       </v-btn>
 
       <v-btn
@@ -21,7 +21,7 @@
         to="/discover"
       >
         <span>Discover</span>
-        <v-icon>search</v-icon>
+        <icon v-once>search</icon>
       </v-btn>
 
       <v-btn
@@ -31,13 +31,18 @@
         to="/movies"
       >
         <span>All Movies</span>
-        <v-icon>movie</v-icon>
+        <icon v-once>movie</icon>
       </v-btn>
     </v-bottom-nav>
 </template>
 
 <script>
+import Icon from '@/components/Lite/Icon'
+
 export default {
-  Name: 'Bottom Nav'
+  name: 'BottomNav',
+  components: {
+    Icon
+  }
 }
 </script>

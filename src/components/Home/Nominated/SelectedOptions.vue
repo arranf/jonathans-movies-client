@@ -3,7 +3,7 @@
   <div>
       <!-- nominations empty state -->
     <div v-if="isCurrentPollInNomination && currentPollOptions.length === 0" class="empty-state-container">
-      <v-icon size="100px" class="mb-2">playlist_add</v-icon>
+      <icon v-once size="100px" class="mb-2">playlist_add</icon>
       <h1 class="display-1 mb-1">Nominate a Movie</h1>
       <p class="empty-state-description">{{`You\'ve got ${nominationsRemaining} nomination${nominationsRemaining > 1 ? 's' : ''} left. Use ${nominationsRemaining > 1 ? 'them' : 'it'} wisely!`}}</p>
       <v-btn color="primary" @click="$router.push('/discover')">Nominate a movie</v-btn>
@@ -11,7 +11,7 @@
 
     <!-- voting empty state -->
     <div v-if="!isCurrentPollInNomination && currentPollOptions.length === 0" class="empty-state-container">
-      <v-icon size="100px" class="mb-2">alert_circle</v-icon>
+      <icon v-once size="100px" class="mb-2">alert_circle</icon>
       <h1 class="display-1 mb-1">Oops</h1>
       <p class="empty-state-description">Looks like no movies were nominated. That's awkward.</p>
     </div>
@@ -26,11 +26,13 @@
 import OptionPreview from './OptionPreview'
 import { getOptionsForPoll, getVotesForCurrentPoll } from '@/api'
 import { mapGetters, mapActions } from 'vuex'
+import Icon from '@/components/Lite/Icon'
 
 export default {
   name: 'SelectedOptions',
   components: {
-    OptionPreview
+    OptionPreview,
+    Icon
   },
   methods: {
     ...mapActions('loading', ['setLoaded', 'setLoading'])

@@ -22,7 +22,7 @@
       <spacer v-else />
     <v-menu v-if="user && user.isAdmin && (isCurrentPollInVoting || isCurrentPollInNomination)" :nudge-width="50" lazy>
       <v-btn icon slot="activator">
-        <v-icon>more_vert</v-icon>
+        <icon v-once>more_vert</icon>
       </v-btn>
         <v-list>
           <v-list-tile v-if="isCurrentPollInNomination" @click.prevent="stopNominations()"><v-list-tile-title>End Nomination Phase</v-list-tile-title></v-list-tile>
@@ -36,6 +36,7 @@
 import { getFilmSuggestions, stopPoll, stopNominations } from '@/api'
 import { mapGetters } from 'vuex'
 import Spacer from '@/components/Lite/Spacer'
+import Icon from '@/components/Lite/Icon'
 
 export default {
   name: 'Toolbar',
@@ -48,7 +49,8 @@ export default {
     }
   },
   components: {
-    Spacer
+    Spacer,
+    Icon
   },
   props: {
     user: { type: Object }

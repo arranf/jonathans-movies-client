@@ -38,7 +38,7 @@
       </div>
 
       <v-btn class="big-bottom" right color="accent" fab fixed @click="showFilters = true">
-        <v-icon>filter_list</v-icon>
+        <icon v-once>filter_list</icon>
       </v-btn>
    </div>
 </template>
@@ -50,8 +50,9 @@ import debounce from 'tiny-debounce'
 import constants from '@/constants'
 import scrollListener from '@/scroll-listener'
 import Spacer from '@/components/Lite/Spacer'
-
+import Icon from '@/components/Lite/Icon'
 import Loading from '@/components/common/Loading'
+
 const MovieInfoModal = () => ({ component: import('@/components/common/MovieInfoModal'), delay: 200, loading: Loading })
 const Quote = () => import('@/components/Discover/Quote')
 const ProgressLinear = () => import('@/components/common/ProgressLinear')
@@ -63,7 +64,8 @@ export default {
     MovieInfoModal,
     Quote,
     ProgressLinear,
-    Spacer
+    Spacer,
+    Icon
   },
   data: function () {
     return {

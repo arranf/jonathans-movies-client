@@ -15,7 +15,7 @@
     <!-- home -->
     <v-list-tile v-if="user" to="/home">
       <v-list-tile-action>
-          <v-icon>home</v-icon>
+          <icon v-once>home</icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>Home</v-list-tile-title>
@@ -25,7 +25,7 @@
     <!-- create poll -->
     <v-list-tile v-if="user && user.isAdmin && !getActivePoll" to="/create">
       <v-list-tile-action>
-          <v-icon>create</v-icon>
+          <icon v-once>create</icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>Create Poll</v-list-tile-title>
@@ -35,7 +35,7 @@
     <!--  discover-->
     <v-list-tile v-if="user" to="/discover">
       <v-list-tile-action>
-          <v-icon>search</v-icon>
+          <icon v-once>search</icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>Discover</v-list-tile-title>
@@ -45,7 +45,7 @@
     <!-- all movies -->
     <v-list-tile v-if="user" to="/movies">
       <v-list-tile-action>
-          <v-icon>movie</v-icon>
+          <icon v-once>movie</icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>All Movies</v-list-tile-title>
@@ -55,7 +55,7 @@
     <!-- add to library -->
     <v-list-tile v-if="user && user.isAdmin" to="/add">
       <v-list-tile-action>
-          <v-icon>playlist_add</v-icon>
+          <icon v-once>playlist_add</icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>Add to Collection</v-list-tile-title>
@@ -64,7 +64,7 @@
 
     <v-list-tile v-if="user && user.isAdmin" to="/collection">
       <v-list-tile-action>
-          <v-icon>home</v-icon>
+          <icon v-once>home</icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>Switch Active Collection</v-list-tile-title>
@@ -74,7 +74,7 @@
     <!-- logout -->
     <v-list-tile v-if="user" to="/logout">
       <v-list-tile-action>
-          <v-icon>exit_to_app</v-icon>
+          <icon v-once>exit_to_app</icon>
         </v-list-tile-action>
         <v-list-tile-content>
           <v-list-tile-title>Logout</v-list-tile-title>
@@ -122,8 +122,13 @@
 <script>
 import { mapGetters } from 'vuex'
 
+import Icon from '@/components/Lite/Icon'
+
 export default {
   name: 'DrawerList',
+  components: {
+    Icon
+  },
   props: {
     user: {
       type: Object
