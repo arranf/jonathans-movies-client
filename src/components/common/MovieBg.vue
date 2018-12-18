@@ -11,7 +11,6 @@ export default {
   },
   render (h, { props }) {
     const film = props.film
-    console.log(`Rendering ${film.name}: start`)
     const style = function () {
       if (!film.backdropSvgPlaceholder) {
         return {}
@@ -22,8 +21,6 @@ export default {
       }
     }
     if (film && film.tmdbBackDropImage) {
-      console.log(`Rendering ${film.name}: will return`)
-
       const altText = `${film.name} Background`
       const src = film.backdropSvgPlaceholder
       const srcSet = film.tmdbBackdropSrcSet
