@@ -29,7 +29,7 @@ export default {
       const srcSet = film.tmdbBackdropSrcSet
       const img = h('img', { staticClass: 'img-fluid lazyload movie-bg', attrs: { 'data-srcset': srcSet, src, alt: altText }, style })
       const innerDiv = h('div', { staticClass: 'responsive__content' })
-      const div = h('div', { staticClass: 'v-responsive v-image flex-column' }, [img, innerDiv])
+      const div = h('div', { staticClass: 'v-responsive v-image flex-column', key: film._id }, [img, innerDiv])
       return div
     }
     return h('div')

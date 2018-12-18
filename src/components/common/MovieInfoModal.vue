@@ -63,8 +63,6 @@
 <script>
 // eslint-disable-next-line
 import lazysizes from 'lazysizes'
-// eslint-disable-next-line
-import attrChange from 'lazysizes/plugins/attrchange/ls.attrchange'
 import { addNomination } from '@/api'
 import { mapGetters, mapActions } from 'vuex'
 import MovieBg from './MovieBg'
