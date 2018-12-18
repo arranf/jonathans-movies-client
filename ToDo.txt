@@ -1,0 +1,8 @@
+# Immediate
+* Replace scroll-listener with a InteractionObserver API
+* Lazy Load certain stores
+
+# Long Term
+* Replace all Vuetify Components
+* Ensure we're using the correct Vuetify CSS files
+* 
