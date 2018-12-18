@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center mt-4">
+  <div class="text-xs-center mt-4">
     <div class="mb-3">
       <h1 class="display-2">Reset Password</h1>
     </div>

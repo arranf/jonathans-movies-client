@@ -27,7 +27,7 @@ export default {
       const altText = `${film.name} Background`
       const src = film.backdropSvgPlaceholder
       const srcSet = film.tmdbBackdropSrcSet
-      const img = h('img', { staticClass: 'image-fluid movie-bg', attrs: { 'data-srcset': srcSet, src, alt: altText }, style })
+      const img = h('img', { staticClass: 'img-fluid lazyload movie-bg', attrs: { 'data-srcset': srcSet, src, alt: altText }, style })
       const innerDiv = h('div', { staticClass: 'responsive__content' })
       const div = h('div', { staticClass: 'v-responsive v-image flex-column' }, [img, innerDiv])
       return div

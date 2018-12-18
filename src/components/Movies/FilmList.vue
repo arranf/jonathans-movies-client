@@ -31,7 +31,7 @@
             <v-divider v-if="index + 1 < allFilms.length" :key="index"></v-divider>
           </template>
         </v-list>
-        <div class="text-center">
+        <div class="text-xs-center">
           <quote v-if="reachedEnd" />
         </div>
         <progress-linear v-if="loading && isDelayElapsed" :indeterminate="true" />

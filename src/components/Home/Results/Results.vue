@@ -3,7 +3,7 @@
 <div class="d-flex flex-column align-items-center justify-items-center" style="width: 100%">
   <!-- TODO: Refactor to Use a Simpler Getter -->
   <div v-if="getMostRecentPoll && areVotes" style="width: 100%">
-    <h1 class="md-headline text-center">Results</h1>
+    <h1 class="md-headline text-xs-center">Results</h1>
     <bar-chart style="padding-top: 3em" :data="results" :numberOfVoters="getNumberOfUniqueVoters()" :colors="backgroundColors"/>
   </div>
   <div v-else-if="emptyStateAllowed" class="empty-state-container">

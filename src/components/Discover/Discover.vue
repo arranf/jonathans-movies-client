@@ -43,6 +43,9 @@
 </template>
 
 <script>
+
+// eslint-disable-next-line
+import lazySizes from 'lazysizes'
 import FilmPreview from '@/components/common/FilmPreview'
 import { getRecommendations as fetchRecommendations, discoverMovies } from '@/api'
 

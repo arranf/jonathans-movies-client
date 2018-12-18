@@ -2,18 +2,16 @@
   <div @click="showModal()" class="h-100" v-if="film" >
   <img v-if="film.poster_path" class="img-fluid lazyload" :src="film.posterSvgPlaceholder" :data-srcset="film.tmdbPosterSrcSet" :alt="film.name + ' image'">
    <img v-else class="img-fluid" :src="getFallbackPoster()" />
-    <h4 class="text-center">
+    <h4 class="text-xs-center">
       {{film.name}}
     </h4>
-    <p class="text-center ml-1 mr-1 mt-1 text-smaller" v-if="reasons">
+    <p class="text-xs-center ml-1 mr-1 mt-1 text-smaller" v-if="reasons">
       Because you liked {{reasonsSentence}}
     </p>
   </div>
 </template>
 
 <script>
-// eslint-disable-next-line
-import lazySizes from 'lazysizes'
 import { selectRandom } from '@/utils'
 
 export default {
