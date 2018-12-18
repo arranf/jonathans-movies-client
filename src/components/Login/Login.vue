@@ -1,6 +1,5 @@
 <template>
   <div class="text-center mt-4">
-
     <v-card id="loginForm">
       <div class="pa-2">
         <v-card-title>

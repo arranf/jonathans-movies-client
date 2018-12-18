@@ -34,7 +34,6 @@
 
 <script>
 import { getFilmSuggestions, stopPoll, stopNominations } from '@/api'
-import { getYearFromTmdbReleaseDate } from '@/utils'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -75,9 +74,6 @@ export default {
           this.loading = false
         })
         .catch(e => console.error(e))
-    },
-    getYear: function (releaseDate) {
-      return `(${getYearFromTmdbReleaseDate(releaseDate)})`
     },
     navigateToMovie () {
       const id = this.selectedFilm._id

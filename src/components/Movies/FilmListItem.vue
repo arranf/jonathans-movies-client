@@ -7,14 +7,13 @@
       </v-list-tile-avatar>
       <v-list-tile-content>
         <v-list-tile-title v-text="film.name"></v-list-tile-title>
-        <v-list-tile-sub-title v-html="getFilmYear"></v-list-tile-sub-title>
+        <v-list-tile-sub-title v-html="film.releaseYear"></v-list-tile-sub-title>
       </v-list-tile-content>
   </v-list-tile>
 </template>
 
 <script>
 import { addNomination } from '@/api'
-import { getYearFromTmdbReleaseDate } from '@/utils'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -39,12 +38,6 @@ export default {
   },
   computed: {
     ...mapGetters('option', ['hasNominationsRemaining']),
-    getFilmYear: function () {
-      if (this.film && this.film.release_date) {
-        return getYearFromTmdbReleaseDate(this.film.release_date)
-      }
-      return ''
-    },
     filmStart: function () {
       const code = this.film.name.charCodeAt(0)
       if (

@@ -62,29 +62,8 @@ export const getUniqueColors = (count, colorRange = '800') => {
   return array
 }
 
-export const getTmdbBackdropImage = (slug) => {
-  return `https://image.tmdb.org/t/p/w1280${slug}`
-}
-
-export const getTmdbBackdropSrcSet = (slug) => {
-  if (!slug) {
-    throw Error('Slug not valid')
-  }
-  return `https://image.tmdb.org/t/p/w780${slug} 780w,https://image.tmdb.org/t/p/w1280${slug} 1280w`
-}
-
-export const getTmdbPosterImage = (slug) => {
-  if (!slug) {
-    throw Error('Slug not valid')
-  }
-  return `https://image.tmdb.org/t/p/w342/${slug}`
-}
-
-export const getTmdbPosterSrcSet = (slug) => {
-  if (!slug) {
-    throw Error('Slug not valid')
-  }
-  return `https://image.tmdb.org/t/p/w154${slug} 154w,https://image.tmdb.org/t/p/w185${slug} 185w,https://image.tmdb.org/t/p/w342${slug} 342w,https://image.tmdb.org/t/p/w500${slug} 500w`
+export const getTmdbBackdropImage = (film) => {
+  return `https://image.tmdb.org/t/p/w1280${film.backdrop_path}`
 }
 
 export const getYearFromTmdbReleaseDate = (releaseDate) => {

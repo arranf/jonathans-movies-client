@@ -2,10 +2,10 @@
 <div class="layout row justify-center">
   <v-dialog v-model="show" lazy fullscreen transition="dialog-bottom-transition" :overlay="false">
     <v-card v-if="film"  >
-      <movie-bg :height="30" :film="film" />
+      <movie-bg :film="film" />
       <v-card-title primary-title>
         <div>
-          <h1 class="headline mb-0">{{film.name}} <small>({{getFilmYear}})</small></h1>
+          <h1 class="headline mb-0">{{film.name}} <small>({{film.releaseYear}})</small></h1>
           <a v-if="film.imdbLink" :href="film.imdbLink" target="_blank" style="float: right;">
             <svg id="imdb">
               <use xlink:href="/fa-brands.svg#imdb"></use>
@@ -62,7 +62,6 @@
 
 <script>
 import { addNomination } from '@/api'
-import { getYearFromTmdbReleaseDate } from '@/utils'
 import { mapGetters, mapActions } from 'vuex'
 import MovieBg from './MovieBg'
 import Loading from '@/components/common/Loading'
@@ -150,11 +149,6 @@ export default {
     ]),
     ...mapGetters('poll', ['isCurrentPollInNomination']),
     ...mapGetters('films', { getFilm: 'get' }),
-    getFilmYear: function () {
-      if (this.film && this.film.release_date) {
-        return getYearFromTmdbReleaseDate(this.film.release_date)
-      }
-    },
     nominateButtonText () {
       if (this.isOptionForCurrentPoll(this.film._id)) {
         return 'Nominated'

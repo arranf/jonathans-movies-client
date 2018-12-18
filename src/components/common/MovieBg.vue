@@ -1,7 +1,4 @@
 <script>
-// eslint-disable-next-line
-import lazySizes from 'lazysizes'
-import { getTmdbBackdropImage, getTmdbBackdropSrcSet } from '@/utils'
 
 export default {
   functional: true,
@@ -12,31 +9,40 @@ export default {
       required: true
     }
   },
-  render (h, context) {
+  render (h, { props }) {
+    const film = props.film
+    console.log(`Rendering ${film.name}: start`)
     const style = function () {
-      if (!context.props.film.backdrop_svg_base64encoded) {
+      if (!film.backdrop_svg_base64encoded) {
         return {}
       }
       return {
         'background-size': 'cover',
-        'background-image': this.backgroundImage
+        'background-image': film.backdropSvgPlaceholder
       }
     }
+    if (film && film.tmdbBackDropImage) {
+      console.log(`Rendering ${film.name}: will return`)
 
-    if (context.props.film && context.props.film.backdrop_path) {
-      const altText = `${context.props.film.name} Background`
-      const src = getTmdbBackdropImage(context.props.film.backdrop_path)
-      const srcSet = getTmdbBackdropSrcSet(context.props.film.backdrop_path)
-      const img = h('img', { staticClass: 'image-fluid lazyload movie-bg', attrs: { 'data-srcset': srcSet, srcSet: srcSet, src, alt: altText }, style })
+      const altText = `${film.name} Background`
+      const src = film.backdropSvgPlaceholder
+      const srcSet = film.tmdbBackdropSrcSet
+      const img = h('img', { staticClass: 'image-fluid movie-bg', attrs: { 'data-srcset': srcSet, src, alt: altText }, style })
       const innerDiv = h('div', { staticClass: 'responsive__content' })
       const div = h('div', { staticClass: 'v-responsive v-image flex-column' }, [img, innerDiv])
       return div
     }
+    return h('div')
   }
 }
 </script>
 
 <style scoped>
+  .lazyload {
+    width: 100% !important;
+    min-width: 100% !important;
+  }
+
   @media only screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape) {
     .movie-bg {
       width: auto;

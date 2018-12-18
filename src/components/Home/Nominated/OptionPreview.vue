@@ -2,7 +2,7 @@
   <v-card>
     <!-- TODO: Replace with MovieBG (?) -->
     <div v-if="option && film && film.backdrop_path" class="card__media">
-        <img class="img-fluid lazyload" :src="backdropImage" :data-srcset="getBackDropSrcSet" :alt="option.name + ' image'">
+        <img class="img-fluid lazyload" :src="film.backDropSvgPlaceholder" :data-srcset="film.tmdbBackdropSrcSet" :alt="option.name + ' image'">
         <div class="card__media__content"></div>
     </div>
     <v-card-title primary-title>
@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import constants from '@/constants'
-import { humanizeTimeToNowImprecise, getTmdbBackdropImage, getTmdbBackdropSrcSet, selectRandom } from '@/utils'
+import { colors } from '@/constants'
+import { selectRandom } from '@/utils'
 import { mapActions, mapGetters, mapState } from 'vuex'
 
 export default {
@@ -33,49 +33,27 @@ export default {
   },
   computed: {
     ...mapState('auth', ['user']),
-    ...mapGetters('films', { getFilm: 'get' }),
     ...mapGetters('vote', { remainingVotes: 'votesRemaining', votes: 'list' }),
     ...mapGetters('poll', ['getActivePoll', 'isCurrentPollInNomination']),
     voteButtonText: function () {
-      if (this.isVoted(this.option._id)) {
+      if (this.isVoted) {
         return 'Remove Vote'
       }
       return 'Vote'
     },
     voteButtonColor: function () {
-      if (this.isVoted(this.option._id)) {
+      if (this.isVoted) {
         return 'error'
       }
       return 'primary'
     },
-    lastWatched: function () {
-      if (this.film && this.film.lastWatched) {
-        return humanizeTimeToNowImprecise(this.film.lastWatched) + ' ago'
-      }
-      return null
-    },
-    backdropImage: function () {
-      if (this.film && this.film.backdrop_svg_base64encoded) {
-        return `data:image/svg+xml;base64,${
-          this.film.backdrop_svg_base64encoded
-        }`
-      }
-      if (this.film && this.film.backdrop_path) {
-        return getTmdbBackdropImage(this.film.backdrop_path)
-      }
-      return ''
-    },
-    getBackDropSrcSet: function () {
-      if (this.film.backdrop_path) {
-        return getTmdbBackdropSrcSet(this.film.backdrop_path)
-      }
-      return ''
-    },
     film () {
-      if (!this.option.film && this.option.film_id) {
-        return this.getFilm(this.option.film_id)
-      }
       return this.option.film
+    },
+    isVoted: function () {
+      return this.votes.some(
+        v => v && v.user_id === this.user._id && v.option_id === this.option._id
+      )
     }
   },
   methods: {
@@ -113,13 +91,8 @@ export default {
           })
       }
     },
-    isVoted: function () {
-      return this.votes.some(
-        v => v && v.user_id === this.user._id && v.option_id === this.option._id
-      )
-    },
     getColor: function () {
-      return selectRandom(constants.colors['800'])
+      return selectRandom(colors['800'])
     },
     showModal: function () {
       if (this.film && this.showInfo) {

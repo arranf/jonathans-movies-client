@@ -1,7 +1,6 @@
 <template>
   <div @click="showModal()" class="h-100" v-if="film" >
-    <img v-if="film.poster_path" class="img-fluid lazyload"
-      :src="getFilmPoster" :data-srcset="getFilmPosterSrcSet" :alt="film.name + ' image'">
+  <img v-if="film.poster_path" class="img-fluid lazyload" :src="film.posterSvgPlaceholder" :data-srcset="film.tmdbPosterSrcSet" :alt="film.name + ' image'">
    <img v-else class="img-fluid" :src="getFallbackPoster()" />
     <h4 class="text-center">
       {{film.name}}
@@ -15,8 +14,7 @@
 <script>
 // eslint-disable-next-line
 import lazySizes from 'lazysizes'
-import { getTmdbPosterSrcSet, getTmdbPosterImage, selectRandom } from '@/utils'
-import { mapGetters } from 'vuex'
+import { selectRandom } from '@/utils'
 
 export default {
   name: 'FilmPreview',
@@ -27,21 +25,6 @@ export default {
     score: { type: Number }
   },
   computed: {
-    ...mapGetters('films', { getFilm: 'get' }),
-    getFilmPosterSrcSet: function () {
-      if (this.film.poster_path) {
-        return getTmdbPosterSrcSet(this.film.poster_path)
-      }
-      return ''
-    },
-    getFilmPoster: function () {
-      if (this.film.poster_svg_base64encoded) {
-        return `data:image/svg+xml;base64,${
-          this.film.poster_svg_base64encoded
-        }`
-      }
-      return getTmdbPosterImage(this.film.poster_path)
-    },
     reasonsSentence: function () {
       const arr = this.reasons
       if (arr.length === 1) {

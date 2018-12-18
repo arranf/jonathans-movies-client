@@ -27,7 +27,7 @@
       <div>
         <v-list-tile-content>
           <v-list-tile-title v-html="data.item.name"></v-list-tile-title>
-          <v-list-tile-sub-title v-html="getYear(data.item.release_date)"></v-list-tile-sub-title>
+          <v-list-tile-sub-title v-html="getYear(data.item.releaseYear)"></v-list-tile-sub-title>
         </v-list-tile-content>
       </div>
     </template>
@@ -41,7 +41,6 @@
 
 <script>
 import { getFilmSuggestions } from '@/api'
-import { getYearFromTmdbReleaseDate } from '@/utils'
 const ProgressLinear = () => import('@/components/common/ProgressLinear')
 
 export default {
@@ -102,9 +101,6 @@ export default {
         }
       })
       this.$emit('optionsChange', reducedOptions)
-    },
-    getYear: function (releaseDate) {
-      return `(${getYearFromTmdbReleaseDate(releaseDate)})`
     }
   }
 }
