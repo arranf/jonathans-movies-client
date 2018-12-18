@@ -6,9 +6,7 @@
 
     <v-card v-if="!token && !showCodeEnter && !showPasswordEntry">
       <v-card-text>
-        <v-form>
           <v-text-field prepend-icon="inbox" name="email" label="Email" v-model="email" type="text"></v-text-field>
-        </v-form>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -26,7 +24,6 @@
 
       <v-card >
         <v-card-text>
-          <v-form>
             <v-text-field
             name="short-token"
             label="Reset Code"
@@ -34,7 +31,6 @@
             v-model="shortToken"
             type="number"
           ></v-text-field>
-          </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -46,7 +42,6 @@
 
     <v-card v-if="token || showPasswordEntry">
       <v-card-text>
-        <v-form>
           <v-text-field loading @input="checkPasswordStrength" prepend-icon="lock" name="password" label="New Password" v-model="password" id="password"
             :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
             @click:append="() => (hidePassword = !hidePassword)"
@@ -59,7 +54,6 @@
                 height="4"
               ></progress-linear>
           </v-text-field>
-        </v-form>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>

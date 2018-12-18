@@ -5,7 +5,6 @@
         <h1 class="display-1">Sign Up</h1>
         </v-card-title>
     <v-card-text id="internalLoginForm" >
-     <v-form>
       <v-text-field prepend-icon="inbox" name="email" label="Email" hint="Used to reset your password if you forget it." @change="checkUnique" :error-messages="emailErrors" v-model="email" type="text"></v-text-field>
       <v-text-field loading @input="checkPasswordStrength" prepend-icon="lock" name="password" label="Password" v-model="password" id="password"
         :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
@@ -18,7 +17,6 @@
             :height="4"
           ></progress-linear>
       </v-text-field>
-     </v-form>
     </v-card-text>
       <v-card-actions>
         <v-spacer />
