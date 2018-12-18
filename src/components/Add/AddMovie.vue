@@ -32,7 +32,7 @@
       </div>
 
       <v-card v-if="!showSearch && film">
-            <movie-bg v-if="film.backdrop_path" :film="film" :height="200" />
+            <movie-bg v-if="film.backdrop_path" :film="film" />
             <v-card-title>
               <h2 class="md-title">{{film.name}} <small>{{getYear(film.release_date)}}</small></h2>
             </v-card-title>
@@ -60,7 +60,7 @@
 import { getMovieData, searchForMovie } from '@/api/tmdb'
 import { genres } from '@/constants'
 import { mapActions, mapState } from 'vuex'
-import { getYearFromTmdbReleaseDate, getTmdbBackdropImage } from '@/utils'
+import { getYearFromTmdbReleaseDate } from '@/utils'
 
 import MovieBg from '@/components/common/MovieBg'
 
@@ -131,7 +131,8 @@ export default {
           film.runtime = tmdbResponse.runtime
           this.searchQuery = ''
           this.suggestions = []
-          this.film = film
+          const { Film } = this.$FeathersVuex
+          this.film = new Film(film) // allows us to use vuex instance defaults by doing this
           this.isDuplicateForOther = apiResponse.total > 0
           this.isDuplicateForCurrent = apiResponse.total > 0 && apiResponse.data.every(a => a.owned_by.indexOf(this.currentCollection) > -1)
           this.showSearch = false
@@ -164,9 +165,8 @@ export default {
             this.setSnackbarText('Error adding film')
           })
       } else {
-        const { Film } = this.$FeathersVuex
         this.film.owned_by = [this.currentCollection]
-        new Film(this.film)
+        this.film
           .create()
           .then(() => {
             this.setSnackbarText(`Successfully added ${this.film.name} to ${this.currentCollection}'s collection`)
@@ -196,13 +196,10 @@ export default {
   },
   computed: {
     ...mapState('collection', { currentCollection: 'current' }),
-    getBackdropImage () {
-      if (this.film) {
-        return getTmdbBackdropImage(this.film.backdrop_path)
-      }
-      return ''
-    },
     truncatedOverview () {
+      if (!this.film.overview) {
+        return ''
+      }
       if (!(this.film.overview.length > 350)) {
         return this.film.overview
       }

@@ -13,7 +13,7 @@ export default {
     const film = props.film
     console.log(`Rendering ${film.name}: start`)
     const style = function () {
-      if (!film.backdrop_svg_base64encoded) {
+      if (!film.backdropSvgPlaceholder) {
         return {}
       }
       return {
