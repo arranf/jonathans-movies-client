@@ -3,7 +3,7 @@
   <v-dialog v-model="show" lazy fullscreen transition="dialog-bottom-transition" :overlay="false">
     <card v-if="film"  >
       <movie-bg :film="film" />
-      <v-card-title primary-title>
+      <card-title primary-title>
         <div>
           <h1 class="headline mb-0">{{film.name}} <small>({{film.releaseYear}})</small></h1>
           <a v-if="film.imdbLink" :href="film.imdbLink" target="_blank" style="float: right;">
@@ -13,9 +13,9 @@
           </a>
           <h3 class="subtitle grey--text text--darken-2">{{film.tagline}}</h3>
         </div>
-      </v-card-title>
+      </card-title>
 
-      <v-card-text>
+      <card-text>
         <div class="container grid-list-md text-xs-left">
           <div class="layout row wrap">
             <div class="flex xs6">
@@ -36,15 +36,15 @@
             </div>
           </div>
         </div>
-      </v-card-text>
+      </card-text>
 
       <v-slide-y-transition>
-        <v-card-text v-if="showOverview">
+        <card-text v-if="showOverview">
                 {{film.overview}}
-        </v-card-text>
+        </card-text>
       </v-slide-y-transition>
 
-       <v-card-actions>
+       <card-actions>
          <spacer />
         <v-btn flat color="primary" @click.prevent="addNomination()" v-if="inNominations" :disabled="!nominatable">
           {{nominateButtonText}}
@@ -53,7 +53,7 @@
           <icon>{{!showOverview ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</icon> Read Plot
         </v-btn>
         <v-btn flat @click="closeModal()">Close</v-btn>
-        </v-card-actions>
+        </card-actions>
     </card>
     <loading v-else />
    </v-dialog>
@@ -70,6 +70,9 @@ import Loading from '@/components/common/Loading'
 import Spacer from '@/components/Lite/Spacer'
 import Icon from '@/components/Lite/Icon'
 import Card from '@/components/Lite/Card'
+import CardTitle from '@/components/Lite/Card/Title'
+import CardActions from '@/components/Lite/Card/Actions'
+import CardText from '@/components/Lite/Card/Text'
 
 export default {
   name: 'MovieInfoModal',
@@ -78,7 +81,10 @@ export default {
     Loading,
     Spacer,
     Icon,
-    Card
+    Card,
+    CardTitle,
+    CardActions,
+    CardText
   },
   props: {
     filmId: { type: String },

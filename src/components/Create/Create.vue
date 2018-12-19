@@ -2,16 +2,16 @@
   <div class="mb-3">
     <h2 class="display-2 mt-4 pb-3">Create a Poll</h2>
 
-    <v-card>
-      <v-card-title class="title font-weight-regular justify-space-between">
+    <card>
+      <card-title class="title font-weight-regular justify-space-between">
         <span>{{ currentTitle }}</span>
-      </v-card-title>
+      </card-title>
 
       <v-window v-model="step">
 
         <!-- Nominations or not -->
         <v-window-item :value="1">
-          <v-card-text>
+          <card-text>
             <div class="caption grey--text text--darken-1 mb-2">
               Should this poll have a nominations phase to allow other users to suggest movies?
             </div>
@@ -26,21 +26,21 @@
                 :value="false"
               ></v-radio>
             </v-radio-group>
-          </v-card-text>
+          </card-text>
         </v-window-item>
 
         <!-- Nomination options -->
         <v-window-item :value="2">
-          <v-card-text>
+          <card-text>
             <v-text-field id="nomination-length" :error-messages="nominationLengthErrors" prepend-icon="timelapse" label="Nomination Length" hint="The duration of the nomination phase (in minutes)" v-model="nominationsMinutes" @input="$v.nominationsMinutes.$touch()" type="number"  pattern="[1-9][0-9]*" min="1" max="60" />
             <v-text-field id="nomination-votes" :error-messages="nominationsErrors" prepend-icon="format_list_numbered" label="Number of Nominations Per User" hint="The number of nominations each person can make" v-model="nominations" @input="$v.nominations.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
 
-          </v-card-text>
+          </card-text>
         </v-window-item>
 
         <!-- Add Movies -->
         <v-window-item :value="3">
-          <v-card-text>
+          <card-text>
             <movie-suggest :placeholder="movieSuggestPlaceholder" :errors="optionsErrors" @optionsChange="updateOptions"></movie-suggest>
             <span v-if="haveNominations" class="caption grey--text text--darken-1">
               Optionally pre-select some movies to add to the pool of nominations.
@@ -48,31 +48,31 @@
             <span v-else class="caption grey--text text--darken-1">
               Choose the movies to be voted on.
             </span>
-          </v-card-text>
+          </card-text>
         </v-window-item>
 
         <!-- Voting Phase Options -->
         <v-window-item :value="4">
-          <v-card-text>
+          <card-text>
             <v-text-field id="minutes" :error-messages="minutesErrors" prepend-icon="timelapse" label="Voting Length" hint="The duration of voting (in minutes)" v-model="minutes" @input="$v.minutes.$touch()" type="number" pattern="[1-9]" min="1" max="10" />
             <v-text-field id="votes" :error-messages="votesErrors" prepend-icon="format_list_numbered" label="Number of Votes Per User" hint="The number of votes each person receives" v-model="votes" @input="$v.votes.$touch()" type="number" pattern="[1-4]" min="1" max="4" />
-          </v-card-text>
+          </card-text>
         </v-window-item>
 
         <!-- Summary -->
         <v-window-item :value="5">
-          <v-card-text>
+          <card-text>
             <span class="grey--text text--darken-1">Voting Length: <span class="greytext--darken-3">{{minutes}}</span> <small>m</small></span><br />
             <span class="grey--text text--darken-1">Vote Count: <span class="text--darken-3">{{votes}}</span></span><br />
             <span class="grey--text text--darken-1">Nomination Length: <span class="text--darken-3">{{nominationsMinutes}}</span> <small>m</small></span><br />
             <span class="grey--text text--darken-1">Nomination Count: <span class="text--darken-3">{{nominations}}</span></span><br />
-          </v-card-text>
+          </card-text>
         </v-window-item>
       </v-window>
 
       <v-divider></v-divider>
 
-      <v-card-actions>
+      <card-actions>
         <v-btn
           :disabled="step === 1"
           flat
@@ -89,8 +89,8 @@
         >
           {{step === 5 ? 'Start Poll': 'Next'}}
         </v-btn>
-      </v-card-actions>
-    </v-card>
+      </card-actions>
+    </card>
   </div>
 </template>
 
@@ -108,11 +108,20 @@ import MovieSuggest from './MovieSuggest'
 import Spacer from '@/components/Lite/Spacer'
 import router from '@/router'
 
+import Card from '@/components/Lite/Card'
+import CardTitle from '@/components/Lite/Card/Title'
+import CardActions from '@/components/Lite/Card/Actions'
+import CardText from '@/components/Lite/Card/Text'
+
 export default {
   name: 'Create',
   components: {
     MovieSuggest,
-    Spacer
+    Spacer,
+    Card,
+    CardTitle,
+    CardText,
+    CardActions
   },
   mixins: [validationMixin],
   data () {

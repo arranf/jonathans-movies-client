@@ -2,10 +2,10 @@
   <div class="text-xs-center mt-4">
     <card id="loginForm">
       <div class="pa-2">
-        <v-card-title>
+        <card-title>
           <h1 class="display-1">Login</h1>
-          </v-card-title>
-        <v-card-text>
+          </card-title>
+        <card-text>
             <v-text-field @input="isError = false" :error="isError" prepend-icon="inbox" name="email" label="Email" v-model="email" type="text"></v-text-field>
             <v-text-field @input="isError = false" :error="isError" ref="password" prepend-icon="lock" name="password" label="Password" v-model="password" id="password"
               :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
@@ -17,7 +17,7 @@
           <v-btn block id="facebook" class="btn-facebook mt-2" @click.prevent="facebookLogin()">
             <span class="white--text">Log In with Facebook</span>
           </v-btn>
-        </v-card-text>
+        </card-text>
       </div>
       <div class="pa-4 grey lighten-3">
         <router-link id="signup" to="/signup">Not got an account? Sign up</router-link>
@@ -32,11 +32,15 @@ import { mapActions } from 'vuex'
 import router from '@/router'
 
 import Card from '@/components/Lite/Card'
+import CardTitle from '@/components/Lite/Card/Title'
+import CardText from '@/components/Lite/Card/Text'
 
 export default {
   name: 'Login',
   components: {
-    Card
+    Card,
+    CardTitle,
+    CardText
   },
   data () {
     return {

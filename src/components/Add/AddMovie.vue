@@ -33,24 +33,24 @@
 
       <card v-if="!showSearch && film">
             <movie-bg v-if="film.backdrop_path" :film="film" />
-            <v-card-title>
+            <card-title>
               <h2 class="md-title">{{film.name}} <small>{{getYear(film.release_date)}}</small></h2>
-            </v-card-title>
+            </card-title>
 
-            <v-card-text style="padding-top: 0px">
+            <card-text style="padding-top: 0px">
               <div v-if="film.tagline">
                 <h4 style="font-weight: 600">{{film.tagline}}</h4>
               </div>
-            </v-card-text>
+            </card-text>
 
-            <v-card-text style="padding-top: 0px">
+            <card-text style="padding-top: 0px">
               {{truncatedOverview}}
-            </v-card-text>
+            </card-text>
 
-          <v-card-actions>
+          <card-actions>
             <v-btn @click="addFilm" :disabled="isDuplicateForCurrent" color="primary">{{addButtonLabel}}</v-btn>
             <v-btn flat @click="closePreview" >Cancel</v-btn>
-          </v-card-actions>
+          </card-actions>
         </card>
       </transition>
   </div>
@@ -65,13 +65,19 @@ import { getYearFromTmdbReleaseDate } from '@/utils'
 import MovieBg from '@/components/common/MovieBg'
 import Icon from '@/components/Lite/Icon'
 import Card from '@/components/Lite/Card'
+import CardTitle from '@/components/Lite/Card/Title'
+import CardActions from '@/components/Lite/Card/Actions'
+import CardText from '@/components/Lite/Card/Text'
 
 export default {
   name: 'AddMovie',
   components: {
     MovieBg,
     Icon,
-    Card
+    Card,
+    CardTitle,
+    CardActions,
+    CardText
   },
   data () {
     return {

@@ -3,24 +3,24 @@
       <div v-if="allFilms">
         <!-- TODO: Move this out and make it emit update events and a filter event -->
         <v-dialog lazy v-model="showFilters">
-          <v-card>
-            <v-card-title class="headline">Filter Movies</v-card-title>
+          <card>
+            <card-title class="headline">Filter Movies</card-title>
 
             <v-subheader>Genres</v-subheader>
-            <v-card-text class="pt-0 pb-0">
+            <card-text class="pt-0 pb-0">
               <v-select :items="totalGenres" v-model="genres" multiple chips deletable-chips item-text="name" item-value="name" />
-            </v-card-text>
+            </card-text>
             <v-subheader>Minimum Rating</v-subheader>
-            <v-card-text class="pt-0 pb-0">
+            <card-text class="pt-0 pb-0">
               <v-slider v-model="floorRating" thumb-label min="0" max="10" step="0.5" ticks></v-slider>
-            </v-card-text>
-            <v-card-actions>
+            </card-text>
+            <card-actions>
               <spacer id="hide" />
               <v-btn flat @click.prevent="requery()" type="submit" class="md-accent md-raised">Submit</v-btn>
               <v-btn flat @click.prevent="reset()" type="reset">Reset</v-btn>
               <v-btn flat @click.prevent="showFilters = false">Close</v-btn>
-            </v-card-actions>
-          </v-card>
+            </card-actions>
+          </card>
         </v-dialog>
 
         <movie-info-modal close-route="/movies" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
@@ -53,6 +53,11 @@ import Spacer from '@/components/Lite/Spacer'
 import Icon from '@/components/Lite/Icon'
 import Loading from '@/components/common/Loading'
 
+import Card from '@/components/Lite/Card'
+import CardTitle from '@/components/Lite/Card/Title'
+import CardActions from '@/components/Lite/Card/Actions'
+import CardText from '@/components/Lite/Card/Text'
+
 const MovieInfoModal = () => ({ component: import('@/components/common/MovieInfoModal'), delay: 200, loading: Loading })
 const Quote = () => import('@/components/Discover/Quote')
 const ProgressLinear = () => import('@/components/common/ProgressLinear')
@@ -65,7 +70,11 @@ export default {
     Quote,
     ProgressLinear,
     Spacer,
-    Icon
+    Icon,
+    Card,
+    CardTitle,
+    CardActions,
+    CardText
   },
   data: function () {
     return {

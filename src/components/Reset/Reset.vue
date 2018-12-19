@@ -4,26 +4,26 @@
       <h1 class="display-2">Reset Password</h1>
     </div>
 
-    <v-card v-if="!token && !showCodeEnter && !showPasswordEntry">
-      <v-card-text>
+    <card v-if="!token && !showCodeEnter && !showPasswordEntry">
+      <card-text>
           <v-text-field prepend-icon="inbox" name="email" label="Email" v-model="email" type="text"></v-text-field>
-      </v-card-text>
-      <v-card-actions>
+      </card-text>
+      <card-actions>
         <spacer />
         <v-btn id="submit" :disabled="isDisabled" @click.prevent="requestReset()" color="primary">Request Reset</v-btn>
         <v-btn flat id="back" to="/">Back</v-btn>
-      </v-card-actions>
-    </v-card>
+      </card-actions>
+    </card>
 
     <div v-if="showCodeEnter && !showPasswordEntry">
-      <v-card :value="true" type="info" class="mb-2">
-        <v-card-text>
+      <card :value="true" type="info" class="mb-2">
+        <card-text>
           <p class="body-1 mb-0">An email has been sent to you with a reset code.</p>
-        </v-card-text>
-      </v-card>
+        </card-text>
+      </card>
 
-      <v-card >
-        <v-card-text>
+      <card >
+        <card-text>
             <v-text-field
             name="short-token"
             label="Reset Code"
@@ -31,17 +31,17 @@
             v-model="shortToken"
             type="number"
           ></v-text-field>
-        </v-card-text>
-        <v-card-actions>
+        </card-text>
+        <card-actions>
           <spacer />
           <v-btn id="submitCode" :disabled="shortToken.length != 6" @click.prevent="setCode()" color="primary">Input Code</v-btn>
           <v-btn flat id="back" to="/">Back</v-btn>
-        </v-card-actions>
-      </v-card>
+        </card-actions>
+      </card>
     </div>
 
-    <v-card v-if="token || showPasswordEntry">
-      <v-card-text>
+    <card v-if="token || showPasswordEntry">
+      <card-text>
           <v-text-field loading @input="checkPasswordStrength" prepend-icon="lock" name="password" label="New Password" v-model="password" id="password"
             :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
             @click:append="() => (hidePassword = !hidePassword)"
@@ -54,13 +54,13 @@
                 height="4"
               ></progress-linear>
           </v-text-field>
-      </v-card-text>
-      <v-card-actions>
+      </card-text>
+      <card-actions>
         <spacer />
         <v-btn id="submit" :disabled="!password" @click.prevent="resetPassword()" color="primary">Change Password</v-btn>
         <v-btn flat id="back" to="/">Back</v-btn>
-      </v-card-actions>
-    </v-card>
+      </card-actions>
+    </card>
   </div>
 </template>
 
@@ -72,6 +72,9 @@ import zxcvbn from 'zxcvbn'
 import feathersClient from '@/api/feathers-client'
 import authClient from '@/api/auth-client'
 
+import Card from '@/components/Lite/Card'
+import CardActions from '@/components/Lite/Card/Actions'
+import CardText from '@/components/Lite/Card/Text'
 import Spacer from '@/components/Lite/Spacer'
 const ProgressLinear = () => import('@/components/common/ProgressLinear')
 
@@ -90,7 +93,10 @@ export default {
   },
   components: {
     ProgressLinear,
-    Spacer
+    Spacer,
+    Card,
+    CardActions,
+    CardText
   },
   props: {
     token: {

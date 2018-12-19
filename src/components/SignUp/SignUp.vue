@@ -1,10 +1,10 @@
 <template>
-  <v-card>
+  <card>
     <div class="pa-2">
-      <v-card-title>
+      <card-title>
         <h1 class="display-1">Sign Up</h1>
-        </v-card-title>
-    <v-card-text id="internalLoginForm" >
+        </card-title>
+    <card-text id="internalLoginForm" >
       <v-text-field prepend-icon="inbox" name="email" label="Email" hint="Used to reset your password if you forget it." @change="checkUnique" :error-messages="emailErrors" v-model="email" type="text"></v-text-field>
       <v-text-field loading @input="checkPasswordStrength" prepend-icon="lock" name="password" label="Password" v-model="password" id="password"
         :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
@@ -17,14 +17,14 @@
             :height="4"
           ></progress-linear>
       </v-text-field>
-    </v-card-text>
-      <v-card-actions>
+    </card-text>
+      <card-actions>
         <spacer />
         <v-btn id="submit" :disabled="isDisabled || !emailIsUnique" @click.prevent="trySignUp()" color="primary">Signup</v-btn>
         <v-btn id="back" flat @click.prevent="toHome()">Back</v-btn>
-      </v-card-actions>
+      </card-actions>
     </div>
-  </v-card>
+  </card>
 </template>
 
 <script>
@@ -33,14 +33,24 @@ import authClient from '@/api/auth-client'
 import { mapActions } from 'vuex'
 import router from '@/router'
 import zxcvbn from 'zxcvbn'
+
 import Spacer from '@/components/Lite/Spacer'
+import Card from '@/components/Lite/Card'
+import CardTitle from '@/components/Lite/Card/Title'
+import CardActions from '@/components/Lite/Card/Actions'
+import CardText from '@/components/Lite/Card/Text'
+
 const ProgressLinear = () => import('@/components/common/ProgressLinear')
 
 export default {
   name: 'SignUp',
   components: {
     ProgressLinear,
-    Spacer
+    Spacer,
+    Card,
+    CardTitle,
+    CardActions,
+    CardText
   },
   data () {
     return {

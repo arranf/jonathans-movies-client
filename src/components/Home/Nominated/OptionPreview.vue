@@ -5,18 +5,18 @@
         <img class="img-fluid lazyload" :src="film.backDropSvgPlaceholder" :data-srcset="film.tmdbBackdropSrcSet" :alt="option.name + ' image'">
         <div class="card__media__content"></div>
     </div>
-    <v-card-title primary-title>
+    <card-title primary-title>
       <div>
         <h3 class="headline mb-0">{{option.name}}</h3>
         <div v-if="film">{{film.tagline}}</div>
       </div>
-    </v-card-title>
-    <v-card-actions>
+    </card-title>
+    <card-actions>
       <v-btn :color="voteButtonColor" @click="vote" v-if="!isCurrentPollInNomination && getActivePoll" :disabled="!isVoted(option._id) && remainingVotes <= 0" flat>
         {{voteButtonText}}
       </v-btn>
       <v-btn @click="showModal()" flat color="orange">More Info</v-btn>
-    </v-card-actions>
+    </card-actions>
   </card>
 </template>
 
@@ -25,6 +25,8 @@ import { colors } from '@/constants'
 import { selectRandom } from '@/utils'
 import { mapActions, mapGetters, mapState } from 'vuex'
 import Card from '@/components/Lite/Card'
+import CardTitle from '@/components/Lite/Card/Title'
+import CardActions from '@/components/Lite/Card/Actions'
 
 export default {
   name: 'OptionPreview',
@@ -33,7 +35,9 @@ export default {
     showInfo: { type: Boolean, default: true }
   },
   components: {
-    Card
+    Card,
+    CardTitle,
+    CardActions
   },
   computed: {
     ...mapState('auth', ['user']),

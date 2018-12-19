@@ -21,6 +21,8 @@ export default {
 @require '../../assets/styles/vuetify-lite/theme.styl'
 // primary transition
 @require '../../assets/styles/vuetify-lite/settings/_variables/_transition.styl'
+// elevation($)
+@require '../../assets/styles/vuetify-lite/generic/_elevation.styl'
 
 // taken from _variables
 $card-border-radius := 2px
