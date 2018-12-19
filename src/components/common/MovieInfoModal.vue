@@ -1,7 +1,7 @@
 <template>
 <div class="layout row justify-center">
   <v-dialog v-model="show" lazy fullscreen transition="dialog-bottom-transition" :overlay="false">
-    <v-card v-if="film"  >
+    <card v-if="film"  >
       <movie-bg :film="film" />
       <v-card-title primary-title>
         <div>
@@ -50,11 +50,11 @@
           {{nominateButtonText}}
         </v-btn>
         <v-btn flat @click="showOverview = !showOverview">
-          <icon v-once>{{!showOverview ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</icon> Read Plot
+          <icon>{{!showOverview ? 'keyboard_arrow_down' : 'keyboard_arrow_up'}}</icon> Read Plot
         </v-btn>
         <v-btn flat @click="closeModal()">Close</v-btn>
         </v-card-actions>
-    </v-card>
+    </card>
     <loading v-else />
    </v-dialog>
   </div>
@@ -69,6 +69,7 @@ import MovieBg from './MovieBg'
 import Loading from '@/components/common/Loading'
 import Spacer from '@/components/Lite/Spacer'
 import Icon from '@/components/Lite/Icon'
+import Card from '@/components/Lite/Card'
 
 export default {
   name: 'MovieInfoModal',
@@ -76,7 +77,8 @@ export default {
     MovieBg,
     Loading,
     Spacer,
-    Icon
+    Icon,
+    Card
   },
   props: {
     filmId: { type: String },

@@ -1,0 +1,8 @@
+@import './settings/_theme.styl'
+
+theme($component, $name)
+  light($component, $name)
+
+light($component, $name)
+  .theme--light.{$name}
+    $component($material-light)

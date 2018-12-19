@@ -15,7 +15,17 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+@require '../../assets/styles/vuetify-lite/theme.styl'
 @require '../../assets/styles/vuetify-lite/settings/_variables/_transition.styl'
+
+/* Themes */
+v-icon($material)
+  color: $material.icons.active
+
+  &.v-icon--disabled
+    color: $material.icons.inactive !important
+
+theme(v-icon, "v-icon")
 
 .v-item-group.v-bottom-nav .v-btn .v-btn__content i.vl-icon
     color: inherit;
