@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <card>
     <!-- TODO: Replace with MovieBG (?) -->
     <div v-if="option && film && film.backdrop_path" class="card__media">
         <img class="img-fluid lazyload" :src="film.backDropSvgPlaceholder" :data-srcset="film.tmdbBackdropSrcSet" :alt="option.name + ' image'">
@@ -17,19 +17,23 @@
       </v-btn>
       <v-btn @click="showModal()" flat color="orange">More Info</v-btn>
     </v-card-actions>
-  </v-card>
+  </card>
 </template>
 
 <script>
 import { colors } from '@/constants'
 import { selectRandom } from '@/utils'
 import { mapActions, mapGetters, mapState } from 'vuex'
+import Card from '@/components/Lite/Card'
 
 export default {
   name: 'OptionPreview',
   props: {
     option: { type: Object, required: true },
     showInfo: { type: Boolean, default: true }
+  },
+  components: {
+    Card
   },
   computed: {
     ...mapState('auth', ['user']),

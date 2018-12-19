@@ -31,7 +31,7 @@
           </v-autocomplete>
       </div>
 
-      <v-card v-if="!showSearch && film">
+      <card v-if="!showSearch && film">
             <movie-bg v-if="film.backdrop_path" :film="film" />
             <v-card-title>
               <h2 class="md-title">{{film.name}} <small>{{getYear(film.release_date)}}</small></h2>
@@ -51,7 +51,7 @@
             <v-btn @click="addFilm" :disabled="isDuplicateForCurrent" color="primary">{{addButtonLabel}}</v-btn>
             <v-btn flat @click="closePreview" >Cancel</v-btn>
           </v-card-actions>
-        </v-card>
+        </card>
       </transition>
   </div>
 </template>
@@ -64,12 +64,14 @@ import { getYearFromTmdbReleaseDate } from '@/utils'
 
 import MovieBg from '@/components/common/MovieBg'
 import Icon from '@/components/Lite/Icon'
+import Card from '@/components/Lite/Card'
 
 export default {
-  name: 'AddFilm',
+  name: 'AddMovie',
   components: {
     MovieBg,
-    Icon
+    Icon,
+    Card
   },
   data () {
     return {

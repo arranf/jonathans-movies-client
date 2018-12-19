@@ -1,6 +1,6 @@
 <template>
   <div class="text-xs-center mt-4">
-    <v-card id="loginForm">
+    <card id="loginForm">
       <div class="pa-2">
         <v-card-title>
           <h1 class="display-1">Login</h1>
@@ -22,7 +22,7 @@
       <div class="pa-4 grey lighten-3">
         <router-link id="signup" to="/signup">Not got an account? Sign up</router-link>
       </div>
-    </v-card>
+    </card>
   </div>
 </template>
 
@@ -31,8 +31,13 @@ import feathersClient from '@/api/feathers-client'
 import { mapActions } from 'vuex'
 import router from '@/router'
 
+import Card from '@/components/Lite/Card'
+
 export default {
   name: 'Login',
+  components: {
+    Card
+  },
   data () {
     return {
       hidePassword: true,

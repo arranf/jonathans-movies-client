@@ -2,7 +2,7 @@
   <div class="mb-3">
     <!-- <h2 class="display-2 mt-4 pb-3">Switch Collection</h2> -->
 
-    <v-card>
+    <card>
       <v-card-title class="font-weight-regular justify-space-between">
         <span>Current Collection: {{ currentCollection }}</span>
       </v-card-title>
@@ -26,16 +26,20 @@
       <!-- <v-card-actions>
 
       </v-card-actions> -->
-    </v-card>
+    </card>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
 import router from '@/router'
+import Card from '@/components/Lite/Card'
 
 export default {
   name: 'SwitchCollection',
+  components: {
+    Card
+  },
   methods: {
     ...mapActions('snackbar', { setSnackbarText: 'setText' }),
     ...mapActions('collection', { getCurrentCollection: 'getCurrent', changeCollection: 'changeCurrent' }),
