@@ -1,43 +1,37 @@
 <template>
-  <v-list-tile @click.prevent="showModal()">
+  <list-tile @click.prevent="showModal()">
       <v-list-tile-avatar>
-        <v-avatar color="primary" :size="40">
+        <avatar color="primary" :size="40">
           <span class="white--text headline">{{filmStart}}</span>
-        </v-avatar>
+        </avatar>
       </v-list-tile-avatar>
       <v-list-tile-content>
         <v-list-tile-title v-text="film.name"></v-list-tile-title>
         <v-list-tile-sub-title v-html="film.releaseYear"></v-list-tile-sub-title>
       </v-list-tile-content>
-  </v-list-tile>
+  </list-tile>
 </template>
 
 <script>
-import { addNomination } from '@/api'
-import { mapGetters } from 'vuex'
+// TODO: Refactor into functional component
+import Avatar from '@/components/Lite/Avatar'
+import ListTile from '@/components/Lite/List/Tile'
 
 export default {
   name: 'FilmListItem',
   props: {
     film: { type: Object }
   },
+  components: {
+    Avatar,
+    ListTile
+  },
   methods: {
     showModal: function () {
       this.$router.push({ name: 'Movies', params: { filmId: this.film._id } })
-    },
-    addNomination: function () {
-      addNomination(this.film)
-        .then(() => {
-          this.hideModal()
-          if (!this.hasNominationsRemaining) {
-            this.$router.push('/')
-          }
-        })
-        .catch(error => console.error(error))
     }
   },
   computed: {
-    ...mapGetters('option', ['hasNominationsRemaining']),
     filmStart: function () {
       const code = this.film.name.charCodeAt(0)
       if (
