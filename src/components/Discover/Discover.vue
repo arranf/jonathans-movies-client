@@ -19,11 +19,21 @@
             <h3 class="separator">Recommended For You</h3>
             <v-container fluid grid-list-xs>
             <v-layout row wrap>
-              <v-flex xs6 sm4 md3 lg2 :key="recommendation.film._id+index" v-for="(recommendation, index) in recommendations">
+              <v-flex xs6 sm4 md3 lg2 :key="recommendation.film._id+index+'recommended'" v-for="(recommendation, index) in recommendations">
                 <film-preview :film="recommendation.film" :reasons="recommendation.reasons" modal-page-name="Discover"></film-preview>
               </v-flex>
             </v-layout>
           </v-container>
+        </div>
+        <div v-if="recentlyAdded && recentlyAdded.length">
+          <h3 class="separator">Recently Added</h3>
+              <v-container fluid grid-list-xs>
+              <v-layout row wrap>
+                <v-flex xs6 sm4 md3 lg2 :key="recentlyAdded._id+index+'recent'" v-for="(recentlyAdded, index) in recentlyAdded">
+                  <film-preview :film="recentlyAdded" modal-page-name="Discover"></film-preview>
+                </v-flex>
+              </v-layout>
+            </v-container>
         </div>
         <div v-if="suggestions && suggestions.length">
           <h3 class="separator mt-4">Popular and Highly Rated Movies</h3>
@@ -46,7 +56,7 @@
 import FilmPreview from '@/components/common/FilmPreview'
 import MovieInfoModal from '@/components/common/MovieInfoModal'
 import Quote from './Quote'
-import { getRecommendations as fetchRecommendations, discoverMovies } from '@/api'
+import { getRecommendations as fetchRecommendations, getRecentlyAdded as fetchRecentlyAdded, discoverMovies } from '@/api'
 
 import scrollListener from '@/scroll-listener'
 import { mapActions } from 'vuex'
@@ -58,6 +68,7 @@ export default {
       showingFilm: false,
       suggestions: [],
       recommendations: [],
+      recentlyAdded: [],
       busy: false,
       seenIds: [],
       done: false
@@ -116,6 +127,19 @@ export default {
           this.busy = false
         })
     },
+    getRecentlyAdded: function () {
+      this.busy = true
+      return fetchRecentlyAdded()
+        .then(response => {
+          this.recentlyAdded = response.data || response
+          this.busy = false
+        })
+        .catch(e => {
+          console.error(e)
+          this.setSnackbar('Something went wrong. Try again.')
+          this.busy = false
+        })
+    },
     scroll () {
       window.scrollTo(0, 0)
     }
@@ -135,6 +159,7 @@ export default {
     this.showingFilm = Boolean(this.filmId)
     try {
       await this.getRecommendations()
+      await this.getRecentlyAdded()
       await this.refresh()
       document.addEventListener('scroll', this.listener)
       await this.setLoaded('Discover')
