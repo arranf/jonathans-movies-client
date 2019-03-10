@@ -1095,7 +1095,7 @@ export default {
         createdAt: '2017-09-27T13:01:32.926Z',
         updatedAt: '2018-05-25T18:53:44.218Z',
         name: 'Arran France',
-        email: 'arranf@gmail.com',
+        email: 'arran@arranfrance.com',
         isAdmin: true,
         facebook: {
           profile: {
@@ -1105,7 +1105,7 @@ export default {
             name: { familyName: null, givenName: null, middleName: null },
             gender: null,
             profileUrl: null,
-            emails: [{ value: 'arranf@gmail.com' }],
+            emails: [{ value: 'arran@arranfrance.com' }],
             photos: [
               {
                 value:
@@ -1127,7 +1127,7 @@ export default {
                   width: 50
                 }
               },
-              email: 'arranf@gmail.com'
+              email: 'arran@arranfrance.com'
             }
           },
           accessToken:
