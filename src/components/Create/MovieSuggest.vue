@@ -31,7 +31,7 @@
             </v-list-tile-content>
           </li>
         </ul>
-        <v-progress-linear v-else-if="loading" indeterminate slot="progress" height="4"/>
+        <!-- <v-progress-linear v-else-if="loading" indeterminate slot="progress" height="4"/> -->
       </div>
 
       <div class="selected">
@@ -164,14 +164,15 @@ export default {
 .search-box {
   display: inline-block;
   position: relative;
-  margin-right: 1rem;
+  margin-left: 1rem;
+  min-width: 80%;
 }
 .search-box input {
   cursor: text;
-  width: 10rem;
+  width: 100%;
   color: #4e6e8e;
   display: inline-block;
-  border: 1px solid #cfd4db;
+  border: 1px solid  #3e98af;
   border-radius: 2rem;
   font-size: 0.9rem;
   line-height: 2rem;
@@ -180,6 +181,7 @@ export default {
   transition: all 0.2s ease;
   /* background: #fff url("../styles/search.svg") 0.6rem 0.5rem no-repeat; */
   background-size: 1rem;
+
 }
 .search-box input:focus {
   cursor: auto;
@@ -225,14 +227,14 @@ export default {
 @media (max-width: 959px) {
   .search-box input {
     cursor: pointer;
-    width: 0;
-    border-color: transparent;
+    /* width: 0; */
+    /* border-color: transparent; */
     position: relative;
   }
   .search-box input:focus {
     cursor: text;
     left: 0;
-    width: 10rem;
+    /* width: 10rem; */
   }
 }
 @media (max-width: 959px) and (min-width: 719px) {
