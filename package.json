@@ -8,7 +8,9 @@
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",
-    "report": "ANALYZE=TRUE vue-cli-service build --report "
+    "report": "ANALYZE=TRUE vue-cli-service build --report ",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "@feathersjs/client": "^3.7.5",
@@ -26,7 +28,8 @@
     "vuelidate": "^0.7.4",
     "vuetify": "^1.5.12",
     "vuex": "^3.0.1",
-    "zxcvbn": "^4.4.2"
+    "zxcvbn": "^4.4.2",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.1.0",
@@ -115,5 +118,6 @@
       "vue-cli-service lint",
       "git add"
     ]
-  }
+  },
+  "snyk": true
 }
