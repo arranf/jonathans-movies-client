@@ -3,6 +3,7 @@ const DefinePlugin = require('webpack').DefinePlugin
 // const Critters = require('critters-webpack-plugin')
 
 module.exports = {
+  transpileDependencies: ['vuetify'],
   pwa: {
     name: "Jonathan's Movies",
     themeColor: '#365ED4',

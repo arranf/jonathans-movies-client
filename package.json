@@ -29,6 +29,7 @@
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
+    "@babel/polyfill": "^7.6.0",
     "@vue/cli-plugin-babel": "^3.1.0",
     "@vue/cli-plugin-e2e-nightwatch": "^3.1.0",
     "@vue/cli-plugin-eslint": "^3.1.3",
