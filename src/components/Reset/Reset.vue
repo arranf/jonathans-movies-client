@@ -12,7 +12,13 @@
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn id="submit" :disabled="isDisabled" @click.prevent="requestReset()" color="primary">Request Reset</v-btn>
+        <v-btn
+          id="submit"
+          :disabled="isDisabled"
+          :loading="isLoading"
+          @click.prevent="requestReset()"
+          color="primary"
+        >Request Reset</v-btn>
         <v-btn flat id="back" to="/">Back</v-btn>
       </v-card-actions>
     </v-card>
@@ -24,21 +30,26 @@
         </v-card-text>
       </v-card>
 
-      <v-card >
+      <v-card>
         <v-card-text>
           <v-form>
             <v-text-field
-            name="short-token"
-            label="Reset Code"
-            mask="######"
-            v-model="shortToken"
-            type="number"
-          ></v-text-field>
+              name="short-token"
+              label="Reset Code"
+              mask="######"
+              v-model="shortToken"
+              type="number"
+            ></v-text-field>
           </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn id="submitCode" :disabled="shortToken.length != 6" @click.prevent="setCode()" color="primary">Input Code</v-btn>
+          <v-btn
+            id="submitCode"
+            :disabled="shortToken.length != 6"
+            @click.prevent="setCode()"
+            color="primary"
+          >Input Code</v-btn>
           <v-btn flat id="back" to="/">Back</v-btn>
         </v-card-actions>
       </v-card>
@@ -47,24 +58,38 @@
     <v-card v-if="token || showPasswordEntry">
       <v-card-text>
         <v-form>
-          <v-text-field loading @input="checkPasswordStrength" prepend-icon="lock" name="password" label="New Password" v-model="password" id="password"
+          <v-text-field
+            loading
+            @input="checkPasswordStrength"
+            prepend-icon="lock"
+            name="password"
+            label="New Password"
+            v-model="password"
+            id="password"
             :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
             @click:append="() => (hidePassword = !hidePassword)"
-            :type="hidePassword ? 'password' : 'text'">
-              <v-progress-linear
-                v-show="password"
-                slot="progress"
-                :value="progress"
-                :color="color"
-                height="4"
-                label="Strength"
-              ></v-progress-linear>
+            :type="hidePassword ? 'password' : 'text'"
+          >
+            <v-progress-linear
+              v-show="password"
+              slot="progress"
+              :value="progress"
+              :color="color"
+              height="4"
+              label="Strength"
+            ></v-progress-linear>
           </v-text-field>
         </v-form>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn id="submit" :disabled="!password" @click.prevent="resetPassword()" color="primary">Change Password</v-btn>
+        <v-btn
+          :loading="isLoading"
+          id="submit"
+          :disabled="!password"
+          @click.prevent="resetPassword()"
+          color="primary"
+        >Change Password</v-btn>
         <v-btn flat id="back" to="/">Back</v-btn>
       </v-card-actions>
     </v-card>
@@ -72,10 +97,10 @@
 </template>
 
 <script>
-import router from '@/router'
 import { mapActions } from 'vuex'
 import zxcvbn from 'zxcvbn'
 
+import router from '@/router'
 import feathersClient from '@/api/feathers-client'
 import authClient from '@/api/auth-client'
 
@@ -89,7 +114,8 @@ export default {
       hidePassword: true,
       showPasswordEntry: false,
       password: '',
-      passwordStrength: 0
+      passwordStrength: 0,
+      isLoading: false
     }
   },
   props: {
@@ -100,27 +126,27 @@ export default {
   methods: {
     ...mapActions('snackbar', { setSnackbar: 'setText' }),
     ...mapActions('auth', ['authenticate', 'logout']),
-    requestReset () {
+    async requestReset () {
       const user = { email: this.email }
-      authClient
-        .sendResetPwd(user)
-        .then(result => {
-          // Show short token input
-          this.showCodeEnter = true
-        })
-        .catch(e => {
-          console.error(e)
-          // one potential source of error is a not-verified user
-          if (e.message.includes('User is not verified')) {
-            this.setSnackbar(
-              'Check your email to verify your email address before resetting your password.'
-            )
-          } else {
-            this.setSnackbar('Something went wrong. Please try again.')
-          }
-          // Show error
+      this.isLoading = true
+
+      try {
+        await authClient.sendResetPwd(user)
+        this.showCodeEnter = true
+      } catch (e) {
+        console.error(e)
+        // one potential source of error is a not-verified user
+        if (e.message.includes('User is not verified')) {
+          this.setSnackbar(
+            'Check your email to verify your email address before resetting your password.'
+          )
           authClient.resendVerifySignup(user)
-        })
+        } else {
+          this.setSnackbar('Something went wrong. Please try again.')
+        }
+      } finally {
+        this.isLoading = false
+      }
     },
     setCode () {
       if (this.shortToken.length === 6) {
@@ -132,25 +158,26 @@ export default {
       const result = zxcvbn(this.password)
       this.passwordStrength = result.score
     },
-    resetPassword () {
-      let promise
-      if (this.token) {
-        promise = authClient.resetPwdLong(this.token, this.password)
-      } else {
-        promise = authClient.resetPwdShort(
-          this.shortToken,
-          { email: this.email },
-          this.password
-        )
+    async resetPassword () {
+      this.isLoading = true
+      try {
+        let user
+        if (this.token) {
+          user = await authClient.resetPwdLong(this.token, this.password)
+        } else {
+          user = await authClient.resetPwdShort(
+            this.shortToken,
+            { email: this.email },
+            this.password
+          )
+        }
+        this.showConfirm(user)
+      } catch (e) {
+        console.error(e)
+        this.setSnackbar(e.message)
+      } finally {
+        this.isLoading = false
       }
-      promise
-        .then(user => {
-          this.showConfirm(user)
-        })
-        .catch(e => {
-          console.error(e)
-          this.setSnackbar(e.message)
-        })
     },
     showConfirm (user) {
       this.setSnackbar('Password reset! 🙌')
