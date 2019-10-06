@@ -207,10 +207,8 @@ export default {
       document.addEventListener('scroll', this.listener)
       await this.setLoaded('Discover')
     } catch (e) {
-      console.log('Failed')
       console.error(e)
       this.setSnackbar('Something went wrong. Try again.')
-      console.log(this.$router)
       this.$router.push('/home')
       document.removeEventListener('scroll', this.listener)
     }
