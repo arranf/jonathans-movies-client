@@ -55,7 +55,7 @@ export default {
         // lower alpha (a-z)
         return '#'
       }
-      return this.film.canonical_name[0]
+      return this.film.canonical_name[0].toUpperCase()
     }
   }
 }
