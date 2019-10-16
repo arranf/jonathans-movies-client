@@ -1,14 +1,14 @@
 <template>
   <v-list-tile @click.prevent="showModal()">
-      <v-list-tile-avatar>
-        <v-avatar color="primary" :size="40">
-          <span class="white--text headline">{{filmStart}}</span>
-        </v-avatar>
-      </v-list-tile-avatar>
-      <v-list-tile-content>
-        <v-list-tile-title v-text="film.name"></v-list-tile-title>
-        <v-list-tile-sub-title v-html="getFilmYear"></v-list-tile-sub-title>
-      </v-list-tile-content>
+    <v-list-tile-avatar>
+      <v-avatar color="primary" :size="40">
+        <span class="white--text headline">{{filmStart}}</span>
+      </v-avatar>
+    </v-list-tile-avatar>
+    <v-list-tile-content>
+      <v-list-tile-title v-text="film.canonical_name"></v-list-tile-title>
+      <v-list-tile-sub-title v-html="getFilmYear"></v-list-tile-sub-title>
+    </v-list-tile-content>
   </v-list-tile>
 </template>
 
