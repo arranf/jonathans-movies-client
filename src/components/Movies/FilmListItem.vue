@@ -6,7 +6,7 @@
       </v-avatar>
     </v-list-tile-avatar>
     <v-list-tile-content>
-      <v-list-tile-title v-text="film.canonical_name"></v-list-tile-title>
+      <v-list-tile-title v-text="film.name"></v-list-tile-title>
       <v-list-tile-sub-title v-html="getFilmYear"></v-list-tile-sub-title>
     </v-list-tile-content>
   </v-list-tile>
@@ -55,7 +55,7 @@ export default {
         // lower alpha (a-z)
         return '#'
       }
-      return this.film.name[0]
+      return this.film.canonical_name[0]
     }
   }
 }
