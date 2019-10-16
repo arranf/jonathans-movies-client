@@ -61,19 +61,19 @@
 </template>
 
 <script>
-import { getMovieData, searchForMovie } from "@/api/tmdb";
-import { genres } from "@/constants";
-import { mapActions, mapState } from "vuex";
-import { getYearFromTmdbReleaseDate, getTmdbBackdropImage } from "@/utils";
+import { getMovieData, searchForMovie } from '@/api/tmdb'
+import { genres } from '@/constants'
+import { mapActions, mapState } from 'vuex'
+import { getYearFromTmdbReleaseDate, getTmdbBackdropImage } from '@/utils'
 
-import MovieBg from "@/components/common/MovieBg";
+import MovieBg from '@/components/common/MovieBg'
 
 export default {
-  name: "AddFilm",
+  name: 'AddFilm',
   components: {
     MovieBg
   },
-  data() {
+  data () {
     return {
       showSearch: true,
       isDuplicateForCurrent: false,
@@ -84,27 +84,27 @@ export default {
       currentFilmResponse: {},
       film: null,
       loading: false
-    };
+    }
   },
   methods: {
-    ...mapActions("films", ["create", "find"]),
-    ...mapActions("loading", ["setLoading", "setLoaded"]),
-    ...mapActions("collection", { getCurrentCollection: "getCurrent" }),
-    ...mapActions("snackbar", { setSnackbarText: "setText" }),
-    getFilms: function(searchTerm) {
+    ...mapActions('films', ['create', 'find']),
+    ...mapActions('loading', ['setLoading', 'setLoaded']),
+    ...mapActions('collection', { getCurrentCollection: 'getCurrent' }),
+    ...mapActions('snackbar', { setSnackbarText: 'setText' }),
+    getFilms: function (searchTerm) {
       if (searchTerm.trim()) {
-        this.loading = true;
+        this.loading = true
         searchForMovie(searchTerm).then(response => {
           if (response) {
-            this.suggestions = response.results.slice(0, 5);
+            this.suggestions = response.results.slice(0, 5)
           } else {
-            this.suggestions = [{ title: "" }];
+            this.suggestions = [{ title: '' }]
           }
-          this.loading = false;
-        });
+          this.loading = false
+        })
       }
     },
-    selectFilm() {
+    selectFilm () {
       let film = {
         tmdb_id: this.selectedFilm.id,
         name: this.selectedFilm.title,
@@ -115,11 +115,11 @@ export default {
         genres: this.selectedFilm.genre_ids.map(
           id => genres.find(g => g.id === id).name
         )
-      };
+      }
 
-      this.currentFilmResponse = {};
+      this.currentFilmResponse = {}
 
-      this.selectedFilm = film.name;
+      this.selectedFilm = film.name
       Promise.all([
         getMovieData(film.tmdb_id),
         this.find({
@@ -127,40 +127,40 @@ export default {
         })
       ])
         .then(responses => {
-          const tmdbResponse = responses[0];
-          const apiResponse = responses[1];
-          film.backdrop_path = tmdbResponse.backdrop_path;
-          film.poster_path = tmdbResponse.poster_path;
-          film.budget = tmdbResponse.budget;
-          film.imdb_id = tmdbResponse.imdb_id;
-          film.tagline = tmdbResponse.tagline;
-          film.runtime = tmdbResponse.runtime;
-          this.searchQuery = "";
-          this.suggestions = [];
-          this.film = film;
-          this.isDuplicateForOther = apiResponse.total > 0;
+          const tmdbResponse = responses[0]
+          const apiResponse = responses[1]
+          film.backdrop_path = tmdbResponse.backdrop_path
+          film.poster_path = tmdbResponse.poster_path
+          film.budget = tmdbResponse.budget
+          film.imdb_id = tmdbResponse.imdb_id
+          film.tagline = tmdbResponse.tagline
+          film.runtime = tmdbResponse.runtime
+          this.searchQuery = ''
+          this.suggestions = []
+          this.film = film
+          this.isDuplicateForOther = apiResponse.total > 0
           this.isDuplicateForCurrent =
             apiResponse.total > 0 &&
             apiResponse.data.every(
               a => a.owned_by.indexOf(this.currentCollection) > -1
-            );
-          this.showSearch = false;
-          return apiResponse;
+            )
+          this.showSearch = false
+          return apiResponse
         })
         .then(apiResponse => {
           if (apiResponse.data.length === 1) {
-            this.currentFilmResponse = apiResponse.data[0];
+            this.currentFilmResponse = apiResponse.data[0]
           }
         })
         .catch(e => {
-          console.error(e);
-          this.setSnackbarText("Error fetching film information");
-        });
+          console.error(e)
+          this.setSnackbarText('Error fetching film information')
+        })
     },
-    addFilm() {
+    addFilm () {
       if (this.isDuplicateForCurrent) {
       } else if (this.isDuplicateForOther) {
-        this.currentFilmResponse.owned_by.push(this.currentCollection);
+        this.currentFilmResponse.owned_by.push(this.currentCollection)
         this.currentFilmResponse
           .patch()
           .then(() => {
@@ -168,18 +168,18 @@ export default {
               `Added ${this.film.name} to ${
                 this.currentCollection
               }'s collection`
-            );
-            this.selectedFilm = "";
-            this.film = null;
-            this.showSearch = true;
+            )
+            this.selectedFilm = ''
+            this.film = null
+            this.showSearch = true
           })
           .catch(e => {
-            console.error(e);
-            this.setSnackbarText("Error adding film");
-          });
+            console.error(e)
+            this.setSnackbarText('Error adding film')
+          })
       } else {
-        const { Film } = this.$FeathersVuex;
-        this.film.owned_by = [this.currentCollection];
+        const { Film } = this.$FeathersVuex
+        this.film.owned_by = [this.currentCollection]
         new Film(this.film)
           .create()
           .then(() => {
@@ -187,61 +187,61 @@ export default {
               `Successfully added ${this.film.name} to ${
                 this.currentCollection
               }'s collection`
-            );
-            this.selectedFilm = "";
-            this.film = null;
-            this.showSearch = true;
+            )
+            this.selectedFilm = ''
+            this.film = null
+            this.showSearch = true
           })
           .catch(e => {
-            console.error(e);
-            this.setSnackbarText("Error adding film");
-          });
+            console.error(e)
+            this.setSnackbarText('Error adding film')
+          })
       }
     },
-    getYear(releaseDate) {
-      return `(${getYearFromTmdbReleaseDate(releaseDate)})`;
+    getYear (releaseDate) {
+      return `(${getYearFromTmdbReleaseDate(releaseDate)})`
     },
-    closePreview() {
-      this.showSearch = true;
-      this.selectedFilm = null;
-      this.searchQuery = null;
+    closePreview () {
+      this.showSearch = true
+      this.selectedFilm = null
+      this.searchQuery = null
     }
   },
   watch: {
-    searchQuery(val) {
-      val && val.trim() && this.getFilms(this.searchQuery);
+    searchQuery (val) {
+      val && val.trim() && this.getFilms(this.searchQuery)
     }
   },
   computed: {
-    ...mapState("collection", { currentCollection: "current" }),
-    getBackdropImage() {
+    ...mapState('collection', { currentCollection: 'current' }),
+    getBackdropImage () {
       if (this.film) {
-        return getTmdbBackdropImage(this.film.backdrop_path);
+        return getTmdbBackdropImage(this.film.backdrop_path)
       }
-      return "";
+      return ''
     },
-    truncatedOverview() {
+    truncatedOverview () {
       if (!(this.film.overview.length > 350)) {
-        return this.film.overview;
+        return this.film.overview
       }
       return (
         this.film.overview.substring(0, 350) +
-        (this.film.overview.length > 350 ? "..." : "")
-      );
+        (this.film.overview.length > 350 ? '...' : '')
+      )
     },
-    addButtonLabel() {
+    addButtonLabel () {
       if (this.isDuplicateForCurrent) {
-        return `Already in ${this.currentCollection}'s Collection`;
+        return `Already in ${this.currentCollection}'s Collection`
       } else {
-        return `Add to ${this.currentCollection}'s Collection`;
+        return `Add to ${this.currentCollection}'s Collection`
       }
     }
   },
-  async created() {
-    await this.getCurrentCollection();
-    await this.setLoaded("Add");
+  async created () {
+    await this.getCurrentCollection()
+    await this.setLoaded('Add')
   }
-};
+}
 </script>
 
 <style>
