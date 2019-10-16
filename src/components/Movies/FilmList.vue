@@ -1,46 +1,59 @@
 <template>
-   <div>
-      <div v-if="allFilms">
-        <!-- TODO: Move this out and make it emit update events and a filter event -->
-        <v-dialog lazy v-model="showFilters">
-          <v-card>
-            <v-card-title class="headline">Filter Movies</v-card-title>
+  <div>
+    <div v-if="allFilms">
+      <!-- TODO: Move this out and make it emit update events and a filter event -->
+      <v-dialog lazy v-model="showFilters">
+        <v-card>
+          <v-card-title class="headline">Filter Movies</v-card-title>
 
-            <v-subheader>Genres</v-subheader>
-            <v-card-text class="pt-0 pb-0">
-              <v-select :items="totalGenres" v-model="genres" multiple chips deletable-chips item-text="name" item-value="name" />
-            </v-card-text>
-            <v-subheader>Minimum Rating</v-subheader>
-            <v-card-text class="pt-0 pb-0">
-              <v-slider v-model="floorRating" thumb-label min="0" max="10" step="0.5" ticks></v-slider>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer id="hide" />
-              <v-btn flat @click.prevent="requery()" type="submit" class="md-accent md-raised">Submit</v-btn>
-              <v-btn flat @click.prevent="reset()" type="reset">Reset</v-btn>
-              <v-btn flat @click.prevent="showFilters = false">Close</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+          <v-subheader>Genres</v-subheader>
+          <v-card-text class="pt-0 pb-0">
+            <v-select
+              :items="totalGenres"
+              v-model="genres"
+              multiple
+              chips
+              deletable-chips
+              item-text="name"
+              item-value="name"
+            />
+          </v-card-text>
+          <v-subheader>Minimum Rating</v-subheader>
+          <v-card-text class="pt-0 pb-0">
+            <v-slider v-model="floorRating" thumb-label min="0" max="10" step="0.5" ticks></v-slider>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer id="hide" />
+            <v-btn flat @click.prevent="requery()" type="submit" class="md-accent md-raised">Submit</v-btn>
+            <v-btn flat @click.prevent="reset()" type="reset">Reset</v-btn>
+            <v-btn flat @click.prevent="showFilters = false">Close</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
 
-        <movie-info-modal close-route="/movies" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
+      <movie-info-modal
+        close-route="/movies"
+        :show.sync="showingFilm"
+        :filmId="filmId"
+        :show-nominate="true"
+      />
 
-        <v-list>
-          <template v-for="(film, index) in allFilms">
-            <film-list-item class="pt-2 pb-2" :film="film" :key="film._id+'item'"/>
-            <v-divider v-if="index + 1 < allFilms.length" :key="index"></v-divider>
-          </template>
-        </v-list>
-        <div class="text-center">
-          <quote v-if="reachedEnd" />
-        </div>
-        <v-progress-linear v-show="busy" :indeterminate="true" />
+      <v-list>
+        <template v-for="(film, index) in allFilms">
+          <film-list-item class="pt-2 pb-2" :film="film" :key="film._id+'item'" />
+          <v-divider v-if="index + 1 < allFilms.length" :key="index"></v-divider>
+        </template>
+      </v-list>
+      <div class="text-center">
+        <quote v-if="reachedEnd" />
       </div>
+      <v-progress-linear v-show="busy" :indeterminate="true" />
+    </div>
 
-      <v-btn class="big-bottom" right color="accent" fab fixed @click="showFilters = true">
-        <v-icon>filter_list</v-icon>
-      </v-btn>
-   </div>
+    <v-btn class="big-bottom" right color="accent" fab fixed @click="showFilters = true">
+      <v-icon>filter_list</v-icon>
+    </v-btn>
+  </div>
 </template>
 
 <script>
@@ -68,7 +81,7 @@ export default {
       loadedAll: false,
       busy: false,
       total: 51,
-      sort: { name: 1 },
+      sort: { canonical_name: 1 },
       floorRating: 0.0,
       genres: [],
       reachedEnd: false
