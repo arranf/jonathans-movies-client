@@ -10,7 +10,13 @@
       </card-text>
       <card-actions>
         <spacer />
-        <v-btn id="submit" :disabled="isDisabled" @click.prevent="requestReset()" color="primary">Request Reset</v-btn>
+        <v-btn
+          id="submit"
+          :disabled="isDisabled"
+          :loading="isLoading"
+          @click.prevent="requestReset()"
+          color="primary"
+        >Request Reset</v-btn>
         <v-btn flat id="back" to="/">Back</v-btn>
       </card-actions>
     </card>
@@ -57,7 +63,13 @@
       </card-text>
       <card-actions>
         <spacer />
-        <v-btn id="submit" :disabled="!password" @click.prevent="resetPassword()" color="primary">Change Password</v-btn>
+        <v-btn
+          :loading="isLoading"
+          id="submit"
+          :disabled="!password"
+          @click.prevent="resetPassword()"
+          color="primary"
+        >Change Password</v-btn>
         <v-btn flat id="back" to="/">Back</v-btn>
       </card-actions>
     </card>
@@ -65,10 +77,10 @@
 </template>
 
 <script>
-import router from '@/router'
 import { mapActions } from 'vuex'
 import zxcvbn from 'zxcvbn'
 
+import router from '@/router'
 import feathersClient from '@/api/feathers-client'
 import authClient from '@/api/auth-client'
 
@@ -88,7 +100,8 @@ export default {
       hidePassword: true,
       showPasswordEntry: false,
       password: '',
-      passwordStrength: 0
+      passwordStrength: 0,
+      isLoading: false
     }
   },
   components: {
@@ -106,27 +119,27 @@ export default {
   methods: {
     ...mapActions('snackbar', { setSnackbar: 'setText' }),
     ...mapActions('auth', ['authenticate', 'logout']),
-    requestReset () {
+    async requestReset () {
       const user = { email: this.email }
-      authClient
-        .sendResetPwd(user)
-        .then(result => {
-          // Show short token input
-          this.showCodeEnter = true
-        })
-        .catch(e => {
-          console.error(e)
-          // one potential source of error is a not-verified user
-          if (e.message.includes('User is not verified')) {
-            this.setSnackbar(
-              'Check your email to verify your email address before resetting your password.'
-            )
-          } else {
-            this.setSnackbar('Something went wrong. Please try again.')
-          }
-          // Show error
+      this.isLoading = true
+
+      try {
+        await authClient.sendResetPwd(user)
+        this.showCodeEnter = true
+      } catch (e) {
+        console.error(e)
+        // one potential source of error is a not-verified user
+        if (e.message.includes('User is not verified')) {
+          this.setSnackbar(
+            'Check your email to verify your email address before resetting your password.'
+          )
           authClient.resendVerifySignup(user)
-        })
+        } else {
+          this.setSnackbar('Something went wrong. Please try again.')
+        }
+      } finally {
+        this.isLoading = false
+      }
     },
     setCode () {
       if (this.shortToken.length === 6) {
@@ -138,25 +151,26 @@ export default {
       const result = zxcvbn(this.password)
       this.passwordStrength = result.score
     },
-    resetPassword () {
-      let promise
-      if (this.token) {
-        promise = authClient.resetPwdLong(this.token, this.password)
-      } else {
-        promise = authClient.resetPwdShort(
-          this.shortToken,
-          { email: this.email },
-          this.password
-        )
+    async resetPassword () {
+      this.isLoading = true
+      try {
+        let user
+        if (this.token) {
+          user = await authClient.resetPwdLong(this.token, this.password)
+        } else {
+          user = await authClient.resetPwdShort(
+            this.shortToken,
+            { email: this.email },
+            this.password
+          )
+        }
+        this.showConfirm(user)
+      } catch (e) {
+        console.error(e)
+        this.setSnackbar(e.message)
+      } finally {
+        this.isLoading = false
       }
-      promise
-        .then(user => {
-          this.showConfirm(user)
-        })
-        .catch(e => {
-          console.error(e)
-          this.setSnackbar(e.message)
-        })
     },
     showConfirm (user) {
       this.setSnackbar('Password reset! 🙌')

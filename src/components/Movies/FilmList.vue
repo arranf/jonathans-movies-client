@@ -23,7 +23,12 @@
           </card>
         </v-dialog>
 
-        <movie-info-modal close-route="/movies" :show.sync="showingFilm" :filmId="filmId" :show-nominate="true" />
+      <movie-info-modal
+        close-route="/movies"
+        :show.sync="showingFilm"
+        :filmId="filmId"
+        :show-nominate="true"
+      />
 
         <v-list>
           <template v-for="(film, index) in allFilms">
@@ -36,6 +41,8 @@
         </div>
         <progress-linear v-if="loading && isDelayElapsed" :indeterminate="true" />
       </div>
+      <v-progress-linear v-show="busy" :indeterminate="true" />
+    </div>
 
       <v-btn class="big-bottom" right color="accent" fab fixed @click="showFilters = true">
         <icon v-once>filter_list</icon>
@@ -86,7 +93,7 @@ export default {
       loading: false,
       isDelayElapsed: false,
       total: 51,
-      sort: { name: 1 },
+      sort: { canonical_name: 1 },
       floorRating: 0.0,
       genres: [],
       reachedEnd: false

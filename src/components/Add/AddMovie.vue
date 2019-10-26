@@ -6,29 +6,28 @@
         <h1 class="display-1 mb-1">Add Films</h1>
         <p class="empty-state-description">Search to find films to add to your online collection</p>
         <v-autocomplete
-            solo
-            @input="selectFilm"
-            label="Find a Film"
-            :loading="loading"
-            return-object
-            clearable
-            :items="suggestions"
-            :search-input.sync="searchQuery"
-            item-value="title"
-            item-text="title"
-            no-data-text="No Film Found"
-            v-model="selectedFilm"
-            :no-filter="true"
-          >
-            <template slot="item" slot-scope="data">
-              <div>
-                <v-list-tile-content>
-                  <v-list-tile-title v-html="data.item.title"></v-list-tile-title>
-                  <v-list-tile-sub-title v-html="getYear(data.item.release_date)"></v-list-tile-sub-title>
-                </v-list-tile-content>
-              </div>
-            </template>
-          </v-autocomplete>
+          solo
+          @input="selectFilm"
+          label="Find a Film"
+          :loading="loading"
+          return-object
+          clearable
+          :items="suggestions"
+          :search-input.sync="searchQuery"
+          item-value="id"
+          item-text="title"
+          no-data-text="No Film Found"
+          v-model="selectedFilm"
+        >
+          <template slot="item" slot-scope="data">
+            <div>
+              <v-list-tile-content>
+                <v-list-tile-title v-html="data.item.title"></v-list-tile-title>
+                <v-list-tile-sub-title v-html="getYear(data.item.release_date)"></v-list-tile-sub-title>
+              </v-list-tile-content>
+            </div>
+          </template>
+        </v-autocomplete>
       </div>
 
       <card v-if="!showSearch && film">
@@ -128,7 +127,9 @@ export default {
       this.selectedFilm = film.name
       Promise.all([
         getMovieData(film.tmdb_id),
-        this.find({ query: { tmdb_id: film.tmdb_id, ignoreCollectionLimits: true } })
+        this.find({
+          query: { tmdb_id: film.tmdb_id, ignoreCollectionLimits: true }
+        })
       ])
         .then(responses => {
           const tmdbResponse = responses[0]
@@ -144,7 +145,11 @@ export default {
           const { Film } = this.$FeathersVuex
           this.film = new Film(film) // allows us to use vuex instance defaults by doing this
           this.isDuplicateForOther = apiResponse.total > 0
-          this.isDuplicateForCurrent = apiResponse.total > 0 && apiResponse.data.every(a => a.owned_by.indexOf(this.currentCollection) > -1)
+          this.isDuplicateForCurrent =
+            apiResponse.total > 0 &&
+            apiResponse.data.every(
+              a => a.owned_by.indexOf(this.currentCollection) > -1
+            )
           this.showSearch = false
           return apiResponse
         })
@@ -160,12 +165,16 @@ export default {
     },
     addFilm () {
       if (this.isDuplicateForCurrent) {
-
       } else if (this.isDuplicateForOther) {
         this.currentFilmResponse.owned_by.push(this.currentCollection)
-        this.currentFilmResponse.patch()
+        this.currentFilmResponse
+          .patch()
           .then(() => {
-            this.setSnackbarText(`Added ${this.film.name} to ${this.currentCollection}'s collection`)
+            this.setSnackbarText(
+              `Added ${this.film.name} to ${
+                this.currentCollection
+              }'s collection`
+            )
             this.selectedFilm = ''
             this.film = null
             this.showSearch = true
@@ -179,7 +188,11 @@ export default {
         this.film
           .create()
           .then(() => {
-            this.setSnackbarText(`Successfully added ${this.film.name} to ${this.currentCollection}'s collection`)
+            this.setSnackbarText(
+              `Successfully added ${this.film.name} to ${
+                this.currentCollection
+              }'s collection`
+            )
             this.selectedFilm = ''
             this.film = null
             this.showSearch = true
@@ -234,10 +247,11 @@ export default {
 </script>
 
 <style>
-.fade-enter-active{
-  transition: opacity .5s;
+.fade-enter-active {
+  transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>

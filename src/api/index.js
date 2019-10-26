@@ -1,6 +1,8 @@
 import store from '@/store'
 import feathersClient from './feathers-client'
 
+const DAY_MS = 24 * 60 * 60 * 1000
+
 export const getCurrentPoll = () =>
   store.dispatch('poll/find', {
     query: {
@@ -56,8 +58,7 @@ export const getFilmSuggestions = (movieName, limit = 5) => {
 export const getFilms = (
   skip = 0,
   limit = 50,
-  sort = { name: 1 },
-  shouldPageinate = false
+  sort = { canonical_name: 1 }
 ) =>
   store.dispatch('films/find', {
     paginate: false,
@@ -72,7 +73,7 @@ export const addNomination = (film) => {
   const poll = store.getters['poll/getActivePoll']
   const pollId = poll._id
   const hasNominationsRemaining =
-      store.getters['option/hasNominationsRemaining']
+    store.getters['option/hasNominationsRemaining']
 
   if (!hasNominationsRemaining) {
     return Promise.reject(new Error('Nomination used'))
@@ -116,6 +117,17 @@ export const discoverMovies = (seenIds) =>
       discover: true,
       _id: {
         $nin: seenIds
+      }
+    }
+  })
+
+/// Find movies that were added in the last month
+export const getRecentlyAdded = () =>
+  store.dispatch('films/find', {
+    paginate: false,
+    query: {
+      createdAt: {
+        $gte: new Date().getTime() - (30 * DAY_MS)
       }
     }
   })
