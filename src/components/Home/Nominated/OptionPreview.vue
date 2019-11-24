@@ -2,8 +2,13 @@
   <v-card>
     <!-- TODO: Replace with MovieBG (?) -->
     <div v-if="option && film && film.backdrop_path" class="card__media">
-        <img class="img-fluid lazyload" :src="backdropImage" :data-srcset="getBackDropSrcSet" :alt="option.name + ' image'">
-        <div class="card__media__content"></div>
+      <img
+        class="img-fluid lazyload"
+        :src="backdropImage"
+        :data-srcset="getBackDropSrcSet"
+        :alt="option.name + ' image'"
+      />
+      <div class="card__media__content"></div>
     </div>
     <v-card-title primary-title>
       <div>
@@ -12,9 +17,13 @@
       </div>
     </v-card-title>
     <v-card-actions>
-      <v-btn :color="voteButtonColor" @click="vote" v-if="!isCurrentPollInNomination && getActivePoll" :disabled="!isVoted(option._id) && remainingVotes <= 0" flat>
-        {{voteButtonText}}
-      </v-btn>
+      <v-btn
+        :color="voteButtonColor"
+        @click="vote"
+        v-if="!isCurrentPollInNomination && getActivePoll"
+        :disabled="!isVoted(option._id) && remainingVotes <= 0"
+        flat
+      >{{voteButtonText}}</v-btn>
       <v-btn @click="showModal()" flat color="orange">More Info</v-btn>
     </v-card-actions>
   </v-card>
@@ -22,9 +31,13 @@
 
 <script>
 import constants from '@/constants'
-import { humanizeTimeToNowImprecise, getTmdbBackdropImage, getTmdbBackdropSrcSet, selectRandom } from '@/utils'
+import {
+  humanizeTimeToNowImprecise,
+  getTmdbBackdropImage,
+  getTmdbBackdropSrcSet,
+  selectRandom
+} from '@/utils'
 import { mapActions, mapGetters, mapState } from 'vuex'
-
 export default {
   name: 'OptionPreview',
   props: {
@@ -92,8 +105,7 @@ export default {
         const vote = this.votes.find(
           v => v.user_id === this.user._id && v.option_id === optionId
         )
-        this.removeVote(vote._id)
-          .catch(error => console.error(error))
+        this.removeVote(vote._id).catch(error => console.error(error))
       } else {
         if (this.remainingVotes <= 0) {
           this.setSnackbar("Unable to vote. You don't have any votes left")
