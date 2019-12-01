@@ -8,7 +8,8 @@ const state = {
     isResultsLoading: false,
     isSignupLoading: false,
     isDiscoverLoading: false,
-    isVerifyLoading: false
+    isVerifyLoading: false,
+    isChristmasLoading: false
   }
 }
 

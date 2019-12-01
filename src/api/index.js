@@ -121,6 +121,17 @@ export const discoverMovies = (seenIds) =>
     }
   })
 
+export const discoverChristmasMovies = (seenIds) =>
+  store.dispatch('films/find', {
+    paginate: false,
+    query: {
+      discoverChristmas: true,
+      _id: {
+        $nin: seenIds
+      }
+    }
+  })
+
 /// Find movies that were added in the last month
 export const getRecentlyAdded = () =>
   store.dispatch('films/find', {

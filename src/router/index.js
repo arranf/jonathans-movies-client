@@ -11,6 +11,7 @@ const Create = () => import('@/components/Create/Create')
 const FilmList = () => import('@/components/Movies/FilmList')
 const Add = () => import('@/components/Add/AddMovie')
 const Discover = () => import('@/components/Discover/Discover')
+const ChristmasDiscover = () => import('@/components/Discover/ChristmasDiscover')
 const Reset = () => import('@/components/Reset/Reset')
 const Verify = () => import('@/components/Verify/Verify')
 const Logout = () => import('@/components/Logout/Logout')
@@ -134,6 +135,14 @@ const routes = [
     path: '/collection',
     name: 'Collection',
     component: SwitchCollection,
+    meta: {
+      admin: true
+    }
+  },
+  {
+    path: '/christmas',
+    name: 'Christmas',
+    component: ChristmasDiscover,
     meta: {
       admin: true
     }

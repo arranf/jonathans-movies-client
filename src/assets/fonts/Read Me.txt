@@ -1,1 +1,7 @@
+We use the 'Material Icons' set from Google.
+
+To avoid importing all the icons we have a custom subset created using the app IcoMoon.
+
 You can import *selection.json* back to the IcoMoon app using the *Import Icons* button (or via Main Menu → Manage Projects) to retrieve your icon selection.
+
+From then export just a subset with the additional icons added.

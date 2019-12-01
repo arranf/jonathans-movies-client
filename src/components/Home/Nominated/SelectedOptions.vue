@@ -68,11 +68,10 @@ export default {
       return this.getOptionsForCurrentPoll.reverse();
     },
     nominationsRemainingText: function () {
-      return `You\'ve got ${this.nominationsRemaining} nomination${
+      return `You've got ${this.nominationsRemaining} nomination${
         this.nominationsRemaining > 1 ? 's' : ''
       } left. Use ${this.nominationsRemaining > 1 ? 'them' : 'it'} wisely!`
-    },
-    timeRemainingText: function () {}
+    }
   },
   async created () {
     try {
