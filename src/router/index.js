@@ -140,12 +140,10 @@ const routes = [
     }
   },
   {
-    path: '/christmas',
+    path: '/christmas/:filmId?',
     name: 'Christmas',
     component: ChristmasDiscover,
-    meta: {
-      admin: true
-    }
+    props: true
   }
 ]
 

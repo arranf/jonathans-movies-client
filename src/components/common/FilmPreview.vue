@@ -1,20 +1,24 @@
 <template>
-  <div @click="showModal()" class="h-100" v-if="film" >
-    <img v-if="film.poster_path" class="img-fluid lazyload"
-      :src="getFilmPoster" :data-srcset="getFilmPosterSrcSet" :alt="film.name + ' image'">
-   <img v-else class="img-fluid" :src="getFallbackPoster()" />
-    <h4 class="text-center">
-      {{film.name}}
-    </h4>
-    <p class="text-center ml-1 mr-1 mt-1 text-smaller" v-if="reasons">
-      Because you liked {{reasonsSentence}}
-    </p>
+  <div @click="showModal()" class="h-100" v-if="film">
+    <img
+      v-if="film.poster_path"
+      class="img-fluid lazyload"
+      :src="getFilmPoster"
+      :data-srcset="getFilmPosterSrcSet"
+      :alt="film.name + ' image'"
+    />
+    <img v-else class="img-fluid" :src="getFallbackPoster()" />
+    <h4 class="text-center">{{film.name}}</h4>
+    <p
+      class="text-center ml-1 mr-1 mt-1 text-smaller"
+      v-if="reasons"
+    >Because you liked {{reasonsSentence}}</p>
   </div>
 </template>
 
 <script>
 // eslint-disable-next-line
-import lazySizes from 'lazysizes'
+import lazySizes from "lazysizes";
 import { getTmdbPosterSrcSet, getTmdbPosterImage, selectRandom } from '@/utils'
 import { mapGetters } from 'vuex'
 
