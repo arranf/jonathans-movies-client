@@ -229,12 +229,9 @@ export default {
         numberOfVotes: parseInt(this.votes),
         startDateTime: currentTime,
         endDateTime: endDateTime,
-        options: this.options
-          .filter(o => o && typeof o === 'object' && o.name.trim().length > 0)
-          .map(a => {
-            delete a.isSearchQueryOption
-            return a
-          }),
+        options: this.options.filter(
+          o => o && typeof o === 'object' && o.name.trim().length > 0
+        ),
         pollTransitionDateTime: pollTransitionDateTime,
         numberOfNominations: numberOfNominations
       }).create()

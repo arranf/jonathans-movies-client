@@ -33,9 +33,9 @@
     </div>
 
     <div class="selected">
-      <template v-for="c in selected">
-        <v-chip :key="'c' + c._id">{{c.name}}</v-chip>
-        <v-btn :key="'b' + c._id" icon small @click.prevent="remove(c._id)">x</v-btn>
+      <template v-for="(s, index) in selected">
+        <v-chip :key="`c${s.id || index}-${s.name}`">{{s.name}}</v-chip>
+        <v-btn :key="`b${s.id || index}-${s.name}`" icon small @click.prevent="remove(s)">x</v-btn>
       </template>
     </div>
   </div>
@@ -114,11 +114,13 @@ export default {
       this.suggestions = []
       this.searchQuery = ''
     },
-    remove: function (id) {
-      this.selected.splice(
-        this.suggestions.indexOf(a => a._id === id),
-        1
+    remove: function (selected) {
+      const index = this.selected.findIndex(
+        // The name comparison means we can match selected items without an id (i.e. items not in the db)
+        a => a.name === selected.name && a._id === selected._id
       )
+      this.selected.splice(index, 1)
+
       const reducedOptions = this.selected.map(f => {
         if (f) {
           return { name: f.name, film_id: f._id }
@@ -151,6 +153,7 @@ export default {
       this.focusIndex = -1
     },
     getIdFromFocusIndex () {
+      // This can return undefined which refers to the entered text.
       return this.suggestions[this.focusIndex]._id
     }
   }
