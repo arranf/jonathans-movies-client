@@ -81,7 +81,7 @@ export default {
         response.data.forEach(a => this.suggestions.push(a))
       }
       this.suggestions.push({
-        id: SEARCH_QUERY_ID,
+        _id: SEARCH_QUERY_ID,
         value: this.searchQuery,
         name: this.searchQuery
       })
@@ -164,7 +164,7 @@ export default {
       this.focusIndex = -1
     },
     getIdFromFocusIndex (i) {
-      return this.suggestions[i]
+      return this.suggestions[i]._id
     }
   }
 }
