@@ -11,7 +11,7 @@ const Create = () => import('@/components/Create/Create')
 const FilmList = () => import('@/components/Movies/FilmList')
 const Add = () => import('@/components/Add/AddMovie')
 const Discover = () => import('@/components/Discover/Discover')
-const ChristmasDiscover = () => import('@/components/Discover/ChristmasDiscover')
+// const ChristmasDiscover = () => import('@/components/Discover/ChristmasDiscover')
 const Reset = () => import('@/components/Reset/Reset')
 const Verify = () => import('@/components/Verify/Verify')
 const Logout = () => import('@/components/Logout/Logout')
@@ -138,13 +138,13 @@ const routes = [
     meta: {
       admin: true
     }
-  },
-  {
-    path: '/christmas/:filmId?',
-    name: 'Christmas',
-    component: ChristmasDiscover,
-    props: true
   }
+  // {
+  //   path: '/christmas/:filmId?',
+  //   name: 'Christmas',
+  //   component: ChristmasDiscover,
+  //   props: true
+  // }
 ]
 
 const router = new Router({
