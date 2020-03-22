@@ -40,7 +40,7 @@
         </v-list-tile-content>
       </v-list-tile>
 
-      <v-list-tile v-if="user" to="/christmas">
+      <!-- <v-list-tile v-if="user" to="/christmas">
         <v-list-tile-action>
           <v-icon>movie_filter</v-icon>
         </v-list-tile-action>
@@ -50,7 +50,7 @@
             <v-chip :small="true" :label="true" color="red" class="white--text">New</v-chip>
           </v-list-tile-title>
         </v-list-tile-content>
-      </v-list-tile>
+      </v-list-tile>-->
 
       <!-- all movies -->
       <v-list-tile v-if="user" to="/movies">
