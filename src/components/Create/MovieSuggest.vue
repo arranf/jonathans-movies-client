@@ -10,7 +10,7 @@
         spellcheck="false"
         @focus="focused = true"
         @blur="focused = false"
-        @keyup.enter="choose(getIdFromFocusIndex(id))"
+        @keyup.enter="choose(getIdFromFocusIndex())"
         @keyup.up="onUp"
         @keyup.down="onDown"
       />
@@ -44,9 +44,6 @@
 <script>
 import { getFilmSuggestions } from '@/api'
 import { getYearFromTmdbReleaseDate } from '@/utils'
-
-const SEARCH_QUERY_ID = '$searchQuery'
-
 export default {
   data () {
     return {
@@ -81,23 +78,13 @@ export default {
         response.data.forEach(a => this.suggestions.push(a))
       }
       this.suggestions.push({
-        _id: SEARCH_QUERY_ID,
+        isSearchQueryOption: true,
         value: this.searchQuery,
         name: this.searchQuery
       })
 
       this.loading = false
     },
-    // addNonPredictedFilm: function () {
-    //   // TODO: Make this component handle movies that aren't searchable films (i.e. Someone brings a movie to Jonathans)
-    //   // Trigger Code on the component: @keyup.native.enter="addNonPredictedFilm"
-    //   const searchQuery = this.searchQuery.trim()
-    //   if (searchQuery !== '') {
-    //     const newFilm = { name: searchQuery, _id: null }
-    //     this.selected.push(newFilm)
-    //     this.searchQuery = ''
-    //     this.fillBox()
-    //   },
     optionsChange: function (event) {
       const reducedOptions = this.selected.map(f => {
         if (f) {
@@ -111,7 +98,7 @@ export default {
     },
     // Handles the case where we want to identify an option as _not_ a film in the db
     getName: function (suggestion) {
-      if (suggestion.id === SEARCH_QUERY_ID) {
+      if (suggestion.isSearchQueryOption) {
         return `${suggestion.name} <small>(Not in database)</small>`
       }
       return suggestion.name
@@ -163,8 +150,8 @@ export default {
     unfocus () {
       this.focusIndex = -1
     },
-    getIdFromFocusIndex (i) {
-      return this.suggestions[i]._id
+    getIdFromFocusIndex () {
+      return this.suggestions[this.focusIndex]._id
     }
   }
 }
