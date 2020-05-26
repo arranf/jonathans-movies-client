@@ -17,7 +17,7 @@
         "feathers-authentication-management": "^2.0.1",
         "feathers-vuex": "^1.6.2",
         "humanize-duration": "^3.15.3",
-        "lazysizes": "^4.1.4",
+        "lazysizes": "^5.2.1",
         "lodash": "^4.17.13",
         "register-service-worker": "^1.0.0",
         "socket.io-client": "^2.1.1",
