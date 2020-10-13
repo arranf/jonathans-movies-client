@@ -14,7 +14,7 @@
         "@feathersjs/client": "^3.7.5",
         "@sentry/browser": "^4.3.4",
         "@vue/eslint-config-standard": "^4.0.0",
-        "feathers-authentication-management": "^2.0.1",
+        "feathers-authentication-management": "^3.0.1",
         "feathers-vuex": "^1.6.2",
         "humanize-duration": "^3.15.3",
         "lazysizes": "^4.1.4",
