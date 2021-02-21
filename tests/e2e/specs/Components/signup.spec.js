@@ -3,15 +3,15 @@
 
 module.exports = {
   back: function (browser) {
-    const devServer = browser.globals.devServerURL
+    const devServer = browser.globals.devServerURL;
 
     browser
-      .url(devServer + '/signup')
-      .waitForElementVisible('#app-container', 5000)
-      .click('#back')
-      .assert.urlEquals(devServer + '/')
-      .end()
-  }
+      .url(devServer + "/signup")
+      .waitForElementVisible("#app-container", 5000)
+      .click("#back")
+      .assert.urlEquals(devServer + "/")
+      .end();
+  },
   // TODO: Find a way to make this work with the server running
   // 'snackbar': function (browser) {
   //   const devServer = browser.globals.devServerURL
@@ -26,4 +26,4 @@ module.exports = {
   //     .waitForElementVisible('#snackbar', 5000)
   //     .end()
   // }
-}
+};

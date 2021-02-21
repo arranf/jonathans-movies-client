@@ -3,26 +3,49 @@
     <div class="pa-2">
       <v-card-title>
         <h1 class="display-1">Sign Up</h1>
-        </v-card-title>
-    <v-card-text id="internalLoginForm" >
-     <v-form>
-      <v-text-field prepend-icon="inbox" name="email" label="Email" hint="Used to reset your password if you forget it." @change="checkUnique" :error-messages="emailErrors" v-model="email" type="text"></v-text-field>
-      <v-text-field loading @input="checkPasswordStrength" prepend-icon="lock" name="password" label="Password" v-model="password" id="password"
-        :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
-        @click:append="() => (hidePassword = !hidePassword)"
-        :type="hidePassword ? 'password' : 'text'">
-          <v-progress-linear
-            slot="progress"
-            :value="progress"
-            :color="color"
-            height="4"
-          ></v-progress-linear>
-      </v-text-field>
-     </v-form>
-    </v-card-text>
+      </v-card-title>
+      <v-card-text id="internalLoginForm">
+        <v-form>
+          <v-text-field
+            v-model="email"
+            prepend-icon="inbox"
+            name="email"
+            label="Email"
+            hint="Used to reset your password if you forget it."
+            :error-messages="emailErrors"
+            type="text"
+            @change="checkUnique"
+          ></v-text-field>
+          <v-text-field
+            id="password"
+            v-model="password"
+            loading
+            prepend-icon="lock"
+            name="password"
+            label="Password"
+            :append-icon="hidePassword ? 'visibility' : 'visibility_off'"
+            :type="hidePassword ? 'password' : 'text'"
+            @input="checkPasswordStrength"
+            @click:append="() => (hidePassword = !hidePassword)"
+          >
+            <v-progress-linear
+              slot="progress"
+              :value="progress"
+              :color="color"
+              height="4"
+            ></v-progress-linear>
+          </v-text-field>
+        </v-form>
+      </v-card-text>
       <v-card-actions>
         <v-spacer />
-        <v-btn id="submit" :disabled="isDisabled || !emailIsUnique" @click.prevent="trySignUp()" color="primary">Signup</v-btn>
+        <v-btn
+          id="submit"
+          :disabled="isDisabled || !emailIsUnique"
+          color="primary"
+          @click.prevent="trySignUp()"
+          >Signup</v-btn
+        >
         <v-btn id="back" flat @click.prevent="toHome()">Back</v-btn>
       </v-card-actions>
     </div>
@@ -30,95 +53,94 @@
 </template>
 
 <script>
-import feathersClient from '@/api/feathers-client'
-import authClient from '@/api/auth-client'
-import { mapActions } from 'vuex'
-import router from '@/router'
-import zxcvbn from 'zxcvbn'
+import authClient from "@/api/auth-client";
+import { mapActions } from "vuex";
+import router from "@/router";
+import zxcvbn from "zxcvbn";
 
 export default {
-  name: 'SignUp',
-  data () {
+  name: "SignUp",
+  data() {
     return {
       hidePassword: true,
-      password: '',
-      email: '',
+      password: "",
+      email: "",
       emailErrors: [],
       passwordStrength: 0,
-      emailIsUnique: true
-    }
+      emailIsUnique: true,
+    };
   },
   methods: {
-    ...mapActions('users', { signUp: 'create' }),
-    ...mapActions('auth', ['authenticate']),
-    ...mapActions('snackbar', { setSnackbar: 'setText' }),
+    ...mapActions("users", { signUp: "create" }),
+    ...mapActions("auth", ["authenticate"]),
+    ...mapActions("snackbar", { setSnackbar: "setText" }),
     toHome: function () {
-      router.push('/home')
+      router.push("/home");
     },
     checkUnique: function () {
       authClient
         .checkUnique({ email: this.email })
         .then(() => {
-          this.emailErrors = []
-          this.emailIsUnique = true
+          this.emailErrors = [];
+          this.emailIsUnique = true;
         })
-        .catch(e => {
-          console.error(e)
-          this.emailErrors = ['This email address is already in use.']
-          this.emailIsUnique = false
-        })
+        .catch((e) => {
+          console.error(e);
+          this.emailErrors = ["This email address is already in use."];
+          this.emailIsUnique = false;
+        });
     },
     trySignUp: function () {
-      const password = this.password
-      const email = this.email
+      const password = this.password;
+      const email = this.email;
       this.signUp({
-        strategy: 'local',
+        strategy: "local",
         email: email,
-        password: password
+        password: password,
       })
         .then(() =>
           this.authenticate({
-            strategy: 'local',
+            strategy: "local",
             email: email,
-            password: password
+            password: password,
           })
         )
-        .then(() => router.push('home'))
-        .catch(error => {
-          let message = 'Unable to complete sign up.'
-          if (error.hasOwnProperty('message')) {
-            message += error.message
+        .then(() => router.push("home"))
+        .catch((error) => {
+          let message = "Unable to complete sign up.";
+          if (Object.prototype.hasOwnProperty.call(error, "message")) {
+            message += error.message;
           }
-          this.setSnackbar(message)
-        })
+          this.setSnackbar(message);
+        });
     },
-    checkPasswordStrength () {
-      let result = zxcvbn(this.password)
-      this.passwordStrength = result.score
-    }
+    checkPasswordStrength() {
+      let result = zxcvbn(this.password);
+      this.passwordStrength = result.score;
+    },
   },
   computed: {
     isDisabled: function () {
       // W3 Email regex: http://emailregex.com/
-      const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-      return !(this.password && this.email && regex.test(this.email))
+      const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      return !(this.password && this.email && regex.test(this.email));
     },
-    color () {
+    color() {
       if (!this.password) {
-        return 'grey'
+        return "grey";
       }
-      const colors = ['red', 'orange', 'amber', 'light-green', 'green']
-      return colors[this.passwordStrength]
+      const colors = ["red", "orange", "amber", "light-green", "green"];
+      return colors[this.passwordStrength];
     },
-    progress () {
+    progress() {
       if (!this.password) {
-        return 0
+        return 0;
       }
       if (this.passwordStrength === 0) {
-        return 3
+        return 3;
       }
-      return Math.min(100, this.passwordStrength * 25)
-    }
-  }
-}
+      return Math.min(100, this.passwordStrength * 25);
+    },
+  },
+};
 </script>

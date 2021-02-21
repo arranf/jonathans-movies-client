@@ -1,59 +1,59 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-import feathersClient from '../api/feathers-client'
-import feathersVuex from 'feathers-vuex'
+import feathersClient from "../api/feathers-client";
+import feathersVuex from "feathers-vuex";
 
-import usersOnlineGetters from './users-online/getters'
-import voteGetters from './vote/getters'
-import optionGetters from './option/getters'
-import pollGetters from './poll/getters'
+import usersOnlineGetters from "./users-online/getters";
+import voteGetters from "./vote/getters";
+import optionGetters from "./option/getters";
+import pollGetters from "./poll/getters";
 
-import time from '@/store/time'
-import snackbar from '@/store/snackbar'
-import collection from '@/store/collection'
-import loading from '@/store/loading'
+import time from "@/store/time";
+import snackbar from "@/store/snackbar";
+import collection from "@/store/collection";
+import loading from "@/store/loading";
 
 const { service, auth, FeathersVuex } = feathersVuex(feathersClient, {
-  idField: '_id'
-})
-Vue.use(FeathersVuex)
-Vue.use(Vuex)
+  idField: "_id",
+});
+Vue.use(FeathersVuex);
+Vue.use(Vuex);
 
 let plugins = [
-  service('poll', {
+  service("poll", {
     getters: pollGetters,
     instanceDefaults: {
-      options: 'Option'
-    }
+      options: "Option",
+    },
   }),
-  service('option', {
+  service("option", {
     getters: optionGetters,
     instanceDefaults: {
-      film: 'Film'
-    }
+      film: "Film",
+    },
   }),
-  service('vote', { getters: voteGetters }),
-  service('users'),
-  service('films', {
+  service("vote", { getters: voteGetters }),
+  service("users"),
+  service("films", {
     instanceDefaults: {
-      get imdbLink () {
-        return this.imdb_id ? `https://www.imdb.com/title/${this.imdb_id}` : ''
-      }
-    }
+      get imdbLink() {
+        return this.imdb_id ? `https://www.imdb.com/title/${this.imdb_id}` : "";
+      },
+    },
   }),
-  service('users-online', { getters: usersOnlineGetters }),
-  auth({ userService: 'users' })
-]
+  service("users-online", { getters: usersOnlineGetters }),
+  auth({ userService: "users" }),
+];
 
 const store = new Vuex.Store({
   modules: {
     time,
     snackbar,
     collection,
-    loading
+    loading,
   },
-  plugins: [...plugins]
-})
+  plugins: [...plugins],
+});
 
-export default store
+export default store;

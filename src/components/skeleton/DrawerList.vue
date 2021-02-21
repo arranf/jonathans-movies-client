@@ -104,23 +104,37 @@
     <v-list v-if="getActivePoll && user">
       <v-list-tile v-if="isCurrentPollInNomination">
         <v-list-tile-content>
-          <v-list-tile-title>{{remainingNominations}} Nomination{{remainingNominations > 1 ? 's' : ''}} Left</v-list-tile-title>
+          <v-list-tile-title
+            >{{ remainingNominations }} Nomination{{
+              remainingNominations > 1 ? "s" : ""
+            }}
+            Left</v-list-tile-title
+          >
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile v-else-if="isCurrentPollInVoting">
         <v-list-tile-content>
-          <v-list-tile-title>{{remainingVotes}} Vote{{remainingVotes > 1 ? 's' : ''}} Left</v-list-tile-title>
+          <v-list-tile-title
+            >{{ remainingVotes }} Vote{{
+              remainingVotes > 1 ? "s" : ""
+            }}
+            Left</v-list-tile-title
+          >
         </v-list-tile-content>
       </v-list-tile>
 
       <v-list-tile v-if="isCurrentPollInNomination">
         <v-list-tile-content>
-          <v-list-tile-title>{{remainingTimeInNominationWordsForCurrentPoll}}</v-list-tile-title>
+          <v-list-tile-title>{{
+            remainingTimeInNominationWordsForCurrentPoll
+          }}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
       <v-list-tile v-else-if="isCurrentPollInVoting">
         <v-list-tile-content>
-          <v-list-tile-title>{{remainingTimeWordsForCurrentPoll}}</v-list-tile-title>
+          <v-list-tile-title>{{
+            remainingTimeWordsForCurrentPoll
+          }}</v-list-tile-title>
         </v-list-tile-content>
       </v-list-tile>
     </v-list>
@@ -128,21 +142,21 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState } from "vuex";
 
 export default {
-  name: 'DrawerList',
+  name: "DrawerList",
   computed: {
-    ...mapGetters('poll', [
-      'getActivePoll',
-      'remainingTimeWordsForCurrentPoll',
-      'isCurrentPollInNomination',
-      'isCurrentPollInVoting',
-      'remainingTimeInNominationWordsForCurrentPoll'
+    ...mapGetters("poll", [
+      "getActivePoll",
+      "remainingTimeWordsForCurrentPoll",
+      "isCurrentPollInNomination",
+      "isCurrentPollInVoting",
+      "remainingTimeInNominationWordsForCurrentPoll",
     ]),
-    ...mapState('auth', ['user']),
-    ...mapGetters('vote', { remainingVotes: 'votesRemaining' }),
-    ...mapGetters('option', { remainingNominations: 'nominationsRemaining' })
-  }
-}
+    ...mapState("auth", ["user"]),
+    ...mapGetters("vote", { remainingVotes: "votesRemaining" }),
+    ...mapGetters("option", { remainingNominations: "nominationsRemaining" }),
+  },
+};
 </script>

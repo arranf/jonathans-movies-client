@@ -1,64 +1,76 @@
 <template>
-<!-- TODO: Check over this CSS -->
-<div class="d-flex flex-column align-items-center justify-items-center" style="width: 100%">
-  <!-- TODO: Refactor to Use a Simpler Getter -->
-  <div v-if="getMostRecentPoll && areVotes" style="width: 100%">
-    <h1 class="md-headline text-center">Results</h1>
-    <bar-chart style="padding-top: 3em" :data="results" :colors="backgroundColors"/>
+  <!-- TODO: Check over this CSS -->
+  <div
+    class="d-flex flex-column align-items-center justify-items-center"
+    style="width: 100%"
+  >
+    <!-- TODO: Refactor to Use a Simpler Getter -->
+    <div v-if="getMostRecentPoll && areVotes" style="width: 100%">
+      <h1 class="md-headline text-center">Results</h1>
+      <bar-chart
+        style="padding-top: 3em"
+        :data="results"
+        :colors="backgroundColors"
+      />
+    </div>
+    <div v-else-if="emptyStateAllowed" class="empty-state-container">
+      <v-icon size="100px" class="mb-2">error_outline</v-icon>
+      <h1 class="display-1 mb-1">No Results</h1>
+      <p class="empty-state-description">
+        There needs to be at least one vote for there to be a winner!
+      </p>
+    </div>
   </div>
-  <div v-else-if="emptyStateAllowed" class="empty-state-container">
-    <v-icon size="100px" class="mb-2">error_outline</v-icon>
-    <h1 class="display-1 mb-1">No Results</h1>
-    <p class="empty-state-description">There needs to be at least one vote for there to be a winner!</p>
-  </div>
-</div>
 </template>
 
 <script>
-import BarChart from './BarChart'
-import { mapGetters, mapState, mapActions } from 'vuex'
-import { getUniqueColors } from '@/utils'
-import { getCurrentPoll, getVotesForMostRecentPoll } from '@/api'
+import BarChart from "./BarChart";
+import { mapGetters, mapState, mapActions } from "vuex";
+import { getUniqueColors } from "@/utils";
+import { getCurrentPoll, getVotesForMostRecentPoll } from "@/api";
 
 export default {
-  name: 'Results',
+  name: "Results",
   components: {
-    BarChart
+    BarChart,
   },
-  data () {
+  data() {
     return {
       backgroundColors: [],
-      emptyStateAllowed: false
-    }
+      emptyStateAllowed: false,
+    };
   },
   methods: {
-    ...mapActions('loading', ['setLoading', 'setLoaded'])
+    ...mapActions("loading", ["setLoading", "setLoaded"]),
   },
   computed: {
-    ...mapGetters('vote', ['getGraphData', 'areVotesForPoll']),
-    ...mapGetters('poll', ['getMostRecentPoll']),
-    ...mapState('vote', ['isFindPending']),
-    results () {
-      return this.getGraphData(this.getMostRecentPoll)
+    ...mapGetters("vote", ["getGraphData", "areVotesForPoll"]),
+    ...mapGetters("poll", ["getMostRecentPoll"]),
+    ...mapState("vote", ["isFindPending"]),
+    results() {
+      return this.getGraphData(this.getMostRecentPoll);
     },
-    areVotes () {
+    areVotes() {
       if (this.getMostRecentPoll) {
-        return this.areVotesForPoll(this.getMostRecentPoll)
+        return this.areVotesForPoll(this.getMostRecentPoll);
       }
-      return false
+      return false;
+    },
+  },
+  async mounted() {
+    try {
+      await this.setLoading("Home"); // this is required because 'Home' has two possible components that load data
+      await getCurrentPoll();
+      await getVotesForMostRecentPoll(this.getMostRecentPoll);
+      this.backgroundColors = getUniqueColors(
+        this.getMostRecentPoll.options.length,
+        "500"
+      );
+      this.emptyStateAllowed = true;
+      this.setLoaded("Home");
+    } catch (error) {
+      console.error(error);
     }
   },
-  async mounted () {
-    try {
-      await this.setLoading('Home') // this is required because 'Home' has two possible components that load data
-      await getCurrentPoll()
-      await getVotesForMostRecentPoll(this.getMostRecentPoll)
-      this.backgroundColors = getUniqueColors(this.getMostRecentPoll.options.length, '500')
-      this.emptyStateAllowed = true
-      this.setLoaded('Home')
-    } catch (error) {
-      console.error(error)
-    }
-  }
-}
+};
 </script>

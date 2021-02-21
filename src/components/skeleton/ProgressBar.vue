@@ -1,27 +1,32 @@
 <template>
-  <v-progress-linear class="progress-linear" :color="color" v-if="getActivePoll" v-model="percentageOfCurrentPhaseComplete" />
+  <v-progress-linear
+    v-if="getActivePoll"
+    v-model="percentageOfCurrentPhaseComplete"
+    class="progress-linear"
+    :color="color"
+  />
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
-const dangerMark = 80
+const dangerMark = 80;
 
 export default {
-  name: 'ProgressBar',
+  name: "ProgressBar",
   computed: {
-    ...mapGetters('poll', [
-      'getActivePoll',
-      'percentageOfCurrentPhaseComplete'
+    ...mapGetters("poll", [
+      "getActivePoll",
+      "percentageOfCurrentPhaseComplete",
     ]),
-    color () {
+    color() {
       if (this.percentageOfCurrentPhaseComplete < dangerMark) {
-        return 'secondary'
+        return "secondary";
       }
-      return 'red'
-    }
-  }
-}
+      return "red";
+    },
+  },
+};
 </script>
 
 <style scoped>

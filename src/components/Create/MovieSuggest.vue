@@ -2,30 +2,37 @@
   <div>
     <div class="search-box">
       <input
-        @input="searchQuery = $event.target.value"
         aria-label="Search"
         :value="searchQuery"
-        :class="{ 'focused': focused }"
+        :class="{ focused: focused }"
         autocomplete="off"
         spellcheck="false"
+        @input="searchQuery = $event.target.value"
         @focus="focused = true"
         @blur="focused = false"
         @keyup.enter="choose(getIdFromFocusIndex())"
         @keyup.up="onUp"
         @keyup.down="onDown"
       />
-      <ul class="suggestions" v-if="suggestions.length > 0 && !loading" @mouseleave="unfocus">
+      <ul
+        v-if="suggestions.length > 0 && !loading"
+        class="suggestions"
+        @mouseleave="unfocus"
+      >
         <li
-          class="suggestion"
           v-for="(s, i) in suggestions"
           :key="s._id"
+          class="suggestion"
           :class="{ focused: i === focusIndex }"
           @click="choose(s._id)"
           @mouseenter="focus(i)"
         >
           <v-list-tile-content>
             <v-list-tile-title v-html="getName(s)"></v-list-tile-title>
-            <v-list-tile-sub-title v-if="s.release_date" v-html="getYear(s.release_date)" />
+            <v-list-tile-sub-title
+              v-if="s.release_date"
+              v-html="getYear(s.release_date)"
+            />
           </v-list-tile-content>
         </li>
       </ul>
@@ -34,18 +41,28 @@
 
     <div class="selected">
       <template v-for="(s, index) in selected">
-        <v-chip :key="`c${s.id || index}-${s.name}`">{{s.name}}</v-chip>
-        <v-btn :key="`b${s.id || index}-${s.name}`" icon small @click.prevent="remove(s)">x</v-btn>
+        <v-chip :key="`c${s.id || index}-${s.name}`">{{ s.name }}</v-chip>
+        <v-btn
+          :key="`b${s.id || index}-${s.name}`"
+          icon
+          small
+          @click.prevent="remove(s)"
+          >x</v-btn
+        >
       </template>
     </div>
   </div>
 </template>
 
 <script>
-import { getFilmSuggestions } from '@/api'
-import { getYearFromTmdbReleaseDate } from '@/utils'
+import { getFilmSuggestions } from "@/api";
+import { getYearFromTmdbReleaseDate } from "@/utils";
 export default {
-  data () {
+  props: {
+    placeholder: String,
+    errors: Array,
+  },
+  data() {
     return {
       suggestions: [],
       searchQuery: null,
@@ -53,111 +70,107 @@ export default {
 
       focused: false,
       focusIndex: 0,
-      selected: []
-    }
-  },
-  props: {
-    placeholder: String,
-    errors: Array
+      selected: [],
+    };
   },
   watch: {
-    searchQuery (newInput, oldInput) {
+    searchQuery(newInput, oldInput) {
       if (newInput && newInput.trim()) {
-        this.getSuggestions(newInput)
+        this.getSuggestions(newInput);
       }
-    }
+    },
   },
   methods: {
     getSuggestions: async function (searchTerm) {
-      this.loading = true
-      let response = await getFilmSuggestions(searchTerm)
+      this.loading = true;
+      let response = await getFilmSuggestions(searchTerm);
 
       // Reset array
-      this.suggestions.splice(0, this.suggestions.length)
+      this.suggestions.splice(0, this.suggestions.length);
       if (response && response.data && response.data.length) {
-        response.data.forEach(a => this.suggestions.push(a))
+        response.data.forEach((a) => this.suggestions.push(a));
       }
       this.suggestions.push({
         isSearchQueryOption: true,
         value: this.searchQuery,
-        name: this.searchQuery
-      })
+        name: this.searchQuery,
+      });
 
-      this.loading = false
+      this.loading = false;
     },
     optionsChange: function (event) {
-      const reducedOptions = this.selected.map(f => {
+      const reducedOptions = this.selected.map((f) => {
         if (f) {
-          return { name: f.name, film_id: f._id }
+          return { name: f.name, film_id: f._id };
         }
-      })
-      this.$emit('optionsChange', reducedOptions)
+      });
+      this.$emit("optionsChange", reducedOptions);
     },
     getYear: function (releaseDate) {
-      return `(${getYearFromTmdbReleaseDate(releaseDate)})`
+      return `(${getYearFromTmdbReleaseDate(releaseDate)})`;
     },
     // Handles the case where we want to identify an option as _not_ a film in the db
     getName: function (suggestion) {
       if (suggestion.isSearchQueryOption) {
-        return `${suggestion.name} <small>(Not in database)</small>`
+        return `${suggestion.name} <small>(Not in database)</small>`;
       }
-      return suggestion.name
+      return suggestion.name;
     },
     choose: function (id) {
-      this.selected.push(this.suggestions.find(a => a._id === id))
-      const reducedOptions = this.selected.map(f => {
+      this.selected.push(this.suggestions.find((a) => a._id === id));
+      const reducedOptions = this.selected.map((f) => {
         if (f) {
-          return { name: f.name, film_id: f._id }
+          return { name: f.name, film_id: f._id };
         }
-      })
-      this.$emit('optionsChange', reducedOptions)
-      this.suggestions = []
-      this.searchQuery = ''
+      });
+      this.$emit("optionsChange", reducedOptions);
+      this.suggestions = [];
+      this.searchQuery = "";
     },
     remove: function (selected) {
       const index = this.selected.findIndex(
         // The name comparison means we can match selected items without an id (i.e. items not in the db)
-        a => a.name === selected.name && a._id === selected._id
-      )
-      this.selected.splice(index, 1)
+        (a) => a.name === selected.name && a._id === selected._id
+      );
+      this.selected.splice(index, 1);
 
-      const reducedOptions = this.selected.map(f => {
+      const reducedOptions = this.selected.map((f) => {
         if (f) {
-          return { name: f.name, film_id: f._id }
+          return { name: f.name, film_id: f._id };
         }
-      })
-      this.$emit('optionsChange', reducedOptions)
+      });
+      this.$emit("optionsChange", reducedOptions);
     },
-    onUp () {
+    onUp() {
       if (this.suggestions.length > 0) {
         if (this.focusIndex > 0) {
-          this.focusIndex--
+          this.focusIndex--;
         } else {
-          this.focusIndex = this.suggestions.length - 1
+          this.focusIndex = this.suggestions.length - 1;
         }
       }
     },
-    onDown () {
+    onDown() {
       if (this.suggestions.length > 0) {
         if (this.focusIndex < this.suggestions.length - 1) {
-          this.focusIndex++
+          this.focusIndex++;
         } else {
-          this.focusIndex = 0
+          this.focusIndex = 0;
         }
       }
     },
-    focus (i) {
-      this.focusIndex = i
+    focus(i) {
+      this.focusIndex = i;
     },
-    unfocus () {
-      this.focusIndex = -1
+    unfocus() {
+      this.focusIndex = -1;
     },
-    getIdFromFocusIndex () {
+    getIdFromFocusIndex() {
       // This can return undefined which refers to the entered text.
-      return this.suggestions[this.focusIndex]._id
-    }
-  }
-}
+      return this.suggestions[this.focusIndex]._id;
+    },
+  },
+};
 </script>
 
 <style scoped>

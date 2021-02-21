@@ -3,7 +3,7 @@
     <movie-info-modal
       close-route="/discover"
       :show.sync="showingFilm"
-      :filmId="filmId"
+      :film-id="filmId"
       :show-nominate="true"
     />
     <transition name="slide">
@@ -14,8 +14,8 @@
         bottom
         right
         color="secondary"
-        @click="scroll"
         class="big-bottom"
+        @click="scroll"
       >
         <v-icon>expand_less</v-icon>
       </v-btn>
@@ -26,12 +26,12 @@
       <v-container fluid grid-list-xs>
         <v-layout row wrap>
           <v-flex
+            v-for="(recommendation, index) in recommendations"
+            :key="recommendation.film._id + index + 'recommended'"
             xs6
             sm4
             md3
             lg2
-            :key="recommendation.film._id+index+'recommended'"
-            v-for="(recommendation, index) in recommendations"
           >
             <film-preview
               :film="recommendation.film"
@@ -47,14 +47,17 @@
       <v-container fluid grid-list-xs>
         <v-layout row wrap>
           <v-flex
+            v-for="(recentlyAdded, index) in recentlyAdded"
+            :key="recentlyAdded._id + index + 'recent'"
             xs6
             sm4
             md3
             lg2
-            :key="recentlyAdded._id+index+'recent'"
-            v-for="(recentlyAdded, index) in recentlyAdded"
           >
-            <film-preview :film="recentlyAdded" modal-page-name="Discover"></film-preview>
+            <film-preview
+              :film="recentlyAdded"
+              modal-page-name="Discover"
+            ></film-preview>
           </v-flex>
         </v-layout>
       </v-container>
@@ -63,12 +66,21 @@
       <h3 class="separator mt-4">Popular and Highly Rated Movies</h3>
       <v-container grid-list-md text-xs-center>
         <v-layout row wrap>
-          <v-flex xs6 md3 lg2 :key="film._id+index" v-for="(film, index) in suggestions">
-            <film-preview :film="film" modal-page-name="Discover"></film-preview>
+          <v-flex
+            v-for="(film, index) in suggestions"
+            :key="film._id + index"
+            xs6
+            md3
+            lg2
+          >
+            <film-preview
+              :film="film"
+              modal-page-name="Discover"
+            ></film-preview>
           </v-flex>
           <quote v-if="done" />
           <v-flex xs12>
-            <v-progress-linear color="secondary" v-if="busy" indeterminate />
+            <v-progress-linear v-if="busy" color="secondary" indeterminate />
           </v-flex>
         </v-layout>
       </v-container>
@@ -77,21 +89,29 @@
 </template>
 
 <script>
-import FilmPreview from '@/components/common/FilmPreview'
-import MovieInfoModal from '@/components/common/MovieInfoModal'
-import Quote from './Quote'
+import FilmPreview from "@/components/common/FilmPreview";
+import MovieInfoModal from "@/components/common/MovieInfoModal";
+import Quote from "./Quote";
 import {
   getRecommendations as fetchRecommendations,
   getRecentlyAdded as fetchRecentlyAdded,
-  discoverMovies
-} from '@/api'
+  discoverMovies,
+} from "@/api";
 
-import scrollListener from '@/scroll-listener'
-import { mapActions } from 'vuex'
+import scrollListener from "@/scroll-listener";
+import { mapActions } from "vuex";
 
 export default {
-  name: 'Suggestions',
-  data () {
+  name: "Suggestions",
+  components: {
+    FilmPreview,
+    MovieInfoModal,
+    Quote,
+  },
+  props: {
+    filmId: String,
+  },
+  data() {
     return {
       showingFilm: false,
       suggestions: [],
@@ -100,120 +120,112 @@ export default {
       busy: false,
       seenIds: [],
       done: false,
-      queueCount: 0
-    }
-  },
-  components: {
-    FilmPreview,
-    MovieInfoModal,
-    Quote
-  },
-  props: {
-    filmId: String
+      queueCount: 0,
+    };
   },
   watch: {
-    filmId (to, from) {
-      this.showingFilm = Boolean(this.filmId)
-    }
+    filmId(to, from) {
+      this.showingFilm = Boolean(this.filmId);
+    },
   },
   methods: {
-    ...mapActions('snackbar', { setSnackbar: 'setText' }),
-    ...mapActions('loading', ['setLoaded']),
+    ...mapActions("snackbar", { setSnackbar: "setText" }),
+    ...mapActions("loading", ["setLoaded"]),
     refresh: async function () {
       if (this.done) {
-        return
+        return;
       }
 
-      this.busy = true
+      this.busy = true;
       try {
-        const discoveredFilms = await discoverMovies(this.seenIds)
+        const discoveredFilms = await discoverMovies(this.seenIds);
         if (discoveredFilms.length === 0) {
-          this.done = true
+          this.done = true;
         }
-        this.suggestions = this.suggestions.concat(discoveredFilms)
-        this.seenIds = this.seenIds.concat(discoveredFilms.map(f => f._id))
+        this.suggestions = this.suggestions.concat(discoveredFilms);
+        this.seenIds = this.seenIds.concat(discoveredFilms.map((f) => f._id));
       } catch (e) {
-        console.error(e)
-        this.setSnackbar('Something went wrong. Try again.')
-        this.busy = false
+        console.error(e);
+        this.setSnackbar("Something went wrong. Try again.");
+        this.busy = false;
       } finally {
-        this.busy = false
+        this.busy = false;
 
         if (this.queueCount > 0) {
-          this.queueCount--
-          this.refresh()
+          this.queueCount--;
+          this.refresh();
         }
       }
     },
     getRecommendations: function () {
-      this.busy = true
+      this.busy = true;
       return fetchRecommendations()
-        .then(response => {
-          this.recommendations = response
-          this.busy = false
+        .then((response) => {
+          this.recommendations = response;
+          this.busy = false;
         })
-        .catch(e => {
-          console.error(e)
-          this.setSnackbar('Something went wrong. Try again.')
-          this.busy = false
-        })
+        .catch((e) => {
+          console.error(e);
+          this.setSnackbar("Something went wrong. Try again.");
+          this.busy = false;
+        });
     },
     getRecentlyAdded: function () {
-      this.busy = true
+      this.busy = true;
       return fetchRecentlyAdded()
-        .then(response => {
-          this.recentlyAdded = response.data || response
-          this.busy = false
+        .then((response) => {
+          this.recentlyAdded = response.data || response;
+          this.busy = false;
         })
-        .catch(e => {
-          console.error(e)
-          this.setSnackbar('Something went wrong. Try again.')
-          this.busy = false
-        })
+        .catch((e) => {
+          console.error(e);
+          this.setSnackbar("Something went wrong. Try again.");
+          this.busy = false;
+        });
     },
-    scroll () {
-      window.scrollTo(0, 0)
+    scroll() {
+      window.scrollTo(0, 0);
     },
-    refreshQueueWrapper () {
+    refreshQueueWrapper() {
       // This queue abstraction prevents a race condition where seenIds are not sent to the server before the next request
       // In this race duplicates may be shown extremely close together causing a weird expereince for users
       // By queueing requests on scroll we prevent a case where requests overlap
       if (this.busy) {
-        this.queueCount++
+        this.queueCount++;
       } else {
-        this.refresh()
+        this.refresh();
       }
-    }
+    },
   },
   computed: {
-    disabled () {
-      return this.busy || this.done
-    }
+    disabled() {
+      return this.busy || this.done;
+    },
   },
-  beforeDestroy () {
-    document.removeEventListener('scroll', this.listener)
+  beforeDestroy() {
+    document.removeEventListener("scroll", this.listener);
   },
-  async created () {
-    const nextPage = this.refreshQueueWrapper
-    this.listener = scrollListener(nextPage)
+  async created() {
+    const nextPage = this.refreshQueueWrapper;
+    this.listener = scrollListener(nextPage);
     // route watcher won't be called on initial load
-    this.showingFilm = Boolean(this.filmId)
+    this.showingFilm = Boolean(this.filmId);
     try {
       await Promise.all([
         this.getRecommendations(),
         this.getRecentlyAdded(),
-        this.refresh()
-      ])
-      document.addEventListener('scroll', this.listener)
-      await this.setLoaded('Discover')
+        this.refresh(),
+      ]);
+      document.addEventListener("scroll", this.listener);
+      await this.setLoaded("Discover");
     } catch (e) {
-      console.error(e)
-      this.setSnackbar('Something went wrong. Try again.')
-      this.$router.push('/home')
-      document.removeEventListener('scroll', this.listener)
+      console.error(e);
+      this.setSnackbar("Something went wrong. Try again.");
+      this.$router.push("/home");
+      document.removeEventListener("scroll", this.listener);
     }
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

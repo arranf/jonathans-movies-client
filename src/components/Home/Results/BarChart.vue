@@ -1,46 +1,56 @@
 <template>
   <div class="graph-cont">
-    <template class="d-flex" v-for="(option, index) in data" >
-      <div :key="option.name+'bar'" class="bar" :id="option.name" :style="{'--width': calcPercentage(option), '--color': colors[index] }"> <span class="bar-label"><strong>{{option.name}}</strong></span> <span class="bar-count" style="float:right;">{{option.votes}}</span></div>
+    <template v-for="(option, index) in data" class="d-flex">
+      <div
+        :id="option.name"
+        :key="option.name + 'bar'"
+        class="bar"
+        :style="{ '--width': calcPercentage(option), '--color': colors[index] }"
+      >
+        <span class="bar-label"
+          ><strong>{{ option.name }}</strong></span
+        >
+        <span class="bar-count" style="float: right">{{ option.votes }}</span>
+      </div>
     </template>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'BarChart',
+  name: "BarChart",
   props: {
     data: {
       type: Array,
-      required: true
+      required: true,
     },
     colors: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
-    ...mapGetters('vote', ['getNumberOfUniqueVoters']),
-    ...mapGetters('poll', ['getMostRecentPoll'])
+    ...mapGetters("vote", ["getNumberOfUniqueVoters"]),
+    ...mapGetters("poll", ["getMostRecentPoll"]),
   },
   methods: {
-    calcPercentage (option) {
+    calcPercentage(option) {
       if (option.votes === 0) {
-        return '1%'
+        return "1%";
       } else {
         return (
           Math.round(
             (option.votes /
               this.getNumberOfUniqueVoters(this.getMostRecentPoll._id)) *
               100
-          ) + '%'
-        )
+          ) + "%"
+        );
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>

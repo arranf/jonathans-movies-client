@@ -5,26 +5,26 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import Loading from '@/components/skeleton/Loading'
+import { mapActions } from "vuex";
+import Loading from "@/components/skeleton/Loading";
 
 export default {
-  name: 'Logout',
+  name: "Logout",
   components: {
-    Loading
+    Loading,
   },
   methods: {
-    ...mapActions('auth', ['logout']),
-    ...mapActions('snackbar', { setSnackbar: 'setText' }),
+    ...mapActions("auth", ["logout"]),
+    ...mapActions("snackbar", { setSnackbar: "setText" }),
     logoutAndRedirect: function () {
       this.logout()
-        .then(() => this.setSnackbar('You are now logged out!'))
-        .then(() => this.$router.push({ path: '/' }))
-        .catch(e => console.error(e))
-    }
+        .then(() => this.setSnackbar("You are now logged out!"))
+        .then(() => this.$router.push({ path: "/" }))
+        .catch((e) => console.error(e));
+    },
   },
-  mounted () {
-    this.logoutAndRedirect()
-  }
-}
+  mounted() {
+    this.logoutAndRedirect();
+  },
+};
 </script>

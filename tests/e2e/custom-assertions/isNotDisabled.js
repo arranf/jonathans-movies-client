@@ -7,29 +7,29 @@
 // for how to write custom assertions see
 // http://nightwatchjs.org/guide#writing-custom-assertions
 exports.assertion = function (selector) {
-  this.message = 'Testing if element <' + selector + '> is not disabled'
-  this.expected = false
+  this.message = "Testing if element <" + selector + "> is not disabled";
+  this.expected = false;
   this.pass = function (val) {
-    return val === this.expected
-  }
+    return val === this.expected;
+  };
   this.value = function (res) {
-    return res.value
-  }
+    return res.value;
+  };
   this.command = function (cb) {
-    var self = this
+    var self = this;
     return this.api.execute(
       function (selector) {
-        var element = document.querySelector(selector)
-        if (!element.hasAttribute('disabled')) {
-          return false
+        var element = document.querySelector(selector);
+        if (!element.hasAttribute("disabled")) {
+          return false;
         } else {
-          return element.getAttribute('disabled')
+          return element.getAttribute("disabled");
         }
       },
       [selector],
       function (res) {
-        cb.call(self, res)
+        cb.call(self, res);
       }
-    )
-  }
-}
+    );
+  };
+};

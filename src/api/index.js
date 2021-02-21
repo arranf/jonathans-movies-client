@@ -1,147 +1,143 @@
-import store from '@/store'
-import feathersClient from './feathers-client'
+import store from "@/store";
+import feathersClient from "./feathers-client";
 
-const DAY_MS = 24 * 60 * 60 * 1000
+const DAY_MS = 24 * 60 * 60 * 1000;
 
 export const getCurrentPoll = () =>
-  store.dispatch('poll/find', {
+  store.dispatch("poll/find", {
     query: {
       $sort: { endDateTime: -1 },
-      $limit: 20
-    }
-  })
+      $limit: 20,
+    },
+  });
 
 export const getVotesForMostRecentPoll = (poll) =>
-  store.dispatch('vote/find', {
+  store.dispatch("vote/find", {
     pageinate: false,
     query: {
       $limit: 1000,
-      poll_id: poll._id
-    }
-  })
+      poll_id: poll._id,
+    },
+  });
 
 export const getOptionsForPoll = (pollId) =>
-  store.dispatch('option/find', {
+  store.dispatch("option/find", {
     pageinate: false,
     query: {
       $limit: 100,
-      poll_id: pollId
-    }
-  })
+      poll_id: pollId,
+    },
+  });
 
 export const getVotesForCurrentPoll = () => {
-  const poll = store.getters['poll/getActivePoll']
+  const poll = store.getters["poll/getActivePoll"];
   if (poll && poll._id) {
-    return store.dispatch('vote/find', {
+    return store.dispatch("vote/find", {
       pageinate: false,
       query: {
         $limit: 1000,
-        poll_id: poll._id
-      }
-    })
+        poll_id: poll._id,
+      },
+    });
   }
-  return Promise.reject(new Error('Could not get current poll'))
-}
+  return Promise.reject(new Error("Could not get current poll"));
+};
 
 export const getFilmSuggestions = (movieName, limit = 5) => {
   if (movieName && movieName.length > 0) {
-    return store.dispatch('films/find', {
+    return store.dispatch("films/find", {
       query: {
         $limit: limit,
-        $search: movieName
-      }
-    })
+        $search: movieName,
+      },
+    });
   }
-  return Promise.resolve()
-}
+  return Promise.resolve();
+};
 
-export const getFilms = (
-  skip = 0,
-  limit = 50,
-  sort = { canonical_name: 1 }
-) =>
-  store.dispatch('films/find', {
+export const getFilms = (skip = 0, limit = 50, sort = { canonical_name: 1 }) =>
+  store.dispatch("films/find", {
     paginate: false,
     query: {
       $limit: limit,
       $sort: sort,
-      $skip: skip
-    }
-  })
+      $skip: skip,
+    },
+  });
 
 export const addNomination = (film) => {
-  const poll = store.getters['poll/getActivePoll']
-  const pollId = poll._id
+  const poll = store.getters["poll/getActivePoll"];
+  const pollId = poll._id;
   const hasNominationsRemaining =
-    store.getters['option/hasNominationsRemaining']
+    store.getters["option/hasNominationsRemaining"];
 
   if (!hasNominationsRemaining) {
-    return Promise.reject(new Error('Nomination used'))
+    return Promise.reject(new Error("Nomination used"));
   }
 
   if (!pollId) {
-    return Promise.reject(new Error('Missing poll id'))
+    return Promise.reject(new Error("Missing poll id"));
   }
   if (film && film.name && film._id) {
-    return store.dispatch('option/create', {
+    return store.dispatch("option/create", {
       name: film.name,
       poll_id: pollId,
-      film_id: film._id
-    })
+      film_id: film._id,
+    });
   } else {
-    return Promise.reject(new Error('Missing film information id'))
+    return Promise.reject(new Error("Missing film information id"));
   }
-}
+};
 export const stopPoll = () => {
-  const poll = store.getters['poll/getActivePoll']
-  const currentTime = store.getters['time/getNow']
-  const data = { endDateTime: currentTime }
-  store.dispatch('poll/patch', [poll._id, data, {}])
-}
+  const poll = store.getters["poll/getActivePoll"];
+  const currentTime = store.getters["time/getNow"];
+  const data = { endDateTime: currentTime };
+  store.dispatch("poll/patch", [poll._id, data, {}]);
+};
 
 export const stopNominations = () => {
-  const poll = store.getters['poll/getActivePoll']
-  const currentTime = store.getters['time/getNow']
-  const oldTransitionTime = poll.pollTransitionDateTime
+  const poll = store.getters["poll/getActivePoll"];
+  const currentTime = store.getters["time/getNow"];
+  const oldTransitionTime = poll.pollTransitionDateTime;
   const data = {
     pollTransitionDateTime: currentTime,
-    endDateTime: poll.endDateTime - (oldTransitionTime - currentTime)
-  }
-  store.dispatch('poll/patch', [poll._id, data, {}])
-}
+    endDateTime: poll.endDateTime - (oldTransitionTime - currentTime),
+  };
+  store.dispatch("poll/patch", [poll._id, data, {}]);
+};
 
 export const discoverMovies = (seenIds) =>
-  store.dispatch('films/find', {
+  store.dispatch("films/find", {
     paginate: false,
     query: {
       discover: true,
       _id: {
-        $nin: seenIds
-      }
-    }
-  })
+        $nin: seenIds,
+      },
+    },
+  });
 
 export const discoverChristmasMovies = (seenIds) =>
-  store.dispatch('films/find', {
+  store.dispatch("films/find", {
     paginate: false,
     query: {
       discoverChristmas: true,
       _id: {
-        $nin: seenIds
-      }
-    }
-  })
+        $nin: seenIds,
+      },
+    },
+  });
 
 /// Find movies that were added in the last month
 export const getRecentlyAdded = () =>
-  store.dispatch('films/find', {
+  store.dispatch("films/find", {
     paginate: false,
     query: {
       createdAt: {
-        $gte: new Date().getTime() - (30 * DAY_MS)
-      }
-    }
-  })
+        $gte: new Date().getTime() - 30 * DAY_MS,
+      },
+    },
+  });
 
 export const getRecommendations = () =>
-  feathersClient.service('/recommendations').get(store.state.auth.user._id)
+  feathersClient.service("/recommendations").get(store.state.auth.user._id);

@@ -6,48 +6,48 @@ module.exports = {
     // automatically uses dev Server port from /config.index.js
     // default: http://localhost:8080
     // see nightwatch.conf.js
-    const devServer = browser.globals.devServerURL
+    const devServer = browser.globals.devServerURL;
 
     browser
       .url(devServer)
-      .waitForElementVisible('#app-container', 5000)
+      .waitForElementVisible("#app-container", 5000)
       // Inital page
-      .assert.elementPresent('#login')
-      .assert.elementPresent('#facebook')
+      .assert.elementPresent("#login")
+      .assert.elementPresent("#facebook")
       // Should be taken to login form
-      .click('#login')
-      .assert.elementCount('input', 2) // Email and password
-      .assert.elementNotPresent('#facebook')
-      .assert.elementNotPresent('#login')
-      .assert.attributeEquals('#submit', 'disabled', 'true')
+      .click("#login")
+      .assert.elementCount("input", 2) // Email and password
+      .assert.elementNotPresent("#facebook")
+      .assert.elementNotPresent("#login")
+      .assert.attributeEquals("#submit", "disabled", "true")
       // Test invalid form input, the submit button should still be disabled
-      .setValue('#email', 'aninvalidemail')
-      .setValue('#password', 'password')
-      .assert.attributeEquals('#submit', 'disabled', 'true')
+      .setValue("#email", "aninvalidemail")
+      .setValue("#password", "password")
+      .assert.attributeEquals("#submit", "disabled", "true")
       // Test valid input, the submit button should not be disabled
-      .setValue('#email', 'valid@email.com')
+      .setValue("#email", "valid@email.com")
       // .assert.attributeEquals('#submit', 'disabled', null)
-      .assert.isNotDisabled('#submit')
-      .click('#back')
+      .assert.isNotDisabled("#submit")
+      .click("#back")
       // We should be on the same page
-      .assert.elementPresent('#facebook')
-      .assert.elementPresent('#login')
+      .assert.elementPresent("#facebook")
+      .assert.elementPresent("#login")
       // Should be taken to signup route
-      .click('#signup')
-      .assert.urlEquals(devServer + '/signup')
-      .end()
+      .click("#signup")
+      .assert.urlEquals(devServer + "/signup")
+      .end();
   },
   facebookLogin: function (browser) {
-    const devServer = browser.globals.devServerURL
+    const devServer = browser.globals.devServerURL;
 
     browser
       .url(devServer)
-      .waitForElementVisible('#app-container', 5000)
-      .click('#facebook')
+      .waitForElementVisible("#app-container", 5000)
+      .click("#facebook")
       .pause(1000)
-      .assert.urlContains('facebook')
-      .end()
-  }
+      .assert.urlContains("facebook")
+      .end();
+  },
   // TODO: Find a way to make this work with the server running
   // 'snackbar': function (browser) {
   //   const devServer = browser.globals.devServerURL
@@ -63,4 +63,4 @@ module.exports = {
   //     .waitForElementVisible('.md-snackbar', 5000)
   //     .end()
   // }
-}
+};

@@ -9,38 +9,41 @@ const state = {
     isSignupLoading: false,
     isDiscoverLoading: false,
     isVerifyLoading: false,
-    isChristmasLoading: false
-  }
-}
+    isChristmasLoading: false,
+  },
+};
 
 const actions = {
-  setLoading ({ commit }, payload) {
-    commit('setLoading', payload)
+  setLoading({ commit }, payload) {
+    commit("setLoading", payload);
   },
-  setLoaded ({ commit }, payload) {
-    commit('setLoaded', payload)
-  }
-}
+  setLoaded({ commit }, payload) {
+    commit("setLoaded", payload);
+  },
+};
 
 const mutations = {
-  setLoading (state, payload) {
-    const key = `is${payload}Loading`
-    state.loading[key] = true
+  setLoading(state, payload) {
+    const key = `is${payload}Loading`;
+    state.loading[key] = true;
   },
-  setLoaded (state, payload) {
-    const key = `is${payload}Loading`
-    state.loading[key] = false
-  }
-}
+  setLoaded(state, payload) {
+    const key = `is${payload}Loading`;
+    state.loading[key] = false;
+  },
+};
 
 const getters = {
-  isLoading: (state) => { let result = Object.values(state.loading).some(l => l === true); return result }
-}
+  isLoading: (state) => {
+    let result = Object.values(state.loading).some((l) => l === true);
+    return result;
+  },
+};
 
 export default {
   namespaced: true,
   state,
   actions,
   mutations,
-  getters
-}
+  getters,
+};

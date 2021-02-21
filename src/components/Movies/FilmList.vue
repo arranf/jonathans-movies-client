@@ -2,15 +2,15 @@
   <div>
     <div v-if="allFilms">
       <!-- TODO: Move this out and make it emit update events and a filter event -->
-      <v-dialog lazy v-model="showFilters">
+      <v-dialog v-model="showFilters" lazy>
         <v-card>
           <v-card-title class="headline">Filter Movies</v-card-title>
 
           <v-subheader>Genres</v-subheader>
           <v-card-text class="pt-0 pb-0">
             <v-select
-              :items="totalGenres"
               v-model="genres"
+              :items="totalGenres"
               multiple
               chips
               deletable-chips
@@ -20,12 +20,25 @@
           </v-card-text>
           <v-subheader>Minimum Rating</v-subheader>
           <v-card-text class="pt-0 pb-0">
-            <v-slider v-model="floorRating" thumb-label min="0" max="10" step="0.5" ticks></v-slider>
+            <v-slider
+              v-model="floorRating"
+              thumb-label
+              min="0"
+              max="10"
+              step="0.5"
+              ticks
+            ></v-slider>
           </v-card-text>
           <v-card-actions>
             <v-spacer id="hide" />
-            <v-btn flat @click.prevent="requery()" type="submit" class="md-accent md-raised">Submit</v-btn>
-            <v-btn flat @click.prevent="reset()" type="reset">Reset</v-btn>
+            <v-btn
+              flat
+              type="submit"
+              class="md-accent md-raised"
+              @click.prevent="requery()"
+              >Submit</v-btn
+            >
+            <v-btn flat type="reset" @click.prevent="reset()">Reset</v-btn>
             <v-btn flat @click.prevent="showFilters = false">Close</v-btn>
           </v-card-actions>
         </v-card>
@@ -34,14 +47,21 @@
       <movie-info-modal
         close-route="/movies"
         :show.sync="showingFilm"
-        :filmId="filmId"
+        :film-id="filmId"
         :show-nominate="true"
       />
 
       <v-list>
         <template v-for="(film, index) in allFilms">
-          <film-list-item class="pt-2 pb-2" :film="film" :key="film._id+'item'" />
-          <v-divider v-if="index + 1 < allFilms.length" :key="index"></v-divider>
+          <film-list-item
+            :key="film._id + 'item'"
+            class="pt-2 pb-2"
+            :film="film"
+          />
+          <v-divider
+            v-if="index + 1 < allFilms.length"
+            :key="index"
+          ></v-divider>
         </template>
       </v-list>
       <div class="text-center">
@@ -50,27 +70,37 @@
       <v-progress-linear v-show="busy" :indeterminate="true" />
     </div>
 
-    <v-btn class="big-bottom" right color="accent" fab fixed @click="showFilters = true">
+    <v-btn
+      class="big-bottom"
+      right
+      color="accent"
+      fab
+      fixed
+      @click="showFilters = true"
+    >
       <v-icon>filter_list</v-icon>
     </v-btn>
   </div>
 </template>
 
 <script>
-import FilmListItem from './FilmListItem'
-import { mapGetters, mapActions, mapMutations } from 'vuex'
-import debounce from 'lodash/debounce'
-import constants from '@/constants'
-import scrollListener from '@/scroll-listener'
-import MovieInfoModal from '@/components/common/MovieInfoModal'
-import Quote from '@/components/Discover/Quote'
+import FilmListItem from "./FilmListItem";
+import { mapGetters, mapActions, mapMutations } from "vuex";
+import debounce from "lodash/debounce";
+import constants from "@/constants";
+import scrollListener from "@/scroll-listener";
+import MovieInfoModal from "@/components/common/MovieInfoModal";
+import Quote from "@/components/Discover/Quote";
 
 export default {
-  name: 'FilmList',
+  name: "FilmList",
   components: {
     FilmListItem,
     MovieInfoModal,
-    Quote
+    Quote,
+  },
+  props: {
+    filmId: String,
   },
   data: function () {
     return {
@@ -84,110 +114,107 @@ export default {
       sort: { canonical_name: 1 },
       floorRating: 0.0,
       genres: [],
-      reachedEnd: false
-    }
-  },
-  props: {
-    filmId: String
+      reachedEnd: false,
+    };
   },
   watch: {
-    filmId (newFilmId, oldFilmId) {
-      this.showingFilm = Boolean(newFilmId)
-    }
+    filmId(newFilmId, oldFilmId) {
+      this.showingFilm = Boolean(newFilmId);
+    },
   },
   computed: {
-    ...mapGetters('films', { allFilms: 'list' }),
+    ...mapGetters("films", { allFilms: "list" }),
     totalGenres: () => constants.genres,
     query: function () {
       let query = {
         query: {
           $limit: this.limit,
           $sort: this.sort,
-          $skip: this.limit * this.page
-        }
-      }
+          $skip: this.limit * this.page,
+        },
+      };
       if (this.genres.length > 0) {
-        query.query['genres'] = this.genres
+        query.query["genres"] = this.genres;
       }
       if (this.floorRating > 0) {
-        query.query['imdb_rating'] = { $gte: this.floorRating }
+        query.query["imdb_rating"] = { $gte: this.floorRating };
       }
-      return query
-    }
+      return query;
+    },
   },
   methods: {
-    ...mapActions('films', { queryFilms: 'find' }),
-    ...mapMutations('films', { clearFilms: 'clearAll' }),
-    ...mapActions('snackbar', { setSnackbar: 'setText' }),
-    ...mapActions('loading', ['setLoaded']),
+    ...mapActions("films", { queryFilms: "find" }),
+    ...mapMutations("films", { clearFilms: "clearAll" }),
+    ...mapActions("snackbar", { setSnackbar: "setText" }),
+    ...mapActions("loading", ["setLoaded"]),
     reset: function () {
-      this.page = 0
-      this.genres = ''
-      this.total = 51
-      this.floorRating = 0
-      this.showFilters = false
-      this.clearFilms()
-      this.getFilms()
+      this.page = 0;
+      this.genres = "";
+      this.total = 51;
+      this.floorRating = 0;
+      this.showFilters = false;
+      this.clearFilms();
+      this.getFilms();
     },
     requery: function () {
-      this.showFilters = false
-      this.page = 0
-      this.clearFilms()
-      this.getFilms()
+      this.showFilters = false;
+      this.page = 0;
+      this.clearFilms();
+      this.getFilms();
     },
     getFilms: function () {
-      let query = this.query
+      let query = this.query;
       return this.queryFilms(query)
-        .then(response => {
-          this.total = response.total
-          this.busy = false
+        .then((response) => {
+          this.total = response.total;
+          this.busy = false;
         })
-        .catch(error => {
-          console.error(error)
-          this.busy = false
-          this.setSnackbar('No films can be displayed')
-        })
+        .catch((error) => {
+          console.error(error);
+          this.busy = false;
+          this.setSnackbar("No films can be displayed");
+        });
     },
     tryFetchNextPage: function () {
-      const offset = this.limit * this.page
+      const offset = this.limit * this.page;
       if (offset >= this.total) {
-        this.reachedEnd = true
-        return
+        this.reachedEnd = true;
+        return;
       }
-      this.busy = true
-      return this.fetchNextPage()
+      this.busy = true;
+      return this.fetchNextPage();
     },
     fetchNextPage: debounce(
       function () {
-        this.page++
-        return this.getFilms()
+        this.page++;
+        return this.getFilms();
       },
       800,
       { leading: true }
-    )
+    ),
   },
-  beforeDestroy () {
-    document.removeEventListener('scroll', this.listener)
+  beforeDestroy() {
+    document.removeEventListener("scroll", this.listener);
   },
-  async created () {
+  async created() {
     // $route watcher will not be called when componenet loaded
-    this.showingFilm = Boolean(this.filmId)
+    this.showingFilm = Boolean(this.filmId);
 
     // Setup listener
-    let nextPage = this.tryFetchNextPage
-    this.listener = scrollListener(nextPage)
+    let nextPage = this.tryFetchNextPage;
+    this.listener = scrollListener(nextPage);
 
-    this.clearFilms()
+    this.clearFilms();
     try {
-      await this.getFilms()
-      document.addEventListener('scroll', this.listener)
-      await this.setLoaded('Movies')
+      await this.getFilms();
+      document.addEventListener("scroll", this.listener);
+      await this.setLoaded("Movies");
     } catch (e) {
-      console.error(e)
-      document.removeEventListener('scroll', this.listener)
+      console.error(e);
+      document.removeEventListener("scroll", this.listener);
     }
-  }
-}
+  },
+};
 </script>
 
 <style scoped>

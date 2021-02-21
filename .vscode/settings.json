@@ -2,34 +2,13 @@
 {
     "editor.renderWhitespace": "boundary",
     "editor.detectIndentation": false,
-    "[javascript]": {
-      "editor.tabSize": 2,
-      "editor.insertSpaces": true
-    },
-    "[vue]": {
-        "editor.tabSize": 2,
-        "editor.insertSpaces": true
-    },
     "eslint.options": {
         "extensions": [".html", ".js", ".vue", ".jsx"]
     },
-    "eslint.enable": true,
     "eslint.validate": [
-      {
-          "language": "html",
-          "autoFix": true
-      },
-      {
-          "language": "vue",
-          "autoFix": true
-      },
-      {
-        "language": "vue-html",
-        "autoFix": true
-      },
-      {
-          "language": "javascript",
-          "autoFix": true
-      }
-    ]
+        "javascript",
+        "javascriptreact",
+        "vue"
+    ],
+    "vetur.validation.template": false
   }
