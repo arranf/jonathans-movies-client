@@ -54,9 +54,6 @@ export default {
         email: this.email,
         password: this.password
       })
-        .then(token => {
-          return feathersClient.passport.verifyJWT(token.accessToken)
-        })
         .then(() => {
           router.push('home')
         })
@@ -64,6 +61,7 @@ export default {
         .catch(error => {
           this.isError = true
           this.setSnackbar('Unable to complete log in. Please check your username and password.')
+          console.error(error)
         })
     },
     swapLoginType: function () {

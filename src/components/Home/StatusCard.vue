@@ -65,6 +65,7 @@ export default {
       } else if (this.isCurrentPollInVoting) {
         return 'purple darken-3'
       }
+      return ''
     }
   }
 }

@@ -320,6 +320,7 @@ export default {
         errors.push(
           'You must have at least two options if there are no nominations'
         )
+      return errors
     }
   },
   // TODO: Make sure server side validation matches

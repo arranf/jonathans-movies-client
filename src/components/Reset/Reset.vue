@@ -187,9 +187,6 @@ export default {
           email: user.email,
           password: this.password
         })
-          .then(token => {
-            feathersClient.passport.verifyJWT(token.accessToken)
-          })
           .then(() => {
             router.push('/home')
           })

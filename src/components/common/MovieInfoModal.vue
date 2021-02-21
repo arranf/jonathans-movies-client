@@ -154,6 +154,7 @@ export default {
       if (this.film && this.film.release_date) {
         return getYearFromTmdbReleaseDate(this.film.release_date)
       }
+      return undefined
     },
     nominateButtonText () {
       if (this.isOptionForCurrentPoll(this.film._id)) {

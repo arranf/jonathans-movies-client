@@ -83,9 +83,6 @@ export default {
             password: password
           })
         )
-        .then(token => {
-          return feathersClient.passport.verifyJWT(token.accessToken)
-        })
         .then(() => router.push('home'))
         .catch(error => {
           let message = 'Unable to complete sign up.'

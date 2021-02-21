@@ -24,15 +24,13 @@ export default {
   methods: {
     ...mapActions('auth', ['authenticate', 'logout']),
     ...mapActions('snackbar', { setSnackbar: 'setText' }),
+    // TODO: MAKE THIS REUSABLE
     tryLogin: function () {
       this.authenticate({
         strategy: 'local',
         email: this.email,
         password: this.password
       })
-        .then(token => {
-          return feathersClient.passport.verifyJWT(token.accessToken)
-        })
         .then(() => {
           router.push('home')
         })

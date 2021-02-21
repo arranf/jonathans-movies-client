@@ -15,7 +15,8 @@ const Discover = () => import('@/components/Discover/Discover')
 const Reset = () => import('@/components/Reset/Reset')
 const Verify = () => import('@/components/Verify/Verify')
 const Logout = () => import('@/components/Logout/Logout')
-const SwitchCollection = () => import('@/components/Collection/SwitchCollection')
+const SwitchCollection = () =>
+  import('@/components/Collection/SwitchCollection')
 
 Vue.use(Router)
 
@@ -25,9 +26,6 @@ const loginBeforeEnter = (to, from, next) => {
   } else {
     store
       .dispatch('auth/authenticate')
-      .then(response => {
-        return feathersClient.passport.verifyJWT(response.accessToken)
-      })
       .then(payload => {
         return feathersClient
           .service('users')
@@ -177,7 +175,6 @@ router.beforeEach((to, from, next) => {
   if (!user && requiresAuth) {
     store
       .dispatch('auth/authenticate')
-      .then(response => feathersClient.passport.verifyJWT(response.accessToken))
       .then(payload =>
         feathersClient
           .service('users')
@@ -201,7 +198,7 @@ router.beforeEach((to, from, next) => {
 
 // Show loading animation
 router.afterEach((to, from) => {
-  if ((to.meta && to.meta.skipLoading) || (from.name === to.name)) {
+  if ((to.meta && to.meta.skipLoading) || from.name === to.name) {
     return
   }
   store.dispatch('loading/setLoading', to.name)
