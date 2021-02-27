@@ -13,8 +13,10 @@
   "dependencies": {
     "@feathersjs/client": "^4.3.11",
     "@sentry/browser": "^4.3.4",
+    "@vue/composition-api": "^1.0.0-rc.2",
     "core-js": "^3.6.5",
-    "feathers-vuex": "^1.6.2",
+    "feathers-hooks-common": "^5.0.5",
+    "feathers-vuex": "git://github.com/arranf/feathers-vuex.git#1.x",
     "humanize-duration": "^3.15.3",
     "lazysizes": "^4.1.4",
     "lodash": "^4.17.13",
@@ -39,7 +41,7 @@
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^26.6.3",
     "critters-webpack-plugin": "^2.0.1",
     "eslint": "^6.7.2",
     "eslint-plugin-html": "^4.0.6",
@@ -50,15 +52,15 @@
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
     "lint-staged": "^7.2.2",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4",
     "prettier": "^2.2.1",
-    "sass-loader": "^7.0.1",
+    "sass-loader": "^8",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "vue-cli-plugin-vuetify": "~2.1.0",
     "vue-template-compiler": "^2.5.17",
     "vuetify-loader": "^1.2.2",
-    "webpack-bundle-analyzer": "^3.3.2"
+    "webpack-bundle-analyzer": "^4.4.0"
   },
   "postcss": {
     "plugins": {

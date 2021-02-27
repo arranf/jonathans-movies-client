@@ -4,7 +4,7 @@ const DefinePlugin = require("webpack").DefinePlugin;
 // const Critters = require('critters-webpack-plugin')
 
 module.exports = {
-  transpileDependencies: ["vuetify"],
+  transpileDependencies: ["vuetify", "feathers-vuex"],
   pwa: {
     name: "Jonathan's Movies",
     themeColor: "#365ED4",
@@ -12,7 +12,7 @@ module.exports = {
     appleMobileWebAppCapable: "yes",
     appleMobileWebAppStatusBarStyle: "black",
   },
-  configureWebpack: (config) => {
+  configureWebpack: (_config) => {
     let plugins = [
       new DefinePlugin({
         "process.env": {

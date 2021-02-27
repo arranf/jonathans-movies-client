@@ -2,49 +2,41 @@ import feathers from "@feathersjs/client";
 import io from "socket.io-client";
 import store from "@/store"; // used for transition notification
 
-let socket;
+let url;
+// TODO: MOVE THIS TO BUILD TIME
 if (process.env.BRANCH && process.env.BRANCH.trim() === "develop") {
-  try {
-    socket = io("https://staging-api.jonathansmovies.com", {
-      transports: ["websocket"],
-    });
-  } catch (e) {
-    console.error(e);
-    console.error("Unable to create socket to staging server");
-  }
-  console.info("Running staging environment!");
+  url = "https://staging-api.jonathansmovies.com";
 } else if (process.env.NODE_ENV === "production") {
-  try {
-    socket = io("https://api.jonathansmovies.com", {
-      transports: ["websocket"],
-    });
-  } catch (e) {
-    console.error(e);
-    console.error("Unable to create socket to live server");
-  }
+  url = "https://api.jonathansmovies.com";
 } else {
-  try {
-    socket = io("http://localhost:3030", { transports: ["websocket"] });
-  } catch (e) {
-    console.error(e);
-    console.error("Unable to create local development socket");
-  }
+  url = "http://localhost:3030";
 }
 
-let app = feathers()
+let socket;
+try {
+  socket = io(url, {
+    transports: ["websocket"],
+  });
+  console.debug(`Socket created to: ${url}`);
+} catch (e) {
+  console.error(e);
+  console.error(`Unable to create socket to server: ${url}`);
+}
+
+let feathersClient = feathers()
   .configure(feathers.socketio(socket))
   .configure(feathers.authentication({ storage: window.localStorage }));
 
-app.service("/users");
-app.service("/poll");
-app.service("/option");
-app.service("/vote");
-app.service("/films");
-app.service("/time");
-app.service("/users-online");
-app.service("/recommendations");
+feathersClient.service("/users");
+feathersClient.service("/poll");
+feathersClient.service("/option");
+feathersClient.service("/vote");
+feathersClient.service("/films");
+feathersClient.service("/time");
+feathersClient.service("/users-online");
+feathersClient.service("/recommendations");
 
-app.service("/poll").on("transition", (_data) => {
+feathersClient.service("/poll").on("transition", (_data) => {
   const numberOfVotes = store.getters["vote/votesRemaining"];
   const text =
     numberOfVotes == null
@@ -56,10 +48,10 @@ app.service("/poll").on("transition", (_data) => {
   });
 });
 
-app.service("/collection").on("patched", (_data) => {
+feathersClient.service("/collection").on("patched", (_data) => {
   store.commit("films/clearAll");
   // data.current contains the current string for the correct collection
   // TODO: We should do things here like clear out films
 });
 
-export default app;
+export default feathersClient;
