@@ -17,10 +17,11 @@ const Verify = () => import("@/components/Verify/Verify");
 const Logout = () => import("@/components/Logout/Logout");
 const SwitchCollection = () =>
   import("@/components/Collection/SwitchCollection");
+const Privacy = () => import("@/components/Privacy/Privacy");
 
 Vue.use(Router);
 
-const loginBeforeEnter = (to, from, next) => {
+const loginBeforeEnter = (_to, _from, next) => {
   if (store.state.auth.user) {
     next("/home");
   } else {
@@ -124,6 +125,15 @@ const routes = [
     path: "/logout",
     name: "Logout",
     component: Logout,
+    meta: {
+      doesNotNeedLogin: true,
+      skipLoading: true,
+    },
+  },
+  {
+    path: "/privacy",
+    name: "Privacy Policy",
+    component: Privacy,
     meta: {
       doesNotNeedLogin: true,
       skipLoading: true,

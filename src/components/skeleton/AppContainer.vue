@@ -18,6 +18,9 @@
       <bottom-nav v-if="user" />
     </v-content>
     <snackbar />
+    <small>
+      <router-link to="/privacy">Privacy Policy</router-link>
+    </small>
   </v-app>
 </template>
 

@@ -55,13 +55,16 @@
         <router-link id="signup" to="/signup"
           >Not got an account? Sign up</router-link
         >
+        <br />
+        <small>
+          <router-link to="/privacy">Privacy Policy</router-link>
+        </small>
       </div>
     </v-card>
   </div>
 </template>
 
 <script>
-import feathersClient from "@/api/feathers-client";
 import { mapActions } from "vuex";
 import router from "@/router";
 

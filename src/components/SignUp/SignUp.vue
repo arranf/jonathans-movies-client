@@ -48,6 +48,9 @@
         >
         <v-btn id="back" flat @click.prevent="toHome()">Back</v-btn>
       </v-card-actions>
+      <div class="pa-4 grey lighten-3">
+        <router-link to="/privacy">Privacy Policy</router-link>
+      </div>
     </div>
   </v-card>
 </template>
