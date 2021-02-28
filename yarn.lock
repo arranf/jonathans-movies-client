@@ -5212,7 +5212,7 @@ feathers-hooks-common@^5.0.5:
 
 "feathers-vuex@git://github.com/arranf/feathers-vuex.git#1.x":
   version "1.7.2"
-  resolved "git://github.com/arranf/feathers-vuex.git#7dadf386a686eb31363e0fdf1ff698ac5072f0aa"
+  resolved "git://github.com/arranf/feathers-vuex.git#428cad6828f87f3658266f4ddd931cbe5f2c7b58"
   dependencies:
     "@feathersjs/adapter-commons" "^2.0.0"
     "@feathersjs/commons" "^4.0.0"

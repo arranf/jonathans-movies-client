@@ -25,7 +25,9 @@
         @click="vote"
         >{{ voteButtonText }}</v-btn
       >
-      <v-btn flat color="orange" @click="showModal()">More Info</v-btn>
+      <v-btn v-if="film" flat color="orange" @click="showModal()"
+        >More Info</v-btn
+      >
     </v-card-actions>
   </v-card>
 </template>
