@@ -1,5 +1,5 @@
 {
-  "name": "jonathans-movies-client-2",
+  "name": "jonathans-movies-client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -11,7 +11,7 @@
     "report": "ANALYZE=TRUE vue-cli-service build --report "
   },
   "dependencies": {
-    "@feathersjs/client": "^4.3.11",
+    "@feathersjs/client": "^4.5.11",
     "@sentry/browser": "^4.3.4",
     "@vue/composition-api": "^1.0.0-rc.2",
     "core-js": "^3.6.5",
