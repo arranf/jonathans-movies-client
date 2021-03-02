@@ -35,6 +35,7 @@ feathersClient.service("/films");
 feathersClient.service("/time");
 feathersClient.service("/users-online");
 feathersClient.service("/recommendations");
+feathersClient.service("/streaming-films");
 
 feathersClient.service("/poll").on("transition", (_data) => {
   const numberOfVotes = store.getters["vote/votesRemaining"];

@@ -1,4 +1,4 @@
-import { humanizeTimeToNowPrecise } from "@/utils";
+import { humanizeTimeToNowPrecise, round } from "@/utils";
 
 export default {
   getActivePoll(state, _getters, rootState, _rootGetters) {

@@ -18,10 +18,6 @@
           Switch collection to {{ alternativeCollection }}
         </v-btn>
       </v-card-text>
-
-      <!-- <v-card-actions>
-
-      </v-card-actions> -->
     </v-card>
   </div>
 </template>

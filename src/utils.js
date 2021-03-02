@@ -22,6 +22,11 @@ let shortHumanizer = humanizeDuration.humanizer({
   round: true,
 });
 
+export function round(value, precision) {
+  const multiplier = Math.pow(10, precision || 0);
+  return Math.round(value * multiplier) / multiplier;
+}
+
 const shuffle = function (a) {
   for (let i = a.length; i; i--) {
     let j = Math.floor(Math.random() * i);

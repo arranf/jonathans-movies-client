@@ -20,7 +20,7 @@
         <v-icon>expand_less</v-icon>
       </v-btn>
     </transition>
-
+    <nominate-streaming-film-prompt />
     <div v-if="recommendations && recommendations.length">
       <h3 class="separator">Recommended For You</h3>
       <v-container fluid grid-list-xs>
@@ -47,8 +47,8 @@
       <v-container fluid grid-list-xs>
         <v-layout row wrap>
           <v-flex
-            v-for="(recentlyAdded, index) in recentlyAdded"
-            :key="recentlyAdded._id + index + 'recent'"
+            v-for="(recentlyAddedItem, index) in recentlyAdded"
+            :key="recentlyAddedItem._id + index + 'recent'"
             xs6
             sm4
             md3
@@ -91,6 +91,7 @@
 <script>
 import FilmPreview from "@/components/common/FilmPreview";
 import MovieInfoModal from "@/components/common/MovieInfoModal";
+import NominateStreamingFilmPrompt from "./NominateStreamingFilmPrompt";
 import Quote from "./Quote";
 import {
   getRecommendations as fetchRecommendations,
@@ -102,11 +103,12 @@ import scrollListener from "@/scroll-listener";
 import { mapActions } from "vuex";
 
 export default {
-  name: "Suggestions",
+  name: "Discover",
   components: {
     FilmPreview,
     MovieInfoModal,
     Quote,
+    NominateStreamingFilmPrompt,
   },
   props: {
     filmId: String,
@@ -124,7 +126,7 @@ export default {
     };
   },
   watch: {
-    filmId(to, from) {
+    filmId(_to, _from) {
       this.showingFilm = Boolean(this.filmId);
     },
   },

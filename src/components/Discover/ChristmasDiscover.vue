@@ -57,7 +57,7 @@ import scrollListener from "@/scroll-listener";
 import { mapActions } from "vuex";
 
 export default {
-  name: "ChristmasSuggestions",
+  name: "ChristmasDiscover",
   components: {
     FilmPreview,
     MovieInfoModal,
