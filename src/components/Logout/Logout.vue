@@ -19,7 +19,7 @@ export default {
     logoutAndRedirect: function () {
       this.logout()
         .then(() => this.setSnackbar("You are now logged out!"))
-        .then(() => this.$router.push({ path: "/" }))
+        .then(() => this.$router.push({ path: "/home" }))
         .catch((e) => console.error(e));
     },
   },

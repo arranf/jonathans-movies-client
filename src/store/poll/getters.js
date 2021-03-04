@@ -1,4 +1,5 @@
-import { humanizeTimeToNowPrecise, round } from "@/utils";
+import { humanizeTimeToNowPrecise } from "@/utils";
+import { round } from "../../utils";
 
 export default {
   getActivePoll(state, _getters, rootState, _rootGetters) {
@@ -61,7 +62,10 @@ export default {
       let total = activePoll.pollTransitionDateTime - activePoll.startDateTime;
       return (
         100 -
-        ((activePoll.pollTransitionDateTime - currentDateTime) / total) * 100
+        round(
+          ((activePoll.pollTransitionDateTime - currentDateTime) / total) * 100,
+          1
+        )
       );
     } else if (getters.isCurrentPollInVoting) {
       let total;
@@ -70,7 +74,10 @@ export default {
       } else {
         total = activePoll.endDateTime - activePoll.startDateTime;
       }
-      return 100 - ((activePoll.endDateTime - currentDateTime) / total) * 100;
+      return (
+        100 -
+        round(((activePoll.endDateTime - currentDateTime) / total) * 100, 1)
+      );
     }
     return 0;
   },
@@ -88,7 +95,7 @@ export default {
     }
   },
   doesCurrentPollHaveNominations(_state, getters) {
-    let activePoll = getters.getActivePoll;
+    const activePoll = getters.getActivePoll;
     if (activePoll) {
       return activePoll.pollTransitionDateTime != null;
     }

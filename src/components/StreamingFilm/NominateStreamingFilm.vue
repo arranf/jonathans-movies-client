@@ -27,7 +27,7 @@
               <v-list-tile-content>
                 <v-list-tile-title v-html="data.item.title"></v-list-tile-title>
                 <v-list-tile-sub-title
-                  v-html="data.item.releaseYear"
+                  v-html="data.item.release_year"
                 ></v-list-tile-sub-title>
               </v-list-tile-content>
             </div>
@@ -40,27 +40,25 @@
         <v-card-title>
           <h2 class="md-title">
             {{ film.title }}
-            <small>({{ film.releaseYear }})</small>
+            <small>({{ film.release_year }})</small>
           </h2>
         </v-card-title>
 
         <v-card-text style="padding-top: 0px">
-          <div v-if="film.tagline">
+          <div>
             <div class="flex">
-              <h4 style="font-weight: 600">{{ film.tagline }}</h4>
+              <h4 v-if="film.tagline" style="font-weight: 600">
+                {{ film.tagline }}
+              </h4>
 
-              <img
-                v-if="film.services.includes('Netflix')"
-                src="/icons8-netflix.svg"
-              />
-              <img
-                v-if="film.services.includes('Disney Plus')"
-                src="/icons8-disney-plus.svg"
-              />
-              <img
-                v-if="film.services.includes('Amazon Prime Video')"
-                src="/icons8-amazon.svg"
-              />
+              <a
+                v-for="service in simpleServices"
+                :key="service.name"
+                :href="service.url"
+                target="_blank"
+              >
+                <img :src="service.iconSrc" :alt="service.name" />
+              </a>
             </div>
           </div>
         </v-card-text>
@@ -84,9 +82,9 @@
 </template>
 
 <script>
+import { addNomination } from "@/api";
 import feathersClient from "@/api/feathers-client";
-import { getMovieData } from "@/api/tmdb";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapGetters } from "vuex";
 import { getTmdbBackdropImage } from "@/utils";
 
 import MovieBg from "@/components/common/MovieBg";
@@ -102,13 +100,11 @@ export default {
       selectedFilm: null,
       searchQuery: null,
       suggestions: [],
-      currentFilmResponse: {},
       film: null,
       loading: false,
     };
   },
   methods: {
-    ...mapActions("films", ["find"]),
     ...mapActions("loading", ["setLoading", "setLoaded"]),
     ...mapActions("snackbar", { setSnackbarText: "setText" }),
     searchForMovie: async function (searchTerm) {
@@ -130,49 +126,60 @@ export default {
         // TODO ERROR HANDLING
       }
     },
-    selectFilm() {
-      // TODO: MOVE THIS TO GET SERVER SIDE
+    async selectFilm() {
       let film = this.selectedFilm;
 
-      this.currentFilmResponse = {};
-
       this.selectedFilm = film.name;
-      Promise.all([
-        getMovieData(film.externalIds.tmdb),
-        this.find({
-          query: {
-            tmdb_id: film.externalIds.tmdb,
-            ignoreCollectionLimits: true,
-          },
-        }),
-      ])
-        .then((responses) => {
-          const tmdbResponse = responses[0];
-          const apiResponse = responses[1];
-          film.backdrop_path = tmdbResponse.backdrop_path;
-          film.poster_path = tmdbResponse.poster_path;
-          film.budget = tmdbResponse.budget;
-          film.imdb_id = tmdbResponse.imdb_id;
-          film.tagline = tmdbResponse.tagline;
-          film.runtime = tmdbResponse.runtime;
-          film.overview = tmdbResponse.overview;
-          this.searchQuery = "";
-          this.suggestions = [];
-          this.film = film;
-          this.showSearch = false;
-          return apiResponse;
-        })
-        .then((apiResponse) => {
-          if (apiResponse.data.length === 1) {
-            this.currentFilmResponse = apiResponse.data[0];
-          }
-        })
-        .catch((e) => {
-          console.error(e);
-          this.setSnackbarText("Error fetching film information");
-        });
+
+      try {
+        const additionalData = await feathersClient
+          .service("/streaming-films")
+          .get(film.external_ids.tmdb, {
+            query: { justWatchId: film.just_watch_id },
+          });
+        film = {
+          ...film,
+          ...additionalData,
+        };
+        this.searchQuery = "";
+        this.suggestions = [];
+        this.film = film;
+        this.showSearch = false;
+      } catch (error) {
+        console.error(error);
+        this.setSnackbarText("Error fetching film information");
+      }
     },
-    nominateFilm() {
+    async nominateFilm() {
+      if (
+        this.hasNominationsRemaining &&
+        !this.isOptionForCurrentPoll(this.film_id) &&
+        this.filmIsNominatable
+      ) {
+        // Copied to prevent a weird race condition
+        const amountRemaining = JSON.parse(
+          JSON.stringify(this.nominationsRemaining)
+        );
+        try {
+          await addNomination(this.film);
+          if (amountRemaining === 1) {
+            this.$router.push("/home");
+          } else {
+            this.setSnackbarText(
+              `Nominated. You have ${amountRemaining - 1} nomination${
+                this.nominationsRemaining === 1 ? "" : "s"
+              } left`
+            );
+            // Refresh to allow further searches
+            this.$router.go();
+          }
+        } catch (error) {
+          console.error(error);
+          this.setSnackbarText(error.message ? error.message : error);
+        }
+      } else {
+        this.setSnackbarText("Error adding nomination.");
+      }
       // TODO
       // create call to upsert to database
       // then nominate on returned film id
@@ -191,6 +198,12 @@ export default {
   },
   computed: {
     ...mapState("collection", { currentCollection: "current" }),
+    ...mapGetters("option", [
+      "hasNominationsRemaining",
+      "isOptionForCurrentPoll",
+      "nominationsRemaining",
+    ]),
+    ...mapGetters("poll", ["isCurrentPollInNomination"]),
     getBackdropImage() {
       if (this.film) {
         return getTmdbBackdropImage(this.film.backdrop_path);
@@ -207,7 +220,24 @@ export default {
       );
     },
     filmIsNominatable() {
-      return this.film.services.length !== 0;
+      return (
+        this.film.services.length !== 0 &&
+        // user has left to spend and isn't already nominated
+        this.hasNominationsRemaining &&
+        !this.isOptionForCurrentPoll(this.film._id)
+      );
+    },
+    simpleServices() {
+      const mapping = {
+        Netflix: "/icons8-netflix-desktop-app.svg",
+        "Disney Plus": "/icons8-disney-movies.svg",
+        "Amazon Prime Video": "/icons8-amazon.svg",
+      };
+      return this.film.services.map((s) => ({
+        name: s.name,
+        url: s.item_url,
+        iconSrc: mapping[s.name],
+      }));
     },
   },
   async created() {

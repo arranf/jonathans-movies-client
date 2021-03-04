@@ -38,7 +38,7 @@ export default {
     ...mapGetters("poll", ["getActivePoll"]),
   },
   watch: {
-    filmId(newFilmId, oldFilmId) {
+    filmId(newFilmId, _oldFilmId) {
       this.showingFilm = Boolean(newFilmId);
     },
   },

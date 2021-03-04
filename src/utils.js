@@ -22,11 +22,6 @@ let shortHumanizer = humanizeDuration.humanizer({
   round: true,
 });
 
-export function round(value, precision) {
-  const multiplier = Math.pow(10, precision || 0);
-  return Math.round(value * multiplier) / multiplier;
-}
-
 const shuffle = function (a) {
   for (let i = a.length; i; i--) {
     let j = Math.floor(Math.random() * i);
@@ -36,6 +31,7 @@ const shuffle = function (a) {
 
 export const humanizeTimeToNowPrecise = (dateTimeEpochms) => {
   const time = store.getters["time/getNow"];
+
   return shortHumanizer(dateTimeEpochms - time);
 };
 
@@ -98,3 +94,15 @@ export const getYearFromTmdbReleaseDate = (releaseDate) => {
   }
   return new Date(releaseDate).getFullYear();
 };
+
+/**
+ * Round half away from zero ('commercial' rounding)
+ * Uses correction to offset floating-point inaccuracies.
+ * Works symmetrically for positive and negative numbers.
+ * From https://stackoverflow.com/a/48764436/6132345
+ */
+export function round(num, decimalPlaces = 0) {
+  var p = Math.pow(10, decimalPlaces);
+  var m = num * p * (1 + Number.EPSILON);
+  return Math.round(m) / p;
+}

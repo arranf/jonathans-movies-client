@@ -9,8 +9,9 @@
     >
       <v-card v-if="film">
         <movie-bg :height="30" :film="film" />
+
         <v-card-title primary-title>
-          <div>
+          <div class="flex-container justify-content-space-between fill-width">
             <h1 class="headline mb-0">
               {{ film.name }} <small>({{ getFilmYear }})</small>
             </h1>
@@ -20,14 +21,12 @@
               target="_blank"
               style="float: right"
             >
-              <svg id="imdb">
-                <use xlink:href="/fa-brands.svg#imdb"></use>
-              </svg>
+              <img src="/icons8-imdb-48.png" />
             </a>
-            <h3 class="subtitle grey--text text--darken-2">
-              {{ film.tagline }}
-            </h3>
           </div>
+          <h3 class="subtitle grey--text text--darken-2">
+            {{ film.tagline }}
+          </h3>
         </v-card-title>
 
         <v-card-text>
@@ -86,6 +85,14 @@
             }}</v-icon>
             Read Plot
           </v-btn>
+          <a
+            v-if="film.imdbLink"
+            type="button"
+            class="v-btn v-btn--flat theme--light"
+            target="_blank"
+            :href="film.imdbLink"
+            ><div class="v-btn__content">Visit IMDB</div></a
+          >
           <v-btn flat @click="closeModal()">Close</v-btn>
         </v-card-actions>
       </v-card>
@@ -160,7 +167,7 @@ export default {
           .then(() => {
             this.$emit("update:show", false);
             if (amountRemaining === 1) {
-              this.$router.push("/");
+              this.$router.push("/home");
             } else {
               this.setSnackbar(
                 `Nominated. You have ${amountRemaining - 1} nomination${
@@ -226,12 +233,6 @@ export default {
 </script>
 
 <style scoped>
-#imdb {
-  fill: #fdd835;
-  height: 2.5em;
-  width: 2.5em;
-}
-
 .fade-enter-active,
 .fade-leave-active {
   transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);

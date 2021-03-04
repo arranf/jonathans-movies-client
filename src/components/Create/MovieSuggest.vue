@@ -44,6 +44,7 @@
         <v-chip :key="`c${s.id || index}-${s.name}`">{{ s.name }}</v-chip>
         <v-btn
           :key="`b${s.id || index}-${s.name}`"
+          class="delete-button"
           icon
           small
           @click.prevent="remove(s)"
@@ -74,7 +75,7 @@ export default {
     };
   },
   watch: {
-    searchQuery(newInput, oldInput) {
+    searchQuery(newInput, _oldInput) {
       if (newInput && newInput.trim()) {
         this.getSuggestions(newInput);
       }
@@ -98,7 +99,7 @@ export default {
 
       this.loading = false;
     },
-    optionsChange: function (event) {
+    optionsChange: function (_event) {
       const reducedOptions = this.selected.map((f) => {
         if (f) {
           return { name: f.name, film_id: f._id };
@@ -178,15 +179,20 @@ export default {
   margin-top: 2em;
 }
 
+.delete-button {
+  margin-left: 0 !important;
+}
+
 .search-box {
   display: inline-block;
   position: relative;
-  margin-left: 1rem;
-  min-width: 80%;
+  min-width: 95%;
 }
 .search-box input {
   cursor: text;
   width: 100%;
+  min-width: 100%;
+  max-width: 100%;
   color: #4e6e8e;
   display: inline-block;
   border: 1px solid #3e98af;

@@ -3,7 +3,7 @@ import client from "@/api/feathers-client";
 // Controls how often time is mutated
 const interval = 1000;
 // Controls how many interval times before a server check for time is made
-const maxCount = 6;
+const maxCount = 1;
 
 const state = {
   now: new Date().getTime(),

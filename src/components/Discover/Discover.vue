@@ -55,7 +55,7 @@
             lg2
           >
             <film-preview
-              :film="recentlyAdded"
+              :film="recentlyAddedItem"
               modal-page-name="Discover"
             ></film-preview>
           </v-flex>
