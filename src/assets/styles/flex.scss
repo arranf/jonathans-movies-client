@@ -2,6 +2,11 @@
     -ms-flex-pack: center !important;
     justify-content: center !important;
 }
+
+.justify-content-space-between {
+    -ms-flex-pack: space-between !important;
+    justify-content: space-between !important;
+}
   
 .flex-column {
     -ms-flex-direction: column !important;
@@ -11,4 +16,16 @@
 .align-items-center {
     -ms-flex-align: center !important;
     align-items: center !important;
+}
+
+.flex-item-grow-2 {
+    flex-grow: 2;
+}
+
+.flex-0 {
+    flex: 0;
+}
+
+.flex-container {
+    display: flex;
 }

@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { round } from "@/utils";
 import { mapGetters } from "vuex";
 
 export default {
@@ -41,7 +42,7 @@ export default {
         return "1%";
       } else {
         return (
-          Math.round(
+          round(
             (option.votes /
               this.getNumberOfUniqueVoters(this.getMostRecentPoll._id)) *
               100

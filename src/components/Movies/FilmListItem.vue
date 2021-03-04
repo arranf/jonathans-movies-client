@@ -31,7 +31,7 @@ export default {
         .then(() => {
           this.hideModal();
           if (!this.hasNominationsRemaining) {
-            this.$router.push("/");
+            this.$router.push("/home");
           }
         })
         .catch((error) => console.error(error));

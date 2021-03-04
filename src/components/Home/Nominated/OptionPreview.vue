@@ -11,10 +11,24 @@
       <div class="card__media__content"></div>
     </div>
     <v-card-title primary-title>
-      <div>
+      <div
+        v-if="film"
+        class="flex-container justify-content-space-between fill-width"
+      >
         <h3 class="headline mb-0">{{ option.name }}</h3>
-        <div v-if="film">{{ film.tagline }}</div>
+
+        <div class="flex-0">
+          <a
+            v-for="service in simpleServices"
+            :key="service.name"
+            :href="service.url"
+            target="_blank"
+          >
+            <img :src="service.iconSrc" :alt="service.name" />
+          </a>
+        </div>
       </div>
+      <div>{{ film.tagline }}</div>
     </v-card-title>
     <v-card-actions>
       <v-btn
@@ -91,6 +105,22 @@ export default {
       }
       return this.option.film;
     },
+    simpleServices() {
+      if (!this.film) {
+        return [];
+      }
+
+      const mapping = {
+        Netflix: "/icons8-netflix-desktop-app.svg",
+        "Disney Plus": "/icons8-disney-movies.svg",
+        "Amazon Prime Video": "/icons8-amazon.svg",
+      };
+      return this.film.services.map((s) => ({
+        name: s.name,
+        url: s.item_url,
+        iconSrc: mapping[s.name],
+      }));
+    },
   },
   methods: {
     ...mapActions("films", { fetchFilm: "get" }),
@@ -140,11 +170,11 @@ export default {
         this.$router.push({ name: "Home", params: { filmId: this.film._id } });
       }
     },
-  },
-  created() {
-    if (!this.film) {
-      this.fetchFilm(this.option.film_id);
-    }
+    created() {
+      if (!this.film) {
+        this.fetchFilm(this.option.film_id);
+      }
+    },
   },
 };
 </script>

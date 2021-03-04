@@ -14,6 +14,10 @@ html { overflow-x: auto !important; }
     text-align: center !important;
 }
 
+.fill-width {
+    min-width: 100%;
+}
+
 /* From bootstrap */
 .img-fluid {
   max-width: 100%;

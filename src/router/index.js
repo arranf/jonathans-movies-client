@@ -18,6 +18,8 @@ const Logout = () => import("@/components/Logout/Logout");
 const SwitchCollection = () =>
   import("@/components/Collection/SwitchCollection");
 const Privacy = () => import("@/components/Privacy/Privacy");
+const NominateStreamingFilm = () =>
+  import("@/components/StreamingFilm/NominateStreamingFilm");
 
 Vue.use(Router);
 
@@ -28,10 +30,14 @@ const loginBeforeEnter = (_to, _from, next) => {
     store
       .dispatch("auth/authenticate")
       .then((payload) => {
-        return feathersClient
-          .service("users")
-          .get(payload.userId)
-          .then(() => initStore());
+        if (payload) {
+          return feathersClient
+            .service("users")
+            .get(payload.userId)
+            .then(() => initStore());
+        } else {
+          initStore();
+        }
       })
       .then(() => {
         // TODO: Find a way to make sure people can login and get sent to where they're coming from
@@ -147,6 +153,11 @@ const routes = [
       admin: true,
     },
   },
+  {
+    path: "/nominate-streaming-film",
+    name: "Nominate Streaming Film",
+    component: NominateStreamingFilm,
+  },
   // {
   //   path: '/christmas/:filmId?',
   //   name: 'Christmas',
@@ -185,14 +196,21 @@ router.beforeEach((to, from, next) => {
 
   // Missing user and requires login
   if (!user && requiresAuth) {
+    console.debug("Authenticating");
     store
       .dispatch("auth/authenticate")
-      .then((payload) =>
-        feathersClient
-          .service("users")
-          .get(payload.userId)
-          .then(() => initStore())
-      )
+      .then((payload) => {
+        if (payload) {
+          console.debug("Authenticated");
+          feathersClient
+            .service("users")
+            .get(payload.userId)
+            .then(() => initStore());
+        } else {
+          console.debug("Reauthenticated");
+          initStore();
+        }
+      })
       .then(() => {
         directToNext(to, from, next, user);
       })
