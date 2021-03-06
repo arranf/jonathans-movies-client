@@ -7,13 +7,13 @@
 
     <v-btn color="primary" flat value="discover" to="/discover">
       <span>Discover</span>
-      <v-icon>search</v-icon>
+      <v-icon>movie</v-icon>
     </v-btn>
 
-    <!-- <v-btn color="primary" flat value="movies" to="/movies">
-      <span>All Movies</span>
-      <v-icon>movie</v-icon>
-    </v-btn> -->
+    <v-btn color="primary" flat value="movies" to="/nominate-streaming-film">
+      <span>Movies</span>
+      <v-icon>search</v-icon>
+    </v-btn>
   </v-bottom-nav>
 </template>
 
