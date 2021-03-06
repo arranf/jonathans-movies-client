@@ -106,6 +106,7 @@ export default {
             justWatchId: this.film.just_watch_id,
             tmdbId: this.film.external_ids.tmdb,
             release_year: this.film.release_year,
+            returnRoute: "/discover",
           },
         });
       } else {

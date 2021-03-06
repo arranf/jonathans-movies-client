@@ -110,6 +110,7 @@ export default {
     filmId: { type: String, default: "" },
     justWatchId: { type: String, default: "" },
     tmdbId: { type: String, default: "" },
+    returnRoute: { type: String, default: undefined },
   },
   data() {
     return {
@@ -198,7 +199,7 @@ export default {
               } left`
             );
             // Refresh to allow further searches
-            this.$router.go();
+            this.$router.go(this.returnRoute);
           }
         } catch (error) {
           this.fetchLoading = false;
@@ -210,6 +211,10 @@ export default {
       }
     },
     closePreview() {
+      // If we've come back
+      if (this.returnRoute) {
+        this.$router.replace(this.returnRoute);
+      }
       this.showSearch = true;
       this.selectedFilm = null;
       this.searchQuery = null;
