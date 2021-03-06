@@ -131,10 +131,10 @@ export default {
       }
     },
     async selectFilm() {
+      this.fetchLoading = true;
       let film = this.selectedFilm;
 
       this.selectedFilm = film.name;
-      this.fetchLoading = true;
       try {
         const additionalData = await feathersClient
           .service("/streaming-films")
@@ -150,10 +150,11 @@ export default {
         this.film = film;
         this.showSearch = false;
         this.loading = false;
-        this.fetchLoading = false;
       } catch (error) {
         console.error(error);
         this.setSnackbarText("Error fetching film information");
+      } finally {
+        this.fetchLoading = false;
       }
     },
     async nominateFilm() {
