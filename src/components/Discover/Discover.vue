@@ -95,8 +95,8 @@ import NominateStreamingFilmPrompt from "./NominateStreamingFilmPrompt";
 import Quote from "./Quote";
 import {
   getRecommendations as fetchRecommendations,
-  getRecentlyAdded as fetchRecentlyAdded,
-  discoverMovies,
+  //   getRecentlyAdded as fetchRecentlyAdded,
+  discoverStreamingMovies,
 } from "@/api";
 
 import scrollListener from "@/scroll-listener";
@@ -121,6 +121,7 @@ export default {
       recentlyAdded: [],
       busy: false,
       seenIds: [],
+      page: 1,
       done: false,
       queueCount: 0,
     };
@@ -140,12 +141,12 @@ export default {
 
       this.busy = true;
       try {
-        const discoveredFilms = await discoverMovies(this.seenIds);
-        if (discoveredFilms.length === 0) {
+        const discoveredFilms = await discoverStreamingMovies(this.page);
+        this.page++;
+        if (discoveredFilms.total === 0) {
           this.done = true;
         }
-        this.suggestions = this.suggestions.concat(discoveredFilms);
-        this.seenIds = this.seenIds.concat(discoveredFilms.map((f) => f._id));
+        this.suggestions = this.suggestions.concat(discoveredFilms.data);
       } catch (e) {
         console.error(e);
         this.setSnackbar("Something went wrong. Try again.");
@@ -174,7 +175,7 @@ export default {
     },
     getRecentlyAdded: function () {
       this.busy = true;
-      return fetchRecentlyAdded()
+      return discoverStreamingMovies(1, "new")
         .then((response) => {
           this.recentlyAdded = response.data || response;
           this.busy = false;
@@ -214,7 +215,7 @@ export default {
     this.showingFilm = Boolean(this.filmId);
     try {
       await Promise.all([
-        this.getRecommendations(),
+        // this.getRecommendations(),
         this.getRecentlyAdded(),
         this.refresh(),
       ]);

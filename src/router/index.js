@@ -154,9 +154,10 @@ const routes = [
     },
   },
   {
-    path: "/nominate-streaming-film",
+    path: "/nominate-streaming-film/:justWatchId?",
     name: "Nominate Streaming Film",
     component: NominateStreamingFilm,
+    props: true,
   },
   // {
   //   path: '/christmas/:filmId?',
