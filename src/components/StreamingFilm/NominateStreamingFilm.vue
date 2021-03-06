@@ -1,6 +1,7 @@
 <template>
   <div>
     <transition name="fade">
+      <loading v-if="fetchLoading" />
       <div v-if="showSearch" class="empty-state-container">
         <!-- Todo Replace Icon -->
         <v-icon size="100px" class="mb-2">playlist_add</v-icon>
@@ -102,6 +103,7 @@ export default {
       suggestions: [],
       film: null,
       loading: false,
+      fetchLoading: false,
     };
   },
   methods: {
@@ -130,7 +132,7 @@ export default {
       let film = this.selectedFilm;
 
       this.selectedFilm = film.name;
-
+      this.fetchLoading = true;
       try {
         const additionalData = await feathersClient
           .service("/streaming-films")
@@ -145,6 +147,8 @@ export default {
         this.suggestions = [];
         this.film = film;
         this.showSearch = false;
+        this.loading = false;
+        this.fetchLoading = false;
       } catch (error) {
         console.error(error);
         this.setSnackbarText("Error fetching film information");
