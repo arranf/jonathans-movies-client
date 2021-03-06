@@ -105,7 +105,10 @@ export default {
     },
     facebookLogin: function () {
       let url;
-      if (process.env.BRANCH === "develop") {
+      if (
+        process.env.BRANCH === "develop" &&
+        process.env.BRANCH.trim() === "develop"
+      ) {
         url = "https://staging-api.jonathansmovies.com/auth/facebook";
       } else if (process.env.NODE_ENV === "production") {
         url = "https://api.jonathansmovies.com/auth/facebook";
