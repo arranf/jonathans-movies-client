@@ -198,8 +198,8 @@ export default {
                 this.nominationsRemaining === 1 ? "" : "s"
               } left`
             );
-            // Refresh to allow further searches
-            this.$router.go(this.returnRoute);
+            this.fetchLoading = false;
+            this.closePreview();
           }
         } catch (error) {
           this.fetchLoading = false;

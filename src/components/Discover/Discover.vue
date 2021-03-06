@@ -43,7 +43,7 @@
       </v-container>
     </div>
     <div v-if="recentlyAdded && recentlyAdded.length">
-      <h3 class="separator">Recently Added</h3>
+      <h3 class="separator">Recently Added to Streaming</h3>
       <v-container fluid grid-list-xs>
         <v-layout row wrap>
           <v-flex
@@ -63,7 +63,9 @@
       </v-container>
     </div>
     <div v-if="suggestions && suggestions.length">
-      <h3 class="separator mt-4">Popular and Highly Rated Movies</h3>
+      <h3 class="separator mt-4">
+        Popular and Highly Rated Movies Streaming Now
+      </h3>
       <v-container grid-list-md text-xs-center>
         <v-layout row wrap>
           <v-flex
