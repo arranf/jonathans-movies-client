@@ -1,8 +1,11 @@
 <template>
   <div>
+    <div v-if="fetchLoading">
+      <loading />
+      <h2>Loading</h2>
+    </div>
     <transition name="fade">
-      <loading v-show="fetchLoading" />
-      <div v-if="showSearch && !fetchLoading" class="empty-state-container">
+      <div v-if="showSearch" class="empty-state-container">
         <!-- Todo Replace Icon -->
         <v-icon size="100px" class="mb-2">playlist_add</v-icon>
         <h1 class="display-1 mb-1">Find Films</h1>
@@ -131,7 +134,6 @@ export default {
       }
     },
     async selectFilm() {
-      this.fetchLoading = true;
       let film = this.selectedFilm;
 
       this.selectedFilm = film.name;
@@ -153,8 +155,6 @@ export default {
       } catch (error) {
         console.error(error);
         this.setSnackbarText("Error fetching film information");
-      } finally {
-        this.fetchLoading = false;
       }
     },
     async nominateFilm() {
@@ -163,6 +163,7 @@ export default {
         !this.isOptionForCurrentPoll(this.film_id) &&
         this.filmIsNominatable
       ) {
+        this.fetchLoading = true;
         // Copied to prevent a weird race condition
         const amountRemaining = JSON.parse(
           JSON.stringify(this.nominationsRemaining)
@@ -183,6 +184,8 @@ export default {
         } catch (error) {
           console.error(error);
           this.setSnackbarText(error.message ? error.message : error);
+        } finally {
+          this.fetchLoading = false;
         }
       } else {
         this.setSnackbarText("Error adding nomination.");

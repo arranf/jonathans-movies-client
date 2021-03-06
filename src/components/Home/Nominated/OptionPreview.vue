@@ -28,7 +28,7 @@
           </a>
         </div>
       </div>
-      <div>{{ film.tagline }}</div>
+      <div v-if="film">{{ film.tagline }}</div>
     </v-card-title>
     <v-card-actions>
       <v-btn
@@ -106,7 +106,7 @@ export default {
       return this.option.film;
     },
     simpleServices() {
-      if (!this.film) {
+      if (!this.film || !this.film.services) {
         return [];
       }
 
