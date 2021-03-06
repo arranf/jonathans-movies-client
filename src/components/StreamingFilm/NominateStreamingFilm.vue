@@ -1,8 +1,8 @@
 <template>
   <div>
     <transition name="fade">
-      <loading v-if="fetchLoading" />
-      <div v-if="showSearch" class="empty-state-container">
+      <loading v-show="fetchLoading" />
+      <div v-if="showSearch && !fetchLoading" class="empty-state-container">
         <!-- Todo Replace Icon -->
         <v-icon size="100px" class="mb-2">playlist_add</v-icon>
         <h1 class="display-1 mb-1">Find Films</h1>
@@ -36,7 +36,7 @@
         </v-autocomplete>
       </div>
 
-      <v-card v-if="!showSearch && film">
+      <v-card v-if="!showSearch && film && !fetchLoading">
         <movie-bg v-if="film.backdrop_path" :film="film" :height="200" />
         <v-card-title>
           <h2 class="md-title">
