@@ -70,7 +70,7 @@
 
         <v-card-actions>
           <v-btn
-            :disabled="film.services.length === 0"
+            :disabled="film.services.length === 0 || fetchLoading"
             color="primary"
             @click="nominateFilm"
             >Nominate</v-btn
