@@ -35,8 +35,6 @@
               hint="The duration of the nomination phase (in minutes)"
               type="number"
               pattern="[1-9][0-9]*"
-              min="1"
-              max="60"
               @input="$v.nominationsMinutes.$touch()"
             />
             <v-text-field
@@ -181,7 +179,7 @@ export default {
       votes: "2",
       haveNominations: false,
       nominationsMinutes: "5",
-      nominations: "1",
+      nominations: "2",
       options: [],
       stepMap: {
         1: "Include Nominations",
@@ -344,7 +342,7 @@ export default {
         required: requiredIf(function () {
           return this.haveNominations;
         }),
-        between: between(1, 300),
+        between: between(1, 615),
       },
       nominations: {
         required: requiredIf(function () {
