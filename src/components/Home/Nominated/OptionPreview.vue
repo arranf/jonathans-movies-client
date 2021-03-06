@@ -106,7 +106,7 @@ export default {
       return this.option.film;
     },
     simpleServices() {
-      if (!this.film || !this.film.services) {
+      if (!this.film || !Array.isArray(this.film.services)) {
         return [];
       }
 
