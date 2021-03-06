@@ -71,7 +71,7 @@ export default {
     };
   },
   watch: {
-    searchInput(newInput, oldInput) {
+    searchInput(newInput, _oldInput) {
       if (newInput && newInput.trim()) {
         this.getMovies(newInput);
       } else {
@@ -120,7 +120,8 @@ export default {
       "isCurrentPollInVoting",
     ]),
     showMovieSearch() {
-      return this.$route.name === "Movies" || this.$route.name === "Discover";
+      return false;
+      //   return this.$route.name === "Movies" || this.$route.name === "Discover";
     },
   },
 };

@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="fetchLoading">
+      <loading />
+    </div>
     <transition name="fade">
       <div v-if="showSearch" class="empty-state-container">
         <!-- Todo Replace Icon -->
@@ -35,12 +38,12 @@
         </v-autocomplete>
       </div>
 
-      <v-card v-if="!showSearch && film">
+      <v-card v-if="!showSearch && film && !fetchLoading">
         <movie-bg v-if="film.backdrop_path" :film="film" :height="200" />
         <v-card-title>
           <h2 class="md-title">
-            {{ film.title }}
-            <small>({{ film.release_year }})</small>
+            {{ film.name }}
+            <small v-if="film.release_year">({{ film.release_year }})</small>
           </h2>
         </v-card-title>
 
@@ -50,15 +53,19 @@
               <h4 v-if="film.tagline" style="font-weight: 600">
                 {{ film.tagline }}
               </h4>
-
-              <a
-                v-for="service in simpleServices"
-                :key="service.name"
-                :href="service.url"
-                target="_blank"
-              >
-                <img :src="service.iconSrc" :alt="service.name" />
-              </a>
+              <div v-if="simpleServices && simpleServices.length > 0">
+                <a
+                  v-for="service in simpleServices"
+                  :key="service.name"
+                  :href="service.url"
+                  target="_blank"
+                >
+                  <img :src="service.iconSrc" :alt="service.name" />
+                </a>
+              </div>
+              <div v-else class="pt-2">
+                <p>{{ film.name }} isn't on any streaming services</p>
+              </div>
             </div>
           </div>
         </v-card-text>
@@ -69,7 +76,10 @@
 
         <v-card-actions>
           <v-btn
-            :disabled="film.services.length === 0"
+            v-if="isCurrentPollInNomination"
+            :disabled="
+              film.services.length === 0 || fetchLoading || !filmIsNominatable
+            "
             color="primary"
             @click="nominateFilm"
             >Nominate</v-btn
@@ -87,21 +97,30 @@ import feathersClient from "@/api/feathers-client";
 import { mapActions, mapState, mapGetters } from "vuex";
 import { getTmdbBackdropImage } from "@/utils";
 
+import Loading from "@/components/skeleton/Loading";
 import MovieBg from "@/components/common/MovieBg";
 
 export default {
   name: "NominateStreamingFilm",
   components: {
     MovieBg,
+    Loading,
+  },
+  props: {
+    filmId: { type: String, default: "" },
+    justWatchId: { type: String, default: "" },
+    tmdbId: { type: String, default: "" },
+    returnRoute: { type: String, default: undefined },
   },
   data() {
     return {
-      showSearch: true,
+      showSearch: false,
       selectedFilm: null,
       searchQuery: null,
       suggestions: [],
       film: null,
       loading: false,
+      fetchLoading: false,
     };
   },
   methods: {
@@ -127,15 +146,21 @@ export default {
       }
     },
     async selectFilm() {
-      let film = this.selectedFilm;
+      let film = this.selectedFilm || {};
 
-      this.selectedFilm = film.name;
+      const justWatchId = film?.just_watch_id || this.justWatchId;
+      const tmdbId = film?.external_ids?.tmdb || this.tmdbId;
+
+      if (!tmdbId || !justWatchId) {
+        this.setSnackbarText("Error fetching film information");
+        return;
+      }
 
       try {
         const additionalData = await feathersClient
           .service("/streaming-films")
-          .get(film.external_ids.tmdb, {
-            query: { justWatchId: film.just_watch_id },
+          .get(tmdbId, {
+            query: { justWatchId },
           });
         film = {
           ...film,
@@ -144,7 +169,9 @@ export default {
         this.searchQuery = "";
         this.suggestions = [];
         this.film = film;
+        this.selectedFilm = film.name;
         this.showSearch = false;
+        this.loading = false;
       } catch (error) {
         console.error(error);
         this.setSnackbarText("Error fetching film information");
@@ -156,6 +183,7 @@ export default {
         !this.isOptionForCurrentPoll(this.film_id) &&
         this.filmIsNominatable
       ) {
+        this.fetchLoading = true;
         // Copied to prevent a weird race condition
         const amountRemaining = JSON.parse(
           JSON.stringify(this.nominationsRemaining)
@@ -170,22 +198,23 @@ export default {
                 this.nominationsRemaining === 1 ? "" : "s"
               } left`
             );
-            // Refresh to allow further searches
-            this.$router.go();
+            this.fetchLoading = false;
+            this.closePreview();
           }
         } catch (error) {
+          this.fetchLoading = false;
           console.error(error);
           this.setSnackbarText(error.message ? error.message : error);
         }
       } else {
         this.setSnackbarText("Error adding nomination.");
       }
-      // TODO
-      // create call to upsert to database
-      // then nominate on returned film id
-      // do some snackbar stuff
     },
     closePreview() {
+      // If we've come back
+      if (this.returnRoute) {
+        this.$router.replace(this.returnRoute);
+      }
       this.showSearch = true;
       this.selectedFilm = null;
       this.searchQuery = null;
@@ -242,6 +271,11 @@ export default {
   },
   async created() {
     await this.setLoaded("Nominate Streaming Film");
+    if (this.tmdbId && this.justWatchId) {
+      await this.selectFilm();
+    } else {
+      this.showSearch = true;
+    }
   },
 };
 </script>

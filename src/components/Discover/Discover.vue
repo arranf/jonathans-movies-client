@@ -43,7 +43,7 @@
       </v-container>
     </div>
     <div v-if="recentlyAdded && recentlyAdded.length">
-      <h3 class="separator">Recently Added</h3>
+      <h3 class="separator">Recently Added to Streaming</h3>
       <v-container fluid grid-list-xs>
         <v-layout row wrap>
           <v-flex
@@ -63,7 +63,9 @@
       </v-container>
     </div>
     <div v-if="suggestions && suggestions.length">
-      <h3 class="separator mt-4">Popular and Highly Rated Movies</h3>
+      <h3 class="separator mt-4">
+        Popular and Highly Rated Movies Streaming Now
+      </h3>
       <v-container grid-list-md text-xs-center>
         <v-layout row wrap>
           <v-flex
@@ -95,8 +97,8 @@ import NominateStreamingFilmPrompt from "./NominateStreamingFilmPrompt";
 import Quote from "./Quote";
 import {
   getRecommendations as fetchRecommendations,
-  getRecentlyAdded as fetchRecentlyAdded,
-  discoverMovies,
+  //   getRecentlyAdded as fetchRecentlyAdded,
+  discoverStreamingMovies,
 } from "@/api";
 
 import scrollListener from "@/scroll-listener";
@@ -121,6 +123,7 @@ export default {
       recentlyAdded: [],
       busy: false,
       seenIds: [],
+      page: 1,
       done: false,
       queueCount: 0,
     };
@@ -140,12 +143,12 @@ export default {
 
       this.busy = true;
       try {
-        const discoveredFilms = await discoverMovies(this.seenIds);
-        if (discoveredFilms.length === 0) {
+        const discoveredFilms = await discoverStreamingMovies(this.page);
+        this.page++;
+        if (discoveredFilms.total === 0) {
           this.done = true;
         }
-        this.suggestions = this.suggestions.concat(discoveredFilms);
-        this.seenIds = this.seenIds.concat(discoveredFilms.map((f) => f._id));
+        this.suggestions = this.suggestions.concat(discoveredFilms.data);
       } catch (e) {
         console.error(e);
         this.setSnackbar("Something went wrong. Try again.");
@@ -174,7 +177,7 @@ export default {
     },
     getRecentlyAdded: function () {
       this.busy = true;
-      return fetchRecentlyAdded()
+      return discoverStreamingMovies(1, "new")
         .then((response) => {
           this.recentlyAdded = response.data || response;
           this.busy = false;
@@ -214,7 +217,7 @@ export default {
     this.showingFilm = Boolean(this.filmId);
     try {
       await Promise.all([
-        this.getRecommendations(),
+        // this.getRecommendations(),
         this.getRecentlyAdded(),
         this.refresh(),
       ]);

@@ -112,7 +112,6 @@ import { mapActions } from "vuex";
 import zxcvbn from "zxcvbn";
 
 import router from "@/router";
-import feathersClient from "@/api/feathers-client";
 import authClient from "@/api/auth-client";
 
 export default {
