@@ -11,13 +11,10 @@
       <div class="card__media__content"></div>
     </div>
     <v-card-title primary-title>
-      <div
-        v-if="film"
-        class="flex-container justify-content-space-between fill-width"
-      >
+      <div class="flex-container justify-content-space-between fill-width">
         <h3 class="headline mb-0">{{ option.name }}</h3>
 
-        <div class="flex-0">
+        <div v-if="film" class="flex-0">
           <a
             v-for="service in simpleServices"
             :key="service.name"
