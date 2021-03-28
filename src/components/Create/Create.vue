@@ -336,7 +336,7 @@ export default {
       },
       votes: {
         required,
-        min: this.nominations ? minValue(this.nominations) : minValue(1),
+        min: minValue(1),
       },
       nominationsMinutes: {
         required: requiredIf(function () {
