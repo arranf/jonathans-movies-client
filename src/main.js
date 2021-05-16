@@ -8,7 +8,6 @@ import "@/api/feathers-client";
 import * as Sentry from "@sentry/browser";
 
 import "./plugins/vuetify";
-import "./registerServiceWorker";
 
 // Import custom CSS
 require("@/assets/styles/main.scss");
