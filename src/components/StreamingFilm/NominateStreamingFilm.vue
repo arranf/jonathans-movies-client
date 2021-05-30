@@ -9,7 +9,7 @@
         <v-icon size="100px" class="mb-2">playlist_add</v-icon>
         <h1 class="display-1 mb-1">Find Films</h1>
         <p class="empty-state-description">
-          Search films across Netflix, Disney Plus, and Amazon Prime VIdeo.
+          Search films across Netflix, Disney Plus, and Amazon Prime Video.
         </p>
         <v-autocomplete
           v-model="selectedFilm"
