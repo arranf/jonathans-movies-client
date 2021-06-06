@@ -226,6 +226,7 @@ export default {
     } catch (e) {
       console.error(e);
       this.setSnackbar("Something went wrong. Try again.");
+      console.error("Error in discover component - pushing /home on router");
       this.$router.push("/home");
       document.removeEventListener("scroll", this.listener);
     }

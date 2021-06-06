@@ -208,9 +208,6 @@ export default {
         this.step++;
       }
     },
-    toHome: function () {
-      router.push("/home");
-    },
     updateOptions: function (options) {
       this.options = options;
       this.$v.options.$touch();
@@ -240,7 +237,7 @@ export default {
         numberOfNominations: numberOfNominations,
       }).create();
       this.setSnackbarText("Poll started!");
-      this.toHome();
+      router.push("/home");
     },
   },
   computed: {

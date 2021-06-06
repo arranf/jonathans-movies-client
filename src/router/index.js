@@ -23,10 +23,8 @@ const NominateStreamingFilm = () =>
 
 Vue.use(Router);
 
-const loginBeforeEnter = (_to, _from, next) => {
-  if (store.state.auth.user) {
-    next("/home");
-  } else {
+const loginBeforeEnter = (to, _from, next) => {
+  if (!store.state.auth.user) {
     store
       .dispatch("auth/authenticate")
       .then((payload) => {
@@ -39,18 +37,20 @@ const loginBeforeEnter = (_to, _from, next) => {
           initStore();
         }
       })
-      .then(() => {
-        // TODO: Find a way to make sure people can login and get sent to where they're coming from
-        next("/home");
-      })
       .catch(function (error) {
         console.error(
           "Error authenticating in login router beforeEnter",
           error
         );
       });
+    return;
   }
-  next();
+  if (to.path === "/") {
+    next("/home");
+  } else {
+    console.log("Let's go!");
+    next();
+  }
 };
 
 const routes = [
@@ -197,7 +197,7 @@ router.beforeEach((to, from, next) => {
 
   // Missing user and requires login
   if (!user && requiresAuth) {
-    console.debug("Authenticating");
+    console.debug("Missing Auth: Authenticating");
     store
       .dispatch("auth/authenticate")
       .then((payload) => {
@@ -208,11 +208,12 @@ router.beforeEach((to, from, next) => {
             .get(payload.userId)
             .then(() => initStore());
         } else {
-          console.debug("Reauthenticated");
+          console.debug("Missing Auth: Reauthenticated");
           initStore();
         }
       })
       .then(() => {
+        console.log(`No auth going to: ${to}`);
         directToNext(to, from, next, user);
       })
       .catch(function (error) {
@@ -235,11 +236,12 @@ router.afterEach((to, from) => {
   store.dispatch("loading/setLoading", to.name);
 });
 
-function directToNext(to, from, next, user) {
+function directToNext(to, _from, next, user) {
   const allowed = !(
     to.matched.some((record) => record.meta.admin) &&
     (!user || !user.isAdmin)
   );
+  console.debug(`Navigation ${to.path} is allowed: ${allowed}`);
   initStore().then(() => {
     next(allowed);
   });

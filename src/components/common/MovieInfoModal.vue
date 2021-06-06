@@ -141,11 +141,17 @@ export default {
         this.fetchFilm(this.filmId)
           .then((film) => {
             this.film = film;
+            if (!film) {
+              console.log(film);
+              this.setSnackbar("Sorry! Couldn't find that film.");
+              this.closeModal();
+            }
           })
           .catch((error) => {
             console.error(error);
             this.setSnackbar("Sorry! Couldn't find that film.");
             this.$emit("update:show", false);
+            this.$router.replace(this.closeRoute);
           });
       }
     },
@@ -218,7 +224,7 @@ export default {
     },
   },
   watch: {
-    filmId: function (newFilmId, oldFilmId) {
+    filmId: function (newFilmId, _oldFilmId) {
       if (newFilmId) {
         this.modalOpened();
       }
