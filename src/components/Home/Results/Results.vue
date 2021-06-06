@@ -4,14 +4,9 @@
     class="d-flex flex-column align-items-center justify-items-center"
     style="width: 100%"
   >
-    <!-- TODO: Refactor to Use a Simpler Getter -->
-    <div v-if="getMostRecentPoll && areVotes" style="width: 100%">
+    <div v-if="results && areVotes" style="width: 100%">
       <h1 class="md-headline text-center">Results</h1>
-      <bar-chart
-        style="padding-top: 3em"
-        :data="results"
-        :colors="backgroundColors"
-      />
+      <bar-chart style="padding-top: 3em" :data="results" />
     </div>
     <div v-else-if="emptyStateAllowed" class="empty-state-container">
       <v-icon size="100px" class="mb-2">error_outline</v-icon>
@@ -25,9 +20,8 @@
 
 <script>
 import BarChart from "./BarChart";
-import { mapGetters, mapState, mapActions } from "vuex";
-import { getUniqueColors } from "@/utils";
-import { getCurrentPoll, getVotesForMostRecentPoll } from "@/api";
+import { mapGetters, mapActions } from "vuex";
+import { getCurrentPoll, getResults } from "@/api";
 
 export default {
   name: "Results",
@@ -36,41 +30,29 @@ export default {
   },
   data() {
     return {
-      backgroundColors: [],
+      results: null,
       emptyStateAllowed: false,
     };
   },
-  methods: {
-    ...mapActions("loading", ["setLoading", "setLoaded"]),
-  },
   computed: {
-    ...mapGetters("vote", ["getGraphData", "areVotesForPoll"]),
     ...mapGetters("poll", ["getMostRecentPoll"]),
-    ...mapState("vote", ["isFindPending"]),
-    results() {
-      return this.getGraphData(this.getMostRecentPoll);
-    },
     areVotes() {
-      if (this.getMostRecentPoll) {
-        return this.areVotesForPoll(this.getMostRecentPoll);
-      }
-      return false;
+      return this.results.some((result) => result.votes && result.votes > 0);
     },
   },
   async mounted() {
     try {
       await this.setLoading("Home"); // this is required because 'Home' has two possible components that load data
       await getCurrentPoll();
-      await getVotesForMostRecentPoll(this.getMostRecentPoll);
-      this.backgroundColors = getUniqueColors(
-        this.getMostRecentPoll.options.length,
-        "500"
-      );
+      this.results = await getResults(this.getMostRecentPoll._id);
       this.emptyStateAllowed = true;
       this.setLoaded("Home");
     } catch (error) {
       console.error(error);
     }
+  },
+  methods: {
+    ...mapActions("loading", ["setLoading", "setLoaded"]),
   },
 };
 </script>

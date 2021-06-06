@@ -213,7 +213,7 @@ export default {
     closePreview() {
       // If we've come back
       if (this.returnRoute) {
-        this.$router.replace(this.returnRoute);
+        this.$router.push(this.returnRoute);
       }
       this.showSearch = true;
       this.selectedFilm = null;

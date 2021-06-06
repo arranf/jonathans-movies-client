@@ -18,6 +18,8 @@
 <script>
 // eslint-disable-next-line
 import lazySizes from 'lazysizes'
+import "lazysizes/plugins/native-loading/ls.native-loading";
+
 import { getTmdbBackdropImage, getTmdbBackdropSrcSet } from "@/utils";
 
 export default {

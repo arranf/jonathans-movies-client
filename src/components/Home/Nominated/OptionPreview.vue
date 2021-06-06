@@ -7,6 +7,7 @@
         :src="backdropImage"
         :data-srcset="getBackDropSrcSet"
         :alt="option.name + ' image'"
+        loading="lazy"
       />
       <div class="card__media__content"></div>
     </div>

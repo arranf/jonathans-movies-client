@@ -119,6 +119,7 @@ export default {
     showNominate: { default: true, type: Boolean },
     show: { type: Boolean },
     closeRoute: { type: String, required: true },
+    shouldClose: { type: Boolean, default: true },
   },
   data() {
     return {
@@ -142,7 +143,6 @@ export default {
           .then((film) => {
             this.film = film;
             if (!film) {
-              console.log(film);
               this.setSnackbar("Sorry! Couldn't find that film.");
               this.closeModal();
             }
@@ -150,14 +150,15 @@ export default {
           .catch((error) => {
             console.error(error);
             this.setSnackbar("Sorry! Couldn't find that film.");
-            this.$emit("update:show", false);
-            this.$router.replace(this.closeRoute);
+            this.closeModal();
           });
       }
     },
     closeModal: function () {
       this.$emit("update:show", false);
-      this.$router.replace(this.closeRoute);
+      if (this.shouldClose) {
+        this.$router.replace(this.closeRoute);
+      }
     },
     addNomination: function () {
       if (

@@ -142,8 +142,6 @@ export const getRecentlyAdded = () =>
 export const getRecommendations = () =>
   feathersClient.service("/recommendations").get(store.state.auth.user._id);
 
-// streaming discover
-
 export const discoverStreamingMovies = (page = 1, type = "popular") =>
   feathersClient.service("/films").find({
     paginate: false,
@@ -153,3 +151,6 @@ export const discoverStreamingMovies = (page = 1, type = "popular") =>
       page: page,
     },
   });
+
+export const getResults = (pollId) =>
+  feathersClient.service("/results").get(pollId);

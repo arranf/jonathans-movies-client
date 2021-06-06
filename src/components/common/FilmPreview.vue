@@ -6,6 +6,7 @@
       :src="getFilmPoster"
       :data-srcset="getFilmPosterSrcSet"
       :alt="film.name + ' image'"
+      loading="lazy"
     />
     <img
       v-else-if="film.justwatch_poster_path"
@@ -13,6 +14,7 @@
       :src="getJustWatchFilmPoster"
       :data-srcset="getJustWatchFilmPosterSrcSet"
       :alt="film.name + ' image'"
+      loading="lazy"
     />
     <img v-else class="img-fluid" :src="getFallbackPoster()" />
     <h4 class="text-center">{{ film.name }}</h4>
@@ -26,8 +28,9 @@
 </template>
 
 <script>
-// eslint-disable-next-line
 import lazySizes from "lazysizes";
+import "lazysizes/plugins/native-loading/ls.native-loading";
+
 import { getTmdbPosterSrcSet, getTmdbPosterImage, selectRandom } from "@/utils";
 import { mapGetters } from "vuex";
 

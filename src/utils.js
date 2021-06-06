@@ -1,6 +1,5 @@
 import humanizeDuration from "humanize-duration";
 import store from "@/store";
-import constants from "./constants";
 
 let shortHumanizer = humanizeDuration.humanizer({
   language: "shortEn",
@@ -22,13 +21,6 @@ let shortHumanizer = humanizeDuration.humanizer({
   round: true,
 });
 
-const shuffle = function (a) {
-  for (let i = a.length; i; i--) {
-    let j = Math.floor(Math.random() * i);
-    [a[i - 1], a[j]] = [a[j], a[i - 1]];
-  }
-};
-
 export const humanizeTimeToNowPrecise = (dateTimeEpochms) => {
   const time = store.getters["time/getNow"];
 
@@ -46,21 +38,6 @@ export const humanizeTimeToNowImprecise = (dateTimeEpochms) => {
 
 export const selectRandom = (array) => {
   return array[Math.floor(Math.random() * array.length)];
-};
-
-export const getUniqueColors = (count, colorRange = "800") => {
-  let array = JSON.parse(JSON.stringify(constants.colors[colorRange]));
-
-  while (count > array.length) {
-    array = array.concat(
-      JSON.parse(JSON.stringify(constants.colors[colorRange]))
-    );
-  }
-  shuffle(array);
-  if (count < array.length) {
-    array = array.slice(0, count);
-  }
-  return array;
 };
 
 export const getTmdbBackdropImage = (slug) => {

@@ -1,11 +1,11 @@
 <template>
   <div class="graph-cont">
-    <template v-for="(option, index) in data" class="d-flex">
+    <template v-for="option in data" class="d-flex">
       <div
-        :id="option.name"
+        :id="option.id"
         :key="option.name + 'bar'"
         class="bar"
-        :style="{ '--width': calcPercentage(option), '--color': colors[index] }"
+        :style="{ '--width': option.percentage, '--color': option.color }"
       >
         <span class="bar-label"
           ><strong>{{ option.name }}</strong></span
@@ -17,38 +17,12 @@
 </template>
 
 <script>
-import { round } from "@/utils";
-import { mapGetters } from "vuex";
-
 export default {
   name: "BarChart",
   props: {
     data: {
       type: Array,
       required: true,
-    },
-    colors: {
-      type: Array,
-      required: true,
-    },
-  },
-  computed: {
-    ...mapGetters("vote", ["getNumberOfUniqueVoters"]),
-    ...mapGetters("poll", ["getMostRecentPoll"]),
-  },
-  methods: {
-    calcPercentage(option) {
-      if (option.votes === 0) {
-        return "1%";
-      } else {
-        return (
-          round(
-            (option.votes /
-              this.getNumberOfUniqueVoters(this.getMostRecentPoll._id)) *
-              100
-          ) + "%"
-        );
-      }
     },
   },
 };
