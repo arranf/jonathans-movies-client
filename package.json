@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@feathersjs/client": "^4.5.11",
-    "@sentry/browser": "^6.7.2",
+    "@sentry/tracing": "^6.7.2",
+    "@sentry/vue": "^6.7.2",
     "@vue/composition-api": "^1.0.0-rc.2",
     "core-js": "^3.6.5",
     "feathers-hooks-common": "^5.0.5",

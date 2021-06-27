@@ -5,7 +5,9 @@ import App from "@/components/skeleton/AppContainer";
 import router from "./router";
 import store from "./store/";
 import "@/api/feathers-client";
-import * as Sentry from "@sentry/browser";
+
+import * as Sentry from "@sentry/vue";
+import { Integrations } from "@sentry/tracing";
 
 import "./plugins/vuetify";
 
@@ -20,7 +22,11 @@ Vue.config.performance = !isProduction;
 if (isProduction) {
   Sentry.init({
     dsn: "https://af031047bfd341f8b9d082c5474c016d@sentry.io/1329415",
-    integrations: [new Sentry.Integrations.Vue({ Vue })],
+    integrations: [new Integrations.BrowserTracing()],
+
+    // We recommend adjusting this value in production, or using tracesSampler
+    // for finer control
+    tracesSampleRate: 1.0,
   });
 }
 
