@@ -171,19 +171,6 @@ const router = new Router({
   mode: "history",
   linkActiveClass: "active",
   routes,
-  scrollBehavior(to, _from, savedPosition) {
-    if (to.hash) {
-      return {
-        selector: to.hash,
-        behavior: "smooth",
-      };
-    }
-    if (savedPosition) {
-      return savedPosition;
-    } else {
-      return { x: 0, y: 0 };
-    }
-  },
 });
 
 function initStore() {
