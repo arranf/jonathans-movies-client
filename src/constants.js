@@ -57,3 +57,6 @@ export const genres = [
 ];
 
 export default { colors, genres };
+
+export const JONATHAN_COLLECTION = "Jonathan";
+export const ARRAN_COLLECTION = "Arran";

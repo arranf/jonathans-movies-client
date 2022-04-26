@@ -8,12 +8,6 @@
       </v-card-title>
 
       <v-card-text>
-        <!-- <v-select
-            v-model="currentCollection"
-            :items="items"
-            attach
-            label="Collection"
-          ></v-select> -->
         <v-btn block color="primary" @click="save">
           Switch collection to {{ alternativeCollection }}
         </v-btn>
@@ -24,6 +18,7 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import { JONATHAN_COLLECTION, ARRAN_COLLECTION } from "@/constants";
 import router from "@/router";
 
 export default {
@@ -48,7 +43,10 @@ export default {
   computed: {
     ...mapState("collection", { currentCollection: "current" }),
     alternativeCollection() {
-      return this.currentCollection === "Jonathan" ? "Arran" : "Jonathan";
+      // TODO: Remove hardcoded collections
+      return this.currentCollection === JONATHAN_COLLECTION
+        ? ARRAN_COLLECTION
+        : JONATHAN_COLLECTION;
     },
   },
   async created() {

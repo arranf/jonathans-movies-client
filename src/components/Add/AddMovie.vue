@@ -61,6 +61,13 @@
             >{{ addButtonLabel }}</v-btn
           >
           <v-btn flat @click="closePreview">Cancel</v-btn>
+          <v-spacer />
+
+          <v-select
+            v-model="addToCollection"
+            :items="collections"
+            label="Collection"
+          ></v-select>
         </v-card-actions>
       </v-card>
     </transition>
@@ -69,7 +76,7 @@
 
 <script>
 import { getMovieData, searchForMovie } from "@/api/tmdb";
-import { genres } from "@/constants";
+import { genres, ARRAN_COLLECTION, JONATHAN_COLLECTION } from "@/constants";
 import { mapActions, mapState } from "vuex";
 import { getYearFromTmdbReleaseDate, getTmdbBackdropImage } from "@/utils";
 
@@ -91,12 +98,14 @@ export default {
       currentFilmResponse: {},
       film: null,
       loading: false,
+      addToCollection: undefined,
+      collections: [ARRAN_COLLECTION, JONATHAN_COLLECTION],
     };
   },
   methods: {
     ...mapActions("films", ["create", "find"]),
     ...mapActions("loading", ["setLoading", "setLoaded"]),
-    ...mapActions("collection", { getCurrentCollection: "getCurrent" }),
+    ...mapActions("collection", { getCurrentGlobalCollection: "getCurrent" }),
     ...mapActions("snackbar", { setSnackbarText: "setText" }),
     getFilms: function (searchTerm) {
       if (searchTerm.trim()) {
@@ -145,7 +154,7 @@ export default {
           this.isDuplicateForCurrent =
             apiResponse.total > 0 &&
             apiResponse.data.every(
-              (a) => a.owned_by.indexOf(this.currentCollection) > -1
+              (a) => a.owned_by.indexOf(this.collection) > -1
             );
           this.showSearch = false;
           return apiResponse;
@@ -162,12 +171,12 @@ export default {
     },
     addFilm() {
       if (this.isDuplicateForOther) {
-        this.currentFilmResponse.owned_by.push(this.currentCollection);
+        this.currentFilmResponse.owned_by.push(this.collection);
         this.currentFilmResponse
           .patch()
           .then(() => {
             this.setSnackbarText(
-              `Added ${this.film.name} to ${this.currentCollection}'s collection`
+              `Added ${this.film.name} to ${this.collection}'s collection`
             );
             this.selectedFilm = "";
             this.film = null;
@@ -179,12 +188,12 @@ export default {
           });
       } else {
         const { Film } = this.$FeathersVuex;
-        this.film.owned_by = [this.currentCollection];
+        this.film.owned_by = [this.collection];
         new Film({ tmdb_id: this.film.tmdb_id })
           .create()
           .then(() => {
             this.setSnackbarText(
-              `Successfully added ${this.film.name} to ${this.currentCollection}'s collection`
+              `Successfully added ${this.film.name} to ${this.collection}'s collection`
             );
             this.selectedFilm = "";
             this.film = null;
@@ -211,7 +220,7 @@ export default {
     },
   },
   computed: {
-    ...mapState("collection", { currentCollection: "current" }),
+    ...mapState("collection", { currentGlobalCollection: "current" }),
     getBackdropImage() {
       if (this.film) {
         return getTmdbBackdropImage(this.film.backdrop_path);
@@ -229,14 +238,19 @@ export default {
     },
     addButtonLabel() {
       if (this.isDuplicateForCurrent) {
-        return `Already in ${this.currentCollection}'s Collection`;
+        return `Already in ${this.collection}'s Collection`;
       } else {
-        return `Add to ${this.currentCollection}'s Collection`;
+        return `Add to ${this.collection}'s Collection`;
       }
+    },
+    collection() {
+      return this.addToCollection || this.currentGlobalCollection;
     },
   },
   async created() {
-    await this.getCurrentCollection();
+    await this.getCurrentGlobalCollection();
+    console.log(this.currentGlobalCollection);
+    this.addToCollection = this.currentGlobalCollection;
     await this.setLoaded("Add");
   },
 };

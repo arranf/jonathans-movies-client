@@ -10,5 +10,5 @@
         "javascriptreact",
         "vue"
     ],
-    "vetur.validation.template": false
+    "vetur.validation.template": true
   }
