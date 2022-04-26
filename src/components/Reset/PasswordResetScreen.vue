@@ -115,7 +115,7 @@ import router from "@/router";
 import authClient from "@/api/auth-client";
 
 export default {
-  name: "Reset",
+  name: "PasswordResetScreen",
   props: {
     token: {
       type: String,
@@ -207,7 +207,8 @@ export default {
   computed: {
     isDisabled: function () {
       // W3 Email regex: http://emailregex.com/
-      const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      const regex =
+        /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
       return !(this.email && regex.test(this.email));
     },
     color() {

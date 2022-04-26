@@ -61,7 +61,7 @@ import { getYearFromTmdbReleaseDate } from "@/utils";
 import { mapGetters, mapState } from "vuex";
 
 export default {
-  name: "Toolbar",
+  name: "AppToolbar",
   data() {
     return {
       selectedFilm: null,

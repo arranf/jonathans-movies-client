@@ -4,20 +4,20 @@ import store from "@/store";
 import feathersClient from "@/api/feathers-client";
 import { getOptionsForPoll, getCurrentPoll } from "@/api";
 
-const Home = () => import("@/components/Home/Home");
-const Login = () => import("@/components/Login/Login");
-const SignUp = () => import("@/components/SignUp/SignUp");
-const Create = () => import("@/components/Create/Create");
+const Home = () => import("@/components/Home/HomeScreen");
+const Login = () => import("@/components/Login/LoginScreen");
+const SignUp = () => import("@/components/SignUp/SignUpScreen");
+const Create = () => import("@/components/Create/CreateScreen");
 const FilmList = () => import("@/components/Movies/FilmList");
 const Add = () => import("@/components/Add/AddMovie");
-const Discover = () => import("@/components/Discover/Discover");
+const Discover = () => import("@/components/Discover/DiscoverScreen");
 // const ChristmasDiscover = () => import('@/components/Discover/ChristmasDiscover')
-const Reset = () => import("@/components/Reset/Reset");
-const Verify = () => import("@/components/Verify/Verify");
-const Logout = () => import("@/components/Logout/Logout");
+const Reset = () => import("@/components/Reset/PasswordResetScreen");
+const Verify = () => import("@/components/Verify/VerifyScreen");
+const Logout = () => import("@/components/Logout/LogoutScreen");
 const SwitchCollection = () =>
   import("@/components/Collection/SwitchCollection");
-const Privacy = () => import("@/components/Privacy/Privacy");
+const Privacy = () => import("@/components/Privacy/PrivacyScreen");
 const NominateStreamingFilm = () =>
   import("@/components/StreamingFilm/NominateStreamingFilm");
 

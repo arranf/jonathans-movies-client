@@ -28,11 +28,11 @@
 import { mapState, mapGetters } from "vuex";
 
 import DrawerList from "@/components/skeleton/DrawerList";
-import Toolbar from "@/components/skeleton/Toolbar";
+import Toolbar from "@/components/skeleton/AppToolbar";
 import ProgressBar from "@/components/skeleton/ProgressBar";
-import Snackbar from "@/components/skeleton/Snackbar";
+import Snackbar from "@/components/skeleton/AppSnackbar";
 import BottomNav from "@/components/skeleton/BottomNav";
-import Loading from "@/components/skeleton/Loading";
+import Loading from "@/components/skeleton/LoadingSpinner";
 
 export default {
   name: "App",

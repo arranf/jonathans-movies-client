@@ -167,7 +167,7 @@ import MovieSuggest from "./MovieSuggest";
 import router from "@/router";
 
 export default {
-  name: "Create",
+  name: "CreateScreen",
   components: {
     MovieSuggest,
   },

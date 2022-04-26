@@ -1,7 +1,6 @@
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin; // eslint-disable-line no-unused-vars
+const BundleAnalyzerPlugin =
+  require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const DefinePlugin = require("webpack").DefinePlugin;
-// const Critters = require('critters-webpack-plugin')
 
 module.exports = {
   transpileDependencies: ["vuetify", "feathers-vuex"],
@@ -13,17 +12,33 @@ module.exports = {
     appleMobileWebAppStatusBarStyle: "black",
   },
   configureWebpack: (_config) => {
+    //TODO: Should this all be defined without this logic? Probably!
+    let facebookUrl;
+    if (process.env.BRANCH && process.env.BRANCH.trim() === "develop") {
+      facebookUrl = "https://staging-api.jonathansmovies.com/auth/facebook";
+    } else if (process.env.NODE_ENV === "production") {
+      facebookUrl = "https://api.jonathansmovies.com/auth/facebook";
+    } else {
+      facebookUrl = "http://localhost:3030/auth/facebook";
+    }
+
+    let apiUrl;
+    if (process.env.BRANCH && process.env.BRANCH.trim() === "develop") {
+      apiUrl = "https://staging-api.jonathansmovies.com";
+    } else if (process.env.NODE_ENV === "production") {
+      apiUrl = "https://api.jonathansmovies.com";
+    } else {
+      apiUrl = "http://localhost:3030";
+    }
+
     let plugins = [
       new DefinePlugin({
         "process.env": {
-          BRANCH: JSON.stringify(process.env.BRANCH),
+          FACEBOOK_URL: JSON.stringify(facebookUrl),
+          API_URL: JSON.stringify(apiUrl),
         },
       }),
     ];
-
-    // if (process.env.NODE_ENV === 'production') {
-    //   plugins.push(new Critters())
-    // }
 
     if (process.env.ANALYZE) {
       plugins.push(new BundleAnalyzerPlugin());

@@ -137,11 +137,7 @@ export default {
           const tmdbResponse = responses[0];
           const apiResponse = responses[1];
           film.backdrop_path = tmdbResponse.backdrop_path;
-          film.poster_path = tmdbResponse.poster_path;
-          film.budget = tmdbResponse.budget;
-          film.imdb_id = tmdbResponse.imdb_id;
           film.tagline = tmdbResponse.tagline;
-          film.runtime = tmdbResponse.runtime;
           this.searchQuery = "";
           this.suggestions = [];
           this.film = film;
@@ -184,7 +180,7 @@ export default {
       } else {
         const { Film } = this.$FeathersVuex;
         this.film.owned_by = [this.currentCollection];
-        new Film(this.film)
+        new Film({ tmdb_id: this.film.tmdb_id })
           .create()
           .then(() => {
             this.setSnackbarText(

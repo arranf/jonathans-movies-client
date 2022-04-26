@@ -69,7 +69,7 @@ import { mapActions } from "vuex";
 import router from "@/router";
 
 export default {
-  name: "Login",
+  name: "LoginScreen",
   data() {
     return {
       hidePassword: true,
@@ -104,23 +104,16 @@ export default {
       this.isInternalLogin = !this.isInternalLogin;
     },
     facebookLogin: function () {
-      let url;
-      if (process.env.BRANCH && process.env.BRANCH.trim() === "develop") {
-        url = "https://staging-api.jonathansmovies.com/auth/facebook";
-      } else if (process.env.NODE_ENV === "production") {
-        url = "https://api.jonathansmovies.com/auth/facebook";
-      } else {
-        url = "http://localhost:3030/auth/facebook";
-      }
       this.logout()
-        .then((window.location = url))
+        .then((window.location = process.env.FACEBOOK_URL))
         .catch((e) => console.error(e));
     },
   },
   computed: {
     isDisabled: function () {
       // W3 Email regex: http://emailregex.com/
-      const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      const regex =
+        /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
       return !(this.password && this.email && regex.test(this.email));
     },
   },

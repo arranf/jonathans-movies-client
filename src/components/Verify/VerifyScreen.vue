@@ -7,12 +7,12 @@
 <script>
 import feathersClient from "@/api/feathers-client";
 import authClient from "@/api/auth-client";
-import Loading from "@/components/skeleton/Loading";
+import Loading from "@/components/skeleton/LoadingSpinner";
 import { mapActions } from "vuex";
 import router from "@/router";
 
 export default {
-  name: "Verify",
+  name: "VerifyScreen",
   components: {
     Loading,
   },

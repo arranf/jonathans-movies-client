@@ -1,5 +1,6 @@
 <template>
   <v-layout row justify-center>
+    <!-- eslint-disable vue/no-mutating-props -->
     <v-dialog
       v-model="show"
       lazy
@@ -7,6 +8,7 @@
       transition="dialog-bottom-transition"
       :overlay="false"
     >
+      <!-- eslint-enable vue/no-mutating-props -->
       <v-card v-if="film">
         <movie-bg :height="30" :film="film" />
 
@@ -106,7 +108,7 @@ import { addNomination } from "@/api";
 import { getYearFromTmdbReleaseDate } from "@/utils";
 import { mapGetters, mapActions } from "vuex";
 import MovieBg from "./MovieBg";
-import Loading from "@/components/skeleton/Loading";
+import Loading from "@/components/skeleton/LoadingSpinner";
 
 export default {
   name: "MovieInfoModal",

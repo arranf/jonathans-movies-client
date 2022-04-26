@@ -15,12 +15,12 @@
 
 <script>
 import { mapGetters } from "vuex";
-import Results from "@/components/Home/Results/Results";
+import Results from "@/components/Home/Results/PollResults";
 import SelectedOptions from "./Nominated/SelectedOptions";
 import MovieInfoModal from "@/components/common/MovieInfoModal";
 
 export default {
-  name: "Home",
+  name: "HomeScreen",
   components: {
     Results,
     SelectedOptions,

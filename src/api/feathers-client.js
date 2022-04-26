@@ -2,15 +2,7 @@ import feathers from "@feathersjs/client";
 import io from "socket.io-client";
 import store from "@/store"; // used for transition notification
 
-let url;
-// TODO: MOVE THIS TO BUILD TIME
-if (process.env.BRANCH && process.env.BRANCH.trim() === "develop") {
-  url = "https://staging-api.jonathansmovies.com";
-} else if (process.env.NODE_ENV === "production") {
-  url = "https://api.jonathansmovies.com";
-} else {
-  url = "http://localhost:3030";
-}
+const url = process.env.API_URL;
 
 let socket;
 try {

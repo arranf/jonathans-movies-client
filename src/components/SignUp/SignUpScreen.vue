@@ -62,7 +62,7 @@ import router from "@/router";
 import zxcvbn from "zxcvbn";
 
 export default {
-  name: "SignUp",
+  name: "SignUpScreen",
   data() {
     return {
       hidePassword: true,
@@ -125,7 +125,8 @@ export default {
   computed: {
     isDisabled: function () {
       // W3 Email regex: http://emailregex.com/
-      const regex = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      const regex =
+        /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
       return !(this.password && this.email && regex.test(this.email));
     },
     color() {

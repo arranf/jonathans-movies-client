@@ -97,7 +97,7 @@ import feathersClient from "@/api/feathers-client";
 import { mapActions, mapState, mapGetters } from "vuex";
 import { getTmdbBackdropImage } from "@/utils";
 
-import Loading from "@/components/skeleton/Loading";
+import Loading from "@/components/skeleton/LoadingSpinner";
 import MovieBg from "@/components/common/MovieBg";
 
 export default {

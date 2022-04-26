@@ -90,7 +90,7 @@ import debounce from "lodash/debounce";
 import constants from "@/constants";
 import scrollListener from "@/scroll-listener";
 import MovieInfoModal from "@/components/common/MovieInfoModal";
-import Quote from "@/components/Discover/Quote";
+import Quote from "@/components/Discover/FilmQuote";
 
 export default {
   name: "FilmList",

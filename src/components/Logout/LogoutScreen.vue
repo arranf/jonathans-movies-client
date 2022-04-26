@@ -6,10 +6,10 @@
 
 <script>
 import { mapActions } from "vuex";
-import Loading from "@/components/skeleton/Loading";
+import Loading from "@/components/skeleton/LoadingSpinner";
 
 export default {
-  name: "Logout",
+  name: "LogoutScreen",
   components: {
     Loading,
   },

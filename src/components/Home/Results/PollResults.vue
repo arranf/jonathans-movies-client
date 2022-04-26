@@ -24,7 +24,7 @@ import { mapGetters, mapActions } from "vuex";
 import { getCurrentPoll, getResults } from "@/api";
 
 export default {
-  name: "Results",
+  name: "PollResults",
   components: {
     BarChart,
   },

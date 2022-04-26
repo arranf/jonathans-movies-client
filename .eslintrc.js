@@ -13,7 +13,7 @@ module.exports = {
     "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
   },
   parserOptions: {
-    parser: "babel-eslint",
+    parser: "@babel/eslint-parser",
   },
   overrides: [
     {

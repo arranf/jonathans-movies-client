@@ -94,7 +94,7 @@
 import FilmPreview from "@/components/common/FilmPreview";
 import MovieInfoModal from "@/components/common/MovieInfoModal";
 import NominateStreamingFilmPrompt from "./NominateStreamingFilmPrompt";
-import Quote from "./Quote";
+import Quote from "./FilmQuote";
 import {
   getRecommendations as fetchRecommendations,
   //   getRecentlyAdded as fetchRecentlyAdded,
@@ -105,7 +105,7 @@ import scrollListener from "@/scroll-listener";
 import { mapActions } from "vuex";
 
 export default {
-  name: "Discover",
+  name: "DiscoverScreen",
   components: {
     FilmPreview,
     MovieInfoModal,

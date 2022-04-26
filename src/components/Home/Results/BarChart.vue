@@ -1,6 +1,6 @@
 <template>
   <div class="graph-cont">
-    <template v-for="option in data" class="d-flex">
+    <template v-for="option in data">
       <div
         :id="option.id"
         :key="option.name + 'bar'"
