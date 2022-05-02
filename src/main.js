@@ -1,3 +1,7 @@
+// Needed for Vuetify: see https://cli.vuejs.org/guide/browser-compatibility.html#usebuiltins-usage
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
 import Vue from "vue";
 import App from "@/components/skeleton/AppContainer";
 import router from "./router";

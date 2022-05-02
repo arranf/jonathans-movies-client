@@ -29,23 +29,27 @@ feathersClient.service("/users-online");
 feathersClient.service("/recommendations");
 feathersClient.service("/streaming-films");
 feathersClient.service("/results");
+feathersClient.service("/poll-phase");
 
-feathersClient.service("/poll").on("transition", (_data) => {
+feathersClient.service("/poll").on("transition", (data) => {
+  const poll = store.getters["poll/getActivePoll"];
   const numberOfVotes = store.getters["vote/votesRemaining"];
   const text =
     numberOfVotes == null
       ? "Voting has begun"
       : `Voting has begun! You have ${numberOfVotes} votes.`;
-  store.dispatch("snackbar/setText", {
-    text: text,
-    isPersistent: true,
-  });
+  // Avoid creating transition notifications when multiple polls in the background.
+  if (poll && poll._id === data.poll_pollId) {
+    store.dispatch("snackbar/setText", {
+      text: text,
+      isPersistent: true,
+    });
+  }
 });
 
 feathersClient.service("/collection").on("patched", (_data) => {
-  store.commit("films/clearAll");
   // data.current contains the current string for the correct collection
-  // TODO: We should do things here like clear out films
+  store.commit("films/clearAll");
 });
 
 export default feathersClient;

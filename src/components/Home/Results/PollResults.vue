@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { timeout } from "@/utils";
 import BarChart from "./BarChart";
 import { mapGetters, mapActions } from "vuex";
 import { getCurrentPoll, getResults } from "@/api";
@@ -32,6 +33,8 @@ export default {
     return {
       results: null,
       emptyStateAllowed: false,
+      succesfullyFetchedData: false,
+      mountAttempts: 0,
     };
   },
   computed: {
@@ -41,18 +44,30 @@ export default {
     },
   },
   async mounted() {
-    try {
-      await this.setLoading("Home"); // this is required because 'Home' has two possible components that load data
-      await getCurrentPoll();
-      this.results = await getResults(this.getMostRecentPoll._id);
-      this.emptyStateAllowed = true;
-      this.setLoaded("Home");
-    } catch (error) {
-      console.error(error);
+    while (this.mountAttempts < 4) {
+      this.tryMount();
+      if (this.succesfullyFetchedData) {
+        return;
+      }
+      this.mountAttempts++;
+      await timeout(1000);
     }
+    // TODO: Show error
   },
   methods: {
     ...mapActions("loading", ["setLoading", "setLoaded"]),
+    async tryMount() {
+      try {
+        await this.setLoading("Home"); // this is required because 'Home' has two possible components that load data
+        await getCurrentPoll();
+        this.results = await getResults(this.getMostRecentPoll._id);
+        this.succesfullyFetchedData = true;
+        this.emptyStateAllowed = true;
+        this.setLoaded("Home");
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 };
 </script>

@@ -7,7 +7,7 @@ export const getCurrentPoll = () =>
   store.dispatch("poll/find", {
     query: {
       $sort: { endDateTime: -1 },
-      $limit: 20,
+      $limit: 10,
     },
   });
 
@@ -90,20 +90,16 @@ export const addNomination = (film) => {
 };
 export const stopPoll = () => {
   const poll = store.getters["poll/getActivePoll"];
-  const currentTime = store.getters["time/getNow"];
-  const data = { endDateTime: currentTime };
-  store.dispatch("poll/patch", [poll._id, data, {}]);
+  feathersClient
+    .service("/poll-phase")
+    .patch(poll._id, { changeType: "stopPoll" });
 };
 
 export const stopNominations = () => {
   const poll = store.getters["poll/getActivePoll"];
-  const currentTime = store.getters["time/getNow"];
-  const oldTransitionTime = poll.pollTransitionDateTime;
-  const data = {
-    pollTransitionDateTime: currentTime,
-    endDateTime: poll.endDateTime - (oldTransitionTime - currentTime),
-  };
-  store.dispatch("poll/patch", [poll._id, data, {}]);
+  feathersClient
+    .service("/poll-phase")
+    .patch(poll._id, { changeType: "stopNominations" });
 };
 
 export const discoverMovies = (seenIds) =>
@@ -111,17 +107,6 @@ export const discoverMovies = (seenIds) =>
     paginate: false,
     query: {
       discover: true,
-      _id: {
-        $nin: seenIds,
-      },
-    },
-  });
-
-export const discoverChristmasMovies = (seenIds) =>
-  store.dispatch("films/find", {
-    paginate: false,
-    query: {
-      discoverChristmas: true,
       _id: {
         $nin: seenIds,
       },

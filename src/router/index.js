@@ -11,7 +11,6 @@ const Create = () => import("@/components/Create/CreateScreen");
 const FilmList = () => import("@/components/Movies/FilmList");
 const Add = () => import("@/components/Add/AddMovie");
 const Discover = () => import("@/components/Discover/DiscoverScreen");
-// const ChristmasDiscover = () => import('@/components/Discover/ChristmasDiscover')
 const Reset = () => import("@/components/Reset/PasswordResetScreen");
 const Verify = () => import("@/components/Verify/VerifyScreen");
 const Logout = () => import("@/components/Logout/LogoutScreen");
@@ -159,12 +158,6 @@ const routes = [
     component: NominateStreamingFilm,
     props: true,
   },
-  // {
-  //   path: '/christmas/:filmId?',
-  //   name: 'Christmas',
-  //   component: ChristmasDiscover,
-  //   props: true
-  // }
 ];
 
 const router = new Router({

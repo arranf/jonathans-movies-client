@@ -9,7 +9,6 @@ const state = {
     isSignupLoading: false,
     isDiscoverLoading: false,
     isVerifyLoading: false,
-    isChristmasLoading: false,
   },
 };
 

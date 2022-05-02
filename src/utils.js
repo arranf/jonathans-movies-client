@@ -83,3 +83,7 @@ export function round(num, decimalPlaces = 0) {
   var m = num * p * (1 + Number.EPSILON);
   return Math.round(m) / p;
 }
+
+export function timeout(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}

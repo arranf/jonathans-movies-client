@@ -11,7 +11,7 @@ export default {
         .find(
           (p) =>
             p.startDateTime <= currentDateTime &&
-            p.endDateTime > currentDateTime
+            p.endDateTime >= currentDateTime
         )
     );
   },
