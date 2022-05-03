@@ -5588,9 +5588,9 @@ feathers-hooks-common@^5.0.5:
     process "0.11.10"
     traverse "^0.6.6"
 
-"feathers-vuex@git://github.com/arranf/feathers-vuex.git#1.x":
+"feathers-vuex@https://github.com/arranf/feathers-vuex.git#1.x":
   version "1.7.2"
-  resolved "git://github.com/arranf/feathers-vuex.git#428cad6828f87f3658266f4ddd931cbe5f2c7b58"
+  resolved "https://github.com/arranf/feathers-vuex.git#428cad6828f87f3658266f4ddd931cbe5f2c7b58"
   dependencies:
     "@feathersjs/adapter-commons" "^2.0.0"
     "@feathersjs/commons" "^4.0.0"
