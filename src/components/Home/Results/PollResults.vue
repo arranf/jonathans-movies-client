@@ -45,28 +45,27 @@ export default {
   },
   async mounted() {
     while (this.mountAttempts < 4) {
-      this.tryMount();
+      try {
+        this.tryMount();
+      } catch (error) {
+        console.log(error);
+      }
       if (this.succesfullyFetchedData) {
         return;
       }
       this.mountAttempts++;
       await timeout(1000);
     }
-    // TODO: Show error
   },
   methods: {
     ...mapActions("loading", ["setLoading", "setLoaded"]),
     async tryMount() {
-      try {
-        await this.setLoading("Home"); // this is required because 'Home' has two possible components that load data
-        await getCurrentPoll();
-        this.results = await getResults(this.getMostRecentPoll._id);
-        this.succesfullyFetchedData = true;
-        this.emptyStateAllowed = true;
-        this.setLoaded("Home");
-      } catch (error) {
-        console.error(error);
-      }
+      await this.setLoading("Home"); // this is required because 'Home' has two possible components that load data
+      await getCurrentPoll();
+      this.results = await getResults(this.getMostRecentPoll._id);
+      this.succesfullyFetchedData = true;
+      this.emptyStateAllowed = true;
+      this.setLoaded("Home");
     },
   },
 };
