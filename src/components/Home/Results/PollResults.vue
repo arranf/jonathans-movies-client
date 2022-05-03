@@ -46,7 +46,7 @@ export default {
   async mounted() {
     while (this.mountAttempts < 4) {
       try {
-        this.tryMount();
+        await this.tryMount();
       } catch (error) {
         console.log(error);
       }
