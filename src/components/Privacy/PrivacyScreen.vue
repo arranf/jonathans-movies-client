@@ -25,6 +25,12 @@
       placed on our data to prevent it from being obtained by third parties.
     </p>
 
+    <h3>Deletion</h3>
+    <p>
+      You may request data deletion through the application by clicking the
+      "Delete my account button".
+    </p>
+
     <h3>Third Parties</h3>
     <p>
       We do not sell your information or engage with any third parties for the
