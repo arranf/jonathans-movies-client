@@ -27,8 +27,8 @@
 
     <h3>Deletion</h3>
     <p>
-      You may request data deletion through the application by clicking the
-      "Delete my account button".
+      You may request data deletion by contacting admin@jonathansmovies.com with
+      your email address. Your data will be deleted within 14 days.
     </p>
 
     <h3>Third Parties</h3>
